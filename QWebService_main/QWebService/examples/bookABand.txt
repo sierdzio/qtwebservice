@@ -1,0 +1,55 @@
+SOAP 1.2
+
+The following is a sample SOAP 1.2 request and response. The placeholders shown need to be replaced with actual values.
+
+POST /band_ws.asmx HTTP/1.1
+Host: localhost
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: length
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+  <soap12:Body>
+    <bookABand xmlns="http://tempuri.org/">
+      <from>dateTime</from>
+      <to>dateTime</to>
+      <bookingCode>string</bookingCode>
+      <bandID>int</bandID>
+      <customerName>string</customerName>
+      <customerSurname>string</customerSurname>
+      <Phone>string</Phone>
+      <customerEmail>string</customerEmail>
+      <customerAddress>string</customerAddress>
+      <receptionAddress>string</receptionAddress>
+      <numberOfGuests>int</numberOfGuests>
+    </bookABand>
+  </soap12:Body>
+</soap12:Envelope>
+HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: length
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+  <soap12:Body>
+    <bookABandResponse xmlns="http://tempuri.org/">
+      <bookABandResult>boolean</bookABandResult>
+    </bookABandResponse>
+  </soap12:Body>
+</soap12:Envelope>
+HTTP POST
+
+The following is a sample HTTP POST request and response. The placeholders shown need to be replaced with actual values.
+
+POST /band_ws.asmx/bookABand HTTP/1.1
+Host: localhost
+Content-Type: application/x-www-form-urlencoded
+Content-Length: length
+
+from=string&to=string&bookingCode=string&bandID=string&customerName=string&customerSurname=string&Phone=string&customerEmail=string&customerAddress=string&receptionAddress=string&numberOfGuests=string
+HTTP/1.1 200 OK
+Content-Type: text/xml; charset=utf-8
+Content-Length: length
+
+<?xml version="1.0" encoding="utf-8"?>
+<boolean xmlns="http://tempuri.org/">boolean</boolean>
