@@ -55,11 +55,19 @@ void QSoapMessage::setTargetNamespace(QString tNamespace)
 
 bool QSoapMessage::sendMessage()
 {
+    hostUrl.setUrl(hostname);
     QNetworkRequest request;
-    request.setUrl(QUrl("http://www.webserviceX.NET/stockquote.asmx")); //hostUrl);
+    request.setUrl(hostUrl); //"http://www.webserviceX.NET/stockquote.asmx"));
+    //request.setHeader(QNetworkRequest::LocationHeader, QVariant("/stockquote.asmx"));
     request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/soap+xml; charset=utf-8"));
+    if (version == soap10)
+        request.setRawHeader(QByteArray("SOAPAction"), QByteArray("\"http://www.webserviceX.NET/GetQuote\""));
 
     prepareRequestData();
+
+    qDebug() << request.rawHeaderList() << " " << request.url().toString();
+    //qDebug() << data;
+    qDebug() << "*************************";
 
     manager->post(request, data);
 }
@@ -127,8 +135,8 @@ void QSoapMessage::replyFinished(QNetworkReply *netReply)
     networkReply = netReply;
     QByteArray replyBytes;
 
-    replyBytes = networkReply->readAll();
-    QString replyString(replyBytes);
+    replyBytes = (networkReply->readAll());
+    QString replyString = convertReplyToUtf(replyBytes);
 
     QString tempBegin = "<" + messageName + "Result>";
     int replyBeginIndex = replyString.indexOf(tempBegin, 0, Qt::CaseSensitive);
@@ -168,24 +176,33 @@ void QSoapMessage::prepareRequestData()
 
     if (version == soap12)
     {
-        header = "<?xml version=\"1.0\" encoding=\"utf-8\"?> \r\n <soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\"> \r\n \t<soap12:Body>";
+        header = "<?xml version=\"1.0\" encoding=\"utf-8\"?> \r\n <soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\"> \r\n <soap12:Body> \r\n";
 
-        footer = "\t</soap12:Body> \r\n</soap12:Envelope>";
+        footer = "</soap12:Body> \r\n</soap12:Envelope>";
     }
 
-    // ADD TARGET NAMESPACE!
-    body = "<" + messageName + " xmlns=\"" + targetNamespace + "\"> \r\n";
+    body = "\t<" + messageName + " xmlns=\"" + targetNamespace + "\"> \r\n";
 
     foreach (const QString currentKey, parameters.keys())
     {
         QVariant qv = parameters.value(currentKey);
         // Currently, this does not handle nested lists
-        body += "\t<" + currentKey + ">" + qv.toString() + "</" + currentKey + "> \r\n";
+        body += "\t\t<" + currentKey + ">" + qv.toString() + "</" + currentKey + "> \r\n";
     }
 
-    body += "</" + messageName + "> \r\n";
+    body += "\t</" + messageName + "> \r\n";
 
     data.append(header + body + footer);
+}
+
+QString QSoapMessage::convertReplyToUtf(QString textToConvert)
+{
+    QString result = textToConvert;
+
+    result.replace("&lt;", "<");
+    result.replace("&gt;", ">");
+
+    return result;
 }
 
 //TEMP

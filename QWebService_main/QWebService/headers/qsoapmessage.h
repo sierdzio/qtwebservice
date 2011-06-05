@@ -48,6 +48,7 @@ public slots:
 private:
     void init();
     void prepareRequestData();
+    QString convertReplyToUtf(QString textToConvert);
 
     bool replyReceived;
     Role role;

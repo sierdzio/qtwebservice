@@ -16,6 +16,8 @@ public slots:
     void messageResponse(QVariant msg);
 
 private:
+    void soapMessageTest();
+
     QWsdl *wsdl;
     QSoapMessage *message;
 };
