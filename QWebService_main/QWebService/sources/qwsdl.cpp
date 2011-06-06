@@ -3,6 +3,7 @@
 QWsdl::QWsdl(QObject *parent) :
     QObject(parent)
 {
+    replyReceived = false;
     errorState = false;
     errorMessage = "";
     hostname = "";
@@ -17,6 +18,7 @@ QWsdl::QWsdl(QObject *parent) :
 QWsdl::QWsdl(QString wsdlFile, QObject *parent) :
     QObject(parent), wsdlFilePath(wsdlFile)
 {
+    replyReceived = false;
     errorState = false;
     errorMessage = "";
     hostname = "";
@@ -92,11 +94,40 @@ void QWsdl::resetWsdl(QString newWsdlPath)
 
     methods->clear();
     workMethodList->clear();
+    replyReceived = false;
     errorState = false;
     errorMessage = "";
     xmlReader.clear();
 
     parse();
+}
+
+void QWsdl::fileReplyFinished(QNetworkReply *rply)
+{
+    QNetworkReply *networkReply = rply;
+    QByteArray replyBytes;
+
+    replyBytes = (networkReply->readAll());
+    QString replyString = convertReplyToUtf(replyBytes);
+
+    wsdlFilePath = "tempWsdl.asmx~";
+    QFile file("tempWsdl.asmx~");
+
+    if (!file.open(QFile::WriteOnly))
+    {
+        errorMessage = "Error: cannot write WSDL file from remote location. Reason: " + file.errorString();
+        qDebug() << errorMessage;
+        errorState = true;
+        return;
+    }
+    else
+    {
+        file.write(replyString.toUtf8());
+    }
+
+    file.close();
+    replyReceived = true;
+//    emit replyReady(reply);
 }
 
 bool QWsdl::parse()
@@ -118,9 +149,7 @@ bool QWsdl::parse()
         return false;
     }
 
-    QUrl filePath(wsdlFilePath);
-    hostname = filePath.host();
-    filePath.toLocalFile();
+    prepareFile();
 
     QFile file(wsdlFilePath);
     if (!file.open(QFile::ReadOnly | QFile::Text))
@@ -139,7 +168,7 @@ bool QWsdl::parse()
         if (xmlReader.isStartElement())
         {
             QString tempN = xmlReader.name().toString() ;
-            if (xmlReader.name().toString() == "definitions")
+            if (tempN == "definitions")
             {
                 targetNamespace = xmlReader.attributes().value("targetNamespace").toString();
                 hostname = targetNamespace;
@@ -168,8 +197,35 @@ bool QWsdl::parse()
         return false;
 }
 
+void QWsdl::prepareFile()
+{
+    QUrl filePath(wsdlFilePath);
+    hostname = filePath.host();
+
+    if (!QFile::exists(wsdlFilePath) && filePath.isValid())
+    {
+        QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+        connect(manager, SIGNAL(finished(QNetworkReply*)),
+                this, SLOT(fileReplyFinished(QNetworkReply*)));
+
+        manager->get(QNetworkRequest(filePath));
+
+        for (;;)
+        {
+            if (replyReceived == true)
+                return;
+            else
+                qApp->processEvents();
+        }
+    }
+}
+
 void QWsdl::readDefinitions()
 {
+    /*
+      Need to add wsdl:documentation!
+      */
+
     xmlReader.readNext();
     QString tempName = xmlReader.name().toString();
 
@@ -177,13 +233,15 @@ void QWsdl::readDefinitions()
     {
         tempName = xmlReader.name().toString();
 
-        if (xmlReader.isEndElement())
+        if (xmlReader.isEndElement() && (tempName == "definitions"))
         {
             xmlReader.readNext();
             //            tempName = xmlReader.name().toString();
             break;
         }
 
+//        if (!xmlReader.isEndElement())
+//        {
         if (tempName == "types")
         {
             readTypes();
@@ -205,11 +263,19 @@ void QWsdl::readDefinitions()
         {
             readService();
         }
+        else if (tempName == "documentation")
+        {
+            readDocumentation();
+        }
         else
         {
             xmlReader.readNext();
-            //            tempName = xmlReader.name().toString();
         }
+//    }
+//        else
+//        {
+//            xmlReader.readNext();
+//        }
     }
 }
 
@@ -431,3 +497,18 @@ void QWsdl::readService()
     xmlReader.readNext();
 }
 
+void QWsdl::readDocumentation()
+{
+    qDebug() << "WSDL :documentation tag not supported yet.";
+    xmlReader.readNext();
+}
+
+QString QWsdl::convertReplyToUtf(QString textToConvert)
+{
+    QString result = textToConvert;
+
+    result.replace("&lt;", "<");
+    result.replace("&gt;", ">");
+
+    return result;
+}

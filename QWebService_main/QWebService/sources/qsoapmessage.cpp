@@ -95,7 +95,8 @@ QVariant QSoapMessage::sendMessage(QObject *parent, QUrl url, QString _messageNa
             return qsm.reply;
         else
         {
-            sleep(2);
+            qApp->processEvents();
+            //sleep(2);
         }
     }
 }

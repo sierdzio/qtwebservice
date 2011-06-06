@@ -51,4 +51,6 @@ OTHER_FILES += \
     doc/README.txt \
     examples/stockquote.asmx \
     examples/bookABand.txt \
-    examples/band_ws.asmx
+    examples/band_ws.asmx \
+    examples/LondonGoldFix.asmx.xml \
+    examples/wsdlURLs.txt

@@ -18,7 +18,6 @@ public slots:
 private:
     void soapMessageTest();
 
-    QWsdl *wsdl;
     QSoapMessage *message;
 };
 

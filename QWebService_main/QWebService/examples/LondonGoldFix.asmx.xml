@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.webservicex.net" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://www.webservicex.net" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">THE LONDON GOLD &amp; SILVER FIXINGS:	The Fixings are an open process at which market participants can transact business on the basis of a single quoted price. Orders can be changed throughout the proceedings as the price is moved higher and lower until such time as buyers' and sellers' orders are satisfied and the price is said to be 'fixed'. 	The fixings are the internationally published benchmarks for precious metals. They are fully transparent and are therefore used to deal in large amounts, or to achieve the accepted average price of the metal. As a benchmark, many other financial instruments are priced off the fixing, including cash-settled swaps and options. The silver fixing started in 1897 and the gold fixing in 1919. </wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.webservicex.net">
+      <s:element name="GetLondonGoldAndSilverFix">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetLondonGoldAndSilverFixResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetLondonGoldAndSilverFixResult" type="tns:LondonMarketData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="LondonMarketData">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Gold_AM_USD" type="s:float" />
+          <s:element minOccurs="1" maxOccurs="1" name="Gold_AM_STG" type="s:float" />
+          <s:element minOccurs="1" maxOccurs="1" name="Gold_AM_EUR" type="s:float" />
+          <s:element minOccurs="1" maxOccurs="1" name="Gold_PM_USD" type="s:float" />
+          <s:element minOccurs="1" maxOccurs="1" name="Gold_PM_STG" type="s:float" />
+          <s:element minOccurs="1" maxOccurs="1" name="Gold_PM_EUR" type="s:float" />
+          <s:element minOccurs="1" maxOccurs="1" name="Silver_CENTS" type="s:float" />
+          <s:element minOccurs="1" maxOccurs="1" name="Silver_PENCE" type="s:float" />
+          <s:element minOccurs="1" maxOccurs="1" name="Silver_EUR" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="LondonMarketData" type="tns:LondonMarketData" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetLondonGoldAndSilverFixSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLondonGoldAndSilverFix" />
+  </wsdl:message>
+  <wsdl:message name="GetLondonGoldAndSilverFixSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLondonGoldAndSilverFixResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLondonGoldAndSilverFixHttpGetIn" />
+  <wsdl:message name="GetLondonGoldAndSilverFixHttpGetOut">
+    <wsdl:part name="Body" element="tns:LondonMarketData" />
+  </wsdl:message>
+  <wsdl:message name="GetLondonGoldAndSilverFixHttpPostIn" />
+  <wsdl:message name="GetLondonGoldAndSilverFixHttpPostOut">
+    <wsdl:part name="Body" element="tns:LondonMarketData" />
+  </wsdl:message>
+  <wsdl:portType name="LondonGoldAndSilverFixSoap">
+    <wsdl:operation name="GetLondonGoldAndSilverFix">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get London Gold and Silver fixings</wsdl:documentation>
+      <wsdl:input message="tns:GetLondonGoldAndSilverFixSoapIn" />
+      <wsdl:output message="tns:GetLondonGoldAndSilverFixSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="LondonGoldAndSilverFixHttpGet">
+    <wsdl:operation name="GetLondonGoldAndSilverFix">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get London Gold and Silver fixings</wsdl:documentation>
+      <wsdl:input message="tns:GetLondonGoldAndSilverFixHttpGetIn" />
+      <wsdl:output message="tns:GetLondonGoldAndSilverFixHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="LondonGoldAndSilverFixHttpPost">
+    <wsdl:operation name="GetLondonGoldAndSilverFix">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get London Gold and Silver fixings</wsdl:documentation>
+      <wsdl:input message="tns:GetLondonGoldAndSilverFixHttpPostIn" />
+      <wsdl:output message="tns:GetLondonGoldAndSilverFixHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="LondonGoldAndSilverFixSoap" type="tns:LondonGoldAndSilverFixSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetLondonGoldAndSilverFix">
+      <soap:operation soapAction="http://www.webservicex.net/GetLondonGoldAndSilverFix" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="LondonGoldAndSilverFixSoap12" type="tns:LondonGoldAndSilverFixSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetLondonGoldAndSilverFix">
+      <soap12:operation soapAction="http://www.webservicex.net/GetLondonGoldAndSilverFix" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="LondonGoldAndSilverFixHttpGet" type="tns:LondonGoldAndSilverFixHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="GetLondonGoldAndSilverFix">
+      <http:operation location="/GetLondonGoldAndSilverFix" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="LondonGoldAndSilverFixHttpPost" type="tns:LondonGoldAndSilverFixHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetLondonGoldAndSilverFix">
+      <http:operation location="/GetLondonGoldAndSilverFix" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LondonGoldAndSilverFix">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">THE LONDON GOLD &amp; SILVER FIXINGS:	The Fixings are an open process at which market participants can transact business on the basis of a single quoted price. Orders can be changed throughout the proceedings as the price is moved higher and lower until such time as buyers' and sellers' orders are satisfied and the price is said to be 'fixed'. 	The fixings are the internationally published benchmarks for precious metals. They are fully transparent and are therefore used to deal in large amounts, or to achieve the accepted average price of the metal. As a benchmark, many other financial instruments are priced off the fixing, including cash-settled swaps and options. The silver fixing started in 1897 and the gold fixing in 1919. </wsdl:documentation>
+    <wsdl:port name="LondonGoldAndSilverFixSoap" binding="tns:LondonGoldAndSilverFixSoap">
+      <soap:address location="http://www.webservicex.net/LondonGoldFix.asmx" />
+    </wsdl:port>
+    <wsdl:port name="LondonGoldAndSilverFixSoap12" binding="tns:LondonGoldAndSilverFixSoap12">
+      <soap12:address location="http://www.webservicex.net/LondonGoldFix.asmx" />
+    </wsdl:port>
+    <wsdl:port name="LondonGoldAndSilverFixHttpGet" binding="tns:LondonGoldAndSilverFixHttpGet">
+      <http:address location="http://www.webservicex.net/LondonGoldFix.asmx" />
+    </wsdl:port>
+    <wsdl:port name="LondonGoldAndSilverFixHttpPost" binding="tns:LondonGoldAndSilverFixHttpPost">
+      <http:address location="http://www.webservicex.net/LondonGoldFix.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

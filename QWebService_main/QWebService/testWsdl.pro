@@ -14,8 +14,10 @@ TEMPLATE = app
 SOURCES += tests/main.cpp \
     sources/qwsdl.cpp \
     sources/qsoapmessage.cpp \
-    tests/testCase1.cpp
+    tests/testCase1.cpp \
+    tests/testcase2_wsdl.cpp
 
 HEADERS += headers/qwsdl.h \
     headers/qsoapmessage.h \
-    tests/testCase1.h
+    tests/testCase1.h \
+    tests/testcase2_wsdl.h

@@ -8,7 +8,6 @@ testCase1::testCase1(QWidget *parent) :
 
 testCase1::~testCase1()
 {
-    delete wsdl;
     delete message;
 }
 

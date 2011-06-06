@@ -30,9 +30,11 @@ public:
 signals:
 
 public slots:
+    void fileReplyFinished(QNetworkReply *rply);
 
 private:
     bool parse();
+    void prepareFile();
     void prepareMethods();
     void readDefinitions();
     void readTypes();
@@ -41,8 +43,11 @@ private:
     void readMessages();
     void readBindings();
     void readService();
+    void readDocumentation();
+    QString convertReplyToUtf(QString textToConvert);
 
     bool errorState;
+    bool replyReceived;
 //    QFile wsdlFile;
     QString errorMessage;
     QString wsdlFilePath;
