@@ -21,7 +21,7 @@ SOURCES += sources/qwebserviceabstract.cpp \
     sources/qsoapmessage.cpp
 
 HEADERS += headers/QWebService_global.h \
-    headers/qwebserviceabstract.h\
+    headers/qwebserviceabstract.h \
     headers/qwebservicereaderabstract.h \
     headers/qwebservicemethodabstract.h \
     headers/qwsdl.h \
@@ -53,4 +53,5 @@ OTHER_FILES += \
     examples/bookABand.txt \
     examples/band_ws.asmx \
     examples/LondonGoldFix.asmx.xml \
-    examples/wsdlURLs.txt
+    examples/wsdlURLs.txt \
+    doc/CHANGELOG.txt

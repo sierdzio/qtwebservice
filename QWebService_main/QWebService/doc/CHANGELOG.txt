@@ -1,0 +1,9 @@
+Changelog for QWebService library project.
+Part of the initial development is not expressed here. Refer to git logs or as sierdzio at sierdzio@gmail.com
+
+xx.06.2011 xx:yy BST. Changes since v0.1.1:
+ - fixed QWsdl not parsing tags other than 'schema',
+ - debug messages for unsupported tags are now displayed only once,
+ - added some debug information to testCase2,
+ - added method bodies to QWebServiceAbstract,
+ - some other initial changes I forgot about :)

@@ -78,7 +78,6 @@ bool QSoapMessage::sendMessage(QMap<QString, QVariant> params)
     sendMessage();
 }
 
-
 /* STATIC */
 QVariant QSoapMessage::sendMessage(QObject *parent, QUrl url, QString _messageName, QMap<QString, QVariant> params,
                                    QMap<QString, QVariant> returnVal)

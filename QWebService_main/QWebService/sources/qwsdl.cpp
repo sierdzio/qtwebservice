@@ -110,8 +110,10 @@ void QWsdl::fileReplyFinished(QNetworkReply *rply)
     replyBytes = (networkReply->readAll());
     QString replyString = convertReplyToUtf(replyBytes);
 
-    wsdlFilePath = "tempWsdl.asmx~";
+    wsdlFilePath = "tempWsdl.asmx~";    
     QFile file("tempWsdl.asmx~");
+    if (file.exists())
+        file.remove();
 
     if (!file.open(QFile::WriteOnly))
     {
@@ -200,17 +202,18 @@ bool QWsdl::parse()
 void QWsdl::prepareFile()
 {
     QUrl filePath(wsdlFilePath);
-    hostname = filePath.host();
 
     if (!QFile::exists(wsdlFilePath) && filePath.isValid())
     {
+        hostname = filePath.host();
+
         QNetworkAccessManager *manager = new QNetworkAccessManager(this);
         connect(manager, SIGNAL(finished(QNetworkReply*)),
                 this, SLOT(fileReplyFinished(QNetworkReply*)));
 
         manager->get(QNetworkRequest(filePath));
 
-        for (;;)
+        forever
         {
             if (replyReceived == true)
                 return;
@@ -222,9 +225,17 @@ void QWsdl::prepareFile()
 
 void QWsdl::readDefinitions()
 {
-    /*
-      Need to add wsdl:documentation!
-      */
+    //EXPERIMENTAL
+    // QMap used to supress multiple "tag not supported yet" messages.
+    // May actually evolve into more universal tag recognition and handling structure.
+    QMap<QString, bool> tagUsed;
+    tagUsed.insert("types", false);
+    tagUsed.insert("message", false);
+    tagUsed.insert("portType", false);
+    tagUsed.insert("binding", false);
+    tagUsed.insert("service", false);
+    tagUsed.insert("documentation", false);
+    //END of EXPERIMENTAL
 
     xmlReader.readNext();
     QString tempName = xmlReader.name().toString();
@@ -236,8 +247,12 @@ void QWsdl::readDefinitions()
         if (xmlReader.isEndElement() && (tempName == "definitions"))
         {
             xmlReader.readNext();
-            //            tempName = xmlReader.name().toString();
             break;
+        }
+        else if (xmlReader.isEndElement())
+        {
+            xmlReader.readNext();
+            continue;
         }
 
 //        if (!xmlReader.isEndElement())
@@ -245,27 +260,44 @@ void QWsdl::readDefinitions()
         if (tempName == "types")
         {
             readTypes();
+//            tagUsed.insert("types", true);
             xmlReader.readNext();
         }
         else if (tempName == "message")
         {
-            readMessages();
+            if (!tagUsed.value("message"))
+                readMessages();
+            tagUsed.insert("message", true);
+            xmlReader.readNext();
         }
         else if (tempName == "portType")
         {
-            readPorts();
+            if (!tagUsed.value("portType"))
+                readPorts();
+            tagUsed.insert("portType", true);
+            xmlReader.readNext();
         }
         else if (tempName == "binding")
         {
-            readBindings();
+
+            if (!tagUsed.value("binding"))
+                readBindings();
+            tagUsed.insert("binding", true);
+            xmlReader.readNext();
         }
         else if (tempName == "service")
         {
-            readService();
+            tagUsed.insert("service", true);
+            if (!tagUsed.value("service"))
+                readService();
+            xmlReader.readNext();
         }
         else if (tempName == "documentation")
         {
-            readDocumentation();
+            if (!tagUsed.value("documentation"))
+                readDocumentation();
+            tagUsed.insert("documentation", true);
+            xmlReader.readNext();
         }
         else
         {
@@ -309,6 +341,11 @@ void QWsdl::readTypes()
             QString elementName = xmlReader.attributes().value("name").toString();
             workMethodList->append(elementName);
             readTypeSchemaElement();
+        }
+        else if (xmlReader.isEndElement() && (tempName == "schema"))
+        {
+            xmlReader.readNext();
+            break;
         }
         else
         {

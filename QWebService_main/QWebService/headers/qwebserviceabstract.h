@@ -17,12 +17,12 @@ public:
     void setHost(QUrl hostUrl);
     QUrl getHostUrl();
     QString getHost();
-    QString getWsdl();
+//    QString getWsdl();
 
 protected:
     QUrl hostUrl;
     QString hostname;
-    QWsdl wsdl;
+    QWsdl *wsdl;
 };
 
 #endif // QWEBSERVICEABSTRACT_H

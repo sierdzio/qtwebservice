@@ -16,7 +16,7 @@ public:
     // When this constructor returns, the file is set and parsed
     QWsdl(QString wsdlFile, QObject *parent = 0);
     ~QWsdl();
-    void setWsdlFile(QString wsdlFile);
+    void setWsdlFile(QString wsdlFile); // == resetWsdl()
     QStringList getMethodNames();
     QMap<QString, QSoapMessage *> *getMethods();
     QString getHostname();
@@ -24,6 +24,7 @@ public:
     QString getTargetNamespace();
     //QFile getWsdl(); Rethink that. Maybe QString? Or saving to file specified in parameter?
     QString getErrorInfo();
+
     bool isErrorState();
     void resetWsdl(QString newWsdl);
 

@@ -32,7 +32,6 @@ public:
     QString getTargetNamespace();
 
     ///TEMP:
-
     bool isReplyReceived();
     ///ENDOF TEMP
 
