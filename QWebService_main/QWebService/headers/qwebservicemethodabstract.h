@@ -11,10 +11,12 @@ class QWebServiceMethodAbstract : public QObject
 
 public:
     explicit QWebServiceMethodAbstract(QObject *parent = 0);
-    QWebServiceMethodAbstract(QString hostname, QObject *parent = 0);
+//    QWebServiceMethodAbstract(QString hostname, QObject *parent = 0);
+    QWebServiceMethodAbstract(QSoapMessage *msg, QObject *parent = 0);
+    ~QWebServiceMethodAbstract();
     //virtual QWebServiceMethodAbstract(QWsdl wsdl, QObject *parent = 0);
-    bool virtual sendMessage(QList<QVariant> params);
-    bool virtual sendMessage();
+//    bool virtual sendMessage(QList<QVariant> params);
+//    bool virtual sendMessage();
     void setHost(QString hostname);
     void setHost(QUrl hostUrl);
     QUrl getHostUrl();
@@ -22,14 +24,14 @@ public:
     //QString getWsdl();
 
 signals:
-    void replyRead(QVariant replyVal);
+//    void replyRead(QVariant replyVal);
 
 public slots:
 
 protected:
     QUrl hostUrl;
-    QString host;
-    QSoapMessage message;
+    QString hostname;
+    QSoapMessage *message;
 
 };
 

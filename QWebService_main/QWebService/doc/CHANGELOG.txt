@@ -1,9 +1,17 @@
 Changelog for QWebService library project.
 Part of the initial development is not expressed here. Refer to git logs or as sierdzio at sierdzio@gmail.com
 
-xx.06.2011 xx:yy BST. Changes since v0.1.1:
+09.06.2011 08:49 BST. Changes since v0.1.1:
  - fixed QWsdl not parsing tags other than 'schema',
  - debug messages for unsupported tags are now displayed only once,
  - added some debug information to testCase2,
  - added method bodies to QWebServiceAbstract,
  - some other initial changes I forgot about :)
+xx.06.2011 xx:yy BST. Since commit 8e1a403b54b1514f61f4a9686808ac89ff1bd0dd:
+ - began QWebService classes integration,
+ - started testCase3 for QWebService,
+ - added simple errorState propagation to QWebServiceAbstract from QWsdl,
+ - QWebServiceMethod abstract is rendered obsolete (this has to be revised),
+ - reverted QWebServiceAbstract:init() to return 'void',
+ - fixed QWebServiceAbstract destructor, there was a memory leak,
+ - greatly expanded QWSA functionality,

@@ -9,6 +9,8 @@ class QWebServiceReaderAbstract : public QWebServiceAbstract
 
 public:
     explicit QWebServiceReaderAbstract(QObject *parent = 0);
+    QWebServiceReaderAbstract(QWsdl *wsdl, QObject *parent = 0);
+    QWebServiceReaderAbstract(QString hostname, QObject *parent = 0);
 
 signals:
 

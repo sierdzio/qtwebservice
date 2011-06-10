@@ -70,12 +70,14 @@ bool QSoapMessage::sendMessage()
     qDebug() << "*************************";
 
     manager->post(request, data);
+    return true;
 }
 
 bool QSoapMessage::sendMessage(QMap<QString, QVariant> params)
 {
     parameters = params;
     sendMessage();
+    return true;
 }
 
 /* STATIC */
@@ -105,22 +107,22 @@ QVariant QSoapMessage::replyRead()
     return reply;
 }
 
-QStringList QSoapMessage::getParameterNames()
+QStringList QSoapMessage::getParameterNames() const
 {
     return (QStringList) parameters.keys();
 }
 
-QStringList QSoapMessage::getReturnValueName()
+QStringList QSoapMessage::getReturnValueName() const
 {
     return (QStringList) returnValue.keys();
 }
 
-QMap<QString, QVariant> QSoapMessage::getParameterNamesTypes()
+QMap<QString, QVariant> QSoapMessage::getParameterNamesTypes() const
 {
     return parameters;
 }
 
-QMap<QString, QVariant> QSoapMessage::getReturnValueNameType()
+QMap<QString, QVariant> QSoapMessage::getReturnValueNameType() const
 {
     return returnValue;
 }

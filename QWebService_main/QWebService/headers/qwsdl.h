@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QtCore>
 #include "qsoapmessage.h"
+//#include "QWebService_global.h"
 
 class QWsdl : public QObject
 {
@@ -15,6 +16,7 @@ public:
     explicit QWsdl(QObject *parent = 0);
     // When this constructor returns, the file is set and parsed
     QWsdl(QString wsdlFile, QObject *parent = 0);
+//    QWsdl(QWsdl wsdlObject);
     ~QWsdl();
     void setWsdlFile(QString wsdlFile); // == resetWsdl()
     QStringList getMethodNames();

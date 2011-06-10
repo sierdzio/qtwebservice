@@ -17,7 +17,7 @@ public:
     QSoapMessage(QString hostname, QString messageName, QMap<QString, QVariant> params,
                  QMap<QString, QVariant> returnValue, QObject *parent = 0);
     ~QSoapMessage();
-    // ADD TARGET NAMESPACE!
+
     void setParams(QMap<QString, QVariant> params, QMap<QString, QVariant> returnValue);
     void setTargetNamespace(QString tNamespace);
     bool sendMessage();
@@ -25,10 +25,10 @@ public:
     QVariant static sendMessage(QObject *parent, QUrl url, QString _messageName,
                                 QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal);
     QVariant replyRead();
-    QStringList getParameterNames();
-    QStringList getReturnValueName();
-    QMap<QString, QVariant> getParameterNamesTypes();
-    QMap<QString, QVariant> getReturnValueNameType();
+    QStringList getParameterNames() const;
+    QStringList getReturnValueName() const;
+    QMap<QString, QVariant> getParameterNamesTypes() const;
+    QMap<QString, QVariant> getReturnValueNameType() const;
     QString getTargetNamespace();
 
     ///TEMP:
@@ -36,7 +36,7 @@ public:
     ///ENDOF TEMP
 
     enum Role {outboundRole, inboundRole, staticRole, noRole};
-    enum Version {soap10, soap12};
+    enum Version {http, soap10, soap12};
 
 signals:
     void replyReady(QVariant rply);

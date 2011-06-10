@@ -3,6 +3,9 @@
 
 #include <QPushButton>
 #include "../headers/qwsdl.h"
+#include "../headers/qwebserviceabstract.h"
+#include "../headers/qwebservicereaderabstract.h"
+#include "../headers/qwebservicemethodabstract.h"
 
 class testCase2_wsdl : public QPushButton
 {
