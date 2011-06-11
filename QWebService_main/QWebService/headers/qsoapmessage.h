@@ -36,7 +36,7 @@ public:
     ///ENDOF TEMP
 
     enum Role {outboundRole, inboundRole, staticRole, noRole};
-    enum Version {http, soap10, soap12};
+    enum Protocol {http, soap10, soap12};
 
 signals:
     void replyReady(QVariant rply);
@@ -51,7 +51,7 @@ private:
 
     bool replyReceived;
     Role role;
-    Version version;
+    Protocol version;
     QUrl hostUrl;
     QString hostname;
     QString messageName;

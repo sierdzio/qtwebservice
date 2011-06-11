@@ -16,4 +16,5 @@ Part of the initial development is not expressed here. Refer to git logs or as s
  - fixed QWebServiceAbstract destructor, there was a memory leak,
  - greatly expanded QWSA functionality.
 xx.06.2011 xx:yy BST. Since 3d0adf998a126f28d9c919157ff46608248ebf14:
- - started qtWsdlConverter development
+ - started qtWsdlConverter development,
+ - added numerous new methods and fields to WsdlConverter class.
