@@ -2,5 +2,6 @@
 # Tells git to ignore build-related files.
 QWebService_main/QWebService-build-desktop/
 QWebService_main/testWsdl-build-desktop/
+qtWsdlConverter_main/qtWsdlConverter-build-desktop/
 *.pro.user
 *~

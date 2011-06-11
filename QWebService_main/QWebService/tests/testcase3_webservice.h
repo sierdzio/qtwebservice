@@ -5,7 +5,7 @@
 //#include "../headers/qwsdl.h"
 //#include "../headers/qwebserviceabstract.h"
 #include "../headers/qwebservicereaderabstract.h"
-#include "../headers/qwebservicemethodabstract.h"
+//#include "../headers/qwebservicemethodabstract.h"
 
 class testCase3_webservice : public QPushButton
 {

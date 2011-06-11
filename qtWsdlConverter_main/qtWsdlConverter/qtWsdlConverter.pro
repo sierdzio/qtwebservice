@@ -5,7 +5,7 @@
 # sierdzio@gmail.com
 #-------------------------------------------------
 
-QT       += core
+QT       += core network xml
 
 QT       -= gui
 
@@ -16,4 +16,8 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp
+SOURCES += sources/main.cpp \
+    sources/wsdlconverter.cpp
+
+HEADERS += \
+    headers/wsdlconverter.h

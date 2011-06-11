@@ -7,11 +7,13 @@ Part of the initial development is not expressed here. Refer to git logs or as s
  - added some debug information to testCase2,
  - added method bodies to QWebServiceAbstract,
  - some other initial changes I forgot about :)
-xx.06.2011 xx:yy BST. Since commit 8e1a403b54b1514f61f4a9686808ac89ff1bd0dd:
+10.06.2011 15:10 BST. Since commit 8e1a403b54b1514f61f4a9686808ac89ff1bd0dd:
  - began QWebService classes integration,
  - started testCase3 for QWebService,
  - added simple errorState propagation to QWebServiceAbstract from QWsdl,
  - QWebServiceMethod abstract is rendered obsolete (this has to be revised),
  - reverted QWebServiceAbstract:init() to return 'void',
  - fixed QWebServiceAbstract destructor, there was a memory leak,
- - greatly expanded QWSA functionality,
+ - greatly expanded QWSA functionality.
+xx.06.2011 xx:yy BST. Since 3d0adf998a126f28d9c919157ff46608248ebf14:
+ - started qtWsdlConverter development
