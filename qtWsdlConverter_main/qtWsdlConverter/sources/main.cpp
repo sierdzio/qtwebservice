@@ -16,7 +16,11 @@ int main(int argc, char *argv[])
 
     //TODO: check argument sanity, and whether .at(0) is app name or not.
     if (!populateArgumentsList(args))
+    {
+        delete args;
         return 1;
+    }
+    delete args;
 
     //    "/home/sierdzio/Dropbox/Code/QWebService/QWebService_main/QWebService/examples/band_ws.asmx");
     WsdlConverter converter(args->value(Path).toString(),
@@ -55,7 +59,12 @@ bool populateArgumentsList(QMap<int, QVariant> *lst)
     {
         if (s.startsWith("--"))
         {
-            if (s == "--soap12")
+            if (s == "--help")
+            {
+                displayHelp();
+                return false;
+            }
+            else if (s == "--soap12")
                 lst->insert(FlagProt, QSoapMessage::soap12);
             else if (s == "--soap10")
                 lst->insert(FlagProt, QSoapMessage::soap10);
@@ -104,7 +113,8 @@ bool populateArgumentsList(QMap<int, QVariant> *lst)
 void displayHelp()
 {
 //    QString hlpMsg = "";
-    qDebug() << "wsdlConvert  - help.";
+    qDebug() << "";
+    qDebug() << "wsdlConvert - help.";
     qDebug() << "";
     qDebug() << "qtwsdlconvert [options] <WSDL file or URL> [output directory] [base output class name, defaults to web service name]";
     qDebug() << "";
@@ -113,4 +123,5 @@ void displayHelp()
     qDebug() << "Default switches are: --synchronous, --soap12.";
     qDebug() << "Copyright by Tomasz Siekierda <sierdzio@gmail.com>";
     qDebug() << "Distributed under <some GPL licence  -to be decided later>";
+    qDebug() << "";
 }

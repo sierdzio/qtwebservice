@@ -18,7 +18,9 @@ Part of the initial development is not expressed here. Refer to git logs or as s
 11.06.2011 19:07 BST. Since 3d0adf998a126f28d9c919157ff46608248ebf14:
  - started qtWsdlConverter development,
  - added numerous new methods and fields to WsdlConverter class.
-xx.06.2011 xx:yy BST. Since 1d0f4b10e6fc6cb9285e7b09bcc8f89c7ed3638d:
+11.06.2011 21:08 BST. Since 1d0f4b10e6fc6cb9285e7b09bcc8f89c7ed3638d:
  - added command line handling to wsdlConverter. All switches, options and arguments currntly in specs are being taken into account,
  - small fix in QSoapMessage::soap10 handling,
  - added basic and ugly help to wsdlConverter.
+xx.06.2011 xx:yy BST. Since
+ - fixed seg fault when running wsdlConverter from last commit.
