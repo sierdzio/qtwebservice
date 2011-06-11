@@ -53,6 +53,11 @@ void QSoapMessage::setTargetNamespace(QString tNamespace)
     targetNamespace = tNamespace;
 }
 
+void QSoapMessage::setProtocol(Protocol prot)
+{
+    protocol = prot;
+}
+
 bool QSoapMessage::sendMessage()
 {
     hostUrl.setUrl(hostname);
@@ -60,8 +65,8 @@ bool QSoapMessage::sendMessage()
     request.setUrl(hostUrl); //"http://www.webserviceX.NET/stockquote.asmx"));
     //request.setHeader(QNetworkRequest::LocationHeader, QVariant("/stockquote.asmx"));
     request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/soap+xml; charset=utf-8"));
-    if (version == soap10)
-        request.setRawHeader(QByteArray("SOAPAction"), QByteArray("\"http://www.webserviceX.NET/GetQuote\""));
+    if (protocol == soap10)
+        request.setRawHeader(QByteArray("SOAPAction"), QByteArray(hostUrl.toString()));
 
     prepareRequestData();
 
@@ -160,7 +165,7 @@ void QSoapMessage::replyFinished(QNetworkReply *netReply)
 
 void QSoapMessage::init()
 {
-    version = soap12;
+    protocol = soap12;
     replyReceived = false;
 
     manager = new QNetworkAccessManager(this);
@@ -176,7 +181,7 @@ void QSoapMessage::prepareRequestData()
     data.clear();
     QString header, body, footer;
 
-    if (version == soap12)
+    if (protocol == soap12)
     {
         header = "<?xml version=\"1.0\" encoding=\"utf-8\"?> \r\n <soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\"> \r\n <soap12:Body> \r\n";
 

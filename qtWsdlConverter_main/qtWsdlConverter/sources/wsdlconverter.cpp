@@ -7,7 +7,9 @@ WsdlConverter::WsdlConverter(QString wsdlFileOrUrl, QObject *parent, QDir output
     errorState = false;
     errorMessage = "";
 
-    loadMessages();
+    // Setting default flags:
+    synchronousness = synchronous;
+    protocol = QSoapMessage::soap12;
 }
 
 WsdlConverter::~WsdlConverter()
@@ -15,7 +17,39 @@ WsdlConverter::~WsdlConverter()
     delete wsdl;
 }
 
+void WsdlConverter::setFlags(WsdlConverter::Synchronousness synch, QSoapMessage::Protocol prot)
+{
+    synchronousness = synch;
+    protocol = prot;
+    setFlagsOnMessages();
+}
+
+void WsdlConverter::convert()
+{
+    loadMessages();
+}
+
+bool WsdlConverter::isErrorState()
+{
+    return errorState;
+}
+
 void WsdlConverter::loadMessages()
 {
     messages = wsdl->getMethods();
+}
+
+void WsdlConverter::setFlagsOnMessages()
+{
+    foreach (QString s, messages->keys())
+    {
+        messages->value(s)->setProtocol(protocol);
+    }
+}
+
+void WsdlConverter::enterErrorState(QString errMessage)
+{
+    errorState = true;
+    errorMessage = errMessage;
+    emit errorEncountered(errMessage);
 }

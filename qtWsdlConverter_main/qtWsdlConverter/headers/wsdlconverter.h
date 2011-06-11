@@ -16,18 +16,23 @@ public:
                   QObject *parent = 0,
                   QDir outputDirectory = QDir(),
                   QString baseOutputClassName = "");
-    void setFlags(WsdlConverter::Synchronousness synch, QSoapMessage::Protocol);
-    void convert();
     ~WsdlConverter();
 
+    void setFlags(WsdlConverter::Synchronousness synchronousness, QSoapMessage::Protocol protocol);
+    void convert();
+    bool isErrorState();
+
 signals:
+    void errorEncountered(QString errMessage);
 
 public slots:
 
 private:
     void loadMessages();
+    void setFlagsOnMessages();
+    void enterErrorState(QString errMessage = "");
 
-    QSoapMessage::Protocol soapVersion;
+    QSoapMessage::Protocol protocol;
     Synchronousness synchronousness;
 
     bool errorState;

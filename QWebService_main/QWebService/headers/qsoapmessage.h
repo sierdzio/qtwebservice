@@ -20,6 +20,7 @@ public:
 
     void setParams(QMap<QString, QVariant> params, QMap<QString, QVariant> returnValue);
     void setTargetNamespace(QString tNamespace);
+    void setProtocol(Protocol protocol);
     bool sendMessage();
     bool sendMessage(QMap<QString, QVariant> params);
     QVariant static sendMessage(QObject *parent, QUrl url, QString _messageName,
@@ -51,7 +52,7 @@ private:
 
     bool replyReceived;
     Role role;
-    Protocol version;
+    Protocol protocol;
     QUrl hostUrl;
     QString hostname;
     QString messageName;
