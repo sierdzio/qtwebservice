@@ -11,6 +11,9 @@ class QSoapMessage : public QObject
     Q_OBJECT
 
 public:
+    enum Role {outboundRole, inboundRole, staticRole, noRole};
+    enum Protocol {http, soap10, soap12};
+
     explicit QSoapMessage(QObject *parent = 0);
     QSoapMessage(QUrl hostUrl, QString messageName, QObject *parent = 0);
     QSoapMessage(QString hostname, QString messageName, QObject *parent = 0);
@@ -35,9 +38,6 @@ public:
     ///TEMP:
     bool isReplyReceived();
     ///ENDOF TEMP
-
-    enum Role {outboundRole, inboundRole, staticRole, noRole};
-    enum Protocol {http, soap10, soap12};
 
 signals:
     void replyReady(QVariant rply);

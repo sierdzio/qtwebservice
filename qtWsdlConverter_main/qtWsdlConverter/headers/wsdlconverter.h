@@ -19,8 +19,8 @@ public:
     ~WsdlConverter();
 
     void setFlags(WsdlConverter::Synchronousness synchronousness, QSoapMessage::Protocol protocol);
-    void convert();
     bool isErrorState();
+    void convert();
 
 signals:
     void errorEncountered(QString errMessage);
@@ -28,9 +28,9 @@ signals:
 public slots:
 
 private:
-    void loadMessages();
-    void setFlagsOnMessages();
     void enterErrorState(QString errMessage = "");
+    void setFlagsOnMessages();
+    void loadMessages();
 
     QSoapMessage::Protocol protocol;
     Synchronousness synchronousness;

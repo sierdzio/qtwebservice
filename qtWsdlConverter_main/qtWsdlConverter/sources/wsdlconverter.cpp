@@ -3,9 +3,12 @@
 WsdlConverter::WsdlConverter(QString wsdlFileOrUrl, QObject *parent, QDir outputDir, QString baseOutputClsNme) :
     QObject(parent)
 {
-    wsdl = new QWsdl(wsdlFileOrUrl, this);
     errorState = false;
     errorMessage = "";
+    wsdl = new QWsdl(wsdlFileOrUrl, this);
+
+    if (wsdl->isErrorState())
+        enterErrorState("WSDL error!");
 
     // Setting default flags:
     synchronousness = synchronous;
@@ -24,19 +27,9 @@ void WsdlConverter::setFlags(WsdlConverter::Synchronousness synch, QSoapMessage:
     setFlagsOnMessages();
 }
 
-void WsdlConverter::convert()
-{
-    loadMessages();
-}
-
 bool WsdlConverter::isErrorState()
 {
     return errorState;
-}
-
-void WsdlConverter::loadMessages()
-{
-    messages = wsdl->getMethods();
 }
 
 void WsdlConverter::setFlagsOnMessages()
@@ -52,4 +45,14 @@ void WsdlConverter::enterErrorState(QString errMessage)
     errorState = true;
     errorMessage = errMessage;
     emit errorEncountered(errMessage);
+}
+
+void WsdlConverter::convert()
+{
+    loadMessages();
+}
+
+void WsdlConverter::loadMessages()
+{
+    messages = wsdl->getMethods();
 }

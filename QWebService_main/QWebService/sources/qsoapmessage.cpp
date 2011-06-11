@@ -66,7 +66,7 @@ bool QSoapMessage::sendMessage()
     //request.setHeader(QNetworkRequest::LocationHeader, QVariant("/stockquote.asmx"));
     request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/soap+xml; charset=utf-8"));
     if (protocol == soap10)
-        request.setRawHeader(QByteArray("SOAPAction"), QByteArray(hostUrl.toString()));
+        request.setRawHeader(QByteArray("SOAPAction"), QByteArray(hostUrl.toString().toAscii()));
 
     prepareRequestData();
 
