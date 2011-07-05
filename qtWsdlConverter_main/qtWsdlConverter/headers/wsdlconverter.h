@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "../../../QWebService_main/QWebService/headers/QWebService_global.h"
+#include "standardpath.h"
 
 class WsdlConverter : public QObject
 {
@@ -10,6 +11,7 @@ class WsdlConverter : public QObject
 
 public:
     enum Synchronousness {synchronous, asynchronous};
+    enum Structure {standardStructure, noMessagesStructure};
 
 //    explicit WsdlConverter(QString wsdlFileOrUrl, QObject *parent = 0);
     explicit WsdlConverter(QString wsdlFileOrUrl,
@@ -29,17 +31,19 @@ signals:
 public slots:
 
 private:
+    bool createDirs();
     void enterErrorState(QString errMessage = "");
-    void setFlagsOnMessages();
-    void loadMessages();
+//    void setFlagsOnMessages();
+//    void loadMessages();
 
     QSoapMessage::Protocol protocol;
     Synchronousness synchronousness;
+    Structure structure;
 
     bool errorState;
     QString errorMessage;
     QWsdl *wsdl;
-    QMap<QString, QSoapMessage *> *messages;
+//    QMap<QString, QSoapMessage *> *messages;
 };
 
 #endif // WSDLCONVERTER_H

@@ -29,15 +29,12 @@ public:
     QVariant static sendMessage(QObject *parent, QUrl url, QString _messageName,
                                 QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal);
     QVariant replyRead();
+    QString getMessageName();
     QStringList getParameterNames() const;
     QStringList getReturnValueName() const;
     QMap<QString, QVariant> getParameterNamesTypes() const;
     QMap<QString, QVariant> getReturnValueNameType() const;
     QString getTargetNamespace();
-
-    ///TEMP:
-    bool isReplyReceived();
-    ///ENDOF TEMP
 
 signals:
     void replyReady(QVariant rply);

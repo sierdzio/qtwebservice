@@ -3,3 +3,10 @@ Possible new flags:
    maybe no messages, compact code, C++11 code etc.),
  - flags to change the build file creation (default is qmake, but maybe we can code some
    --scons, --cmake etc.).
+
+When there is dir name conflict, app can ask for a new name, instead of exiting.
+
+File creation may be template-based!
+
+A re-think is needed to accomodate the 'compact' path, as well as role of 'protocol' in file creation
+(IMO - sierdzio it should specify the default value in standard path, and the only one in compact).

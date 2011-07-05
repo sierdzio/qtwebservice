@@ -112,6 +112,11 @@ QVariant QSoapMessage::replyRead()
     return reply;
 }
 
+QString QSoapMessage::getMessageName()
+{
+    return messageName;
+}
+
 QStringList QSoapMessage::getParameterNames() const
 {
     return (QStringList) parameters.keys();
@@ -210,10 +215,4 @@ QString QSoapMessage::convertReplyToUtf(QString textToConvert)
     result.replace("&gt;", ">");
 
     return result;
-}
-
-//TEMP
-bool QSoapMessage::isReplyReceived()
-{
-    return replyReceived;
 }
