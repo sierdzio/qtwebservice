@@ -22,5 +22,8 @@ Part of the initial development is not expressed here. Refer to git logs or as s
  - added command line handling to wsdlConverter. All switches, options and arguments currntly in specs are being taken into account,
  - small fix in QSoapMessage::soap10 handling,
  - added basic and ugly help to wsdlConverter.
-xx.06.2011 xx:yy BST. Since
- - fixed seg fault when running wsdlConverter from last commit.
+11.06.2011 21:16 BST. Since
+ - fixed seg fault when running 'wsdlConverter --help' from last commit.
+05.07.2011 xx:yy CEST. Since
+ - made qtWsdlConverter display help when invoked without arguments,
+ - fixed 'args' QList being deleted too early in qtWsdlConverter

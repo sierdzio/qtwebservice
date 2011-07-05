@@ -1,0 +1,8 @@
+Stock Quote:
+http://www.webservicex.net/stockquote.asmx?WSDL
+
+London Gold Fix:
+http://www.webservicex.net/LondonGoldFix.asmx?WSDL
+
+Commands:
+./qtWsdlConverter ../../QWebService_main/QWebService/examples/stockquote.asmx

@@ -30,3 +30,8 @@ HEADERS += headers/wsdlconverter.h \
     ../../QWebService_main/QWebService/headers/qwebservicemethodabstract.h \
     ../../QWebService_main/QWebService/headers/qwsdl.h \
     ../../QWebService_main/QWebService/headers/qsoapmessage.h
+
+OTHER_FILES += \
+    examples/band_ws.asmx \
+    examples/stockquote.asmx \
+    examples/example_URLs_and_commands.txt
