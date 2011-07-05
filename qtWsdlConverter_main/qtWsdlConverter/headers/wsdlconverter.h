@@ -21,6 +21,7 @@ public:
     void setFlags(WsdlConverter::Synchronousness synchronousness, QSoapMessage::Protocol protocol);
     bool isErrorState();
     void convert();
+    QString getWebServiceName();
 
 signals:
     void errorEncountered(QString errMessage);

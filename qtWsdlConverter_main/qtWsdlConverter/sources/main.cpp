@@ -5,6 +5,8 @@
 enum argumentDescription {AppName, Path, Dir, ClassName, FlagSyn, FlagProt, FlagHelp};
 bool populateArgumentsList(QMap<int, QVariant> *lst);
 void displayHelp();
+void displayIntro(QMap<int, QVariant> *args, WsdlConverter &converter);
+void displayOutro(WsdlConverter &converter);
 
 int main(int argc, char *argv[])
 {    
@@ -14,14 +16,13 @@ int main(int argc, char *argv[])
 //    QStringList arguments = a.arguments();
     QMap<int, QVariant> *args = new QMap<int, QVariant>();
 
-    //TODO: check argument sanity, and whether .at(0) is app name or not.    
+    //TODO: check argument sanity, and whether .at(0) is app name or not. Partially done.
     if (!populateArgumentsList(args))
     {
         delete args;
         return 1;
     }
 
-    //    "/home/sierdzio/Dropbox/Code/QWebService/QWebService_main/QWebService/examples/band_ws.asmx");
     WsdlConverter converter(args->value(Path).toString(),
                             0,
                             QDir(args->value(Dir).toString()),
@@ -31,11 +32,12 @@ int main(int argc, char *argv[])
     converter.setFlags((WsdlConverter::Synchronousness) args->value(FlagSyn).toInt(),
                        (QSoapMessage::Protocol) args->value(FlagProt).toInt());
 
-    if (!converter.isErrorState())
-        qDebug() << "Strange. Everything seems to be working just fine...";
+    // Doing the conversion:
+    displayIntro(args, converter);
+    displayOutro(converter);
 
     delete args;
-    return a.exec();
+    return 0; //a.exec();
 }
 
 bool populateArgumentsList(QMap<int, QVariant> *lst)
@@ -81,12 +83,19 @@ bool populateArgumentsList(QMap<int, QVariant> *lst)
             else if (s == "--asynchronous")
                 lst->insert(FlagSyn, WsdlConverter::asynchronous);
         }
-        else if (s != "")
+        else if ((s != "") && (s != qApp->applicationFilePath()))
         {
             if (!wasFile)
             {
                 wasFile = true;
-                lst->insert(Path, s);
+                QString tmp = s;
+                QFileInfo tempInfo(tmp);
+                if (tempInfo.isRelative())
+                {
+                    tmp.prepend(qApp->applicationDirPath() + "/");
+                }
+
+                lst->insert(Path, tmp);
             }
             else if (!wasOutDir)
             {
@@ -129,4 +138,30 @@ void displayHelp()
     qDebug() << "Copyright by Tomasz Siekierda <sierdzio@gmail.com>";
     qDebug() << "Distributed under <some GPL licence - to be decided later>";
     qDebug() << "";
+}
+
+void displayIntro(QMap<int, QVariant> *args, WsdlConverter &converter)
+{
+    qDebug() << "Creating code for web service:" << converter.getWebServiceName();
+    if (args->value(Dir).toString() == "")
+        qDebug() << "Output dir not specified. Defaulting to web service name.";
+
+    QString tempFlags = "Using flags: ";
+    if (args->value(FlagSyn).toInt() == WsdlConverter::synchronous)
+        tempFlags += "synchronous, ";
+    else
+        tempFlags += "asynchronous, ";
+    if (args->value(FlagProt).toInt() == QSoapMessage::http)
+        tempFlags += "http, ";
+    else if (args->value(FlagProt).toInt() == QSoapMessage::soap10)
+        tempFlags += "soap10, ";
+    else
+        tempFlags += "soap12";
+    qDebug() << tempFlags;
+}
+
+void displayOutro(WsdlConverter &converter)
+{
+    if (!converter.isErrorState())
+        qDebug() << "Strange. Everything seems to be working just fine... Operation completed successfully.";
 }

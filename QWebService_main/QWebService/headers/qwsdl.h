@@ -21,6 +21,7 @@ public:
     void setWsdlFile(QString wsdlFile); // == resetWsdl()
     QStringList getMethodNames();
     QMap<QString, QSoapMessage *> *getMethods();
+    QString getWebServiceName();
     QString getHostname();
     QUrl getHostUrl();
     QString getTargetNamespace();
@@ -54,6 +55,7 @@ private:
 //    QFile wsdlFile;
     QString errorMessage;
     QString wsdlFilePath;
+    QString webServiceName;
     QString hostname, hostUrl, targetNamespace;
     QXmlStreamReader xmlReader;
 

@@ -34,4 +34,5 @@ HEADERS += headers/wsdlconverter.h \
 OTHER_FILES += \
     examples/band_ws.asmx \
     examples/stockquote.asmx \
-    examples/example_URLs_and_commands.txt
+    examples/example_URLs_and_commands.txt \
+    doc/futureFeatures.txt

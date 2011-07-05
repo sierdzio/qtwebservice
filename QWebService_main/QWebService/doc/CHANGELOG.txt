@@ -22,8 +22,14 @@ Part of the initial development is not expressed here. Refer to git logs or as s
  - added command line handling to wsdlConverter. All switches, options and arguments currntly in specs are being taken into account,
  - small fix in QSoapMessage::soap10 handling,
  - added basic and ugly help to wsdlConverter.
-11.06.2011 21:16 BST. Since
+11.06.2011 21:16 BST.
  - fixed seg fault when running 'wsdlConverter --help' from last commit.
-05.07.2011 xx:yy CEST. Since
+05.07.2011 15:23 CEST.
  - made qtWsdlConverter display help when invoked without arguments,
  - fixed 'args' QList being deleted too early in qtWsdlConverter
+05.07.2011 xx:yy CEST Since cc1eddec3f152aeb31db9210648073913c631333:
+ - fixed seg fault in QWsdlConverter::setFlags(),
+ - fixed converter wrongly assigning appPath as wsdlFileName when reading args,
+ - added web service name reading functionality to QWsdl and QWsdlConverter,
+ - added conversion algorithm's outline,
+ - added new file to converter, "futureFeatures.txt" and put in some ideas.

@@ -6,6 +6,7 @@ QWsdl::QWsdl(QObject *parent) :
     replyReceived = false;
     errorState = false;
     errorMessage = "";
+    webServiceName = "";
     hostname = "";
     hostUrl = "";
     targetNamespace = "";
@@ -21,6 +22,7 @@ QWsdl::QWsdl(QString wsdlFile, QObject *parent) :
     replyReceived = false;
     errorState = false;
     errorMessage = "";
+    webServiceName = "";
     hostname = "";
     hostUrl = ""; //wsdlFile;
     targetNamespace = "";
@@ -56,6 +58,11 @@ QStringList QWsdl::getMethodNames()
 QMap<QString, QSoapMessage *> *QWsdl::getMethods()
 {
     return methods;
+}
+
+QString QWsdl::getWebServiceName()
+{
+    return webServiceName;
 }
 
 QString QWsdl::getHostname()
@@ -287,9 +294,9 @@ void QWsdl::readDefinitions()
         }
         else if (tempName == "service")
         {
-            tagUsed.insert("service", true);
-            if (!tagUsed.value("service"))
+//            if (!tagUsed.value("service"))
                 readService();
+            tagUsed.insert("service", true);
             xmlReader.readNext();
         }
         else if (tempName == "documentation")
@@ -530,7 +537,11 @@ void QWsdl::readBindings()
 
 void QWsdl::readService()
 {
-    qDebug() << "WSDL :service tag not supported yet.";
+//    qDebug() << "WSDL :service tag not supported yet.";
+//    xmlReader.readNext(); xmlReader.readNext();
+    if (webServiceName == "")
+        webServiceName = xmlReader.attributes().value("name").toString();
+    qDebug() << "Web service's name is now set.";
     xmlReader.readNext();
 }
 

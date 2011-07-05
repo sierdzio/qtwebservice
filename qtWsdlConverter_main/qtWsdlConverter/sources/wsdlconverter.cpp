@@ -9,6 +9,10 @@ WsdlConverter::WsdlConverter(QString wsdlFileOrUrl, QObject *parent, QDir output
 
     if (wsdl->isErrorState())
         enterErrorState("WSDL error!");
+    else
+    {
+        messages = wsdl->getMethods();
+    }
 
     // Setting default flags:
     synchronousness = synchronous;
@@ -49,10 +53,29 @@ void WsdlConverter::enterErrorState(QString errMessage)
 
 void WsdlConverter::convert()
 {
+    /*
+      Algorithm - initial plan:
+      1. Load messages.
+      2. Check and create the directory.
+      3. (optional, for new flags) Dive into specified code creation path.
+      4. (for standard path) Create dirs 'headers' and 'sources'.
+      5. Create headers for messages (yes, a big task in one point :) ).
+      6. Create sources for messages.
+      7. Create the QWebServiceReaderAbstract subclass's header and source, put it into
+            suitable directory.
+      8. Create <webServiceName>.pro file.
+
+      */
+
     loadMessages();
 }
 
 void WsdlConverter::loadMessages()
 {
     messages = wsdl->getMethods();
+}
+
+QString WsdlConverter::getWebServiceName()
+{
+    return wsdl->getWebServiceName();
 }
