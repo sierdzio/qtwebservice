@@ -68,23 +68,6 @@ void WsdlConverter::convert()
       8. Create <webServiceName>.pro file.
       */
 
-//    loadMessages();
-    if (!createDirs())
-        return;
-}
-
-//void WsdlConverter::loadMessages()
-//{
-//    messages = wsdl->getMethods();
-//}
-
-QString WsdlConverter::getWebServiceName()
-{
-    return wsdl->getWebServiceName();
-}
-
-bool WsdlConverter::createDirs()
-{
     QString mainPath = qApp->applicationDirPath() + "/" + getWebServiceName();
     QDir mainDir;
     mainDir.setPath(mainPath);
@@ -96,7 +79,7 @@ bool WsdlConverter::createDirs()
         qDebug() << tmp;
         enterErrorState(tmp);
 
-        return false;
+        return;
     }
     else
     {
@@ -113,10 +96,20 @@ bool WsdlConverter::createDirs()
                 qDebug() << tmp;
                 enterErrorState(tmp);
 
-                return false;
+                return;
             }
         }
     }
 
-    return true;
+    return;
+}
+
+//void WsdlConverter::loadMessages()
+//{
+//    messages = wsdl->getMethods();
+//}
+
+QString WsdlConverter::getWebServiceName()
+{
+    return wsdl->getWebServiceName();
 }

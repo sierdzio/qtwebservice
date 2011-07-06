@@ -33,15 +33,20 @@ Part of the initial development is not expressed here. Refer to git logs or as s
  - made qtWsdlConverter display help when invoked without arguments,
  - fixed 'args' QList being deleted too early in qtWsdlConverter.
 
-05.07.2011 18:00 CEST Since cc1eddec3f152aeb31db9210648073913c631333:
+05.07.2011 18:00 CEST. Since cc1eddec3f152aeb31db9210648073913c631333:
  - fixed seg fault in QWsdlConverter::setFlags(),
  - fixed converter wrongly assigning appPath as wsdlFileName when reading args,
  - added web service name reading functionality to QWsdl and QWsdlConverter,
  - added conversion algorithm's outline,
  - added new file to converter, "futureFeatures.txt" and put in some ideas.
 
-05.07.2011 xx:yy CEST Since 72e94f7b1bd1f8c2b6b6299de8be3c917c15885d:
+05.07.2011 20:43 CEST. Since 72e94f7b1bd1f8c2b6b6299de8be3c917c15885d:
  - added new class, "StandardPath", and began it's coding. It's purpose is to create dir structure
    and files for the standard path,
  - began writing messages' headers creation,
  - added some future ideas.
+
+xx.07.2011 xx:yy CEST. Since 8ae8fa7e42c834c09e527abe100b1cc3ac8c2a17:
+ - added SOAP msg's header creation in full,
+ - added SOAP msg's source creation in full,
+ - SOAP creation still needs looking at, adjustments, new flags etc., but it at least works.

@@ -31,7 +31,7 @@ signals:
 public slots:
 
 private:
-    bool createDirs();
+//    bool createDirs();
     void enterErrorState(QString errMessage = "");
 //    void setFlagsOnMessages();
 //    void loadMessages();

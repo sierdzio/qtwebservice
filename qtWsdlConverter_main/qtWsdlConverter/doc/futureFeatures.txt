@@ -2,7 +2,8 @@ Possible new flags:
  - set of switches that would result in different output code structure (different folders,
    maybe no messages, compact code, C++11 code etc.),
  - flags to change the build file creation (default is qmake, but maybe we can code some
-   --scons, --cmake etc.).
+   --scons, --cmake etc.),
+ - '--force' to make the app overwrite existing files.
 
 When there is dir name conflict, app can ask for a new name, instead of exiting.
 
