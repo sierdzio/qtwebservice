@@ -3,15 +3,14 @@
 
 #include <QObject>
 #include "../../../QWebService_main/QWebService/headers/QWebService_global.h"
+#include "flags.h"
 
 class StandardPath : public QObject
 {
     Q_OBJECT
 public:
-    enum Mode{full, debug, compact};
-
     explicit StandardPath(QObject *parent = 0);
-    static bool create(QWsdl *wsdl, QDir workingDir, Mode mod = full, QObject *parent = 0);
+    static bool create(QWsdl *wsdl, QDir workingDir, Flags flgs, QObject *parent = 0);
 
 signals:
 
@@ -30,7 +29,8 @@ private:
     QMap<QString, QSoapMessage *> *messages;
     QDir workingDir;
     QWsdl *wsdl;
-    Mode mode;
+    Flags flags;
+
 };
 
 #endif // STANDARDPATH_H

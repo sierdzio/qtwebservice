@@ -1,23 +1,22 @@
 #include <QtCore>
 #include <QtCore/QCoreApplication>
+#include "../headers/flags.h"
 #include "../headers/wsdlconverter.h"
 
-enum argumentDescription {AppName, Path, Dir, ClassName, FlagSyn, FlagProt, FlagHelp};
-bool populateArgumentsList(QMap<int, QVariant> *lst);
+enum argumentDescription {AppName, Path, Dir, ClassName, FlagHelp};
+bool populateArgumentsList(QMap<int, QVariant> *lst, Flags flgs);
 void displayHelp();
-void displayIntro(QMap<int, QVariant> *args, WsdlConverter &converter);
+void displayIntro(QMap<int, QVariant> *args, Flags flgs, WsdlConverter &converter);
 void displayOutro(WsdlConverter &converter);
 
 int main(int argc, char *argv[])
 {    
     QCoreApplication a(argc, argv);
-
-
-//    QStringList arguments = a.arguments();
+    Flags flags;
     QMap<int, QVariant> *args = new QMap<int, QVariant>();
 
     //TODO: check argument sanity, and whether .at(0) is app name or not. Partially done.
-    if (!populateArgumentsList(args))
+    if (!populateArgumentsList(args, flags))
     {
         delete args;
         return 1;
@@ -28,24 +27,25 @@ int main(int argc, char *argv[])
                             QDir(args->value(Dir).toString()),
                             args->value(ClassName).toString());
 
-    // Now that is a bit shaky implementation, I (sierdzio) recommend to change it later:
-    converter.setFlags((WsdlConverter::Synchronousness) args->value(FlagSyn).toInt(),
-                       (QSoapMessage::Protocol) args->value(FlagProt).toInt());
+    // Set flags:
+    converter.setFlags(flags);
 
     // Doing the conversion:
-    displayIntro(args, converter);
+    displayIntro(args, flags, converter);
     displayOutro(converter);
 
     delete args;
     return 0; //a.exec();
 }
 
-bool populateArgumentsList(QMap<int, QVariant> *lst)
+bool populateArgumentsList(QMap<int, QVariant> *lst, Flags flgs)
 {
     /*
         qtwsdlconvert [options] <WSDL file or URL> [output directory] [base output class name, defaults to web service name]
 
         Possible options: --soap10, --soap12, --http, --synchronous, --asynchronous, --help.
+        New ones: --fullMode, --debugMode, --compactMode,
+                  --standardStructure, --noMessagesStructure, --allInOneDirStructure.
 
         --synchronous, --soap12 switches are default ones.
     */
@@ -53,9 +53,9 @@ bool populateArgumentsList(QMap<int, QVariant> *lst)
     QStringList arguments = qApp->arguments();
     bool wasFile = false, wasOutDir = false, wasClassName = false;
 
-    // Set default flags:
-    lst->insert(FlagProt, QSoapMessage::soap12);
-    lst->insert(FlagSyn, WsdlConverter::synchronous);
+//    // Set default flags:
+//    lst->insert(FlagProt, QSoapMessage::soap12);
+//    lst->insert(FlagSyn, Flags::synchronous);
 
     if (arguments.length() <= 1)
     {
@@ -73,15 +73,15 @@ bool populateArgumentsList(QMap<int, QVariant> *lst)
                 return false;
             }
             else if (s == "--soap12")
-                lst->insert(FlagProt, QSoapMessage::soap12);
+                flgs.protocol = QSoapMessage::soap12;
             else if (s == "--soap10")
-                lst->insert(FlagProt, QSoapMessage::soap10);
+                flgs.protocol = QSoapMessage::soap10;
             else if (s == "--html")
-                lst->insert(FlagProt, QSoapMessage::http);
+                flgs.protocol = QSoapMessage::http;
             else if (s == "--synchronous")
-                lst->insert(FlagSyn, WsdlConverter::synchronous);
+                flgs.synchronousness = Flags::synchronous;
             else if (s == "--asynchronous")
-                lst->insert(FlagSyn, WsdlConverter::asynchronous);
+                flgs.synchronousness = Flags::asynchronous;
         }
         else if ((s != "") && (s != qApp->applicationFilePath()))
         {
@@ -133,27 +133,29 @@ void displayHelp()
     qDebug() << "qtwsdlconvert [options] <WSDL file or URL> [output directory] [base output class name, defaults to web service name]";
 //    qDebug() << "";
     qDebug() << "Possible options: --soap10, --soap12, --http, --synchronous, --asynchronous, --help.";
-    qDebug() << "Default switches are: --synchronous, --soap12.";
+    qDebug() << "New ones: --fullMode, --debugMode, --compactMode,";
+    qDebug() << "--standardStructure, --noMessagesStructure, --allInOneDirStructure.";
+    qDebug() << "Default switches are: --synchronous, --soap12, --fullMode, --standardStructure.";
     qDebug() << "";
     qDebug() << "Copyright by Tomasz Siekierda <sierdzio@gmail.com>";
     qDebug() << "Distributed under <some GPL licence - to be decided later>";
     qDebug() << "";
 }
 
-void displayIntro(QMap<int, QVariant> *args, WsdlConverter &converter)
+void displayIntro(QMap<int, QVariant> *args, Flags flgs, WsdlConverter &converter)
 {
     qDebug() << "Creating code for web service:" << converter.getWebServiceName();
     if (args->value(Dir).toString() == "")
         qDebug() << "Output dir not specified. Defaulting to web service name.";
 
     QString tempFlags = "Using flags: ";
-    if (args->value(FlagSyn).toInt() == WsdlConverter::synchronous)
+    if (flgs.synchronousness == Flags::synchronous)
         tempFlags += "synchronous, ";
     else
         tempFlags += "asynchronous, ";
-    if (args->value(FlagProt).toInt() == QSoapMessage::http)
+    if (flgs.protocol == QSoapMessage::http)
         tempFlags += "http, ";
-    else if (args->value(FlagProt).toInt() == QSoapMessage::soap10)
+    else if (flgs.protocol == QSoapMessage::soap10)
         tempFlags += "soap10, ";
     else
         tempFlags += "soap12";

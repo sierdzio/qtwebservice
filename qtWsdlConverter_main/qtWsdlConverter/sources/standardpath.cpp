@@ -13,10 +13,10 @@ void StandardPath::prepare()
     messages = wsdl->getMethods();
 }
 
-bool StandardPath::create(QWsdl *w, QDir wrkDir, Mode mod, QObject *parent)
+bool StandardPath::create(QWsdl *w, QDir wrkDir, Flags flgs, QObject *parent)
 {
     StandardPath obj(parent);
-    obj.mode = mod;
+    obj.flags = flgs;
     obj.workingDir = wrkDir;
     obj.wsdl = w;
     obj.prepare();
@@ -103,18 +103,14 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
     out << "    enum Protocol {http, soap10, soap12};" << endl;
     out << endl;
     out << "    explicit " << msgName << "(QObject *parent = 0);" << endl;
-//    out << "    QSoapMessage(QUrl hostUrl, QString messageName, QObject *parent = 0);" << endl;
-//    out << "    QSoapMessage(QString hostname, QString messageName, QObject *parent = 0);" << endl;
-//    out << "    " << msgName << "(" << msgParameters << ", QObject *parent = 0);" << endl;
     out << "    ~" << msgName << "();" << endl;
     out << endl;
-    out << "    void setParams(" << msgParameters << ");" << endl; // << ", " << msgReplyType << " " << msgReplyName << ");" << endl;
-//    out << "    void setTargetNamespace(QString tNamespace);" << endl;
+    out << "    void setParams(" << msgParameters << ");" << endl;
     out << "    void setProtocol(Protocol protocol);" << endl;
     out << "    bool sendMessage();" << endl;
     out << "    bool sendMessage(" << msgParameters << ");" << endl;
     out << "    " << msgReplyType << " static sendMessage(QObject *parent, QUrl url, QString _messageName," << endl;
-    out << "                                " << msgParameters << ");" << endl; //", " << msgReplyType << " " << msgReplyName << ");" << endl;
+    out << "                                " << msgParameters << ");" << endl;
     out << "    " << msgReplyType << " replyRead();" << endl;
     out << "    QString getMessageName();" << endl;
     out << "    QStringList getParameterNames() const;" << endl;
@@ -142,7 +138,6 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
     out << "    QString messageName;" << endl;
     out << "    QString targetNamespace;" << endl;
     out << "    " << msgReplyType << " reply;" << endl;
-//    out << "    QMap<QString, QVariant> parameters;" << endl;
     { // Create parameters list in declarative form.
         out << "    // -------------------------" << endl << "    // Parameters:" << endl;
         QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
@@ -209,24 +204,6 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
     out << "    messageName = \"" << msgName << "\";" << endl;
     out << "    parameters.clear();" << endl;
     out << "}" << endl;
-    /*
-out << "
-out << "QSoapMessage::QSoapMessage(QUrl url, QString _messageName, QObject *parent) :
-out << "    QObject(parent), hostUrl(url), messageName(_messageName)
-out << "{
-out << "    init();
-out << "    hostname = hostUrl.host();
-out << "    parameters.clear();
-out << "}
-out << "
-out << "QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *parent) :
-    QObject(parent), hostname(url), messageName(_messageName)
-{
-    init();
-    hostUrl.setHost(hostname + messageName);
-    parameters.clear();
-}
-*/
     out << msgName << "::" << msgName << "(" << msgParameters << ", QObject *parent) :" << endl;
     out << "    QObject(parent)" << endl;
     out << "{" << endl;
@@ -250,7 +227,6 @@ out << "QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *p
     out << endl;
     out << "void " << msgName << "::setParams(" << msgParameters << ")" << endl;
     out << "{" << endl;
-//    out << "    parameters = params;" << endl; //NEEDS FIXING TO PROPERLY ASSIGN PARAMS TO VARIABLES!
     { // Assign all parameters.
         QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
         foreach (QString s, tempMap.keys())
@@ -258,12 +234,6 @@ out << "QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *p
             out << "    this." << s << " = " << s << ";" << endl;
         }
     }
-//    out << "    returnValue = returnVal;" << endl;
-    out << "}" << endl;
-    out << endl;
-    out << "void " << msgName << "::setTargetNamespace(QString tNamespace)" << endl;
-    out << "{" << endl;
-    out << "    targetNamespace = tNamespace;" << endl;
     out << "}" << endl;
     out << endl;
     out << "void " << msgName << "::setProtocol(Protocol prot)" << endl;
@@ -282,7 +252,7 @@ out << "QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *p
     out << endl;
     out << "    prepareRequestData();" << endl;
     out << endl;
-    if (mode == debug)
+    if (flags.mode == Flags::debugMode)
     {
         out << "    qDebug() << request.rawHeaderList() << \" \" << request.url().toString();" << endl;
         out << "    qDebug() << \"*************************\";" << endl;

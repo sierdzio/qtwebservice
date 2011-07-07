@@ -18,6 +18,7 @@ TEMPLATE = app
 SOURCES += sources/main.cpp \
     sources/wsdlconverter.cpp \
     sources/standardpath.cpp \
+    sources/flags.cpp \
     ../../QWebService_main/QWebService/sources/qwebserviceabstract.cpp \
     ../../QWebService_main/QWebService/sources/qwebservicereaderabstract.cpp \
     ../../QWebService_main/QWebService/sources/qwebservicemethodabstract.cpp \
@@ -26,6 +27,7 @@ SOURCES += sources/main.cpp \
 
 HEADERS += headers/wsdlconverter.h \
     headers/standardpath.h \
+    headers/flags.h \
     ../../QWebService_main/QWebService/headers/qwebserviceabstract.h \
     ../../QWebService_main/QWebService/headers/qwebservicereaderabstract.h \
     ../../QWebService_main/QWebService/headers/qwebservicemethodabstract.h \

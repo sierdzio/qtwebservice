@@ -51,9 +51,12 @@ Part of the initial development is not expressed here. Refer to git logs or as s
  - added SOAP msg's source creation in full,
  - SOAP creation still needs looking at, adjustments, new flags etc., but it at least works.
 
-xx.07.2011 xx:yy CEST. Since a64544f5526c1ed98d6b5cc4587ff31e572201b0:
+07.07.2011 10:30 CEST. Since a64544f5526c1ed98d6b5cc4587ff31e572201b0:
  - (StandardPath) made tempMap truly temporary (moved into a new block) in createMessageHeader/Source(),
  - added real list of parameters, taken from WSDL, to .h and .cpp. Params are now declared in header, and properly assigned
    in relevant methods in source,
  - various other header/ source creation improvements and fixes,
- - added standardPath modes (full, debug, compact),
+ - added standardPath modes (full, debug, compact).
+
+07.07.2011 11:36 CEST. Since 699e9a04feb85e70e592015af0b7d3ea2010d803, on branch 'newFlags':
+ - introduced new "Flag Class" to WSDL converter, which aggregates all flags from converter's classes.
