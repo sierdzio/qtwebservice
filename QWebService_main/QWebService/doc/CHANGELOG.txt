@@ -61,8 +61,11 @@ Part of the initial development is not expressed here. Refer to git logs or as s
 07.07.2011 11:36 CEST. Since 699e9a04feb85e70e592015af0b7d3ea2010d803, on branch 'newFlags':
  - introduced new "Flag Class" to WSDL converter, which aggregates all flags from converter's classes.
 
-xx.07.2011 xx:yy CEST. Since :
+07.07.2011 16:14 CEST. Since last:
  - added error handling to StandardPath class,
  - added web service source and header creation for StandardPath,
  - added QMake .pro file generation for StandardPath,
  - made some code optimisation in StandardPath (file is opened and checked before getting msg info).
+
+.07.2011 : CEST. Since fc8628bd0bf853d3e3cdba8f8383a70870dd8e0a:
+ - 
