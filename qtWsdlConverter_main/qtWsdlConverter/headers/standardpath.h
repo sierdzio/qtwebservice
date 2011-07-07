@@ -8,8 +8,10 @@ class StandardPath : public QObject
 {
     Q_OBJECT
 public:
+    enum Mode{full, debug, compact};
+
     explicit StandardPath(QObject *parent = 0);
-    static bool create(QWsdl *wsdl, QDir workingDir, QObject *parent = 0);
+    static bool create(QWsdl *wsdl, QDir workingDir, Mode mod = full, QObject *parent = 0);
 
 signals:
 
@@ -28,6 +30,7 @@ private:
     QMap<QString, QSoapMessage *> *messages;
     QDir workingDir;
     QWsdl *wsdl;
+    Mode mode;
 };
 
 #endif // STANDARDPATH_H

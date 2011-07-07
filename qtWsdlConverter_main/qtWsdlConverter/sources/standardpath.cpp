@@ -13,9 +13,10 @@ void StandardPath::prepare()
     messages = wsdl->getMethods();
 }
 
-bool StandardPath::create(QWsdl *w, QDir wrkDir, QObject *parent)
+bool StandardPath::create(QWsdl *w, QDir wrkDir, Mode mod, QObject *parent)
 {
     StandardPath obj(parent);
+    obj.mode = mod;
     obj.workingDir = wrkDir;
     obj.wsdl = w;
     obj.prepare();
@@ -55,23 +56,27 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
     QString msgName = msg->getMessageName();
     QString msgReplyName = msg->getReturnValueName().first(); // Possible problem in case of multi-return.
 
-    QMap<QString, QVariant> tempMap = msg->getReturnValueNameType();
     QString msgReplyType = "";
-    foreach (QString s, tempMap.keys())
-    {
-        msgReplyType += tempMap.value(s).typeName();
-        break;
-    }
-
-    tempMap.clear();
-    tempMap = msg->getParameterNamesTypes();
     QString msgParameters = "";
-    foreach (QString s, tempMap.keys())
     {
-        msgParameters += QString(tempMap.value(s).typeName()) + " " + s + ",";
-    }
-    msgParameters.chop(1);
+        // Create msgReplyType
+        QMap<QString, QVariant> tempMap = msg->getReturnValueNameType();
+        foreach (QString s, tempMap.keys())
+        {
+            msgReplyType += tempMap.value(s).typeName();
+            break;
+        }
 
+        tempMap.clear();
+        tempMap = msg->getParameterNamesTypes();
+
+        // Create msgParameters (comma separated list)
+        foreach (QString s, tempMap.keys())
+        {
+            msgParameters += QString(tempMap.value(s).typeName()) + " " + s + ",";
+        }
+        msgParameters.chop(1);
+    }
 
     QFile file(workingDir.path() + "/" + msgName + ".h");
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
@@ -81,8 +86,8 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
     // Begin writing:
     QTextStream out(&file);
     out.setCodec("UTF-8");
-    out << "#ifndef Q" << msgName.toUpper() << endl; // might break on curious names
-    out << "#define Q" << msgName.toUpper() << endl;
+    out << "#ifndef " << msgName.toUpper() << endl; // might break on curious names
+    out << "#define " << msgName.toUpper() << endl;
     out << endl;
     out << "#include <QtCore>" << endl;
     out << "#include <QNetworkAccessManager>" << endl;
@@ -100,8 +105,7 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
     out << "    explicit " << msgName << "(QObject *parent = 0);" << endl;
 //    out << "    QSoapMessage(QUrl hostUrl, QString messageName, QObject *parent = 0);" << endl;
 //    out << "    QSoapMessage(QString hostname, QString messageName, QObject *parent = 0);" << endl;
-//    out << "    QSoapMessage(QString hostname, QString messageName, QMap<QString, QVariant> params," << endl;
-//    out << "                 QMap<QString, QVariant> returnValue, QObject *parent = 0);" << endl;
+//    out << "    " << msgName << "(" << msgParameters << ", QObject *parent = 0);" << endl;
     out << "    ~" << msgName << "();" << endl;
     out << endl;
     out << "    void setParams(" << msgParameters << ");" << endl; // << ", " << msgReplyType << " " << msgReplyName << ");" << endl;
@@ -138,13 +142,22 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
     out << "    QString messageName;" << endl;
     out << "    QString targetNamespace;" << endl;
     out << "    " << msgReplyType << " reply;" << endl;
-    out << "    QMap<QString, QVariant> parameters;" << endl;
+//    out << "    QMap<QString, QVariant> parameters;" << endl;
+    { // Create parameters list in declarative form.
+        out << "    // -------------------------" << endl << "    // Parameters:" << endl;
+        QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
+        foreach (QString s, tempMap.keys())
+        {
+            out << "    " << tempMap.value(s).typeName() << " " << s  << ";" << endl;
+        }
+        out << "    // End of parameters." << endl << "    // -------------------------" << endl;
+    }
     out << "    " << msgReplyType << " " << msgReplyName << ";" << endl;
     out << "    QNetworkAccessManager *manager;" << endl;
     out << "    QNetworkReply *networkReply;" << endl;
     out << "    QByteArray data;" << endl;
     out << "};" << endl;
-    out << "#endif // Q" << msgName.toUpper() << endl;
+    out << "#endif // " << msgName.toUpper() << endl;
     // EOF (SOAP message)
     // ---------------------------------
 
@@ -157,22 +170,25 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
     QString msgName = msg->getMessageName();
     QString msgReplyName = msg->getReturnValueName().first(); // Possible problem in case of multi-return.
 
-    QMap<QString, QVariant> tempMap = msg->getReturnValueNameType();
     QString msgReplyType = "";
-    foreach (QString s, tempMap.keys())
-    {
-        msgReplyType += tempMap.value(s).typeName();
-        break;
-    }
-
-    tempMap.clear();
-    tempMap = msg->getParameterNamesTypes();
     QString msgParameters = "";
-    foreach (QString s, tempMap.keys())
     {
-        msgParameters += QString(tempMap.value(s).typeName()) + " " + s + ",";
+        QMap<QString, QVariant> tempMap = msg->getReturnValueNameType();
+        foreach (QString s, tempMap.keys())
+        {
+            msgReplyType += tempMap.value(s).typeName();
+            break;
+        }
+
+        tempMap.clear();
+        tempMap = msg->getParameterNamesTypes();
+
+        foreach (QString s, tempMap.keys())
+        {
+            msgParameters += QString(tempMap.value(s).typeName()) + " " + s + ", ";
+        }
+        msgParameters.chop(2);
     }
-    msgParameters.chop(1);
 
 
     QFile file(workingDir.path() + "/" + msgName + ".cpp");
@@ -188,7 +204,7 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
     out << "    QObject(parent)" << endl;
     out << "{" << endl;
     out << "    init();" << endl;
-    out << "    hostname = \"\";" << endl;
+    out << "    hostname = \"" << msg->getTargetNamespace() << "\";" << endl;
     out << "    hostUrl.setHost(hostname);" << endl;
     out << "    messageName = \"" << msgName << "\";" << endl;
     out << "    parameters.clear();" << endl;
@@ -210,15 +226,20 @@ out << "QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *p
     hostUrl.setHost(hostname + messageName);
     parameters.clear();
 }
-
-QSoapMessage::QSoapMessage(QString url, QString _messageName,
-                           QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal, QObject *parent) :
-    QObject(parent), hostname(url), messageName(_messageName), parameters(params), returnValue(returnVal)
-{
-    init();
-    hostUrl.setHost(hostname + messageName);
-}
 */
+    out << msgName << "::" << msgName << "(" << msgParameters << ", QObject *parent) :" << endl;
+    out << "    QObject(parent)" << endl;
+    out << "{" << endl;
+    { // Assign all parameters.
+        QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
+        foreach (QString s, tempMap.keys())
+        {
+            out << "    this." << s << " = " << s << ";" << endl;
+        }
+    }
+    out << "    init();" << endl;
+    out << "    hostUrl.setHost(hostname + messageName);" << endl;
+    out << "}" << endl;
     out << endl;
     out << msgName << "::~" << msgName << "()" << endl;
     out << "{" << endl;
@@ -229,8 +250,15 @@ QSoapMessage::QSoapMessage(QString url, QString _messageName,
     out << endl;
     out << "void " << msgName << "::setParams(" << msgParameters << ")" << endl;
     out << "{" << endl;
-    out << "    parameters = params;" << endl; //NEEDS FIXING TO PROPERLY ASSIGN PARAMS TO VARIABLES!
-    out << "    returnValue = returnVal;" << endl;
+//    out << "    parameters = params;" << endl; //NEEDS FIXING TO PROPERLY ASSIGN PARAMS TO VARIABLES!
+    { // Assign all parameters.
+        QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
+        foreach (QString s, tempMap.keys())
+        {
+            out << "    this." << s << " = " << s << ";" << endl;
+        }
+    }
+//    out << "    returnValue = returnVal;" << endl;
     out << "}" << endl;
     out << endl;
     out << "void " << msgName << "::setTargetNamespace(QString tNamespace)" << endl;
@@ -254,24 +282,46 @@ QSoapMessage::QSoapMessage(QString url, QString _messageName,
     out << endl;
     out << "    prepareRequestData();" << endl;
     out << endl;
-    out << "    qDebug() << request.rawHeaderList() << \" \" << request.url().toString();" << endl;
-    out << "    qDebug() << \"*************************\";" << endl;
-    out << endl;
+    if (mode == debug)
+    {
+        out << "    qDebug() << request.rawHeaderList() << \" \" << request.url().toString();" << endl;
+        out << "    qDebug() << \"*************************\";" << endl;
+        out << endl;
+    }
     out << "    manager->post(request, data);" << endl;
     out << "    return true;" << endl;
     out << "}" << endl;
     out << endl;
     out << "bool " << msgName << "::sendMessage(" << msgParameters << ")" << endl;
     out << "{" << endl;
-    out << "    parameters = params;" << endl; // FIX THAT!
+//    out << "    parameters = params;" << endl; // FIX THAT!
+    { // Assign all parameters.
+        QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
+        foreach (QString s, tempMap.keys())
+        {
+            out << "    this." << s << " = " << s << ";" << endl;
+        }
+    }
+
     out << "    sendMessage();" << endl;
     out << "    return true;" << endl;
     out << "}" << endl;
     out << endl;
     out << "/* STATIC */" << endl;
-    out << "" << msgReplyType << " " << msgName << "::sendMessage(QObject *parent, QUrl url, QString _messageName, " << msgParameters << ")" << endl;
+    out << "" << msgReplyType << " " << msgName << "::sendMessage(QObject *parent, " << msgParameters << ")" << endl;
     out << "{" << endl;
-    out << "    " << msgName << " qsm(url.host(), _messageName, params, returnVal, parent);" << endl;
+    out << "    " << msgName << " qsm(parent);" << endl;
+    { // Assign all parameters.
+        out << "    qsm.setParameters(";
+        QString tempS = "";
+        QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
+        foreach (QString s, tempMap.keys())
+        {
+            tempS += s + ", ";
+        }
+        tempS.chop(2);
+        out << tempS << ");" << endl;
+    }
     out << "    qsm.role = staticRole;" << endl;
     out << "    qsm.hostUrl = url;" << endl;
     out << endl;
@@ -300,6 +350,15 @@ QSoapMessage::QSoapMessage(QString url, QString _messageName,
     out << endl;
     out << "QStringList " << msgName << "::getParameterNames() const" << endl;
     out << "{" << endl;
+    out << "    QMap<QString, QVariant> parameters;" << endl;
+    { // Assign all parameters.
+        QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
+        foreach (QString s, tempMap.keys())
+        {
+            out << "    parameters.insert(" << s << ", QVariant(" << tempMap.value(s).typeName();
+            out << "(" << tempMap.value(s).toString() << ")));" << endl;
+        }
+    }
     out << "    return (QStringList) parameters.keys();" << endl;
     out << "}" << endl;
     out << endl;
@@ -310,12 +369,21 @@ QSoapMessage::QSoapMessage(QString url, QString _messageName,
     out << endl;
     out << "QMap<QString, QVariant> " << msgName << "::getParameterNamesTypes() const" << endl;
     out << "{" << endl;
+    out << "    QMap<QString, QVariant> parameters;" << endl;
+    { // Assign all parameters.
+        QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
+        foreach (QString s, tempMap.keys())
+        {
+            out << "    parameters.insert(" << s << ", QVariant(" << tempMap.value(s).typeName();
+            out << "(" << tempMap.value(s).toString() << ")));" << endl;
+        }
+    }
     out << "    return parameters;" << endl;
     out << "}" << endl;
     out << endl;
     out << "QString " << msgName << "::getReturnValueNameType() const" << endl;
     out << "{" << endl;
-    out << "    return returnValue;" << endl;
+    out << "    return " << msgReplyType << ";" << endl;
     out << "}" << endl;
     out << endl;
     out << "QString " << msgName << "::getTargetNamespace()" << endl;

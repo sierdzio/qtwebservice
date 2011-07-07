@@ -89,7 +89,7 @@ void WsdlConverter::convert()
         if (structure == standardStructure)
         {
 //            standardPath(mainDir);
-            if (!StandardPath::create(wsdl, mainDir, this))
+            if (!StandardPath::create(wsdl, mainDir, StandardPath::full , this))
             {
                 QString tmp = "Error - code creation failed.";
                 // Might be good to add an interactive menu here (to ask for a new dir name)

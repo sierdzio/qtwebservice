@@ -70,9 +70,9 @@ bool QSoapMessage::sendMessage()
 
     prepareRequestData();
 
-    qDebug() << request.rawHeaderList() << " " << request.url().toString();
+    //qDebug() << request.rawHeaderList() << " " << request.url().toString();
     //qDebug() << data;
-    qDebug() << "*************************";
+    //qDebug() << "*************************";
 
     manager->post(request, data);
     return true;

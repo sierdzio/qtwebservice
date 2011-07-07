@@ -46,7 +46,14 @@ Part of the initial development is not expressed here. Refer to git logs or as s
  - began writing messages' headers creation,
  - added some future ideas.
 
-xx.07.2011 xx:yy CEST. Since 8ae8fa7e42c834c09e527abe100b1cc3ac8c2a17:
+06.07.2011 15:39 CEST. Since 8ae8fa7e42c834c09e527abe100b1cc3ac8c2a17:
  - added SOAP msg's header creation in full,
  - added SOAP msg's source creation in full,
  - SOAP creation still needs looking at, adjustments, new flags etc., but it at least works.
+
+xx.07.2011 xx:yy CEST. Since a64544f5526c1ed98d6b5cc4587ff31e572201b0:
+ - (StandardPath) made tempMap truly temporary (moved into a new block) in createMessageHeader/Source(),
+ - added real list of parameters, taken from WSDL, to .h and .cpp. Params are now declared in header, and properly assigned
+   in relevant methods in source,
+ - various other header/ source creation improvements and fixes,
+ - added standardPath modes (full, debug, compact),
