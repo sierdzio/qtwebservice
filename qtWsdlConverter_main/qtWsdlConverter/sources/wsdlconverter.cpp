@@ -7,9 +7,6 @@ WsdlConverter::WsdlConverter(QString wsdlFileOrUrl, QObject *parent, QDir output
     errorMessage = "";
     wsdl = new QWsdl(wsdlFileOrUrl, this);
 
-    // Setting default flags:
-//    flags();
-
     if (wsdl->isErrorState())
         enterErrorState("WSDL error!");
     else
@@ -33,11 +30,12 @@ bool WsdlConverter::isErrorState()
     return errorState;
 }
 
-void WsdlConverter::enterErrorState(QString errMessage)
+bool WsdlConverter::enterErrorState(QString errMessage)
 {
     errorState = true;
-    errorMessage = errMessage;
+    errorMessage += errMessage + " ";
     emit errorEncountered(errMessage);
+    return false;
 }
 
 void WsdlConverter::convert()
@@ -75,7 +73,7 @@ void WsdlConverter::convert()
 
         if (flags.structure == Flags::standardStructure)
         {
-            flags = Flags(Flags::fullMode, flags.synchronousness, flags.structure, flags.protocol);
+            flags = Flags(Flags::fullMode, flags.synchronousness, flags.structure, flags.protocol, flags.buildSystem);
             if (!StandardPath::create(wsdl, mainDir, flags, this))
             {
                 QString tmp = "Error - code creation failed.";

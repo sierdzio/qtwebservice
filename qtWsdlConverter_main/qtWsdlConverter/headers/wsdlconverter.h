@@ -28,7 +28,7 @@ signals:
 public slots:
 
 private:
-    void enterErrorState(QString errMessage = "");
+    bool enterErrorState(QString errMessage = "");
 
     bool errorState;
     QString errorMessage;

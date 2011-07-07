@@ -9,27 +9,19 @@ public:
     enum Mode{fullMode, debugMode, compactMode};
     enum Synchronousness {synchronous, asynchronous};
     enum Structure {standardStructure, noMessagesStructure, allInOneDirStructure};
+    enum BuildSystem {qmake, cmake, scons};
 
     Flags(Mode mode = fullMode,
-          Synchronousness synchronousness = asynchronous,
+          Synchronousness synchronousness = synchronous,
           Structure structure = standardStructure,
-          QSoapMessage::Protocol protocol = QSoapMessage::soap12);
+          QSoapMessage::Protocol protocol = QSoapMessage::soap12,
+          BuildSystem = qmake);
 
-//    int mode();
-//    int synchronousness();
-//    int structure();
-//    int protocol();
-
-//    void setMode(Flags::Mode mode);
-//    void setSynchronousness(Flags::Synchronousness synchronousness);
-//    void setStructure(Flags::Structure structure);
-//    void setProtocol(QSoapMessage::Protocol protocol);
-
-//private:
     Mode mode;
     Synchronousness synchronousness;
     Structure structure;
     QSoapMessage::Protocol protocol;
+    BuildSystem buildSystem;
 };
 
 #endif // FLAGS_H

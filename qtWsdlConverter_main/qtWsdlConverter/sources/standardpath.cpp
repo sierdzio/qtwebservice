@@ -3,6 +3,21 @@
 StandardPath::StandardPath(QObject *parent) :
     QObject(parent)
 {
+    errorState = false;
+    errorMessage = "";
+}
+
+bool StandardPath::isErrorState()
+{
+    return errorState;
+}
+
+bool StandardPath::enterErrorState(QString errMessage)
+{
+    errorState = true;
+    errorMessage += errMessage + " ";
+    emit errorEncountered(errMessage);
+    return false;
 }
 
 void StandardPath::prepare()
@@ -23,28 +38,30 @@ bool StandardPath::create(QWsdl *w, QDir wrkDir, Flags flgs, QObject *parent)
 
     if (!obj.createMessages())
         return false;
+    if (!obj.createService())
+        return false;
+    if (!obj.createBuildSystemFile())
+        return false;
     return true;
 }
 
 bool StandardPath::createMessages()
 {
     workingDir.cd("headers");
-
     foreach (QString s, messages->keys())
     {
         QSoapMessage *m = messages->value(s);
-        createMessageHeader(m);
-//        delete m;
+        if (!createMessageHeader(m))
+            return enterErrorState("Creating header for message \"" + m->getMessageName() + "\" failed!");
     }
 
     workingDir.cdUp();
     workingDir.cd("sources");
-
     foreach (QString s, messages->keys())
     {
         QSoapMessage *n = messages->value(s);
-        createMessageSource(n);
-//        delete n;
+        if (!createMessageSource(n))
+            return enterErrorState("Creating source for message \"" + n->getMessageName() + "\" failed!");;
     }
 
     workingDir.cdUp();
@@ -54,6 +71,10 @@ bool StandardPath::createMessages()
 bool StandardPath::createMessageHeader(QSoapMessage *msg)
 {
     QString msgName = msg->getMessageName();
+    QFile file(workingDir.path() + "/" + msgName + ".h");
+    if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
+        return enterErrorState("Error: could not open message header file for writing.");
+
     QString msgReplyName = msg->getReturnValueName().first(); // Possible problem in case of multi-return.
 
     QString msgReplyType = "";
@@ -73,14 +94,10 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
         // Create msgParameters (comma separated list)
         foreach (QString s, tempMap.keys())
         {
-            msgParameters += QString(tempMap.value(s).typeName()) + " " + s + ",";
+            msgParameters += QString(tempMap.value(s).typeName()) + " " + s + ", ";
         }
-        msgParameters.chop(1);
+        msgParameters.chop(2);
     }
-
-    QFile file(workingDir.path() + "/" + msgName + ".h");
-    if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
-        return false;
 
     // ---------------------------------
     // Begin writing:
@@ -163,6 +180,10 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
 bool StandardPath::createMessageSource(QSoapMessage *msg)
 {
     QString msgName = msg->getMessageName();
+    QFile file(workingDir.path() + "/" + msgName + ".cpp");
+    if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
+        return enterErrorState("Error: could not open message source file for writing.");
+
     QString msgReplyName = msg->getReturnValueName().first(); // Possible problem in case of multi-return.
 
     QString msgReplyType = "";
@@ -184,11 +205,6 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
         }
         msgParameters.chop(2);
     }
-
-
-    QFile file(workingDir.path() + "/" + msgName + ".cpp");
-    if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
-        return false;
 
     // ---------------------------------
     // Begin writing:
@@ -434,6 +450,246 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
     out << "    return result;" << endl;
     out << "}" << endl;
     // EOF (SOAP message)
+    // ---------------------------------
+
+    file.close();
+    return true;
+}
+
+bool StandardPath::createService()
+{
+    workingDir.cd("headers");
+    if (!createServiceHeader())
+        return enterErrorState("Creating header for WebvService \"" + wsdl->getWebServiceName() + "\" failed!");
+
+    workingDir.cdUp();
+    workingDir.cd("sources");
+    if (!createServiceSource())
+        return enterErrorState("Creating source for WebvService \"" + wsdl->getWebServiceName() + "\" failed!");
+
+    workingDir.cdUp();
+    return true;
+}
+
+bool StandardPath::createServiceHeader()
+{
+    QString wsName = wsdl->getWebServiceName();
+    QFile file(workingDir.path() + "/" + wsName + ".h");
+    if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
+        return enterErrorState("Error: could not open Web Service header file for writing.");
+
+    // ---------------------------------
+    // Begin writing:
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << "#ifndef " << wsName.toUpper() << "_H" << endl;
+    out << "#define " << wsName.toUpper() << "_H" << endl;
+    out << endl;
+    out << "#include <QUrl>" << endl;
+    { // Include all messages.
+        QStringList tempMap = wsdl->getMethodNames();
+        foreach (QString s, tempMap)
+        {
+            out << "#include \"" << s << ".h\"" << endl;
+        }
+    }
+    out << endl;
+    out << "class " << wsName << " : public QObject" << endl;
+    out << "{" << endl;
+    out << "    Q_OBJECT" << endl;
+    out << endl;
+    out << "public:" << endl;
+    out << "    " << wsName << "(QObject *parent = 0);" << endl;
+    out << "    ~" << wsName << "();" << endl;
+    out << endl;
+    out << "    QStringList getMethodNames();" << endl;
+    { // Declare all messages (as wrappers for message classes).
+        QMap<QString, QSoapMessage *> *tempMap = wsdl->getMethods();
+        foreach (QString s, tempMap->keys())
+        {
+            QString tmpS = "", tmpP = "";
+            QSoapMessage *m = tempMap->value(s);
+            foreach (QString ret, m->getReturnValueNameType().keys())
+            {
+                tmpS = m->getReturnValueNameType().value(ret).typeName();
+                break; // This does not support multiple return values!
+            }
+
+            QMap<QString, QVariant> tempParam = m->getParameterNamesTypes();
+            // Create msgParameters (comma separated list)
+            foreach (QString param, tempParam.keys())
+            {
+                tmpP += QString(tempParam.value(param).typeName()) + " " + s + ", ";
+            }
+            tmpP.chop(2);
+
+            out << "    " << tmpS << " ";
+            out << s << "(" << tmpP << ");" << endl;
+        }
+    }
+    out << endl;
+    out << "    QUrl getHostUrl();" << endl;
+    out << "    QString getHost();" << endl;
+    out << "    bool isErrorState();" << endl;
+    out << endl;
+    out << "protected:" << endl;
+    out << "    void init();" << endl;
+    out << endl;
+    out << "    bool errorState;" << endl;
+    out << "    QUrl hostUrl;" << endl;
+    out << "    QString hostname;" << endl;
+    out << "};" << endl;
+    out << endl;
+    out << "#endif // " << wsName.toUpper() << "_H" << endl;
+    // EOF (Web Service header)
+    // ---------------------------------
+
+    file.close();
+    return true;
+}
+
+bool StandardPath::createServiceSource()
+{
+    QString wsName = wsdl->getWebServiceName();
+    QFile file(workingDir.path() + "/" + wsName + ".cpp");
+    if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
+        return enterErrorState("Error: could not open Web Service source file for writing.");
+
+    // ---------------------------------
+    // Begin writing:
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << "#include \"../headers/" << wsName << ".h\"" << endl;
+    out << endl;
+    out << "" << wsName << "::" << wsName << "(QObject *parent)" << endl;
+    out << "    : QObject(parent)" << endl;
+    out << "{" << endl;
+    out << "    errorState = false;" << endl;
+    out << "    isErrorState();" << endl;
+    out << "}" << endl;
+    out << endl;
+    out << "" << wsName << "::~" << wsName << "()" << endl;
+    out << "{" << endl;
+    out << "}" << endl;
+    out << endl;
+    out << "QStringList " << wsName << "::getMethodNames()" << endl;
+    out << "{" << endl;
+    out << "    return (QStringList) messages->keys();" << endl;
+    out << "}" << endl;
+    out << endl;
+    { // Define all messages (as wrappers for message classes).
+        QMap<QString, QSoapMessage *> *tempMap = wsdl->getMethods();
+        foreach (QString s, tempMap->keys())
+        {
+            QString tmpS = "", tmpP = "";
+            QSoapMessage *m = tempMap->value(s);
+            foreach (QString ret, m->getReturnValueNameType().keys())
+            {
+                tmpS = m->getReturnValueNameType().value(ret).typeName();
+                break; // This does not support multiple return values!
+            }
+
+            QMap<QString, QVariant> tempParam = m->getParameterNamesTypes();
+            // Create msgParameters (comma separated list)
+            foreach (QString param, tempParam.keys())
+            {
+                tmpP += QString(tempParam.value(param).typeName()) + " " + s + ", ";
+            }
+            tmpP.chop(2);
+
+            out << tmpS << " " << s << "(" << tmpP << ");" << endl;
+            out << "{" << endl;
+            out << "    " << m->getMessageName() << "(" << tmpP << ");" << endl;
+            out << "}" << endl;
+            out << endl;
+        }
+    }
+    out << "QUrl " << wsName << "::getHostUrl()" << endl;
+    out << "{" << endl;
+    out << "    return hostUrl;" << endl;
+    out << "}" << endl;
+    out << endl;
+    out << "QString " << wsName << "::getHost()" << endl;
+    out << "{" << endl;
+    out << "    return hostname;" << endl;
+    out << "}" << endl;
+    out << endl;
+    out << "bool " << wsName << "::isErrorState()" << endl;
+    out << "{" << endl;
+    out << "    return errorState;" << endl;
+    out << "}" << endl;
+    out << endl;
+    out << "void " << wsName << "::init()" << endl;
+    out << "{" << endl;
+    out << "    errorState = false;" << endl;
+    out << endl;
+    out << "    if (isErrorState())" << endl;
+    out << "        return;" << endl;
+    out << "}" << endl;
+    // EOF (Web Service source)
+    // ---------------------------------
+
+    file.close();
+    return true;
+}
+
+bool StandardPath::createBuildSystemFile()
+{
+    if (flags.buildSystem == Flags::qmake)
+        return createQMakeProject();
+
+    return true;
+}
+
+bool StandardPath::createQMakeProject()
+{
+    QString wsName = wsdl->getWebServiceName();
+    QFile file(workingDir.path() + "/" + wsName + ".pro");
+    if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
+        return enterErrorState("Error: could not open Web Service .pro file for writing.");
+
+    // ---------------------------------
+    // Begin writing:
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << "#-------------------------------------------------" << endl;
+    out << "#" << endl;
+    out << "# Project generated from WSDL by qtWsdlConverter ";
+    out << QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss") << endl;
+//    out << "# Tomasz 'sierdzio' Siekierda" << endl;
+//    out << "# sierdzio@gmail.com" << endl;
+    out << "#-------------------------------------------------" << endl;
+    out << endl;
+    out << "QT += core network" << endl;
+    out << "QT -= gui" << endl;
+    out << endl;
+    out << "TARGET = " << wsName << endl;
+    out << endl;
+    out << "TEMPLATE = app" << endl;
+    out << endl;
+    out << "SOURCES += " << wsName << ".cpp \\" << endl;
+    { // Include all sources.
+        QStringList tempMap = wsdl->getMethodNames();
+        foreach (QString s, tempMap)
+        {
+            out << "    sources/" << s << ".cpp";
+            if (tempMap.indexOf(s) != (tempMap.length() - 1))
+                out << " \\" << endl;
+        }
+    }
+    out << endl;
+    out << endl;
+    out << "HEADERS += " << wsName << ".h \\" << endl;
+    { // Include all headers.
+        QStringList tempMap = wsdl->getMethodNames();
+        foreach (QString s, tempMap)
+        {
+            out << "    headers/" << s << ".h";
+            if (tempMap.indexOf(s) != (tempMap.length() - 1))
+                out << " \\" << endl;
+        }
+    }
+    // EOF (QMake .pro file)
     // ---------------------------------
 
     file.close();

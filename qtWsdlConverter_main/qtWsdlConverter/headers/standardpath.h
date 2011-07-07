@@ -11,12 +11,15 @@ class StandardPath : public QObject
 public:
     explicit StandardPath(QObject *parent = 0);
     static bool create(QWsdl *wsdl, QDir workingDir, Flags flgs, QObject *parent = 0);
+    bool isErrorState();
 
 signals:
+    void errorEncountered(QString errMessage);
 
 public slots:
 
 private:
+    bool enterErrorState(QString errMessage = "");
     void prepare();
     bool createMessages();
     bool createMessageHeader(QSoapMessage *msg);
@@ -24,13 +27,15 @@ private:
     bool createService();
     bool createServiceHeader();
     bool createServiceSource();
+    bool createBuildSystemFile();
     bool createQMakeProject();
 
     QMap<QString, QSoapMessage *> *messages;
     QDir workingDir;
     QWsdl *wsdl;
     Flags flags;
-
+    bool errorState;
+    QString errorMessage;
 };
 
 #endif // STANDARDPATH_H

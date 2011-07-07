@@ -46,16 +46,13 @@ bool populateArgumentsList(QMap<int, QVariant> *lst, Flags flgs)
         Possible options: --soap10, --soap12, --http, --synchronous, --asynchronous, --help.
         New ones: --fullMode, --debugMode, --compactMode,
                   --standardStructure, --noMessagesStructure, --allInOneDirStructure.
+        Upcoming: --qmake, --cmake, --scons.
 
         --synchronous, --soap12 switches are default ones.
     */
 
     QStringList arguments = qApp->arguments();
     bool wasFile = false, wasOutDir = false, wasClassName = false;
-
-//    // Set default flags:
-//    lst->insert(FlagProt, QSoapMessage::soap12);
-//    lst->insert(FlagSyn, Flags::synchronous);
 
     if (arguments.length() <= 1)
     {
@@ -135,6 +132,7 @@ void displayHelp()
     qDebug() << "Possible options: --soap10, --soap12, --http, --synchronous, --asynchronous, --help.";
     qDebug() << "New ones: --fullMode, --debugMode, --compactMode,";
     qDebug() << "--standardStructure, --noMessagesStructure, --allInOneDirStructure.";
+    qDebug() << "Upcoming: --qmake, --cmake, --scons.";
     qDebug() << "Default switches are: --synchronous, --soap12, --fullMode, --standardStructure.";
     qDebug() << "";
     qDebug() << "Copyright by Tomasz Siekierda <sierdzio@gmail.com>";
