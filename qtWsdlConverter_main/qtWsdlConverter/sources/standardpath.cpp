@@ -624,7 +624,7 @@ bool StandardPath::createServiceSource()
                 out << tmpS << " " << s << "(" << tmpP << ");" << endl;
                 out << "{" << endl;
                 out << "    " << m->getMessageName() << " " << objName << "(this);" << endl;
-                out << "    " << objName << ".sendMessage(" << tmpP << ");" << endl;
+                out << "    " << objName << ".sendMessage(" << tmpPN << ");" << endl;
                 out << "}" << endl;
                 out << endl;
             }

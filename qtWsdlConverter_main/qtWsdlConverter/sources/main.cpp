@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 bool populateArgumentsList(QMap<int, QVariant> *lst, Flags flgs)
 {
     /*
-        qtwsdlconvert [options] <WSDL file or URL> [output directory] [base output class name, defaults to web service name]
+        qtwsdlconvert [options] <WSDL file or URL> [output directory, defaults to web service name] [base output class name, defaults to web service name]
 
         Possible options: --soap10, --soap12, --http, --synchronous, --asynchronous, --help.
         New ones: --full-mode, --debug-mode, --compact-mode,
