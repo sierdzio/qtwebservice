@@ -167,8 +167,10 @@ void displayHelp()
     qDebug() << "Upcoming: --qmake, --cmake, --scons, --no-build-system";
     qDebug() << "Default switches are: --synchronous, --soap12, --standard-structure, --full-mode, --qmake.";
     qDebug() << "";
-    qDebug() << "Copyright by Tomasz Siekierda <sierdzio@gmail.com>";
-    qDebug() << "Distributed under GPLv3";
+    qDebug() << "qtWsdlConverter Copyright (C) 2011  Tomasz 'sierdzio' Siekierda";
+    qDebug() << "This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'."; //Change that!
+    qDebug() << "This is free software, and you are welcome to redistribute it";
+    qDebug() << "under certain conditions; type `show c' for details."; // Change that!
     qDebug() << "";
 }
 
