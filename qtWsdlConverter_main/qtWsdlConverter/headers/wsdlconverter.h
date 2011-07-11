@@ -12,9 +12,9 @@ class WsdlConverter : public QObject
 
 public:
     explicit WsdlConverter(QString wsdlFileOrUrl,
-                  QObject *parent = 0,
-                  QDir outputDirectory = QDir(),
-                  QString baseOutputClassName = "");
+                           QObject *parent = 0,
+                           QString outputDirectory = "",
+                           QString baseOutputClassName = "");
     ~WsdlConverter();
 
     void setFlags(Flags flgs);
@@ -32,6 +32,8 @@ private:
 
     bool errorState;
     QString errorMessage;
+    QString baseClassName;
+    QString outputDir;
     QWsdl *wsdl;
     Flags flags;
 };

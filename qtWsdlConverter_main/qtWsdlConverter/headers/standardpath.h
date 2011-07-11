@@ -10,7 +10,7 @@ class StandardPath : public QObject
     Q_OBJECT
 public:
     explicit StandardPath(QObject *parent = 0);
-    static bool create(QWsdl *wsdl, QDir workingDir, Flags flgs, QObject *parent = 0);
+    static bool create(QWsdl *wsdl, QDir workingDir, Flags flgs, QString baseClassName = 0, QObject *parent = 0);
     bool isErrorState();
 
 signals:
@@ -36,6 +36,7 @@ private:
     Flags flags;
     bool errorState;
     QString errorMessage;
+    QString baseClassName;
 };
 
 #endif // STANDARDPATH_H

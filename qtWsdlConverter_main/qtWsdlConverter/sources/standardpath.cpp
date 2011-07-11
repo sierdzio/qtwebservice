@@ -28,9 +28,10 @@ void StandardPath::prepare()
     messages = wsdl->getMethods();
 }
 
-bool StandardPath::create(QWsdl *w, QDir wrkDir, Flags flgs, QObject *parent)
+bool StandardPath::create(QWsdl *w, QDir wrkDir, Flags flgs, QString bsClsNme, QObject *parent)
 {
     StandardPath obj(parent);
+    obj.baseClassName = bsClsNme;
     obj.flags = flgs;
     obj.workingDir = wrkDir;
     obj.wsdl = w;
@@ -460,12 +461,12 @@ bool StandardPath::createService()
 {
     workingDir.cd("headers");
     if (!createServiceHeader())
-        return enterErrorState("Creating header for WebvService \"" + wsdl->getWebServiceName() + "\" failed!");
+        return enterErrorState("Creating header for Web Service \"" + wsdl->getWebServiceName() + "\" failed!");
 
     workingDir.cdUp();
     workingDir.cd("sources");
     if (!createServiceSource())
-        return enterErrorState("Creating source for WebvService \"" + wsdl->getWebServiceName() + "\" failed!");
+        return enterErrorState("Creating source for Web Service \"" + wsdl->getWebServiceName() + "\" failed!");
 
     workingDir.cdUp();
     return true;
@@ -473,7 +474,12 @@ bool StandardPath::createService()
 
 bool StandardPath::createServiceHeader()
 {
-    QString wsName = wsdl->getWebServiceName();
+    QString wsName = "";
+    if (baseClassName != "")
+        wsName = baseClassName;
+    else
+        wsName = wsdl->getWebServiceName();
+
     QFile file(workingDir.path() + "/" + wsName + ".h");
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
         return enterErrorState("Error: could not open Web Service header file for writing.");
@@ -550,7 +556,12 @@ bool StandardPath::createServiceHeader()
 
 bool StandardPath::createServiceSource()
 {
-    QString wsName = wsdl->getWebServiceName();
+    QString wsName = "";
+    if (baseClassName != "")
+        wsName = baseClassName;
+    else
+        wsName = wsdl->getWebServiceName();
+
     QFile file(workingDir.path() + "/" + wsName + ".cpp");
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
         return enterErrorState("Error: could not open Web Service source file for writing.");
@@ -564,7 +575,7 @@ bool StandardPath::createServiceSource()
     out << "" << wsName << "::" << wsName << "(QObject *parent)" << endl;
     out << "    : QObject(parent)" << endl;
     out << "{" << endl;
-    out << "    connect(" << endl;
+//    out << "    connect(" << endl;
     out << "    errorState = false;" << endl;
     out << "    isErrorState();" << endl;
     out << "}" << endl;
@@ -582,7 +593,7 @@ bool StandardPath::createServiceSource()
         QMap<QString, QSoapMessage *> *tempMap = wsdl->getMethods();
         foreach (QString s, tempMap->keys())
         {
-            QString tmpS = "", tmpP = "";
+            QString tmpS = "", tmpP = "", tmpPN = "";
             QSoapMessage *m = tempMap->value(s);
             foreach (QString ret, m->getReturnValueNameType().keys())
             {
@@ -595,14 +606,15 @@ bool StandardPath::createServiceSource()
             foreach (QString param, tempParam.keys())
             {
                 tmpP += QString(tempParam.value(param).typeName()) + " " + param + ", ";
+                tmpPN += param + ", ";
             }
             tmpP.chop(2);
 
             if (flags.synchronousness == Flags::synchronous)
             {
-                out << tmpS << " " << s << "(" << tmpP << ");" << endl;
+                out << tmpS << " " << wsName << "::" << s << "(" << tmpP << ");" << endl;
                 out << "{" << endl;
-                out << "    return " << m->getMessageName() << "::sendMessage(" << tmpP << ");" << endl;
+                out << "    return " << m->getMessageName() << "::sendMessage(" << tmpPN << ");" << endl;
                 out << "}" << endl;
                 out << endl;
             }
@@ -659,7 +671,12 @@ bool StandardPath::createBuildSystemFile()
 
 bool StandardPath::createQMakeProject()
 {
-    QString wsName = wsdl->getWebServiceName();
+    QString wsName = "";
+    if (baseClassName != "")
+        wsName = baseClassName;
+    else
+        wsName = wsdl->getWebServiceName();
+
     QFile file(workingDir.path() + "/" + wsName + ".pro");
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
         return enterErrorState("Error: could not open Web Service .pro file for writing.");

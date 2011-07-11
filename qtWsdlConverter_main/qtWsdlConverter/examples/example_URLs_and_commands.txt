@@ -8,6 +8,7 @@ http://www.webservicex.net/LondonGoldFix.asmx?WSDL
 *********************
 Commands:
 
+./qtWsdlConverter examples/band_ws.asmx
 ./qtWsdlConverter examples/stockquote.asmx
 ./qtWsdlConverter examples/stockquote.asmx myGreatNewQWebService
 

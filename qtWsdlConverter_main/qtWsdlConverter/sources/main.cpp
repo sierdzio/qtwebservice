@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
     WsdlConverter converter(args->value(Path).toString(),
                             0,
-                            QDir(args->value(Dir).toString()),
+                            args->value(Dir).toString(),
                             args->value(ClassName).toString());
 
     // Set flags:
@@ -69,16 +69,41 @@ bool populateArgumentsList(QMap<int, QVariant> *lst, Flags flgs)
                 displayHelp();
                 return false;
             }
+            // Protocol flags:
             else if (s == "--soap12")
                 flgs.protocol = QSoapMessage::soap12;
             else if (s == "--soap10")
                 flgs.protocol = QSoapMessage::soap10;
             else if (s == "--html")
                 flgs.protocol = QSoapMessage::http;
+            // Synchronousness:
             else if (s == "--synchronous")
                 flgs.synchronousness = Flags::synchronous;
             else if (s == "--asynchronous")
                 flgs.synchronousness = Flags::asynchronous;
+            // Modes:
+            else if (s == "--full-mode")
+                flgs.mode = Flags::fullMode;
+            else if (s == "--debug-mode")
+                flgs.mode = Flags::debugMode;
+            else if (s == "--compact-mode")
+                flgs.mode = Flags::compactMode;
+            // Structures:
+            else if (s == "--standard-structure")
+                flgs.structure = Flags::standardStructure;
+            else if (s == "--no-messages-structure")
+                flgs.structure = Flags::noMessagesStructure;
+            else if (s == "--all-in-one-dir-structure")
+                flgs.structure = Flags::allInOneDirStructure;
+            // Build systems:
+            else if (s == "--qmake")
+                flgs.buildSystem = Flags::qmake;
+            else if (s == "--cmake")
+                flgs.buildSystem = Flags::cmake;
+            else if (s == "--scons")
+                flgs.buildSystem = Flags::scons;
+            else if (s == "--no-build-system")
+                flgs.buildSystem = Flags::noBuildSystem;
         }
         else if ((s != "") && (s != qApp->applicationFilePath()))
         {

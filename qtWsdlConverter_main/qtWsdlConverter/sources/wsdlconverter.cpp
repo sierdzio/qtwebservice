@@ -1,7 +1,7 @@
 #include "../headers/wsdlconverter.h"
 
-WsdlConverter::WsdlConverter(QString wsdlFileOrUrl, QObject *parent, QDir outputDir, QString baseOutputClsNme) :
-    QObject(parent)
+WsdlConverter::WsdlConverter(QString wsdlFileOrUrl, QObject *parent, QString outputD, QString baseOutputCls) :
+    QObject(parent), outputDir(outputD), baseClassName(baseOutputCls)
 {
     errorState = false;
     errorMessage = "";
@@ -55,6 +55,13 @@ void WsdlConverter::convert()
 
     QString mainPath = qApp->applicationDirPath() + "/" + getWebServiceName();
     QDir mainDir;
+    if (outputDir != "")
+    {
+        if (outputDir.at(0) != '/')
+            mainPath = qApp->applicationDirPath() + "/" + outputDir;
+        else
+            mainPath = outputDir;
+    }
     mainDir.setPath(mainPath);
 
     if (mainDir.exists())
@@ -74,7 +81,7 @@ void WsdlConverter::convert()
         if (flags.structure == Flags::standardStructure)
         {
             flags = Flags(Flags::fullMode, flags.synchronousness, flags.structure, flags.protocol, flags.buildSystem);
-            if (!StandardPath::create(wsdl, mainDir, flags, this))
+            if (!StandardPath::create(wsdl, mainDir, flags, baseClassName, this))
             {
                 QString tmp = "Error - code creation failed.";
                 // Might be good to add an interactive menu here (to ask for a new dir name)

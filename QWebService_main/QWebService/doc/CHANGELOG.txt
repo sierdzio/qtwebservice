@@ -67,9 +67,14 @@ Part of the initial development is not expressed here. Refer to git logs or as s
  - added QMake .pro file generation for StandardPath,
  - made some code optimisation in StandardPath (file is opened and checked before getting msg info).
 
-.07.2011 : CEST. Since fc8628bd0bf853d3e3cdba8f8383a70870dd8e0a:
+11.07.2011 10:13 CEST. Since fc8628bd0bf853d3e3cdba8f8383a70870dd8e0a:
  - adeed synchronous/ asynchronous handling to standardPath,
  - added new build-system switch to Flags class: 'noBuildSystem',
  - updated converter's help message and comments on possible switches,
  - fixed converter not handling URLs properly,
  - fixed service classes' parameter list creation getting WS name instead of parameter name.
+
+.07.2011 : CEST. Since f9eefb304d899f049ea186108da65ea531c7fa53:
+ - made converter read all currently used flags from command line, and properly add them to Flags object,
+ - added output dir handling to converter,
+ - added custom base class name functionality (it can be specified in command line).
