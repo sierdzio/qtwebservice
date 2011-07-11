@@ -68,4 +68,8 @@ Part of the initial development is not expressed here. Refer to git logs or as s
  - made some code optimisation in StandardPath (file is opened and checked before getting msg info).
 
 .07.2011 : CEST. Since fc8628bd0bf853d3e3cdba8f8383a70870dd8e0a:
- - 
+ - adeed synchronous/ asynchronous handling to standardPath,
+ - added new build-system switch to Flags class: 'noBuildSystem',
+ - updated converter's help message and comments on possible switches,
+ - fixed converter not handling URLs properly,
+ - fixed service classes' parameter list creation getting WS name instead of parameter name.

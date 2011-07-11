@@ -519,7 +519,7 @@ bool StandardPath::createServiceHeader()
             // Create msgParameters (comma separated list)
             foreach (QString param, tempParam.keys())
             {
-                tmpP += QString(tempParam.value(param).typeName()) + " " + s + ", ";
+                tmpP += QString(tempParam.value(param).typeName()) + " " + param + ", ";
             }
             tmpP.chop(2);
 
@@ -564,6 +564,7 @@ bool StandardPath::createServiceSource()
     out << "" << wsName << "::" << wsName << "(QObject *parent)" << endl;
     out << "    : QObject(parent)" << endl;
     out << "{" << endl;
+    out << "    connect(" << endl;
     out << "    errorState = false;" << endl;
     out << "    isErrorState();" << endl;
     out << "}" << endl;
@@ -593,15 +594,28 @@ bool StandardPath::createServiceSource()
             // Create msgParameters (comma separated list)
             foreach (QString param, tempParam.keys())
             {
-                tmpP += QString(tempParam.value(param).typeName()) + " " + s + ", ";
+                tmpP += QString(tempParam.value(param).typeName()) + " " + param + ", ";
             }
             tmpP.chop(2);
 
-            out << tmpS << " " << s << "(" << tmpP << ");" << endl;
-            out << "{" << endl;
-            out << "    " << m->getMessageName() << "(" << tmpP << ");" << endl;
-            out << "}" << endl;
-            out << endl;
+            if (flags.synchronousness == Flags::synchronous)
+            {
+                out << tmpS << " " << s << "(" << tmpP << ");" << endl;
+                out << "{" << endl;
+                out << "    return " << m->getMessageName() << "::sendMessage(" << tmpP << ");" << endl;
+                out << "}" << endl;
+                out << endl;
+            }
+            else if (flags.synchronousness == Flags::asynchronous)
+            {
+                QString objName = m->getMessageName().toLower(); // might crash when WS name is in low case
+                out << tmpS << " " << s << "(" << tmpP << ");" << endl;
+                out << "{" << endl;
+                out << "    " << m->getMessageName() << " " << objName << "(this);" << endl;
+                out << "    " << objName << ".sendMessage(" << tmpP << ");" << endl;
+                out << "}" << endl;
+                out << endl;
+            }
         }
     }
     out << "QUrl " << wsName << "::getHostUrl()" << endl;
@@ -637,6 +651,8 @@ bool StandardPath::createBuildSystemFile()
 {
     if (flags.buildSystem == Flags::qmake)
         return createQMakeProject();
+    else if (flags.buildSystem == Flags::noBuildSystem)
+        return true;
 
     return true;
 }

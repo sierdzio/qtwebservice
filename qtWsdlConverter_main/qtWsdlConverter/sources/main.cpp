@@ -44,11 +44,11 @@ bool populateArgumentsList(QMap<int, QVariant> *lst, Flags flgs)
         qtwsdlconvert [options] <WSDL file or URL> [output directory] [base output class name, defaults to web service name]
 
         Possible options: --soap10, --soap12, --http, --synchronous, --asynchronous, --help.
-        New ones: --fullMode, --debugMode, --compactMode,
-                  --standardStructure, --noMessagesStructure, --allInOneDirStructure.
-        Upcoming: --qmake, --cmake, --scons.
+        New ones: --full-mode, --debug-mode, --compact-mode,
+                  --standard-structure, --no-messages-structure, --all-in-one-dir-structure.
+        Upcoming: --qmake, --cmake, --scons, --no-build-system.
 
-        --synchronous, --soap12 switches are default ones.
+        --synchronous, --soap12, --standard-structure, --full-mode, --qmake switches are default ones.
     */
 
     QStringList arguments = qApp->arguments();
@@ -86,13 +86,20 @@ bool populateArgumentsList(QMap<int, QVariant> *lst, Flags flgs)
             {
                 wasFile = true;
                 QString tmp = s;
-                QFileInfo tempInfo(tmp);
-                if (tempInfo.isRelative())
+                QUrl tempUrl(tmp);
+                if (!QFile::exists(tmp) && tempUrl.isValid())
                 {
-                    tmp.prepend(qApp->applicationDirPath() + "/");
+                    lst->insert(Path, tmp);;
                 }
-
-                lst->insert(Path, tmp);
+                else
+                {
+                    QFileInfo tempInfo(tmp);
+                    if (tempInfo.isRelative())
+                    {
+                        tmp.prepend(qApp->applicationDirPath() + "/");
+                        lst->insert(Path, tmp);
+                    }
+                }
             }
             else if (!wasOutDir)
             {
@@ -131,12 +138,12 @@ void displayHelp()
 //    qDebug() << "";
     qDebug() << "Possible options: --soap10, --soap12, --http, --synchronous, --asynchronous, --help.";
     qDebug() << "New ones: --fullMode, --debugMode, --compactMode,";
-    qDebug() << "--standardStructure, --noMessagesStructure, --allInOneDirStructure.";
-    qDebug() << "Upcoming: --qmake, --cmake, --scons.";
-    qDebug() << "Default switches are: --synchronous, --soap12, --fullMode, --standardStructure.";
+    qDebug() << "--standard-structure, --no-messages-structure, --all-in-one-dir-structure.";
+    qDebug() << "Upcoming: --qmake, --cmake, --scons, --no-build-system";
+    qDebug() << "Default switches are: --synchronous, --soap12, --standard-structure, --full-mode, --qmake.";
     qDebug() << "";
     qDebug() << "Copyright by Tomasz Siekierda <sierdzio@gmail.com>";
-    qDebug() << "Distributed under <some GPL licence - to be decided later>";
+    qDebug() << "Distributed under GPLv3";
     qDebug() << "";
 }
 

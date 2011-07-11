@@ -9,7 +9,7 @@ public:
     enum Mode{fullMode, debugMode, compactMode};
     enum Synchronousness {synchronous, asynchronous};
     enum Structure {standardStructure, noMessagesStructure, allInOneDirStructure};
-    enum BuildSystem {qmake, cmake, scons};
+    enum BuildSystem {qmake, cmake, scons, noBuildSystem};
 
     Flags(Mode mode = fullMode,
           Synchronousness synchronousness = synchronous,
