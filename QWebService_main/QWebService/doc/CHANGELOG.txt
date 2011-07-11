@@ -74,7 +74,7 @@ Part of the initial development is not expressed here. Refer to git logs or as s
  - fixed converter not handling URLs properly,
  - fixed service classes' parameter list creation getting WS name instead of parameter name.
 
-.07.2011 : CEST. Since f9eefb304d899f049ea186108da65ea531c7fa53:
+11.07.2011 11:dd CEST. Since f9eefb304d899f049ea186108da65ea531c7fa53:
  - made converter read all currently used flags from command line, and properly add them to Flags object,
  - added output dir handling to converter,
  - added custom base class name functionality (it can be specified in command line).
