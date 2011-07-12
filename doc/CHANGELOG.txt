@@ -87,3 +87,7 @@ Part of the initial development is not expressed here. Refer to git logs or ask 
  - refactorised enterErrorState() to show debug messages in WsdlConverter.h, but it needs changes in other classes, too,
  - modified displayIntro() in converter's main(),
  - began implementing --compact-mode flag.
+
+12.07.2011 11:09 CEST. Since 06545eb583d65c20becf4f51fbaa5263e49955c3:
+ - written the readme for converter,
+ - tagged as v0.1.3.

@@ -41,17 +41,6 @@ int main(int argc, char *argv[])
 
 bool populateArgumentsList(QMap<int, QVariant> *lst, Flags *flgs)
 {
-    /*
-        qtwsdlconvert [options] <WSDL file or URL> [output directory, defaults to web service name] [base output class name, defaults to web service name]
-
-        Possible options: --soap10, --soap12, --http, --synchronous, --asynchronous, --help.
-        New ones: --full-mode, --debug-mode, --compact-mode,
-                  --standard-structure, --no-messages-structure, --all-in-one-dir-structure,
-                  --qmake, --cmake, --scons, --no-build-system, --force.
-
-        --synchronous, --soap12, --standard-structure, --full-mode, --qmake switches are default ones.
-    */
-
     QStringList arguments = qApp->arguments();
     bool wasFile = false, wasOutDir = false, wasClassName = false;
 
@@ -159,8 +148,6 @@ bool populateArgumentsList(QMap<int, QVariant> *lst, Flags *flgs)
 */
 void displayHelp()
 {
-//    QString hlpMsg = "";
-//    qDebug() << "";
     qDebug() << "wsdlConvert - help.";
     qDebug() << "";
     qDebug() << "qtwsdlconvert [options] <WSDL file or URL> [output directory] [base output class name, defaults to web service name]";
@@ -171,10 +158,9 @@ void displayHelp()
     qDebug() << "Default switches are: --synchronous, --soap12, --standard-structure, --full-mode, --qmake.";
     qDebug() << "";
     qDebug() << "qtWsdlConverter Copyright (C) 2011  Tomasz 'sierdzio' Siekierda";
-    qDebug() << "This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'."; //Change that!
+    qDebug() << "This program comes with ABSOLUTELY NO WARRANTY.";
     qDebug() << "This is free software, and you are welcome to redistribute it";
-    qDebug() << "under certain conditions; type `show c' for details."; // Change that!
-    qDebug() << "";
+    qDebug() << "under certain conditions, listed in LICENCE.txt.";
 }
 
 void displayIntro(QMap<int, QVariant> *args, Flags flgs, WsdlConverter &converter)
