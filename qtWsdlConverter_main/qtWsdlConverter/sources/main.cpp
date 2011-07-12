@@ -4,7 +4,7 @@
 #include "../headers/wsdlconverter.h"
 
 enum argumentDescription {AppName, Path, Dir, ClassName, FlagHelp};
-bool populateArgumentsList(QMap<int, QVariant> *lst, Flags flgs);
+bool populateArgumentsList(QMap<int, QVariant> *lst, Flags *flgs);
 void displayHelp();
 void displayIntro(QMap<int, QVariant> *args, Flags flgs, WsdlConverter &converter);
 void displayOutro(WsdlConverter &converter);
@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     QMap<int, QVariant> *args = new QMap<int, QVariant>();
 
     //TODO: check argument sanity, and whether .at(0) is app name or not. Partially done.
-    if (!populateArgumentsList(args, flags))
+    if (!populateArgumentsList(args, &flags))
     {
         delete args;
         return 1;
@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
     converter.setFlags(flags);
 
     // Doing the conversion:
+    converter.convert();
     displayIntro(args, flags, converter);
     displayOutro(converter);
 
@@ -38,15 +39,15 @@ int main(int argc, char *argv[])
     return 0; //a.exec();
 }
 
-bool populateArgumentsList(QMap<int, QVariant> *lst, Flags flgs)
+bool populateArgumentsList(QMap<int, QVariant> *lst, Flags *flgs)
 {
     /*
         qtwsdlconvert [options] <WSDL file or URL> [output directory, defaults to web service name] [base output class name, defaults to web service name]
 
         Possible options: --soap10, --soap12, --http, --synchronous, --asynchronous, --help.
         New ones: --full-mode, --debug-mode, --compact-mode,
-                  --standard-structure, --no-messages-structure, --all-in-one-dir-structure.
-        Upcoming: --qmake, --cmake, --scons, --no-build-system.
+                  --standard-structure, --no-messages-structure, --all-in-one-dir-structure,
+                  --qmake, --cmake, --scons, --no-build-system, --force.
 
         --synchronous, --soap12, --standard-structure, --full-mode, --qmake switches are default ones.
     */
@@ -71,39 +72,42 @@ bool populateArgumentsList(QMap<int, QVariant> *lst, Flags flgs)
             }
             // Protocol flags:
             else if (s == "--soap12")
-                flgs.protocol = QSoapMessage::soap12;
+                flgs->protocol = QSoapMessage::soap12;
             else if (s == "--soap10")
-                flgs.protocol = QSoapMessage::soap10;
+                flgs->protocol = QSoapMessage::soap10;
             else if (s == "--html")
-                flgs.protocol = QSoapMessage::http;
+                flgs->protocol = QSoapMessage::http;
             // Synchronousness:
             else if (s == "--synchronous")
-                flgs.synchronousness = Flags::synchronous;
+                flgs->synchronousness = Flags::synchronous;
             else if (s == "--asynchronous")
-                flgs.synchronousness = Flags::asynchronous;
+                flgs->synchronousness = Flags::asynchronous;
             // Modes:
             else if (s == "--full-mode")
-                flgs.mode = Flags::fullMode;
+                flgs->mode = Flags::fullMode;
             else if (s == "--debug-mode")
-                flgs.mode = Flags::debugMode;
+                flgs->mode = Flags::debugMode;
             else if (s == "--compact-mode")
-                flgs.mode = Flags::compactMode;
+                flgs->mode = Flags::compactMode;
             // Structures:
             else if (s == "--standard-structure")
-                flgs.structure = Flags::standardStructure;
+                flgs->structure = Flags::standardStructure;
             else if (s == "--no-messages-structure")
-                flgs.structure = Flags::noMessagesStructure;
+                flgs->structure = Flags::noMessagesStructure;
             else if (s == "--all-in-one-dir-structure")
-                flgs.structure = Flags::allInOneDirStructure;
+                flgs->structure = Flags::allInOneDirStructure;
             // Build systems:
             else if (s == "--qmake")
-                flgs.buildSystem = Flags::qmake;
+                flgs->buildSystem = Flags::qmake;
             else if (s == "--cmake")
-                flgs.buildSystem = Flags::cmake;
+                flgs->buildSystem = Flags::cmake;
             else if (s == "--scons")
-                flgs.buildSystem = Flags::scons;
+                flgs->buildSystem = Flags::scons;
             else if (s == "--no-build-system")
-                flgs.buildSystem = Flags::noBuildSystem;
+                flgs->buildSystem = Flags::noBuildSystem;
+            // Force:
+            else if (s == "--force")
+                flgs->force = true;
         }
         else if ((s != "") && (s != qApp->applicationFilePath()))
         {
@@ -160,11 +164,10 @@ void displayHelp()
     qDebug() << "wsdlConvert - help.";
     qDebug() << "";
     qDebug() << "qtwsdlconvert [options] <WSDL file or URL> [output directory] [base output class name, defaults to web service name]";
-//    qDebug() << "";
     qDebug() << "Possible options: --soap10, --soap12, --http, --synchronous, --asynchronous, --help.";
-    qDebug() << "New ones: --fullMode, --debugMode, --compactMode,";
-    qDebug() << "--standard-structure, --no-messages-structure, --all-in-one-dir-structure.";
-    qDebug() << "Upcoming: --qmake, --cmake, --scons, --no-build-system";
+    qDebug() << "New ones: --full-mode, --debug-mode, --compact-mode,";
+    qDebug() << "--standard-structure, --no-messages-structure, --all-in-one-dir-structure,";
+    qDebug() << "--qmake, --cmake, --scons, --no-build-system, --force";
     qDebug() << "Default switches are: --synchronous, --soap12, --standard-structure, --full-mode, --qmake.";
     qDebug() << "";
     qDebug() << "qtWsdlConverter Copyright (C) 2011  Tomasz 'sierdzio' Siekierda";
@@ -179,7 +182,7 @@ void displayIntro(QMap<int, QVariant> *args, Flags flgs, WsdlConverter &converte
     qDebug() << "Creating code for web service:" << converter.getWebServiceName();
     if (args->value(Dir).toString() == "")
         qDebug() << "Output dir not specified. Defaulting to web service name.";
-
+/*
     QString tempFlags = "Using flags: ";
     if (flgs.synchronousness == Flags::synchronous)
         tempFlags += "synchronous, ";
@@ -192,10 +195,13 @@ void displayIntro(QMap<int, QVariant> *args, Flags flgs, WsdlConverter &converte
     else
         tempFlags += "soap12";
     qDebug() << tempFlags;
+*/
 }
 
 void displayOutro(WsdlConverter &converter)
 {
-    if (!converter.isErrorState())
-        qDebug() << "Strange. Everything seems to be working just fine... Operation completed successfully.";
+    if (converter.isErrorState())
+        qDebug() << "Conversion encountered an error.";
+    else
+        qDebug() << "Conversion successful.";
 }

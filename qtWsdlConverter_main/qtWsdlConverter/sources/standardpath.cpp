@@ -16,6 +16,7 @@ bool StandardPath::enterErrorState(QString errMessage)
 {
     errorState = true;
     errorMessage += errMessage + " ";
+    qDebug() << errorMessage;
     emit errorEncountered(errMessage);
     return false;
 }
@@ -124,7 +125,8 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
     out << "    ~" << msgName << "();" << endl;
     out << endl;
     out << "    void setParams(" << msgParameters << ");" << endl;
-    out << "    void setProtocol(Protocol protocol);" << endl;
+    if (flags.mode != Flags::compactMode)
+        out << "    void setProtocol(Protocol protocol);" << endl;
     out << "    bool sendMessage();" << endl;
     out << "    bool sendMessage(" << msgParameters << ");" << endl;
     out << "    " << msgReplyType << " static sendMessage(QObject *parent, QUrl url, QString _messageName," << endl;
@@ -144,7 +146,7 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
     out << "    void replyFinished(QNetworkReply *reply);" << endl;
     out << endl;
     out << "private:" << endl;
-    out << "    void init();" << endl;
+//    out << "    void init();" << endl;
     out << "    void prepareRequestData();" << endl;
     out << "    QString convertReplyToUtf(QString textToConvert);" << endl;
     out << endl;
@@ -215,11 +217,21 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
     out << msgName << "::" << msgName << "(QObject *parent) :" << endl;
     out << "    QObject(parent)" << endl;
     out << "{" << endl;
-    out << "    init();" << endl;
+//    out << "    init();" << endl;
     out << "    hostname = \"" << msg->getTargetNamespace() << "\";" << endl;
     out << "    hostUrl.setHost(hostname);" << endl;
     out << "    messageName = \"" << msgName << "\";" << endl;
-    out << "    parameters.clear();" << endl;
+    { // Defaulting the protocol:
+        out << "    protocol = ";
+        if (flags.protocol == QSoapMessage::soap10)
+            out << "soap10";
+        else if (flags.protocol == QSoapMessage::soap12)
+            out << "soap12";
+        else if (flags.protocol == QSoapMessage::http)
+            out << "http";
+        out << ";" << endl;
+    }
+//    out << "    parameters.clear();" << endl;
     out << "}" << endl;
     out << msgName << "::" << msgName << "(" << msgParameters << ", QObject *parent) :" << endl;
     out << "    QObject(parent)" << endl;
@@ -230,8 +242,18 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
         {
             out << "    this." << s << " = " << s << ";" << endl;
         }
+
+      // Defaulting the protocol:
+        out << "    protocol = ";
+        if (flags.protocol == QSoapMessage::soap10)
+            out << "soap10";
+        else if (flags.protocol == QSoapMessage::soap12)
+            out << "soap12";
+        else if (flags.protocol == QSoapMessage::http)
+            out << "http";
+        out << ";" << endl;
     }
-    out << "    init();" << endl;
+//    out << "    init();" << endl;
     out << "    hostUrl.setHost(hostname + messageName);" << endl;
     out << "}" << endl;
     out << endl;
@@ -253,11 +275,14 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
     }
     out << "}" << endl;
     out << endl;
-    out << "void " << msgName << "::setProtocol(Protocol prot)" << endl;
-    out << "{" << endl;
-    out << "    protocol = prot;" << endl;
-    out << "}" << endl;
-    out << endl;
+    if (flags.mode != Flags::compactMode)
+    {
+        out << "void " << msgName << "::setProtocol(Protocol prot)" << endl;
+        out << "{" << endl;
+        out << "    protocol = prot;" << endl;
+        out << "}" << endl;
+        out << endl;
+    }
     out << "bool " << msgName << "::sendMessage()" << endl;
     out << "{" << endl;
     out << "    hostUrl.setUrl(hostname);" << endl;

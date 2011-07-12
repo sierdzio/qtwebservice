@@ -541,7 +541,7 @@ void QWsdl::readService()
 //    xmlReader.readNext(); xmlReader.readNext();
     if (webServiceName == "")
         webServiceName = xmlReader.attributes().value("name").toString();
-    qDebug() << "Web service's name is now set.";
+//    qDebug() << "Web service's name is now set.";
     xmlReader.readNext();
 }
 

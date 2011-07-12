@@ -15,13 +15,14 @@ public:
           Synchronousness synchronousness = synchronous,
           Structure structure = standardStructure,
           QSoapMessage::Protocol protocol = QSoapMessage::soap12,
-          BuildSystem = qmake);
+          BuildSystem = qmake, bool force = false);
 
     Mode mode;
     Synchronousness synchronousness;
     Structure structure;
     QSoapMessage::Protocol protocol;
     BuildSystem buildSystem;
+    bool force;
 };
 
 #endif // FLAGS_H

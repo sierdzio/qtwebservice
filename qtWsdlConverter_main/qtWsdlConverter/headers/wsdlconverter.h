@@ -29,6 +29,7 @@ public slots:
 
 private:
     bool enterErrorState(QString errMessage = "");
+    bool removeDir(QString path);
 
     bool errorState;
     QString errorMessage;

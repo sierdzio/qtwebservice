@@ -78,3 +78,12 @@ Part of the initial development is not expressed here. Refer to git logs or ask 
  - made converter read all currently used flags from command line, and properly add them to Flags object,
  - added output dir handling to converter,
  - added custom base class name functionality (it can be specified in command line).
+
+12.07.2011 10:11 CEST. Since e830316e8d9535de19b765b649f7b518c16736df:
+ - numerous changes to doc/ and examples/ directories. They have been merged and moved up
+   to be global for both QWebService and converter,
+ - added licence text (GPLv3),
+ - added '--force' option to converter,
+ - refactorised enterErrorState() to show debug messages in WsdlConverter.h, but it needs changes in other classes, too,
+ - modified displayIntro() in converter's main(),
+ - began implementing --compact-mode flag.
