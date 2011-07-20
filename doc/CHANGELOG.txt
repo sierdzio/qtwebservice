@@ -91,3 +91,6 @@ Part of the initial development is not expressed here. Refer to git logs or ask 
 12.07.2011 11:09 CEST. Since 06545eb583d65c20becf4f51fbaa5263e49955c3:
  - written the readme for converter,
  - tagged as v0.1.3.
+
+20.07.2011 : CEST. Since 1cf263e731c32f7669a5e643932bfacfa06fdc58:
+ - began commenting the code

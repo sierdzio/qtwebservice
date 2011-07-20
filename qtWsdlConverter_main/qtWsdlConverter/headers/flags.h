@@ -3,6 +3,10 @@
 
 #include "../../../QWebService_main/QWebService/headers/QWebService_global.h"
 
+/**
+  Holds all converter's switches in one place.
+  WARNING: all flag variables are PUBLIC, so be careful not to assign value instead of comparing!
+  */
 class Flags
 {
 public:

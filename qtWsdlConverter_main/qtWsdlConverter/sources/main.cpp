@@ -9,6 +9,9 @@ void displayHelp();
 void displayIntro(QMap<int, QVariant> *args, Flags flgs, WsdlConverter &converter);
 void displayOutro(WsdlConverter &converter);
 
+/**
+  Reads flags, displays info, fires the converter.
+  */
 int main(int argc, char *argv[])
 {    
     QCoreApplication a(argc, argv);
@@ -39,6 +42,9 @@ int main(int argc, char *argv[])
     return 0; //a.exec();
 }
 
+/**
+  Reads application's command line, sets Flags, paths etc.
+  */
 bool populateArgumentsList(QMap<int, QVariant> *lst, Flags *flgs)
 {
     QStringList arguments = qApp->arguments();

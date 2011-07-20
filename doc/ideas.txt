@@ -3,4 +3,4 @@ When there is dir name conflict, app can ask for a new name, instead of exiting.
 File creation may be template-based!
 
 A re-think is needed to accomodate the 'compact' path, as well as role of 'protocol' in file creation
-(IMO - sierdzio it should specify the default value in standard path, and the only one in compact).
+(IMO (sierdzio) - it should specify the default value in standard path, and the only one in compact).

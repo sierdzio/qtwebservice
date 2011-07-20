@@ -5,6 +5,11 @@
 #include "../../../QWebService_main/QWebService/headers/QWebService_global.h"
 #include "flags.h"
 
+/**
+  Used to generate files in the standard path (with --standard-structure switch on).
+
+  In the future, this might be modified to support all switches.
+  */
 class StandardPath : public QObject
 {
     Q_OBJECT
