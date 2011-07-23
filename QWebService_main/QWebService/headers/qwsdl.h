@@ -7,6 +7,10 @@
 #include "qsoapmessage.h"
 //#include "QWebService_global.h"
 
+/**
+  Reads web service data (message names, parameters, return values, ws name etc)
+  from a WSDL file or URL.
+  */
 class QWsdl : public QObject
 {
     Q_OBJECT
