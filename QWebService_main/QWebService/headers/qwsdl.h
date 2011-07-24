@@ -18,20 +18,25 @@ class QWsdl : public QObject
 public:
     // Requires subsequent use of setWsdleFile() and parse()
     explicit QWsdl(QObject *parent = 0);
-    // When this constructor returns, the file is set and parsed
+    // When this constructor returns, the file is already set and parsed
     QWsdl(QString wsdlFile, QObject *parent = 0);
 //    QWsdl(QWsdl wsdlObject);
     ~QWsdl();
+    // Sets the WSDL file (or URL)
     void setWsdlFile(QString wsdlFile); // == resetWsdl()
+    // Returns a list of methods' names (as declared in WSDL)
     QStringList getMethodNames();
+    // Returns methods themselves (as QSoapMessages)
     QMap<QString, QSoapMessage *> *getMethods();
+    // Returns web service's name
     QString getWebServiceName();
+    // Returns hostname (URL) - this has to be refactorised, as the name is not intuitive!
     QString getHostname();
     QUrl getHostUrl();
     QString getTargetNamespace();
     //QFile getWsdl(); Rethink that. Maybe QString? Or saving to file specified in parameter?
-    QString getErrorInfo();
 
+    QString getErrorInfo();
     bool isErrorState();
     void resetWsdl(QString newWsdl);
 
