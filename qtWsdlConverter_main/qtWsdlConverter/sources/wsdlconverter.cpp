@@ -1,5 +1,13 @@
 #include "../headers/wsdlconverter.h"
 
+/*!
+    \class WsdlConverter
+    \brief Main class, supervizes code creation.
+  */
+
+/*!
+    \fn WsdlConverter::WsdlConverter(QString wsdlFileOrUrl, QObject *parent, QString outputD, QString baseOutputCls)
+  */
 WsdlConverter::WsdlConverter(QString wsdlFileOrUrl, QObject *parent, QString outputD, QString baseOutputCls) :
     QObject(parent), outputDir(outputD), baseClassName(baseOutputCls)
 {
@@ -11,21 +19,33 @@ WsdlConverter::WsdlConverter(QString wsdlFileOrUrl, QObject *parent, QString out
         enterErrorState("WSDL error!");
 }
 
+/*!
+    \fn WsdlConverter::~WsdlConverter()
+  */
 WsdlConverter::~WsdlConverter()
 {
     delete wsdl;
 }
 
+/*!
+    \fn WsdlConverter::setFlags(Flags flgs)
+  */
 void WsdlConverter::setFlags(Flags flgs)
 {
     flags = flgs;
 }
 
+/*!
+    \fn WsdlConverter::isErrorState()
+  */
 bool WsdlConverter::isErrorState()
 {
     return errorState;
 }
 
+/*!
+    \fn WsdlConverter::enterErrorState(QString errMessage)
+  */
 bool WsdlConverter::enterErrorState(QString errMessage)
 {
     errorState = true;
@@ -35,6 +55,9 @@ bool WsdlConverter::enterErrorState(QString errMessage)
     return false;
 }
 
+/*!
+    \fn WsdlConverter::convert()
+  */
 void WsdlConverter::convert()
 {
     /*
@@ -97,11 +120,17 @@ void WsdlConverter::convert()
     return;
 }
 
+/*!
+    \fn WsdlConverter::getWebServiceName()
+  */
 QString WsdlConverter::getWebServiceName()
 {
     return wsdl->getWebServiceName();
 }
 
+/*!
+    \fn WsdlConverter::removeDir(QString path)
+  */
 bool WsdlConverter::removeDir(QString path)
 {
     QDir dir(path);

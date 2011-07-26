@@ -1,5 +1,18 @@
 #include "../headers/qsoapmessage.h"
 
+/*!
+    \class QSoapMessage
+    \brief Class that can be used to asnchronously and synchronously send HTTP, SOAP1.0 and SOAP1.2 messages to web services.
+
+    To send a message and receive reply synchronously, use the static sendMessage() method. Otherwise, you can use
+    replyReady() signal to know, when a reply returns. It can be read with replyRead().
+  */
+
+/*!
+    \fn QSoapMessage::QSoapMessage(QObject *parent)
+
+    Constructs the message usign \a parent. Requires specifying other params late (setParams()).
+  */
 QSoapMessage::QSoapMessage(QObject *parent) :
     QObject(parent)
 {
@@ -10,6 +23,9 @@ QSoapMessage::QSoapMessage(QObject *parent) :
     parameters.clear();
 }
 
+/*!
+    \fn QSoapMessage::QSoapMessage(QUrl url, QString _messageName, QObject *parent)
+  */
 QSoapMessage::QSoapMessage(QUrl url, QString _messageName, QObject *parent) :
     QObject(parent), hostUrl(url), messageName(_messageName)
 {
@@ -18,6 +34,9 @@ QSoapMessage::QSoapMessage(QUrl url, QString _messageName, QObject *parent) :
     parameters.clear();
 }
 
+/*!
+    \fn QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *parent)
+  */
 QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *parent) :
     QObject(parent), hostname(url), messageName(_messageName)
 {
@@ -26,6 +45,9 @@ QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *parent) :
     parameters.clear();
 }
 
+/*!
+    \fn QSoapMessage::QSoapMessage(QString url, QString _messageName, QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal, QObject *parent)
+  */
 QSoapMessage::QSoapMessage(QString url, QString _messageName,
                            QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal, QObject *parent) :
     QObject(parent), hostname(url), messageName(_messageName), parameters(params), returnValue(returnVal)
@@ -34,6 +56,9 @@ QSoapMessage::QSoapMessage(QString url, QString _messageName,
     hostUrl.setHost(hostname + messageName);
 }
 
+/*!
+    \fn QSoapMessage::~QSoapMessage()
+  */
 QSoapMessage::~QSoapMessage()
 {
     delete manager;
@@ -42,22 +67,34 @@ QSoapMessage::~QSoapMessage()
     this->deleteLater();
 }
 
+/*!
+    \fn QSoapMessage::setParams(QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal)
+  */
 void QSoapMessage::setParams(QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal)
 {
     parameters = params;
     returnValue = returnVal;
 }
 
+/*!
+    \fn QSoapMessage::setTargetNamespace(QString tNamespace)
+  */
 void QSoapMessage::setTargetNamespace(QString tNamespace)
 {
     targetNamespace = tNamespace;
 }
 
+/*!
+    \fn QSoapMessage::setProtocol(Protocol prot)
+  */
 void QSoapMessage::setProtocol(Protocol prot)
 {
     protocol = prot;
 }
 
+/*!
+    \fn QSoapMessage::sendMessage()
+  */
 bool QSoapMessage::sendMessage()
 {
     hostUrl.setUrl(hostname);
@@ -78,6 +115,9 @@ bool QSoapMessage::sendMessage()
     return true;
 }
 
+/*!
+    \fn QSoapMessage::sendMessage(QMap<QString, QVariant> params)
+  */
 bool QSoapMessage::sendMessage(QMap<QString, QVariant> params)
 {
     parameters = params;
@@ -85,7 +125,11 @@ bool QSoapMessage::sendMessage(QMap<QString, QVariant> params)
     return true;
 }
 
-/* STATIC */
+/*!
+    \fn QSoapMessage::sendMessage(QObject *parent, QUrl url, QString _messageName, QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal)
+
+     STATIC method.
+  */
 QVariant QSoapMessage::sendMessage(QObject *parent, QUrl url, QString _messageName, QMap<QString, QVariant> params,
                                    QMap<QString, QVariant> returnVal)
 {
@@ -107,41 +151,65 @@ QVariant QSoapMessage::sendMessage(QObject *parent, QUrl url, QString _messageNa
     }
 }
 
+/*!
+    \fn QSoapMessage::replyRead()
+  */
 QVariant QSoapMessage::replyRead()
 {
     return reply;
 }
 
+/*!
+    \fn QSoapMessage::getMessageName()
+  */
 QString QSoapMessage::getMessageName()
 {
     return messageName;
 }
 
+/*!
+    \fn QSoapMessage::getParameterNames() const
+  */
 QStringList QSoapMessage::getParameterNames() const
 {
     return (QStringList) parameters.keys();
 }
 
+/*!
+    \fn QSoapMessage::getReturnValueName() const
+  */
 QStringList QSoapMessage::getReturnValueName() const
 {
     return (QStringList) returnValue.keys();
 }
 
+/*!
+    \fn QSoapMessage::getParameterNamesTypes() const
+  */
 QMap<QString, QVariant> QSoapMessage::getParameterNamesTypes() const
 {
     return parameters;
 }
 
+/*!
+    \fn QSoapMessage::getReturnValueNameType()
+  */
 QMap<QString, QVariant> QSoapMessage::getReturnValueNameType() const
 {
     return returnValue;
 }
 
+/*!
+    \fn QSoapMessage::getTargetNamespace()
+  */
 QString QSoapMessage::getTargetNamespace()
 {
     return targetNamespace;
 }
 
+/*!
+    \fn QSoapMessage::replyFinished(QNetworkReply *netReply)
+  */
 void QSoapMessage::replyFinished(QNetworkReply *netReply)
 {
     networkReply = netReply;
@@ -168,6 +236,9 @@ void QSoapMessage::replyFinished(QNetworkReply *netReply)
     emit replyReady(reply);
 }
 
+/*!
+    \fn QSoapMessage::init()
+  */
 void QSoapMessage::init()
 {
     protocol = soap12;
@@ -181,6 +252,9 @@ void QSoapMessage::init()
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
 }
 
+/*!
+    \fn QSoapMessage::prepareRequestData()
+  */
 void QSoapMessage::prepareRequestData()
 {
     data.clear();
@@ -207,6 +281,9 @@ void QSoapMessage::prepareRequestData()
     data.append(header + body + footer);
 }
 
+/*!
+    \fn QSoapMessage::convertReplyToUtf(QString textToConvert)
+  */
 QString QSoapMessage::convertReplyToUtf(QString textToConvert)
 {
     QString result = textToConvert;

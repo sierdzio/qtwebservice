@@ -1,5 +1,13 @@
 #include "../headers/standardpath.h"
 
+/*!
+    \class StandardPath
+    \brief Creates code in the standard path (standard structure).
+  */
+
+/*!
+    \fn StandardPath::StandardPath(QObject *parent)
+  */
 StandardPath::StandardPath(QObject *parent) :
     QObject(parent)
 {
@@ -7,11 +15,17 @@ StandardPath::StandardPath(QObject *parent) :
     errorMessage = "";
 }
 
+/*!
+    \fn StandardPath::isErrorState()
+  */
 bool StandardPath::isErrorState()
 {
     return errorState;
 }
 
+/*!
+    \fn StandardPath::enterErrorState(QString errMessage)
+  */
 bool StandardPath::enterErrorState(QString errMessage)
 {
     errorState = true;
@@ -21,6 +35,9 @@ bool StandardPath::enterErrorState(QString errMessage)
     return false;
 }
 
+/*!
+    \fn StandardPath::prepare()
+  */
 void StandardPath::prepare()
 {
     workingDir.mkdir("headers");
@@ -29,6 +46,9 @@ void StandardPath::prepare()
     messages = wsdl->getMethods();
 }
 
+/*!
+    \fn StandardPath::create(QWsdl *w, QDir wrkDir, Flags flgs, QString bsClsNme, QObject *parent)
+  */
 bool StandardPath::create(QWsdl *w, QDir wrkDir, Flags flgs, QString bsClsNme, QObject *parent)
 {
     StandardPath obj(parent);
@@ -47,6 +67,9 @@ bool StandardPath::create(QWsdl *w, QDir wrkDir, Flags flgs, QString bsClsNme, Q
     return true;
 }
 
+/*!
+    \fn StandardPath::createMessages()
+  */
 bool StandardPath::createMessages()
 {
     workingDir.cd("headers");
@@ -70,6 +93,9 @@ bool StandardPath::createMessages()
     return true;
 }
 
+/*!
+    \fn StandardPath::createMessageHeader(QSoapMessage *msg)
+  */
 bool StandardPath::createMessageHeader(QSoapMessage *msg)
 {
     QString msgName = msg->getMessageName();
@@ -180,6 +206,9 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
     return true;
 }
 
+/*!
+    \fn StandardPath::createMessageSource(QSoapMessage *msg)
+  */
 bool StandardPath::createMessageSource(QSoapMessage *msg)
 {
     QString msgName = msg->getMessageName();
@@ -482,6 +511,9 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
     return true;
 }
 
+/*!
+    \fn StandardPath::createService()
+  */
 bool StandardPath::createService()
 {
     workingDir.cd("headers");
@@ -497,6 +529,9 @@ bool StandardPath::createService()
     return true;
 }
 
+/*!
+    \fn StandardPath::createServiceHeader()
+  */
 bool StandardPath::createServiceHeader()
 {
     QString wsName = "";
@@ -579,6 +614,9 @@ bool StandardPath::createServiceHeader()
     return true;
 }
 
+/*!
+    \fn StandardPath::createServiceSource()
+  */
 bool StandardPath::createServiceSource()
 {
     QString wsName = "";
@@ -684,6 +722,9 @@ bool StandardPath::createServiceSource()
     return true;
 }
 
+/*!
+    \fn StandardPath::createBuildSystemFile()
+  */
 bool StandardPath::createBuildSystemFile()
 {
     if (flags.buildSystem == Flags::qmake)
@@ -694,6 +735,9 @@ bool StandardPath::createBuildSystemFile()
     return true;
 }
 
+/*!
+    \fn StandardPath::createQMakeProject()
+  */
 bool StandardPath::createQMakeProject()
 {
     QString wsName = "";
