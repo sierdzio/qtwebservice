@@ -4,7 +4,7 @@
  # include compat.qdocconf.
 
  #
- # To run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./spdar.qdocconf
+ # To run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtwsdlconverter.qdocconf
  #
 
  #include(compat.qdocconf)
@@ -27,7 +27,7 @@
  # directories containing the .cpp or .qdoc
  # files used in the documentation.
 
- #sourcedirs  = ./sources
+  sourcedirs  = ./sources
 
  # The exampledirs variable specifies the directories containing
  # the source code of the example files.

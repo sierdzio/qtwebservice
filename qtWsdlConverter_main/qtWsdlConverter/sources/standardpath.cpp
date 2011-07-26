@@ -7,6 +7,8 @@
 
 /*!
     \fn StandardPath::StandardPath(QObject *parent)
+
+    Constructs QObject using \a parent, initialises StandardPath.
   */
 StandardPath::StandardPath(QObject *parent) :
     QObject(parent)
@@ -16,7 +18,15 @@ StandardPath::StandardPath(QObject *parent) :
 }
 
 /*!
+    \fn StandardPath::errorEncountered(QString errMessage)
+
+    Singal emitted when StandardPath encounters an error. Carries \a errMessage for convenience.
+  */
+
+/*!
     \fn StandardPath::isErrorState()
+
+    Returns true if object is in error state.
   */
 bool StandardPath::isErrorState()
 {
@@ -24,6 +34,7 @@ bool StandardPath::isErrorState()
 }
 
 /*!
+    \internal
     \fn StandardPath::enterErrorState(QString errMessage)
   */
 bool StandardPath::enterErrorState(QString errMessage)
@@ -36,6 +47,7 @@ bool StandardPath::enterErrorState(QString errMessage)
 }
 
 /*!
+    \internal
     \fn StandardPath::prepare()
   */
 void StandardPath::prepare()
@@ -47,7 +59,13 @@ void StandardPath::prepare()
 }
 
 /*!
-    \fn StandardPath::create(QWsdl *w, QDir wrkDir, Flags flgs, QString bsClsNme, QObject *parent)
+    \fn StandardPath::create(QWsdl *wsdl, QDir workingDir, Flags flgs, QString baseClassName = 0, QObject *parent = 0)
+
+    Performs the conversion in StandardPath. Data from WSDL (\a wsdl) is combined with options specified
+    in flags (\a flgs), and base class name (\a baseClassName) to create a complete set of classes
+    in given directory (\a workingDir). For Qt reasons, \a parent is also needed, although it defaults to 0.
+
+    Returns true if successful.
   */
 bool StandardPath::create(QWsdl *w, QDir wrkDir, Flags flgs, QString bsClsNme, QObject *parent)
 {
@@ -68,6 +86,7 @@ bool StandardPath::create(QWsdl *w, QDir wrkDir, Flags flgs, QString bsClsNme, Q
 }
 
 /*!
+    \internal
     \fn StandardPath::createMessages()
   */
 bool StandardPath::createMessages()
@@ -94,6 +113,7 @@ bool StandardPath::createMessages()
 }
 
 /*!
+    \internal
     \fn StandardPath::createMessageHeader(QSoapMessage *msg)
   */
 bool StandardPath::createMessageHeader(QSoapMessage *msg)
@@ -207,6 +227,7 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
 }
 
 /*!
+    \internal
     \fn StandardPath::createMessageSource(QSoapMessage *msg)
   */
 bool StandardPath::createMessageSource(QSoapMessage *msg)
@@ -512,6 +533,7 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
 }
 
 /*!
+    \internal
     \fn StandardPath::createService()
   */
 bool StandardPath::createService()
@@ -530,6 +552,7 @@ bool StandardPath::createService()
 }
 
 /*!
+    \internal
     \fn StandardPath::createServiceHeader()
   */
 bool StandardPath::createServiceHeader()
@@ -615,6 +638,7 @@ bool StandardPath::createServiceHeader()
 }
 
 /*!
+    \internal
     \fn StandardPath::createServiceSource()
   */
 bool StandardPath::createServiceSource()
@@ -723,6 +747,7 @@ bool StandardPath::createServiceSource()
 }
 
 /*!
+    \internal
     \fn StandardPath::createBuildSystemFile()
   */
 bool StandardPath::createBuildSystemFile()
@@ -736,6 +761,7 @@ bool StandardPath::createBuildSystemFile()
 }
 
 /*!
+    \internal
     \fn StandardPath::createQMakeProject()
   */
 bool StandardPath::createQMakeProject()

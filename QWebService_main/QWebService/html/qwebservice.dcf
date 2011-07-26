@@ -1,6 +1,57 @@
 <!DOCTYPE DCF>
 <DCF ref="index.html" icon="qwebservice.png" imagedir="../../gif" title="QWebService Reference Documentation">
 <section ref="classes.html" title="Classes">
+    <section ref="qsoapmessage.html" title="QSoapMessage Class Reference">
+        <keyword ref="qsoapmessage.html">QSoapMessage</keyword>
+        <keyword ref="qsoapmessage.html#Protocol-enum">Protocol</keyword>
+        <keyword ref="qsoapmessage.html#Protocol-enum">QSoapMessage::http</keyword>
+        <keyword ref="qsoapmessage.html#Protocol-enum">QSoapMessage::soap10</keyword>
+        <keyword ref="qsoapmessage.html#Protocol-enum">QSoapMessage::soap12</keyword>
+        <keyword ref="qsoapmessage.html#Role-enum">Role</keyword>
+        <keyword ref="qsoapmessage.html#Role-enum">QSoapMessage::outboundRole</keyword>
+        <keyword ref="qsoapmessage.html#Role-enum">QSoapMessage::noRole</keyword>
+        <keyword ref="qsoapmessage.html#Role-enum">QSoapMessage::inboundRole</keyword>
+        <keyword ref="qsoapmessage.html#Role-enum">QSoapMessage::staticRole</keyword>
+        <keyword ref="qsoapmessage.html#getMessageName">getMessageName</keyword>
+        <keyword ref="qsoapmessage.html#getParameterNames">getParameterNames</keyword>
+        <keyword ref="qsoapmessage.html#getParameterNamesTypes">getParameterNamesTypes</keyword>
+        <keyword ref="qsoapmessage.html#getReturnValueName">getReturnValueName</keyword>
+        <keyword ref="qsoapmessage.html#getReturnValueNameType">getReturnValueNameType</keyword>
+        <keyword ref="qsoapmessage.html#getTargetNamespace">getTargetNamespace</keyword>
+        <keyword ref="qsoapmessage.html#replyFinished">replyFinished</keyword>
+        <keyword ref="qsoapmessage.html#replyRead">replyRead</keyword>
+        <keyword ref="qsoapmessage.html#replyReady">replyReady</keyword>
+        <keyword ref="qsoapmessage.html#sendMessage">sendMessage</keyword>
+        <keyword ref="qsoapmessage.html#setParams">setParams</keyword>
+        <keyword ref="qsoapmessage.html#setProtocol">setProtocol</keyword>
+        <keyword ref="qsoapmessage.html#setTargetNamespace">setTargetNamespace</keyword>
+        <section ref="qsoapmessage-members.html" title="List of all members"/>
+    </section>
+    <section ref="qwebserviceabstract.html" title="QWebServiceAbstract Class Reference">
+        <keyword ref="qwebserviceabstract.html">QWebServiceAbstract</keyword>
+        <keyword ref="qwebserviceabstract.html#getHost">getHost</keyword>
+        <keyword ref="qwebserviceabstract.html#getHostUrl">getHostUrl</keyword>
+        <keyword ref="qwebserviceabstract.html#getMethodNames">getMethodNames</keyword>
+        <keyword ref="qwebserviceabstract.html#getMethodParameters">getMethodParameters</keyword>
+        <keyword ref="qwebserviceabstract.html#getMethodReturnValue">getMethodReturnValue</keyword>
+        <keyword ref="qwebserviceabstract.html#getParameterNamesTypes">getParameterNamesTypes</keyword>
+        <keyword ref="qwebserviceabstract.html#getReturnValueNameType">getReturnValueNameType</keyword>
+        <keyword ref="qwebserviceabstract.html#isErrorState">isErrorState</keyword>
+        <keyword ref="qwebserviceabstract.html#setHost">setHost</keyword>
+        <section ref="qwebserviceabstract-members.html" title="List of all members"/>
+    </section>
+    <section ref="qwebservicemethodabstract.html" title="QWebServiceMethodAbstract Class Reference">
+        <keyword ref="qwebservicemethodabstract.html">QWebServiceMethodAbstract</keyword>
+        <keyword ref="qwebservicemethodabstract.html#getHost">getHost</keyword>
+        <keyword ref="qwebservicemethodabstract.html#getHostUrl">getHostUrl</keyword>
+        <keyword ref="qwebservicemethodabstract.html#setHost">setHost</keyword>
+        <section ref="qwebservicemethodabstract-members.html" title="List of all members"/>
+    </section>
+    <section ref="qwebservicereaderabstract.html" title="QWebServiceReaderAbstract Class Reference">
+        <keyword ref="qwebservicereaderabstract.html">QWebServiceReaderAbstract</keyword>
+        <keyword ref="qwebservicereaderabstract.html#methodHandler">methodHandler</keyword>
+        <section ref="qwebservicereaderabstract-members.html" title="List of all members"/>
+    </section>
     <section ref="qwsdl.html" title="QWsdl Class Reference">
         <keyword ref="qwsdl.html">QWsdl</keyword>
         <keyword ref="qwsdl.html#fileReplyFinished">fileReplyFinished</keyword>

@@ -3,10 +3,15 @@
 /*!
     \class WsdlConverter
     \brief Main class, supervizes code creation.
+
+    Uses WSDL file or URL to transform WSDL code into set of Qt/C++ classes, according to options specified in Flags class.
   */
 
 /*!
     \fn WsdlConverter::WsdlConverter(QString wsdlFileOrUrl, QObject *parent, QString outputD, QString baseOutputCls)
+
+    Uses \a wsdlFileOrUrl, \a outputD, \a baseOutputCls and \a parent to construct the object. Only the WSDL QString
+    is compulsory.
   */
 WsdlConverter::WsdlConverter(QString wsdlFileOrUrl, QObject *parent, QString outputD, QString baseOutputCls) :
     QObject(parent), outputDir(outputD), baseClassName(baseOutputCls)
@@ -21,6 +26,8 @@ WsdlConverter::WsdlConverter(QString wsdlFileOrUrl, QObject *parent, QString out
 
 /*!
     \fn WsdlConverter::~WsdlConverter()
+
+    Deletes the wsdl pointer.
   */
 WsdlConverter::~WsdlConverter()
 {
@@ -28,7 +35,15 @@ WsdlConverter::~WsdlConverter()
 }
 
 /*!
+    \fn WsdlConverter::errorEncountered(QString errMessage)
+
+    Singal emitted when WsdlConverter encounters an error. Carries \a errMessage for convenience.
+  */
+
+/*!
     \fn WsdlConverter::setFlags(Flags flgs)
+
+    Sets the flags using \a flgs object.
   */
 void WsdlConverter::setFlags(Flags flgs)
 {
@@ -37,6 +52,8 @@ void WsdlConverter::setFlags(Flags flgs)
 
 /*!
     \fn WsdlConverter::isErrorState()
+
+    Returns true if object is in error state.
   */
 bool WsdlConverter::isErrorState()
 {
@@ -44,7 +61,10 @@ bool WsdlConverter::isErrorState()
 }
 
 /*!
+    \internal
     \fn WsdlConverter::enterErrorState(QString errMessage)
+
+    Enters into error state with message \a errMessage.
   */
 bool WsdlConverter::enterErrorState(QString errMessage)
 {
@@ -57,6 +77,8 @@ bool WsdlConverter::enterErrorState(QString errMessage)
 
 /*!
     \fn WsdlConverter::convert()
+
+    Performs the WSDL => c++ code conversion.
   */
 void WsdlConverter::convert()
 {
@@ -122,6 +144,8 @@ void WsdlConverter::convert()
 
 /*!
     \fn WsdlConverter::getWebServiceName()
+
+    Returns web service's name.
   */
 QString WsdlConverter::getWebServiceName()
 {
@@ -129,7 +153,10 @@ QString WsdlConverter::getWebServiceName()
 }
 
 /*!
+    \internal
     \fn WsdlConverter::removeDir(QString path)
+
+    Recursively removes directories.
   */
 bool WsdlConverter::removeDir(QString path)
 {

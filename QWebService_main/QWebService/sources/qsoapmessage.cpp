@@ -9,9 +9,39 @@
   */
 
 /*!
+     \enum QSoapMessage::Protocol
+
+     This enum type specifies the protocol that QSoapMessage will use in communicating with the server:
+
+     \value http
+            HTTP protocol will be used.
+     \value soap10
+            SOAP 1.0 will be used.
+     \value soap12
+            SOAP 1.2 will be used.
+ */
+
+/*!
+     \enum QSoapMessage::Role
+
+     This enum type specifies message's role. Currently it is purely internal and NOT USED:
+
+     \value outboundRole
+            Obsolete part, from older implementation.
+     \value inboundRole
+            Obsolete part, from older implementation.
+     \value staticRole
+            Set when used in a static way.
+     \value noRole
+            Obsolete part, from older implementation.
+ */
+
+/*!
     \fn QSoapMessage::QSoapMessage(QObject *parent)
 
-    Constructs the message usign \a parent. Requires specifying other params late (setParams()).
+    Constructs the message usign \a parent. Requires specifying other params later (setParams()).
+
+    \sa setParams(), setProtocol(), sendMessage()
   */
 QSoapMessage::QSoapMessage(QObject *parent) :
     QObject(parent)
@@ -25,6 +55,11 @@ QSoapMessage::QSoapMessage(QObject *parent) :
 
 /*!
     \fn QSoapMessage::QSoapMessage(QUrl url, QString _messageName, QObject *parent)
+
+    Constructs the message using \a url, \a _messageName, and \a parent.
+    Requires params to be specified later.
+
+    \sa setParams(), setProtocol(), sendMessage()
   */
 QSoapMessage::QSoapMessage(QUrl url, QString _messageName, QObject *parent) :
     QObject(parent), hostUrl(url), messageName(_messageName)
@@ -36,6 +71,11 @@ QSoapMessage::QSoapMessage(QUrl url, QString _messageName, QObject *parent) :
 
 /*!
     \fn QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *parent)
+
+    Constructs the message using \a url, \a _messageName, and \a parent.
+    Requires params to be specified later.
+
+    \sa setParams(), setProtocol(), sendMessage()
   */
 QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *parent) :
     QObject(parent), hostname(url), messageName(_messageName)
@@ -47,6 +87,13 @@ QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *parent) :
 
 /*!
     \fn QSoapMessage::QSoapMessage(QString url, QString _messageName, QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal, QObject *parent)
+
+    Constructs the message using \a url, \a _messageName, and \a parent. This constructor also takes
+    message parameters (\a params) and return value (\a returnVal).
+    Does not require specifying any more information, but you still need to manually send the message
+    using sendMessage() (without any arguments, or else - if you want to change ones specified here).
+
+    \sa sendMessage(), setProtocol()
   */
 QSoapMessage::QSoapMessage(QString url, QString _messageName,
                            QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal, QObject *parent) :
@@ -58,17 +105,21 @@ QSoapMessage::QSoapMessage(QString url, QString _messageName,
 
 /*!
     \fn QSoapMessage::~QSoapMessage()
+
+    Deletes internal pointers.
   */
 QSoapMessage::~QSoapMessage()
 {
     delete manager;
     delete networkReply;
-    //delete data;
     this->deleteLater();
 }
 
 /*!
     \fn QSoapMessage::setParams(QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal)
+
+    Sets method's parameters (\a params) and return value (\a returnVal). This also includes their names
+    (that's why you need to specify the return value).
   */
 void QSoapMessage::setParams(QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal)
 {
@@ -78,6 +129,8 @@ void QSoapMessage::setParams(QMap<QString, QVariant> params, QMap<QString, QVari
 
 /*!
     \fn QSoapMessage::setTargetNamespace(QString tNamespace)
+
+    Sets message's target namespace (\a tNamespace), which is needed in SOAP messaging.
   */
 void QSoapMessage::setTargetNamespace(QString tNamespace)
 {
@@ -86,6 +139,9 @@ void QSoapMessage::setTargetNamespace(QString tNamespace)
 
 /*!
     \fn QSoapMessage::setProtocol(Protocol prot)
+
+    Sets the protocol flag (\a prot, being one of the values of QSoapMessage::Protocol).
+    This determines the protocol used later, when sending request. Defaults to SOAP1.2
   */
 void QSoapMessage::setProtocol(Protocol prot)
 {
@@ -94,6 +150,11 @@ void QSoapMessage::setProtocol(Protocol prot)
 
 /*!
     \fn QSoapMessage::sendMessage()
+
+    Sends the message asynchronously, assuming that all neccessary data was specified earlier.
+    Returns true on success.
+
+    \sa setParams(), setProtocol(), setTargetNamespace()
   */
 bool QSoapMessage::sendMessage()
 {
@@ -117,6 +178,8 @@ bool QSoapMessage::sendMessage()
 
 /*!
     \fn QSoapMessage::sendMessage(QMap<QString, QVariant> params)
+
+    Sends the message asynchronously using parameters specified in \a params.
   */
 bool QSoapMessage::sendMessage(QMap<QString, QVariant> params)
 {
@@ -126,9 +189,8 @@ bool QSoapMessage::sendMessage(QMap<QString, QVariant> params)
 }
 
 /*!
-    \fn QSoapMessage::sendMessage(QObject *parent, QUrl url, QString _messageName, QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal)
-
-     STATIC method.
+     STATIC method. Sends the message synchronously, using \a url, \a _messageName, \a params, \a returnVal and \a parent.
+     Returns with web service reply.
   */
 QVariant QSoapMessage::sendMessage(QObject *parent, QUrl url, QString _messageName, QMap<QString, QVariant> params,
                                    QMap<QString, QVariant> returnVal)
@@ -153,6 +215,8 @@ QVariant QSoapMessage::sendMessage(QObject *parent, QUrl url, QString _messageNa
 
 /*!
     \fn QSoapMessage::replyRead()
+
+    After making asynchronous call, and getting the replyReady() signal, this method can be used to read the reply.
   */
 QVariant QSoapMessage::replyRead()
 {
@@ -160,7 +224,15 @@ QVariant QSoapMessage::replyRead()
 }
 
 /*!
+    \fn QSoapMessage::replyReady(QVariant rply)
+
+    Signal invoked when the reply (\a rply) from web service's server is ready for reading.
+  */
+
+/*!
     \fn QSoapMessage::getMessageName()
+
+    Returns message's name.
   */
 QString QSoapMessage::getMessageName()
 {
@@ -169,6 +241,8 @@ QString QSoapMessage::getMessageName()
 
 /*!
     \fn QSoapMessage::getParameterNames() const
+
+    Retrurns list of parameters' names.
   */
 QStringList QSoapMessage::getParameterNames() const
 {
@@ -177,6 +251,8 @@ QStringList QSoapMessage::getParameterNames() const
 
 /*!
     \fn QSoapMessage::getReturnValueName() const
+
+    Returns return value's name.
   */
 QStringList QSoapMessage::getReturnValueName() const
 {
@@ -185,6 +261,8 @@ QStringList QSoapMessage::getReturnValueName() const
 
 /*!
     \fn QSoapMessage::getParameterNamesTypes() const
+
+    Returns whole parameter information (name and type).
   */
 QMap<QString, QVariant> QSoapMessage::getParameterNamesTypes() const
 {
@@ -192,7 +270,9 @@ QMap<QString, QVariant> QSoapMessage::getParameterNamesTypes() const
 }
 
 /*!
-    \fn QSoapMessage::getReturnValueNameType()
+    \fn QSoapMessage::getReturnValueNameType() const
+
+    Returns whole return value information (name and type).
   */
 QMap<QString, QVariant> QSoapMessage::getReturnValueNameType() const
 {
@@ -201,6 +281,8 @@ QMap<QString, QVariant> QSoapMessage::getReturnValueNameType() const
 
 /*!
     \fn QSoapMessage::getTargetNamespace()
+
+    Returns target namespace.
   */
 QString QSoapMessage::getTargetNamespace()
 {
@@ -209,6 +291,9 @@ QString QSoapMessage::getTargetNamespace()
 
 /*!
     \fn QSoapMessage::replyFinished(QNetworkReply *netReply)
+
+    Public (will probably be private in the future) slot, which processes the reply (\a netReply) from the server.
+    Emits the replyReady() signal.
   */
 void QSoapMessage::replyFinished(QNetworkReply *netReply)
 {
@@ -237,6 +322,7 @@ void QSoapMessage::replyFinished(QNetworkReply *netReply)
 }
 
 /*!
+    \internal
     \fn QSoapMessage::init()
   */
 void QSoapMessage::init()
@@ -253,6 +339,7 @@ void QSoapMessage::init()
 }
 
 /*!
+    \internal
     \fn QSoapMessage::prepareRequestData()
   */
 void QSoapMessage::prepareRequestData()
@@ -282,7 +369,10 @@ void QSoapMessage::prepareRequestData()
 }
 
 /*!
+    \internal
     \fn QSoapMessage::convertReplyToUtf(QString textToConvert)
+
+    Changes the encoding of the reply, in a rather crude fashion.
   */
 QString QSoapMessage::convertReplyToUtf(QString textToConvert)
 {

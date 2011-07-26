@@ -42,6 +42,7 @@ QWebServiceReaderAbstract::QWebServiceReaderAbstract(QString hostname, QObject *
     \fn QWebServiceReaderAbstract::methodHandler(QVariant param)
 
     Pure virtual method, can be used to handle methods. Probably a bad idea, might be dropped in the future.
+    Accepts parameters in a QVariant \a param.
   */
 void QWebServiceReaderAbstract::methodHandler(QVariant param)
 {
