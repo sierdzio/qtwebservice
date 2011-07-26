@@ -96,5 +96,6 @@ Part of the initial development is not expressed here. Refer to git logs or ask 
  - began commenting the code,
  - started QDoc documentation.
 
-.07.2011 : CEST. Since 02d3b4ebddc61d60401255456834edc4f18daddf and earlier:
- - finished basic QDoc documentation of QWebService and qtWsdlConverter.
+25.07.2011 19:06 CEST. Since 02d3b4ebddc61d60401255456834edc4f18daddf and earlier:
+ - finished basic QDoc documentation of QWebService and qtWsdlConverter,
+ - tagged as v0.2.0.
