@@ -1,0 +1,43 @@
+<!DOCTYPE DCF>
+<DCF ref="index.html" icon="qtwsdlconverter.png" imagedir="../../gif" title="an app for converting WSDL files into Qt classes">
+<section ref="classes.html" title="Classes">
+    <section ref="flags.html" title="Flags Class Reference">
+        <keyword ref="flags.html">Flags</keyword>
+        <keyword ref="flags.html#BuildSystem-enum">BuildSystem</keyword>
+        <keyword ref="flags.html#BuildSystem-enum">Flags::qmake</keyword>
+        <keyword ref="flags.html#BuildSystem-enum">Flags::cmake</keyword>
+        <keyword ref="flags.html#BuildSystem-enum">Flags::scons</keyword>
+        <keyword ref="flags.html#BuildSystem-enum">Flags::noBuildSystem</keyword>
+        <keyword ref="flags.html#Mode-enum">Mode</keyword>
+        <keyword ref="flags.html#Mode-enum">Flags::fullMode</keyword>
+        <keyword ref="flags.html#Mode-enum">Flags::debugMode</keyword>
+        <keyword ref="flags.html#Mode-enum">Flags::compactMode</keyword>
+        <keyword ref="flags.html#Structure-enum">Structure</keyword>
+        <keyword ref="flags.html#Structure-enum">Flags::standardStructure</keyword>
+        <keyword ref="flags.html#Structure-enum">Flags::allInOneDirStructure</keyword>
+        <keyword ref="flags.html#Structure-enum">Flags::noMessagesStructure</keyword>
+        <keyword ref="flags.html#Synchronousness-enum">Synchronousness</keyword>
+        <keyword ref="flags.html#Synchronousness-enum">Flags::synchronous</keyword>
+        <keyword ref="flags.html#Synchronousness-enum">Flags::asynchronous</keyword>
+        <section ref="flags-members.html" title="List of all members"/>
+    </section>
+    <section ref="standardpath.html" title="StandardPath Class Reference">
+        <keyword ref="standardpath.html">StandardPath</keyword>
+        <keyword ref="standardpath.html#create">create</keyword>
+        <keyword ref="standardpath.html#errorEncountered">errorEncountered</keyword>
+        <keyword ref="standardpath.html#isErrorState">isErrorState</keyword>
+        <section ref="standardpath-members.html" title="List of all members"/>
+    </section>
+    <section ref="wsdlconverter.html" title="WsdlConverter Class Reference">
+        <keyword ref="wsdlconverter.html">WsdlConverter</keyword>
+        <keyword ref="wsdlconverter.html#convert">convert</keyword>
+        <keyword ref="wsdlconverter.html#errorEncountered">errorEncountered</keyword>
+        <keyword ref="wsdlconverter.html#getWebServiceName">getWebServiceName</keyword>
+        <keyword ref="wsdlconverter.html#isErrorState">isErrorState</keyword>
+        <keyword ref="wsdlconverter.html#setFlags">setFlags</keyword>
+        <section ref="wsdlconverter-members.html" title="List of all members"/>
+    </section>
+</section>
+<section ref="overviews.html" title="Overviews"/>
+<section ref="examples.html" title="Tutorial &amp; Examples"/>
+</DCF>

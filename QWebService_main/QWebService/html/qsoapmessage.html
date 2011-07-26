@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qsoapmessage.cpp -->
+  <title>QSoapMessage Class Reference</title>
+  <link rel="stylesheet" type="text/css" href="style/style.css" />
+  <script src="scripts/jquery.js" type="text/javascript"></script>
+  <script src="scripts/functions.js" type="text/javascript"></script>
+</head>
+<body class="offline narrow creator">
+              <li><a href="modules.html">Modules</a></li>              <li>QSoapMessage</li>
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#public-slots">Public Slots</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<h1 class="title">QSoapMessage Class Reference</h1>
+<!-- $$$QSoapMessage-brief -->
+<p>Class that can be used to asnchronously and synchronously send HTTP, SOAP1.0 and SOAP1.2 messages to web services. <a href="#details">More...</a></p>
+<!-- @@@QSoapMessage -->
+<pre class="highlightedCode brush: cpp">    #include &lt;QSoapMessage&gt;</pre><ul>
+<li><a href="qsoapmessage-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2>Public Types</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#Protocol-enum">Protocol</a></b> { http, soap10, soap12 }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#Role-enum">Role</a></b> { outboundRole, inboundRole, staticRole, noRole }</td></tr>
+</table>
+<a name="public-functions"></a>
+<h2>Public Functions</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#QSoapMessage">QSoapMessage</a></b> ( QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#QSoapMessage-2">QSoapMessage</a></b> ( QUrl <i>url</i>, QString <i>_messageName</i>, QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#QSoapMessage-3">QSoapMessage</a></b> ( QString <i>url</i>, QString <i>_messageName</i>, QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#QSoapMessage-4">QSoapMessage</a></b> ( QString <i>url</i>, QString <i>_messageName</i>, QMap&lt;QString, QVariant&gt; <i>params</i>, QMap&lt;QString, QVariant&gt; <i>returnVal</i>, QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#dtor.QSoapMessage">~QSoapMessage</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#getMessageName">getMessageName</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#getParameterNames">getParameterNames</a></b> () const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#getParameterNamesTypes">getParameterNamesTypes</a></b> () const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#getReturnValueName">getReturnValueName</a></b> () const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#getReturnValueNameType">getReturnValueNameType</a></b> () const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#getTargetNamespace">getTargetNamespace</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariant </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#replyRead">replyRead</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#sendMessage">sendMessage</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#sendMessage-2">sendMessage</a></b> ( QMap&lt;QString, QVariant&gt; <i>params</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#setParams">setParams</a></b> ( QMap&lt;QString, QVariant&gt; <i>params</i>, QMap&lt;QString, QVariant&gt; <i>returnVal</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#setProtocol">setProtocol</a></b> ( Protocol <i>prot</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#setTargetNamespace">setTargetNamespace</a></b> ( QString <i>tNamespace</i> )</td></tr>
+</table>
+<a name="public-slots"></a>
+<h2>Public Slots</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#replyFinished">replyFinished</a></b> ( QNetworkReply * <i>netReply</i> )</td></tr>
+</table>
+<a name="signals"></a>
+<h2>Signals</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#replyReady">replyReady</a></b> ( QVariant <i>rply</i> )</td></tr>
+</table>
+<a name="details"></a>
+<!-- $$$QSoapMessage-description -->
+<div class="descr">
+<h2>Detailed Description</h2>
+<p>Class that can be used to asnchronously and synchronously send HTTP, SOAP1.0 and SOAP1.2 messages to web services.</p>
+<p>To send a message and receive reply synchronously, use the static <a href="qsoapmessage.html#sendMessage">sendMessage</a>() method. Otherwise, you can use <a href="qsoapmessage.html#replyReady">replyReady</a>() signal to know, when a reply returns. It can be read with <a href="qsoapmessage.html#replyRead">replyRead</a>().</p>
+</div>
+<!-- @@@QSoapMessage -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$Protocol$$$http$$$soap10$$$soap12 -->
+<h3 class="fn"><a name="Protocol-enum"></a>enum QSoapMessage::Protocol</h3>
+<p>This enum type specifies the protocol that <a href="qsoapmessage.html">QSoapMessage</a> will use in communicating with the server:</p>
+<table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td  class="topAlign"><tt>QSoapMessage::http</tt></td><td class=" topAlign"><tt>0</tt></td><td  class="topAlign">HTTP protocol will be used.</td></tr>
+<tr><td  class="topAlign"><tt>QSoapMessage::soap10</tt></td><td class=" topAlign"><tt>1</tt></td><td  class="topAlign">SOAP 1.0 will be used.</td></tr>
+<tr><td  class="topAlign"><tt>QSoapMessage::soap12</tt></td><td class=" topAlign"><tt>2</tt></td><td  class="topAlign">SOAP 1.2 will be used.</td></tr>
+</table>
+<!-- @@@Protocol -->
+<!-- $$$Role$$$outboundRole$$$inboundRole$$$staticRole$$$noRole -->
+<h3 class="fn"><a name="Role-enum"></a>enum QSoapMessage::Role</h3>
+<p>This enum type specifies message's role. Currently it is purely internal and NOT USED:</p>
+<table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td  class="topAlign"><tt>QSoapMessage::outboundRole</tt></td><td class=" topAlign"><tt>0</tt></td><td  class="topAlign">Obsolete part, from older implementation.</td></tr>
+<tr><td  class="topAlign"><tt>QSoapMessage::inboundRole</tt></td><td class=" topAlign"><tt>1</tt></td><td  class="topAlign">Obsolete part, from older implementation.</td></tr>
+<tr><td  class="topAlign"><tt>QSoapMessage::staticRole</tt></td><td class=" topAlign"><tt>2</tt></td><td  class="topAlign">Set when used in a static way.</td></tr>
+<tr><td  class="topAlign"><tt>QSoapMessage::noRole</tt></td><td class=" topAlign"><tt>3</tt></td><td  class="topAlign">Obsolete part, from older implementation.</td></tr>
+</table>
+<!-- @@@Role -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QSoapMessage[overload1]$$$QSoapMessageQObject* -->
+<h3 class="fn"><a name="QSoapMessage"></a>QSoapMessage::QSoapMessage ( QObject * <i>parent</i> = 0 )</h3>
+<p>Constructs the message usign <i>parent</i>. Requires specifying other params later (<a href="qsoapmessage.html#setParams">setParams</a>()).</p>
+<p>See also <a href="qsoapmessage.html#setParams">setParams</a>(), <a href="qsoapmessage.html#setProtocol">setProtocol</a>(), and <a href="qsoapmessage.html#sendMessage">sendMessage</a>().</p>
+<!-- @@@QSoapMessage -->
+<!-- $$$QSoapMessage$$$QSoapMessageQUrlQStringQObject* -->
+<h3 class="fn"><a name="QSoapMessage-2"></a>QSoapMessage::QSoapMessage ( QUrl <i>url</i>, QString <i>_messageName</i>, QObject * <i>parent</i> = 0 )</h3>
+<p>Constructs the message using <i>url</i>, <i>_messageName</i>, and <i>parent</i>. Requires params to be specified later.</p>
+<p>See also <a href="qsoapmessage.html#setParams">setParams</a>(), <a href="qsoapmessage.html#setProtocol">setProtocol</a>(), and <a href="qsoapmessage.html#sendMessage">sendMessage</a>().</p>
+<!-- @@@QSoapMessage -->
+<!-- $$$QSoapMessage$$$QSoapMessageQStringQStringQObject* -->
+<h3 class="fn"><a name="QSoapMessage-3"></a>QSoapMessage::QSoapMessage ( QString <i>url</i>, QString <i>_messageName</i>, QObject * <i>parent</i> = 0 )</h3>
+<p>Constructs the message using <i>url</i>, <i>_messageName</i>, and <i>parent</i>. Requires params to be specified later.</p>
+<p>See also <a href="qsoapmessage.html#setParams">setParams</a>(), <a href="qsoapmessage.html#setProtocol">setProtocol</a>(), and <a href="qsoapmessage.html#sendMessage">sendMessage</a>().</p>
+<!-- @@@QSoapMessage -->
+<!-- $$$QSoapMessage$$$QSoapMessageQStringQStringQMap<QString,QVariant>QMap<QString,QVariant>QObject* -->
+<h3 class="fn"><a name="QSoapMessage-4"></a>QSoapMessage::QSoapMessage ( QString <i>url</i>, QString <i>_messageName</i>, QMap&lt;QString, QVariant&gt; <i>params</i>, QMap&lt;QString, QVariant&gt; <i>returnVal</i>, QObject * <i>parent</i> = 0 )</h3>
+<p>Constructs the message using <i>url</i>, <i>_messageName</i>, and <i>parent</i>. This constructor also takes message parameters (<i>params</i>) and return value (<i>returnVal</i>). Does not require specifying any more information, but you still need to manually send the message using <a href="qsoapmessage.html#sendMessage">sendMessage</a>() (without any arguments, or else - if you want to change ones specified here).</p>
+<p>See also <a href="qsoapmessage.html#sendMessage">sendMessage</a>() and <a href="qsoapmessage.html#setProtocol">setProtocol</a>().</p>
+<!-- @@@QSoapMessage -->
+<!-- $$$~QSoapMessage[overload1]$$$~QSoapMessage -->
+<h3 class="fn"><a name="dtor.QSoapMessage"></a>QSoapMessage::~QSoapMessage ()</h3>
+<p>Deletes internal pointers.</p>
+<!-- @@@~QSoapMessage -->
+<!-- $$$getMessageName[overload1]$$$getMessageName -->
+<h3 class="fn"><a name="getMessageName"></a>QString QSoapMessage::getMessageName ()</h3>
+<p>Returns message's name.</p>
+<!-- @@@getMessageName -->
+<!-- $$$getParameterNames[overload1]$$$getParameterNames -->
+<h3 class="fn"><a name="getParameterNames"></a>QStringList QSoapMessage::getParameterNames () const</h3>
+<p>Retrurns list of parameters' names.</p>
+<!-- @@@getParameterNames -->
+<!-- $$$getParameterNamesTypes[overload1]$$$getParameterNamesTypes -->
+<h3 class="fn"><a name="getParameterNamesTypes"></a>QMap&lt;QString, QVariant&gt; QSoapMessage::getParameterNamesTypes () const</h3>
+<p>Returns whole parameter information (name and type).</p>
+<!-- @@@getParameterNamesTypes -->
+<!-- $$$getReturnValueName[overload1]$$$getReturnValueName -->
+<h3 class="fn"><a name="getReturnValueName"></a>QStringList QSoapMessage::getReturnValueName () const</h3>
+<p>Returns return value's name.</p>
+<!-- @@@getReturnValueName -->
+<!-- $$$getReturnValueNameType[overload1]$$$getReturnValueNameType -->
+<h3 class="fn"><a name="getReturnValueNameType"></a>QMap&lt;QString, QVariant&gt; QSoapMessage::getReturnValueNameType () const</h3>
+<p>Returns whole return value information (name and type).</p>
+<!-- @@@getReturnValueNameType -->
+<!-- $$$getTargetNamespace[overload1]$$$getTargetNamespace -->
+<h3 class="fn"><a name="getTargetNamespace"></a>QString QSoapMessage::getTargetNamespace ()</h3>
+<p>Returns target namespace.</p>
+<!-- @@@getTargetNamespace -->
+<!-- $$$replyFinished[overload1]$$$replyFinishedQNetworkReply* -->
+<h3 class="fn"><a name="replyFinished"></a>void QSoapMessage::replyFinished ( QNetworkReply * <i>netReply</i> )<tt> [slot]</tt></h3>
+<p>Public (will probably be private in the future) slot, which processes the reply (<i>netReply</i>) from the server. Emits the <a href="qsoapmessage.html#replyReady">replyReady</a>() signal.</p>
+<!-- @@@replyFinished -->
+<!-- $$$replyRead[overload1]$$$replyRead -->
+<h3 class="fn"><a name="replyRead"></a>QVariant QSoapMessage::replyRead ()</h3>
+<p>After making asynchronous call, and getting the <a href="qsoapmessage.html#replyReady">replyReady</a>() signal, this method can be used to read the reply.</p>
+<!-- @@@replyRead -->
+<!-- $$$replyReady[overload1]$$$replyReadyQVariant -->
+<h3 class="fn"><a name="replyReady"></a>void QSoapMessage::replyReady ( QVariant <i>rply</i> )<tt> [signal]</tt></h3>
+<p>Signal invoked when the reply (<i>rply</i>) from web service's server is ready for reading.</p>
+<!-- @@@replyReady -->
+<!-- $$$sendMessage[overload1]$$$sendMessage -->
+<h3 class="fn"><a name="sendMessage"></a>bool QSoapMessage::sendMessage ()</h3>
+<p>Sends the message asynchronously, assuming that all neccessary data was specified earlier. Returns true on success.</p>
+<p>See also <a href="qsoapmessage.html#setParams">setParams</a>(), <a href="qsoapmessage.html#setProtocol">setProtocol</a>(), and <a href="qsoapmessage.html#setTargetNamespace">setTargetNamespace</a>().</p>
+<!-- @@@sendMessage -->
+<!-- $$$sendMessage$$$sendMessageQMap<QString,QVariant> -->
+<h3 class="fn"><a name="sendMessage-2"></a>bool QSoapMessage::sendMessage ( QMap&lt;QString, QVariant&gt; <i>params</i> )</h3>
+<p>Sends the message asynchronously using parameters specified in <i>params</i>.</p>
+<!-- @@@sendMessage -->
+<!-- $$$setParams[overload1]$$$setParamsQMap<QString,QVariant>QMap<QString,QVariant> -->
+<h3 class="fn"><a name="setParams"></a>void QSoapMessage::setParams ( QMap&lt;QString, QVariant&gt; <i>params</i>, QMap&lt;QString, QVariant&gt; <i>returnVal</i> )</h3>
+<p>Sets method's parameters (<i>params</i>) and return value (<i>returnVal</i>). This also includes their names (that's why you need to specify the return value).</p>
+<!-- @@@setParams -->
+<!-- $$$setProtocol[overload1]$$$setProtocolProtocol -->
+<h3 class="fn"><a name="setProtocol"></a>void QSoapMessage::setProtocol ( <a href="qsoapmessage.html#Protocol-enum">Protocol</a> <i>prot</i> )</h3>
+<p>Sets the protocol flag (<i>prot</i>, being one of the values of <a href="qsoapmessage.html#Protocol-enum">QSoapMessage::Protocol</a>). This determines the protocol used later, when sending request. Defaults to SOAP1.2</p>
+<!-- @@@setProtocol -->
+<!-- $$$setTargetNamespace[overload1]$$$setTargetNamespaceQString -->
+<h3 class="fn"><a name="setTargetNamespace"></a>void QSoapMessage::setTargetNamespace ( QString <i>tNamespace</i> )</h3>
+<p>Sets message's target namespace (<i>tNamespace</i>), which is needed in SOAP messaging.</p>
+<!-- @@@setTargetNamespace -->
+</div>
+</body>
+</html>

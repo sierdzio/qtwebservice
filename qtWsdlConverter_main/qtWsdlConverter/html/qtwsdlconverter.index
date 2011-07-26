@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE QDOCINDEX>
+<INDEX url="" title="an app for converting WSDL files into Qt classes" version="">
+    <namespace access="public" threadsafety="unspecified" status="commendable" name="" href="" location="" module="">
+        <class access="public" threadsafety="unspecified" status="commendable" name="Flags" href="flags.html" location="flags.h" bases="" module="">
+            <enum access="public" threadsafety="unspecified" status="commendable" name="Mode" fullname="Flags::Mode" href="flags.html#Mode-enum" location="flags.h">
+                <value name="fullMode" value="0"/>
+                <value name="debugMode" value="1"/>
+                <value name="compactMode" value="2"/>
+            </enum>
+            <enum access="public" threadsafety="unspecified" status="commendable" name="Synchronousness" fullname="Flags::Synchronousness" href="flags.html#Synchronousness-enum" location="flags.h">
+                <value name="synchronous" value="0"/>
+                <value name="asynchronous" value="1"/>
+            </enum>
+            <enum access="public" threadsafety="unspecified" status="commendable" name="Structure" fullname="Flags::Structure" href="flags.html#Structure-enum" location="flags.h">
+                <value name="standardStructure" value="0"/>
+                <value name="noMessagesStructure" value="1"/>
+                <value name="allInOneDirStructure" value="2"/>
+            </enum>
+            <enum access="public" threadsafety="unspecified" status="commendable" name="BuildSystem" fullname="Flags::BuildSystem" href="flags.html#BuildSystem-enum" location="flags.h">
+                <value name="qmake" value="0"/>
+                <value name="cmake" value="1"/>
+                <value name="scons" value="2"/>
+                <value name="noBuildSystem" value="3"/>
+            </enum>
+            <function access="public" threadsafety="unspecified" status="commendable" name="Flags" fullname="Flags::Flags" href="flags.html#Flags" location="flags.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="Flags(Mode mod, Synchronousness synchronousnes, Structure structur, QSoapMessage::Protocol protoco, BuildSystem system, bool forc)">
+                <parameter left="Mode" right="" name="mod" default="fullMode"/>
+                <parameter left="Synchronousness" right="" name="synchronousnes" default="synchronous"/>
+                <parameter left="Structure" right="" name="structur" default="standardStructure"/>
+                <parameter left="QSoapMessage::Protocol" right="" name="protoco" default="QSoapMessage::soap12"/>
+                <parameter left="BuildSystem" right="" name="system" default="qmake"/>
+                <parameter left="bool" right="" name="forc" default="false"/>
+            </function>
+            <variable access="public" threadsafety="unspecified" status="commendable" name="mode" fullname="Flags::mode" href="flags.html#mode-var" location="flags.h" type="Mode" static="false"/>
+            <variable access="public" threadsafety="unspecified" status="commendable" name="synchronousness" fullname="Flags::synchronousness" href="flags.html#synchronousness-var" location="flags.h" type="Synchronousness" static="false"/>
+            <variable access="public" threadsafety="unspecified" status="commendable" name="structure" fullname="Flags::structure" href="flags.html#structure-var" location="flags.h" type="Structure" static="false"/>
+            <variable access="public" threadsafety="unspecified" status="commendable" name="protocol" fullname="Flags::protocol" href="flags.html#protocol-var" location="flags.h" type="QSoapMessage::Protocol" static="false"/>
+            <variable access="public" threadsafety="unspecified" status="commendable" name="buildSystem" fullname="Flags::buildSystem" href="flags.html#buildSystem-var" location="flags.h" type="BuildSystem" static="false"/>
+            <variable access="public" threadsafety="unspecified" status="commendable" name="force" fullname="Flags::force" href="flags.html#force-var" location="flags.h" type="bool" static="false"/>
+        </class>
+        <class access="public" threadsafety="unspecified" status="commendable" name="StandardPath" href="standardpath.html" location="standardpath.h" bases="" module="">
+            <function access="public" threadsafety="unspecified" status="commendable" name="StandardPath" fullname="StandardPath::StandardPath" href="standardpath.html#StandardPath" location="standardpath.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="StandardPath(QObject * parent)">
+                <parameter left="QObject *" right="" name="parent" default="0"/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="create" fullname="StandardPath::create" href="standardpath.html#create" location="standardpath.cpp" virtual="non" meta="plain" const="false" static="true" overload="false" type="bool" signature="create(QWsdl * wsdl, QDir workingDir, Flags flgs, QString baseClassName, QObject * parent)">
+                <parameter left="QWsdl *" right="" name="wsdl" default=""/>
+                <parameter left="QDir" right="" name="workingDir" default=""/>
+                <parameter left="Flags" right="" name="flgs" default=""/>
+                <parameter left="QString" right="" name="baseClassName" default="0"/>
+                <parameter left="QObject *" right="" name="parent" default="0"/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="isErrorState" fullname="StandardPath::isErrorState" href="standardpath.html#isErrorState" location="standardpath.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="isErrorState()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="errorEncountered" fullname="StandardPath::errorEncountered" href="standardpath.html#errorEncountered" location="standardpath.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="errorEncountered(QString errMessage)">
+                <parameter left="QString" right="" name="errMessage" default=""/>
+            </function>
+        </class>
+        <class access="public" threadsafety="unspecified" status="commendable" name="WsdlConverter" href="wsdlconverter.html" location="wsdlconverter.h" bases="" module="">
+            <function access="public" threadsafety="unspecified" status="commendable" name="WsdlConverter" fullname="WsdlConverter::WsdlConverter" href="wsdlconverter.html#WsdlConverter" location="wsdlconverter.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="WsdlConverter(QString wsdlFileOrUrl, QObject * parent, QString outputD, QString baseOutputCls)">
+                <parameter left="QString" right="" name="wsdlFileOrUrl" default=""/>
+                <parameter left="QObject *" right="" name="parent" default="0"/>
+                <parameter left="QString" right="" name="outputD" default="&quot;&quot;"/>
+                <parameter left="QString" right="" name="baseOutputCls" default="&quot;&quot;"/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="~WsdlConverter" fullname="WsdlConverter::~WsdlConverter" href="wsdlconverter.html#dtor.WsdlConverter" location="wsdlconverter.cpp" virtual="non" meta="destructor" const="false" static="false" overload="false" type="" signature="~WsdlConverter()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setFlags" fullname="WsdlConverter::setFlags" href="wsdlconverter.html#setFlags" location="wsdlconverter.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setFlags(Flags flgs)">
+                <parameter left="Flags" right="" name="flgs" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="isErrorState" fullname="WsdlConverter::isErrorState" href="wsdlconverter.html#isErrorState" location="wsdlconverter.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="isErrorState()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="convert" fullname="WsdlConverter::convert" href="wsdlconverter.html#convert" location="wsdlconverter.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="convert()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="getWebServiceName" fullname="WsdlConverter::getWebServiceName" href="wsdlconverter.html#getWebServiceName" location="wsdlconverter.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="QString" signature="getWebServiceName()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="errorEncountered" fullname="WsdlConverter::errorEncountered" href="wsdlconverter.html#errorEncountered" location="wsdlconverter.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="errorEncountered(QString errMessage)">
+                <parameter left="QString" right="" name="errMessage" default=""/>
+            </function>
+        </class>
+    </namespace>
+</INDEX>

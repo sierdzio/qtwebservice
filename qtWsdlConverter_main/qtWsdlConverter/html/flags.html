@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- flags.cpp -->
+  <title>Flags Class Reference</title>
+  <link rel="stylesheet" type="text/css" href="style/style.css" />
+  <script src="scripts/jquery.js" type="text/javascript"></script>
+  <script src="scripts/functions.js" type="text/javascript"></script>
+</head>
+<body class="offline narrow creator">
+              <li><a href="modules.html">Modules</a></li>              <li>Flags</li>
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<h1 class="title">Flags Class Reference</h1>
+<!-- $$$Flags-brief -->
+<p>Holds all important flags used by converter. <a href="#details">More...</a></p>
+<!-- @@@Flags -->
+<pre class="highlightedCode brush: cpp">    #include &lt;Flags&gt;</pre><ul>
+<li><a href="flags-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2>Public Types</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="flags.html#BuildSystem-enum">BuildSystem</a></b> { qmake, cmake, scons, noBuildSystem }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Mode-enum">Mode</a></b> { fullMode, debugMode, compactMode }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Structure-enum">Structure</a></b> { standardStructure, noMessagesStructure, allInOneDirStructure }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Synchronousness-enum">Synchronousness</a></b> { synchronous, asynchronous }</td></tr>
+</table>
+<a name="public-functions"></a>
+<h2>Public Functions</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Flags">Flags</a></b> ( Mode <i>mod</i> = fullMode, Synchronousness <i>synchronousnes</i> = synchronous, Structure <i>structur</i> = standardStructure, QSoapMessage::Protocol <i>protoco</i> = QSoapMessage::soap12, BuildSystem <i>system</i> = qmake, bool <i>forc</i> = false )</td></tr>
+</table>
+<a name="details"></a>
+<!-- $$$Flags-description -->
+<div class="descr">
+<h2>Detailed Description</h2>
+<p>Holds all important flags used by converter.</p>
+<p>Currently, every setting is held in a different enum, and all variables are public. In the future, flags will probably be unified into one/ two enums, thus enabling easy OR switching.</p>
+</div>
+<!-- @@@Flags -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$BuildSystem$$$qmake$$$cmake$$$scons$$$noBuildSystem -->
+<h3 class="fn"><a name="BuildSystem-enum"></a>enum Flags::BuildSystem</h3>
+<p>This enum type specifies the build system to use:</p>
+<table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td  class="topAlign"><tt>Flags::qmake</tt></td><td class=" topAlign"><tt>0</tt></td><td  class="topAlign">qmake will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::cmake</tt></td><td class=" topAlign"><tt>1</tt></td><td  class="topAlign">cmake will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::scons</tt></td><td class=" topAlign"><tt>2</tt></td><td  class="topAlign">scons will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::noBuildSystem</tt></td><td class=" topAlign"><tt>3</tt></td><td  class="topAlign">No build system files will be created.</td></tr>
+</table>
+<!-- @@@BuildSystem -->
+<!-- $$$Mode$$$fullMode$$$debugMode$$$compactMode -->
+<h3 class="fn"><a name="Mode-enum"></a>enum Flags::Mode</h3>
+<p>This enum type specifies code creation mode:</p>
+<table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td  class="topAlign"><tt>Flags::fullMode</tt></td><td class=" topAlign"><tt>0</tt></td><td  class="topAlign">All enums and variables are copied, enabling some flexibility in use.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::debugMode</tt></td><td class=" topAlign"><tt>1</tt></td><td  class="topAlign">fullMode + debug messages.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::compactMode</tt></td><td class=" topAlign"><tt>2</tt></td><td  class="topAlign">Only most needed methods, variables and enums are preserved. Code is as small, as possible, at the expense of loosing flexibility.</td></tr>
+</table>
+<!-- @@@Mode -->
+<!-- $$$Structure$$$standardStructure$$$noMessagesStructure$$$allInOneDirStructure -->
+<h3 class="fn"><a name="Structure-enum"></a>enum Flags::Structure</h3>
+<p>This enum type specifies the filesystem structure (the way files will be written on disk):</p>
+<table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td  class="topAlign"><tt>Flags::standardStructure</tt></td><td class=" topAlign"><tt>0</tt></td><td  class="topAlign">Headers will be placed in &lt;dir&gt;/headers, sources in &lt;dir&gt;/sources, build system and .pro files in &lt;dir&gt;/.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::noMessagesStructure</tt></td><td class=" topAlign"><tt>1</tt></td><td  class="topAlign">Converter will not create messages as separate classes, but use QSoapMessage.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::allInOneDirStructure</tt></td><td class=" topAlign"><tt>2</tt></td><td  class="topAlign">All generated files will be stored in one folder.</td></tr>
+</table>
+<!-- @@@Structure -->
+<!-- $$$Synchronousness$$$synchronous$$$asynchronous -->
+<h3 class="fn"><a name="Synchronousness-enum"></a>enum Flags::Synchronousness</h3>
+<p>This enum type specifies the way messages will be sent and received:</p>
+<table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td  class="topAlign"><tt>Flags::synchronous</tt></td><td class=" topAlign"><tt>0</tt></td><td  class="topAlign">Web methods will wait for reply and return with data.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::asynchronous</tt></td><td class=" topAlign"><tt>1</tt></td><td  class="topAlign">Web methods will return instantly. Data availability will be announced by emitting a signal.</td></tr>
+</table>
+<!-- @@@Synchronousness -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$Flags[overload1]$$$FlagsModeSynchronousnessStructureQSoapMessage::ProtocolBuildSystembool -->
+<h3 class="fn"><a name="Flags"></a>Flags::Flags ( <a href="flags.html#Mode-enum">Mode</a> <i>mod</i> = fullMode, <a href="flags.html#Synchronousness-enum">Synchronousness</a> <i>synchronousnes</i> = synchronous, <a href="flags.html#Structure-enum">Structure</a> <i>structur</i> = standardStructure, QSoapMessage::Protocol <i>protoco</i> = QSoapMessage::soap12, <a href="flags.html#BuildSystem-enum">BuildSystem</a> <i>system</i> = qmake, bool <i>forc</i> = false )</h3>
+<p>Constructs the Flags object. All params are optional. Default values:</p>
+<ul>
+<li><i>mod</i> = <a href="flags.html#Mode-enum">fullMode</a></li>
+<li><i>synchronousnes</i> = synchronous</li>
+<li><i>structur</i> = <a href="flags.html#Structure-enum">standardStructure</a></li>
+<li><i>protoco</i> = QSoapMessage::soap12</li>
+<li><i>system</i> = qmake</li>
+<li><i>forc</i> = false</li>
+</ul>
+<!-- @@@Flags -->
+</div>
+</body>
+</html>
