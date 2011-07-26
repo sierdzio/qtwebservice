@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qwsdl.cpp -->
+  <title>QWsdl Class Reference</title>
+  <link rel="stylesheet" type="text/css" href="style/style.css" />
+  <script src="scripts/jquery.js" type="text/javascript"></script>
+  <script src="scripts/functions.js" type="text/javascript"></script>
+</head>
+<body class="offline narrow creator">
+              <li><a href="modules.html">Modules</a></li>              <li>QWsdl</li>
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#public-slots">Public Slots</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<h1 class="title">QWsdl Class Reference</h1>
+<!-- $$$QWsdl-brief -->
+<p>Class for interaction with local and remote WSDL files. Currently read-only. <a href="#details">More...</a></p>
+<!-- @@@QWsdl -->
+<pre class="highlightedCode brush: cpp">    #include &lt;QWsdl&gt;</pre><ul>
+<li><a href="qwsdl-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2>Public Functions</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#QWsdl">QWsdl</a></b> ( QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#QWsdl-2">QWsdl</a></b> ( QString <i>wsdlFile</i>, QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#dtor.QWsdl">~QWsdl</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#getErrorInfo">getErrorInfo</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#getHostUrl">getHostUrl</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#getHostname">getHostname</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#getMethodNames">getMethodNames</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QSoapMessage *&gt; * </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#getMethods">getMethods</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#getTargetNamespace">getTargetNamespace</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#getWebServiceName">getWebServiceName</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#isErrorState">isErrorState</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#resetWsdl">resetWsdl</a></b> ( QString <i>newWsdlPath</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#setWsdlFile">setWsdlFile</a></b> ( QString <i>wsdlFile</i> )</td></tr>
+</table>
+<a name="public-slots"></a>
+<h2>Public Slots</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#fileReplyFinished">fileReplyFinished</a></b> ( QNetworkReply * <i>rply</i> )</td></tr>
+</table>
+<a name="details"></a>
+<!-- $$$QWsdl-description -->
+<div class="descr">
+<h2>Detailed Description</h2>
+<p>Class for interaction with local and remote WSDL files. Currently read-only.</p>
+<p>Reads web service data (message names, parameters, return values, ws name etc) from a WSDL file or URL.</p>
+</div>
+<!-- @@@QWsdl -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QWsdl[overload1]$$$QWsdlQObject* -->
+<h3 class="fn"><a name="QWsdl"></a>QWsdl::QWsdl ( QObject * <i>parent</i> = 0 )</h3>
+<p>Simple constructor, requires <i>parent</i> only, but needs other information to be specified later in order to run. You need to run <a href="qwsdl.html#setWsdlFile">setWsdlFile</a>(), which automatically parses the file.</p>
+<p>Initialises the whole object with default values.</p>
+<p>See also <a href="qwsdl.html#setWsdlFile">setWsdlFile</a>() and <a href="qwsdl.html#resetWsdl">resetWsdl</a>().</p>
+<!-- @@@QWsdl -->
+<!-- $$$QWsdl$$$QWsdlQStringQObject* -->
+<h3 class="fn"><a name="QWsdl-2"></a>QWsdl::QWsdl ( QString <i>wsdlFile</i>, QObject * <i>parent</i> = 0 )</h3>
+<p>Constructs the object using optional <i>parent</i>. Uses the file path or URL specified in <i>wsdlFile</i> to parse the WSDL file.</p>
+<!-- @@@QWsdl -->
+<!-- $$$~QWsdl[overload1]$$$~QWsdl -->
+<h3 class="fn"><a name="dtor.QWsdl"></a>QWsdl::~QWsdl ()</h3>
+<p>Destructor - cleans some internal variables.</p>
+<!-- @@@~QWsdl -->
+<!-- $$$fileReplyFinished[overload1]$$$fileReplyFinishedQNetworkReply* -->
+<h3 class="fn"><a name="fileReplyFinished"></a>void QWsdl::fileReplyFinished ( QNetworkReply * <i>rply</i> )<tt> [slot]</tt></h3>
+<p>Asynchronous public return slot. Reads WSDL reply (<i>rply</i>) from server (used in case URL was specified in wsdl file path).</p>
+<p>Not sure why it's public (sierdzio). Maybe it will go private in the future.</p>
+<!-- @@@fileReplyFinished -->
+<!-- $$$getErrorInfo[overload1]$$$getErrorInfo -->
+<h3 class="fn"><a name="getErrorInfo"></a>QString QWsdl::getErrorInfo ()</h3>
+<p>Returns QString with error message in case an error occured. Otherwise, returns empty string.</p>
+<p>See also <a href="qwsdl.html#isErrorState">isErrorState</a>().</p>
+<!-- @@@getErrorInfo -->
+<!-- $$$getHostUrl[overload1]$$$getHostUrl -->
+<h3 class="fn"><a name="getHostUrl"></a>QUrl QWsdl::getHostUrl ()</h3>
+<p>Quite similar tp getHostName(). The very existence of this method will be questioned :)</p>
+<p>See also <a href="qwsdl.html#getHostname">getHostname</a>().</p>
+<!-- @@@getHostUrl -->
+<!-- $$$getHostname[overload1]$$$getHostname -->
+<h3 class="fn"><a name="getHostname"></a>QString QWsdl::getHostname ()</h3>
+<p>Not enirely well-thought method and variable. It returns web service's URL (probably). It will almmost certainly be rewritten or deleted in the future.</p>
+<p>See also <a href="qwsdl.html#getHostUrl">getHostUrl</a>().</p>
+<!-- @@@getHostname -->
+<!-- $$$getMethodNames[overload1]$$$getMethodNames -->
+<h3 class="fn"><a name="getMethodNames"></a>QStringList QWsdl::getMethodNames ()</h3>
+<p>Returns a QStringList of names of web service's methods.</p>
+<p>See also <a href="qwsdl.html#getMethods">getMethods</a>().</p>
+<!-- @@@getMethodNames -->
+<!-- $$$getMethods[overload1]$$$getMethods -->
+<h3 class="fn"><a name="getMethods"></a>QMap&lt;QString, QSoapMessage *&gt; * QWsdl::getMethods ()</h3>
+<p>Returns a QMap&lt;QString, QSoapMessage *&gt; pointer. Keys are method names (just as in <a href="qwsdl.html#getMethodNames">getMethodNames</a>()), and values are QSoapMessages themselves (which means they can be used not only to get information, but also to send messages, set them up etc.)&#x2e;</p>
+<p>See also <a href="qwsdl.html#getMethodNames">getMethodNames</a>().</p>
+<!-- @@@getMethods -->
+<!-- $$$getTargetNamespace[overload1]$$$getTargetNamespace -->
+<h3 class="fn"><a name="getTargetNamespace"></a>QString QWsdl::getTargetNamespace ()</h3>
+<p>Returns target namespace specified in WSDL.</p>
+<!-- @@@getTargetNamespace -->
+<!-- $$$getWebServiceName[overload1]$$$getWebServiceName -->
+<h3 class="fn"><a name="getWebServiceName"></a>QString QWsdl::getWebServiceName ()</h3>
+<p>Returns QString with the name of the web service specified in WSDL.</p>
+<!-- @@@getWebServiceName -->
+<!-- $$$isErrorState[overload1]$$$isErrorState -->
+<h3 class="fn"><a name="isErrorState"></a>bool QWsdl::isErrorState ()</h3>
+<p>Returns true if there was an error, false otherwise. Details about an error can be read with <a href="qwsdl.html#getErrorInfo">getErrorInfo</a>().</p>
+<p>See also <a href="qwsdl.html#getErrorInfo">getErrorInfo</a>().</p>
+<!-- @@@isErrorState -->
+<!-- $$$resetWsdl[overload1]$$$resetWsdlQString -->
+<h3 class="fn"><a name="resetWsdl"></a>void QWsdl::resetWsdl ( QString <i>newWsdlPath</i> )</h3>
+<p>Can be used to set or reset a WSDL file (or URL), using <i>newWsdlPath</i>. Cleans and reinitialises the object, parses the file.</p>
+<p>See also <a href="qwsdl.html#setWsdlFile">setWsdlFile</a>().</p>
+<!-- @@@resetWsdl -->
+<!-- $$$setWsdlFile[overload1]$$$setWsdlFileQString -->
+<h3 class="fn"><a name="setWsdlFile"></a>void QWsdl::setWsdlFile ( QString <i>wsdlFile</i> )</h3>
+<p>Wrapper for <a href="qwsdl.html#resetWsdl">resetWsdl</a>(). Used to set the WSDL file or URL using <i>wsdlFile</i>. Compulsory after simple constructor, but not needed if you have already specified the file in the constructor or <a href="qwsdl.html#resetWsdl">resetWsdl</a>().</p>
+<p>See also <a href="qwsdl.html#resetWsdl">resetWsdl</a>().</p>
+<!-- @@@setWsdlFile -->
+</div>
+</body>
+</html>

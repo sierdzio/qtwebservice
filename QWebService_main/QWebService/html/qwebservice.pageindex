@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qtPageIndex>
+    <page id="{c6d5dba5-4a62-4ce9-a696-34ebc7f6dfcf}">
+        <pageWords>QWsdl class reference</pageWords>
+        <pageTitle>QWsdl Class Reference</pageTitle>
+        <pageUrl>qwsdl.html</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{b0a41930-42a3-4c38-85e0-6ad8b73800c0}">
+        <pageWords>QWsdl function QWsdl</pageWords>
+        <pageTitle>QWsdl Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#QWsdl</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{3f082cd3-fd69-4eb0-b126-273377f5e9dd}">
+        <pageWords>QWsdl function QWsdl</pageWords>
+        <pageTitle>QWsdl Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#QWsdl</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{ad96f74b-953a-4931-91db-b5939d7a8d94}">
+        <pageWords>~QWsdl function QWsdl</pageWords>
+        <pageTitle>~QWsdl Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#~QWsdl</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{774f277f-ac5f-44bb-af38-fb58baaf8280}">
+        <pageWords>setWsdlFile function QWsdl</pageWords>
+        <pageTitle>setWsdlFile Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#setWsdlFile</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{a9b1d49f-8f0a-4a99-9ec3-35e730ae1a66}">
+        <pageWords>getMethodNames function QWsdl</pageWords>
+        <pageTitle>getMethodNames Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#getMethodNames</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{836dbae7-6c5d-49a0-9670-f717a06d94ea}">
+        <pageWords>getMethods function QWsdl</pageWords>
+        <pageTitle>getMethods Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#getMethods</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{bfa2d3ea-01cf-49c6-9d06-b9a6190aa86a}">
+        <pageWords>getWebServiceName function QWsdl</pageWords>
+        <pageTitle>getWebServiceName Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#getWebServiceName</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{cc012bfb-3887-429f-8e69-3f5658410c2f}">
+        <pageWords>getHostname function QWsdl</pageWords>
+        <pageTitle>getHostname Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#getHostname</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{927f74d2-3612-4e99-b5f8-b3d2ae05edc5}">
+        <pageWords>getHostUrl function QWsdl</pageWords>
+        <pageTitle>getHostUrl Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#getHostUrl</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{559226fd-bb53-4981-8e19-477c855229b7}">
+        <pageWords>getTargetNamespace function QWsdl</pageWords>
+        <pageTitle>getTargetNamespace Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#getTargetNamespace</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{5de0ad95-c8e3-4352-b83a-db3f03836931}">
+        <pageWords>getErrorInfo function QWsdl</pageWords>
+        <pageTitle>getErrorInfo Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#getErrorInfo</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{459ca8f7-c4e3-4904-aa2a-a1c2f670e272}">
+        <pageWords>isErrorState function QWsdl</pageWords>
+        <pageTitle>isErrorState Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#isErrorState</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{79c83b46-4146-42ef-9aa5-3abc07020005}">
+        <pageWords>resetWsdl function QWsdl</pageWords>
+        <pageTitle>resetWsdl Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#resetWsdl</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{d8abd323-21ee-46ee-a13c-53c5c392c0db}">
+        <pageWords>fileReplyFinished function QWsdl</pageWords>
+        <pageTitle>fileReplyFinished Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#fileReplyFinished</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+</qtPageIndex>

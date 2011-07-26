@@ -95,3 +95,6 @@ Part of the initial development is not expressed here. Refer to git logs or ask 
 20.07.2011 : CEST. Since 1cf263e731c32f7669a5e643932bfacfa06fdc58:
  - began commenting the code,
  - started QDoc documentation.
+
+.07.2011 : CEST. Since 02d3b4ebddc61d60401255456834edc4f18daddf and earlier:
+ -

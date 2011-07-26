@@ -3,14 +3,19 @@
  # practices. For that reason, any QDoc configuration file needs to
  # include compat.qdocconf.
 
+ #
+ # To run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qwebservice.qdocconf
+ #
+
  #include(compat.qdocconf)
 
  project = QWebService
+ descritpion = web service interaction library
 
  # The outputdir variable specifies the directory
  # where QDoc will put the generated documentation.
 
- outputdir   = html
+ outputdir   = ./html
 
  # The headerdirs variable specifies the directories
  # containing the header files associated
@@ -22,14 +27,14 @@
  # directories containing the .cpp or .qdoc
  # files used in the documentation.
 
- #sourcedirs  = ./sources
+ sourcedirs  = ./sources
 
  # The exampledirs variable specifies the directories containing
  # the source code of the example files.
 
- exampledirs = .
+ # exampledirs = .
 
  # The imagedirs variable specifies the
  # directories containing the images used in the documentation.
 
- imagedirs   = ./images 
+ # imagedirs   = ./images 

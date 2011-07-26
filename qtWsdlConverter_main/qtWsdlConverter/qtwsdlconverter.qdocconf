@@ -3,14 +3,19 @@
  # practices. For that reason, any QDoc configuration file needs to
  # include compat.qdocconf.
 
+ #
+ # To run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./spdar.qdocconf
+ #
+
  #include(compat.qdocconf)
 
  project = qtWsdlConverter
+ description = an app for converting WSDL files into Qt classes
 
  # The outputdir variable specifies the directory
  # where QDoc will put the generated documentation.
 
- outputdir   = html
+ outputdir   = ./html
 
  # The headerdirs variable specifies the directories
  # containing the header files associated
@@ -27,9 +32,9 @@
  # The exampledirs variable specifies the directories containing
  # the source code of the example files.
 
- exampledirs = .
+ # exampledirs = .
 
  # The imagedirs variable specifies the
  # directories containing the images used in the documentation.
 
- imagedirs   = ./images 
+ # imagedirs   = ./images 

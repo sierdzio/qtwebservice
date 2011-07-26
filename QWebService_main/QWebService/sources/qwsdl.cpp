@@ -1,5 +1,23 @@
 #include "../headers/qwsdl.h"
 
+/*!
+  \class QWsdl
+  \brief Class for interaction with local and remote WSDL files. Currently read-only.
+
+    Reads web service data (message names, parameters, return values, ws name etc) from a WSDL file or URL.
+  */
+
+/*!
+    \fn QWsdl::QWsdl(QObject *parent)
+
+    Simple constructor, requires \a parent only, but needs other information to be specified later
+    in order to run. You need to run setWsdlFile(), which automatically parses the file.
+
+
+    Initialises the whole object with default values.
+
+    \sa setWsdlFile(), resetWsdl()
+  */
 QWsdl::QWsdl(QObject *parent) :
     QObject(parent)
 {
@@ -16,6 +34,12 @@ QWsdl::QWsdl(QObject *parent) :
     methods = new QMap<QString, QSoapMessage *>;
 }
 
+/*!
+    \fn QWsdl::QWsdl(QString wsdlFile, QObject *parent)
+
+    Constructs the object using optional \a parent. Uses the file path or URL
+    specified in \a wsdlFile to parse the WSDL file.
+  */
 QWsdl::QWsdl(QString wsdlFile, QObject *parent) :
     QObject(parent), wsdlFilePath(wsdlFile)
 {
@@ -34,6 +58,11 @@ QWsdl::QWsdl(QString wsdlFile, QObject *parent) :
     parse();
 }
 
+/*!
+    \fn QWsdl::~QWsdl()
+
+    Destructor - cleans some internal variables.
+  */
 QWsdl::~QWsdl()
 {
     delete methods;
@@ -41,11 +70,26 @@ QWsdl::~QWsdl()
     delete workMethodParameters;
 }
 
+/*!
+    \fn QWsdl::setWsdlFile(QString wsdlFile)
+
+    Wrapper for resetWsdl(). Used to set the WSDL file or URL using \a wsdlFile. Compulsory after simple constructor,
+    but not needed if you have already specified the file in the constructor or resetWsdl().
+
+    \sa resetWsdl()
+  */
 void QWsdl::setWsdlFile(QString wsdlFile) // == resetWsdl()
 {
     resetWsdl(wsdlFile);
 }
 
+/*!
+    \fn QWsdl::getMethodNames()
+
+    Returns a QStringList of names of web service's methods.
+
+    \sa getMethods()
+  */
 QStringList QWsdl::getMethodNames()
 {
     QList<QString> tempMethods = methods->keys();
@@ -55,26 +99,60 @@ QStringList QWsdl::getMethodNames()
     return result;
 }
 
+/*!
+    \fn QWsdl::getMethods()
+
+    Returns a QMap<QString, QSoapMessage *> pointer. Keys are method names (just as in
+    getMethodNames()), and values are QSoapMessages themselves (which means they can be used
+    not only to get information, but also to send messages, set them up etc.).
+
+    \sa getMethodNames()
+  */
 QMap<QString, QSoapMessage *> *QWsdl::getMethods()
 {
     return methods;
 }
 
+/*!
+    \fn QWsdl::getWebServiceName()
+
+    Returns QString with the name of the web service specified in WSDL.
+  */
 QString QWsdl::getWebServiceName()
 {
     return webServiceName;
 }
 
+/*!
+    \fn QWsdl::getHostname()
+
+    Not enirely well-thought method and variable. It returns web service's URL (probably).
+    It will almmost certainly be rewritten or deleted in the future.
+
+    \sa getHostUrl()
+  */
 QString QWsdl::getHostname()
 {
     return hostname;
 }
 
+/*!
+    \fn QWsdl::getHostUrl()
+
+    Quite similar tp getHostName(). The very existence of this method will be questioned :)
+
+    \sa getHostname()
+  */
 QUrl QWsdl::getHostUrl()
 {
     return hostUrl;
 }
 
+/*!
+    \fn QWsdl::getTargetNamespace()
+
+    Returns target namespace specified in WSDL.
+  */
 QString QWsdl::getTargetNamespace()
 {
     return targetNamespace;
@@ -85,16 +163,39 @@ QString QWsdl::getTargetNamespace()
 
 //}
 
+/*!
+    \fn QWsdl::getErrorInfo()
+
+    Returns QString with error message in case an error occured. Otherwise, returns empty string.
+
+    \sa isErrorState()
+  */
 QString QWsdl::getErrorInfo()
 {
     return errorMessage;
 }
 
+/*!
+    \fn QWsdl::isErrorState()
+
+    Returns true if there was an error, false otherwise. Details about an error can be read with
+    getErrorInfo().
+
+    \sa getErrorInfo()
+  */
 bool QWsdl::isErrorState()
 {
     return errorState;
 }
 
+/*!
+    \fn QWsdl::resetWsdl(QString newWsdlPath)
+
+    Can be used to set or reset a WSDL file (or URL), using \a newWsdlPath. Cleans and reinitialises
+    the object, parses the file.
+
+    \sa setWsdlFile()
+  */
 void QWsdl::resetWsdl(QString newWsdlPath)
 {    
     wsdlFilePath = newWsdlPath;
@@ -109,6 +210,14 @@ void QWsdl::resetWsdl(QString newWsdlPath)
     parse();
 }
 
+/*!
+    \fn QWsdl::fileReplyFinished(QNetworkReply *rply)
+
+    Asynchronous public return slot. Reads WSDL reply (\a rply) from server (used in case
+    URL was specified in wsdl file path).
+
+    Not sure why it's public (sierdzio). Maybe it will go private in the future.
+  */
 void QWsdl::fileReplyFinished(QNetworkReply *rply)
 {
     QNetworkReply *networkReply = rply;
@@ -139,6 +248,13 @@ void QWsdl::fileReplyFinished(QNetworkReply *rply)
 //    emit replyReady(reply);
 }
 
+/*!
+    \internal
+    \fn QWsdl::parse()
+
+    Central method of this class. Parses the WSDL file, creates all QSoapMessages,
+    reads all necessary data, like web service's name etc.
+  */
 bool QWsdl::parse()
 {
     /*
@@ -206,6 +322,9 @@ bool QWsdl::parse()
         return false;
 }
 
+/*!
+    \internal
+  */
 void QWsdl::prepareFile()
 {
     QUrl filePath(wsdlFilePath);
@@ -230,6 +349,9 @@ void QWsdl::prepareFile()
     }
 }
 
+/*!
+    \internal
+  */
 void QWsdl::readDefinitions()
 {
     //EXPERIMENTAL
@@ -318,6 +440,9 @@ void QWsdl::readDefinitions()
     }
 }
 
+/*!
+    \internal
+  */
 void QWsdl::readTypes()
 {
     xmlReader.readNext();
@@ -361,6 +486,9 @@ void QWsdl::readTypes()
     }
 }
 
+/*!
+    \internal
+  */
 void QWsdl::readTypeSchemaElement()
 {
     xmlReader.readNext();
@@ -446,9 +574,11 @@ void QWsdl::readTypeSchemaElement()
     }
 }
 
-/*
- * Analyses both "working" QList and QMap, and extracts methods data, which is then put into
- * 'methods' QMap.
+/*!
+    \internal
+
+    Analyses both "working" QList and QMap, and extracts methods data, which is then put into
+    'methods' QMap.
  */
 void QWsdl::prepareMethods()
 {
@@ -517,24 +647,36 @@ void QWsdl::prepareMethods()
     }
 }
 
+/*!
+    \internal
+  */
 void QWsdl::readMessages()
 {
     qDebug() << "WSDL :messages tag not supported yet.";
     xmlReader.readNext();
 }
 
+/*!
+    \internal
+  */
 void QWsdl::readPorts()
 {
     qDebug() << "WSDL :portType tag not supported yet.";
     xmlReader.readNext();
 }
 
+/*!
+    \internal
+  */
 void QWsdl::readBindings()
 {
     qDebug() << "WSDL :binding tag not supported yet.";
     xmlReader.readNext();
 }
 
+/*!
+    \internal
+  */
 void QWsdl::readService()
 {
 //    qDebug() << "WSDL :service tag not supported yet.";
@@ -545,12 +687,18 @@ void QWsdl::readService()
     xmlReader.readNext();
 }
 
+/*!
+    \internal
+  */
 void QWsdl::readDocumentation()
 {
     qDebug() << "WSDL :documentation tag not supported yet.";
     xmlReader.readNext();
 }
 
+/*!
+    \internal
+  */
 QString QWsdl::convertReplyToUtf(QString textToConvert)
 {
     QString result = textToConvert;

@@ -16,7 +16,7 @@ class QWsdl : public QObject
     Q_OBJECT
 
 public:
-    // Requires subsequent use of setWsdleFile() and parse()
+    // Requires subsequent use of setWsdleFile()
     explicit QWsdl(QObject *parent = 0);
     // When this constructor returns, the file is already set and parsed
     QWsdl(QString wsdlFile, QObject *parent = 0);

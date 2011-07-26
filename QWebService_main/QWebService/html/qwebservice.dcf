@@ -1,0 +1,22 @@
+<!DOCTYPE DCF>
+<DCF ref="index.html" icon="qwebservice.png" imagedir="../../gif" title="QWebService Reference Documentation">
+<section ref="classes.html" title="Classes">
+    <section ref="qwsdl.html" title="QWsdl Class Reference">
+        <keyword ref="qwsdl.html">QWsdl</keyword>
+        <keyword ref="qwsdl.html#fileReplyFinished">fileReplyFinished</keyword>
+        <keyword ref="qwsdl.html#getErrorInfo">getErrorInfo</keyword>
+        <keyword ref="qwsdl.html#getHostUrl">getHostUrl</keyword>
+        <keyword ref="qwsdl.html#getHostname">getHostname</keyword>
+        <keyword ref="qwsdl.html#getMethodNames">getMethodNames</keyword>
+        <keyword ref="qwsdl.html#getMethods">getMethods</keyword>
+        <keyword ref="qwsdl.html#getTargetNamespace">getTargetNamespace</keyword>
+        <keyword ref="qwsdl.html#getWebServiceName">getWebServiceName</keyword>
+        <keyword ref="qwsdl.html#isErrorState">isErrorState</keyword>
+        <keyword ref="qwsdl.html#resetWsdl">resetWsdl</keyword>
+        <keyword ref="qwsdl.html#setWsdlFile">setWsdlFile</keyword>
+        <section ref="qwsdl-members.html" title="List of all members"/>
+    </section>
+</section>
+<section ref="overviews.html" title="Overviews"/>
+<section ref="examples.html" title="Tutorial &amp; Examples"/>
+</DCF>

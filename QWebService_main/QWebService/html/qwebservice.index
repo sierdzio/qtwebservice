@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE QDOCINDEX>
+<INDEX url="" title="QWebService Reference Documentation" version="">
+    <namespace access="public" threadsafety="unspecified" status="commendable" name="" href="" location="" module="">
+        <class access="public" threadsafety="unspecified" status="commendable" name="QWsdl" href="qwsdl.html" location="qwsdl.h" bases="" module="">
+            <function access="public" threadsafety="unspecified" status="commendable" name="QWsdl" fullname="QWsdl::QWsdl" href="qwsdl.html#QWsdl" location="qwsdl.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="QWsdl(QObject * parent)">
+                <parameter left="QObject *" right="" name="parent" default="0"/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="QWsdl" fullname="QWsdl::QWsdl" href="qwsdl.html#QWsdl-2" location="qwsdl.cpp" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="2" type="" signature="QWsdl(QString wsdlFile, QObject * parent)">
+                <parameter left="QString" right="" name="wsdlFile" default=""/>
+                <parameter left="QObject *" right="" name="parent" default="0"/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="~QWsdl" fullname="QWsdl::~QWsdl" href="qwsdl.html#dtor.QWsdl" location="qwsdl.cpp" virtual="non" meta="destructor" const="false" static="false" overload="false" type="" signature="~QWsdl()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setWsdlFile" fullname="QWsdl::setWsdlFile" href="qwsdl.html#setWsdlFile" location="qwsdl.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setWsdlFile(QString wsdlFile)">
+                <parameter left="QString" right="" name="wsdlFile" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="getMethodNames" fullname="QWsdl::getMethodNames" href="qwsdl.html#getMethodNames" location="qwsdl.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="QStringList" signature="getMethodNames()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="getMethods" fullname="QWsdl::getMethods" href="qwsdl.html#getMethods" location="qwsdl.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="QMap&lt;QString, QSoapMessage *&gt; *" signature="getMethods()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="getWebServiceName" fullname="QWsdl::getWebServiceName" href="qwsdl.html#getWebServiceName" location="qwsdl.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="QString" signature="getWebServiceName()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="getHostname" fullname="QWsdl::getHostname" href="qwsdl.html#getHostname" location="qwsdl.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="QString" signature="getHostname()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="getHostUrl" fullname="QWsdl::getHostUrl" href="qwsdl.html#getHostUrl" location="qwsdl.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="QUrl" signature="getHostUrl()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="getTargetNamespace" fullname="QWsdl::getTargetNamespace" href="qwsdl.html#getTargetNamespace" location="qwsdl.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="QString" signature="getTargetNamespace()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="getErrorInfo" fullname="QWsdl::getErrorInfo" href="qwsdl.html#getErrorInfo" location="qwsdl.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="QString" signature="getErrorInfo()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="isErrorState" fullname="QWsdl::isErrorState" href="qwsdl.html#isErrorState" location="qwsdl.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="isErrorState()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="resetWsdl" fullname="QWsdl::resetWsdl" href="qwsdl.html#resetWsdl" location="qwsdl.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="resetWsdl(QString newWsdlPath)">
+                <parameter left="QString" right="" name="newWsdlPath" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="fileReplyFinished" fullname="QWsdl::fileReplyFinished" href="qwsdl.html#fileReplyFinished" location="qwsdl.cpp" virtual="non" meta="slot" const="false" static="false" overload="false" type="void" signature="fileReplyFinished(QNetworkReply * rply)">
+                <parameter left="QNetworkReply *" right="" name="rply" default=""/>
+            </function>
+        </class>
+    </namespace>
+</INDEX>
