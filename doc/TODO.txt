@@ -1,3 +1,12 @@
+TODO'S:
+ - (converter) prepare '--asynchronous' part of <service>.cpp and <service>.h,
+ - (converter) prepare '--all-in-one-dir' structure,
+ - (converter) prepare '--compact-mode' implementation,
+ - (converter) review '--debug-mode' implementation,
+ - (converter) review protocol implementation.
+
+
+IDEAS:
 Should messages (in converter) return QStrings (with text reply) or try to automatically extract relevant data?
 This should also be commented into the code.
 

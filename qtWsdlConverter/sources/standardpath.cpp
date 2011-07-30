@@ -380,7 +380,6 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
     {
         out << "bool " << msgName << "::sendMessage(" << msgParameters << ")" << endl;
         out << "{" << endl;
-        //    out << "    parameters = params;" << endl; // FIX THAT!
         { // Assign all parameters.
             QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
             foreach (QString s, tempMap.keys())
@@ -731,7 +730,10 @@ bool StandardPath::createServiceSource()
     out << "" << wsName << "::" << wsName << "(QObject *parent)" << endl;
     out << "    : QObject(parent)" << endl;
     out << "{" << endl;
-//    out << "    connect(" << endl;
+    if (flags.synchronousness == Flags::asynchronous)
+    {
+        out << "    connect(" << endl;
+    }
     out << "    errorState = false;" << endl;
     out << "    isErrorState();" << endl;
     out << "}" << endl;
@@ -795,9 +797,11 @@ bool StandardPath::createServiceSource()
             else if (flags.synchronousness == Flags::asynchronous)
             {
                 QString objName = m->getMessageName().toLower(); // might crash when WS name is in low case
-                out << tmpReturn << " " << s << "(" << tmpP << ")" << endl;
+                // Temporarily, all messages will return QString!
+                out << "QString " << s << "(" << tmpP << ")" << endl;
                 out << "{" << endl;
                 out << "    " << m->getMessageName() << " " << objName << "(this);" << endl;
+                // TODO: pass params to the newely created object (or do it in constructor above).
                 out << "    " << objName << ".sendMessage(" << tmpPN << ");" << endl;
                 out << "}" << endl;
                 out << endl;
