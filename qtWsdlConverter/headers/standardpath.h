@@ -29,6 +29,7 @@ private:
     bool createMessages();
     bool createMessageHeader(QSoapMessage *msg);
     bool createMessageSource(QSoapMessage *msg);
+    bool createMainCpp();
     bool createService();
     bool createServiceHeader();
     bool createServiceSource();

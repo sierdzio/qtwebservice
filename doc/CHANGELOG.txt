@@ -99,3 +99,9 @@ Part of the initial development is not expressed here. Refer to git logs or ask 
 25.07.2011 19:06 CEST. Since 02d3b4ebddc61d60401255456834edc4f18daddf and earlier:
  - finished basic QDoc documentation of QWebService and qtWsdlConverter,
  - tagged as v0.2.0.
+
+30.07.2011 13:26 CEST, v0.2.1:
+ - reorganised folder structure, moved folders of converter and QWebService into project's root,
+ - fixed qmake, webServiceName.cpp, headers and sources creation in converter (mostly small typos or omissions). They prevented created code from compiling,
+ - in converter: (temporarily) made all messages return QString with exact server reply,
+ - in converter: added creation of main.cpp (needed only for successful compilation of pure generated code. It's not needed if code is used for any purpose, as project would have it's own main.cpp in that case).

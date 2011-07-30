@@ -1,3 +1,6 @@
+Should messages (in converter) return QStrings (with text reply) or try to automatically extract relevant data?
+This should also be commented into the code.
+
 When there is dir name conflict, app can ask for a new name, instead of exiting.
 
 File creation may be template-based!
