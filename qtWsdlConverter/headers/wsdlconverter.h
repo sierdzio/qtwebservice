@@ -2,7 +2,7 @@
 #define WSDLCONVERTER_H
 
 #include <QObject>
-#include "../../../QWebService_main/QWebService/headers/QWebService_global.h"
+#include "../../QWebService/headers/QWebService_global.h"
 #include "flags.h"
 #include "standardpath.h"
 
