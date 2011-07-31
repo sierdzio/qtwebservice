@@ -3,6 +3,8 @@
 /*!
     \class StandardPath
     \brief Creates code in the standard path (standard structure).
+
+    This class will most probably be renamed, as it turns out to do almost everything in the conversion process.
   */
 
 /*!
@@ -861,6 +863,8 @@ bool StandardPath::createServiceSource()
 //                out << tmpReturn << " " << wsName << "::" << s << "(" << tmpP << ")" << endl;
                 out << "QString " << wsName << "::" << s << "Send(" << tmpP << ")" << endl;
                 out << "{" << endl;
+                out << "    // TODO: You can add your own data handling here, and make the whole method return" << endl;
+                out << "    //       proper type." << endl;
                 out << "    return " << m->getMessageName() << "::sendMessage(this";
                 if (tmpPN != "")
                     out << ", " << tmpPN << ");" << endl;
