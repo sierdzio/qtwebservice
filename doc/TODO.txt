@@ -1,4 +1,7 @@
 TODO'S:
+ - (converter) add _ReplyRead() methods to <service>.cpp/.h in asynchronous mode,
+ - (converter) review asynchronous 'if' statements - in most, checks are probably too strict,
+ - (converter) change names of created message objects, so that they are clearily distinct from class name,
  - (converter) prepare '--asynchronous' part of <service>.cpp and <service>.h,
  - (converter) prepare '--all-in-one-dir' structure,
  - (converter) prepare '--compact-mode' implementation,

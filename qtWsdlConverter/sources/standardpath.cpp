@@ -152,8 +152,8 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
     // Begin writing:
     QTextStream out(&file);
     out.setCodec("UTF-8");
-    out << "#ifndef " << msgName.toUpper() << endl; // might break on curious names
-    out << "#define " << msgName.toUpper() << endl;
+    out << "#ifndef " << msgName.toUpper() << "_H" << endl; // might break on curious names
+    out << "#define " << msgName.toUpper() << "_H" << endl;
     out << endl;
     out << "#include <QtCore>" << endl;
     out << "#include <QNetworkAccessManager>" << endl;
@@ -236,7 +236,7 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
     out << "    QNetworkReply *networkReply;" << endl;
     out << "    QByteArray data;" << endl;
     out << "};" << endl;
-    out << "#endif // " << msgName.toUpper() << endl;
+    out << "#endif // " << msgName.toUpper() << "_H" << endl;
     // EOF (SOAP message)
     // ---------------------------------
 
@@ -625,6 +625,7 @@ bool StandardPath::createService()
 bool StandardPath::createServiceHeader()
 {
     QString wsName = "";
+    QMap<QString, QSoapMessage *> *tempMap = wsdl->getMethods();
     if (baseClassName != "")
         wsName = baseClassName;
     else
@@ -643,8 +644,8 @@ bool StandardPath::createServiceHeader()
     out << endl;
     out << "#include <QUrl>" << endl;
     { // Include all messages.
-        QStringList tempMap = wsdl->getMethodNames();
-        foreach (QString s, tempMap)
+        QStringList tempMp = wsdl->getMethodNames();
+        foreach (QString s, tempMp)
         {
             out << "#include \"" << s << ".h\"" << endl;
         }
@@ -660,7 +661,6 @@ bool StandardPath::createServiceHeader()
     out << endl;
     out << "    QStringList getMethodNames();" << endl;
     { // Declare all messages (as wrappers for message classes).
-        QMap<QString, QSoapMessage *> *tempMap = wsdl->getMethods();
         foreach (QString s, tempMap->keys())
         {
             QString tmpReturn = "", tmpP = "";
@@ -680,21 +680,85 @@ bool StandardPath::createServiceHeader()
             tmpP.chop(2);
 // Temporarily, all messages will return QString!
 //            out << "    " << tmpReturn << " ";
-            out << "    QString ";
-            out << s << "(" << tmpP << ");" << endl;
+            if (flags.synchronousness == Flags::synchronous)
+                out << "    QString ";
+            else
+                out << "    void ";
+            out << s << "Send(" << tmpP << ");" << endl;
         }
     }
     out << endl;
     out << "    QUrl getHostUrl();" << endl;
     out << "    QString getHost();" << endl;
     out << "    bool isErrorState();" << endl;
+    if (flags.synchronousness == Flags::asynchronous)
+    { // Declare getters of methods' replies.
+        out << "    // Method reply getters: " << endl;
+        foreach (QString s, tempMap->keys())
+        {
+            if (flags.mode == Flags::compactMode)
+            {
+                ; // Code compact mode here :)
+            }
+            else if (flags.mode == Flags::fullMode || flags.mode == Flags::debugMode)
+            {
+                QString tmpReturn = "";
+                QSoapMessage *m = tempMap->value(s);
+                foreach (QString ret, m->getReturnValueNameType().keys())
+                {
+                    tmpReturn = m->getReturnValueNameType().value(ret).typeName();
+                    break; // This does not support multiple return values!
+                }
+                out << "    " << tmpReturn << " " << s << "ReplyRead();" << endl;
+            }
+        }
+        out << endl;
+    }
     out << endl;
+    out << "protected slots:" << endl;
+    if (flags.synchronousness == Flags::asynchronous)
+    { // Declare methods for processing asynchronous replies.
+        foreach (QString s, tempMap->keys())
+        {
+            if (flags.mode == Flags::compactMode)
+            {
+                ; // Code compact mode here :)
+            }
+            else if (flags.mode == Flags::fullMode || flags.mode == Flags::debugMode)
+            {
+                out << "    void " << s << "Reply(QString result);" << endl;
+            }
+        }
+        out << endl;
+    }
     out << "protected:" << endl;
     out << "    void init();" << endl;
     out << endl;
     out << "    bool errorState;" << endl;
     out << "    QUrl hostUrl;" << endl;
     out << "    QString hostname;" << endl;
+    if (flags.synchronousness == Flags::asynchronous
+            && (flags.mode == Flags::fullMode || flags.mode == Flags::debugMode))
+    { // Declare reply variables for asynchronous mode.
+        out << "    // Message replies:" << endl;
+        foreach (QString s, tempMap->keys())
+        {
+            QString tmpReturn = "";
+            QSoapMessage *m = tempMap->value(s);
+            foreach (QString ret, m->getReturnValueNameType().keys())
+            {
+                tmpReturn = m->getReturnValueNameType().value(ret).typeName();
+                break; // This does not support multiple return values!
+            }
+            out << "    " << tmpReturn << " " << s << "Result;" << endl;
+        }
+
+        out << "    // Messages:" << endl;
+        foreach (QString s, tempMap->keys())
+        {
+            out << "    " << s << " " << s.toLower() << ";" << endl;
+        }
+    }
     out << "};" << endl;
     out << endl;
     out << "#endif // " << wsName.toUpper() << "_H" << endl;
@@ -712,6 +776,7 @@ bool StandardPath::createServiceHeader()
 bool StandardPath::createServiceSource()
 {
     QString wsName = "";
+    QMap<QString, QSoapMessage *> *tempMap = wsdl->getMethods();
     if (baseClassName != "")
         wsName = baseClassName;
     else
@@ -731,8 +796,22 @@ bool StandardPath::createServiceSource()
     out << "    : QObject(parent)" << endl;
     out << "{" << endl;
     if (flags.synchronousness == Flags::asynchronous)
-    {
-        out << "    connect(" << endl;
+    { // Connect signals and slots for asynchronous mode.
+        foreach (QString s, tempMap->keys())
+        {
+            out << "    connect(&" << s.toLower() << ", SIGNAL(replyReady(QString)), this, SLOT(";
+
+            if (flags.mode == Flags::compactMode)
+            {
+                ; // Code compact mode here :)
+            }
+            else if (flags.mode == Flags::fullMode || flags.mode == Flags::debugMode)
+            {
+                out << s << "Reply(QString)";
+            }
+
+            out << "));" << endl;
+        }
     }
     out << "    errorState = false;" << endl;
     out << "    isErrorState();" << endl;
@@ -746,7 +825,6 @@ bool StandardPath::createServiceSource()
     out << "{" << endl;
     { // Create and return the QStringList containing method names:
         out << "    QStringList result;" << endl;
-        QMap<QString, QSoapMessage *> *tempMap = wsdl->getMethods();
         foreach (QString s, tempMap->keys())
         {
             QSoapMessage *m = tempMap->value(s);
@@ -757,7 +835,6 @@ bool StandardPath::createServiceSource()
     out << "}" << endl;
     out << endl;
     { // Define all messages (as wrappers for message classes).
-        QMap<QString, QSoapMessage *> *tempMap = wsdl->getMethods();
         foreach (QString s, tempMap->keys())
         {
             QString tmpReturn = "", tmpP = "", tmpPN = "";
@@ -782,11 +859,9 @@ bool StandardPath::createServiceSource()
             {
                 // Temporarily, all messages will return QString!
 //                out << tmpReturn << " " << wsName << "::" << s << "(" << tmpP << ")" << endl;
-                out << "QString " << wsName << "::" << s << "(" << tmpP << ")" << endl;
+                out << "QString " << wsName << "::" << s << "Send(" << tmpP << ")" << endl;
                 out << "{" << endl;
                 out << "    return " << m->getMessageName() << "::sendMessage(this";
-//                , QUrl(\"" << m->getTargetNamespace() << "\"), ";
-//                out << "\"" << m->getMessageName() << "\"";
                 if (tmpPN != "")
                     out << ", " << tmpPN << ");" << endl;
                 else
@@ -796,16 +871,69 @@ bool StandardPath::createServiceSource()
             }
             else if (flags.synchronousness == Flags::asynchronous)
             {
-                QString objName = m->getMessageName().toLower(); // might crash when WS name is in low case
-                // Temporarily, all messages will return QString!
-                out << "QString " << s << "(" << tmpP << ")" << endl;
+                out << "void " << wsName << "::" << s << "Send(" << tmpP << ")" << endl;
                 out << "{" << endl;
-                out << "    " << m->getMessageName() << " " << objName << "(this);" << endl;
-                // TODO: pass params to the newely created object (or do it in constructor above).
-                out << "    " << objName << ".sendMessage(" << tmpPN << ");" << endl;
+                out << "    " << s.toLower() << ".sendMessage(" << tmpPN << ");" << endl;
                 out << "}" << endl;
                 out << endl;
             }
+        }
+    }
+
+    if (flags.synchronousness == Flags::asynchronous)
+    { // Define getters of methods' replies.
+        out << "    // Method reply getters: " << endl;
+        foreach (QString s, tempMap->keys())
+        {
+            if (flags.mode == Flags::compactMode)
+            {
+                ; // Code compact mode here :)
+            }
+            else if (flags.mode == Flags::fullMode || flags.mode == Flags::debugMode)
+            {
+                QString tmpReturn = "";
+                QSoapMessage *m = tempMap->value(s);
+                foreach (QString ret, m->getReturnValueNameType().keys())
+                {
+                    tmpReturn = m->getReturnValueNameType().value(ret).typeName();
+                    break; // This does not support multiple return values!
+                }
+                out << tmpReturn << " " << wsName << "::" << s << "ReplyRead()" << endl;
+                out << "{" << endl;
+                out << "    return " << s << "Result;" << endl;
+                out << "}" << endl;
+                out << endl;
+            }
+        }
+        out << endl;
+    }
+
+    if (flags.synchronousness == Flags::asynchronous
+            && (flags.mode == Flags::fullMode || flags.mode == Flags::debugMode))
+    { // Define all slots for asynchronous mode.
+        foreach (QString s, tempMap->keys())
+        {
+            /*
+            if (flags.mode == Flags::compactMode)
+            {
+                ; // Code compact mode here :) Will probably be ust one method.
+            }
+            else
+            */
+
+            QString tmpReturn = "";
+            QSoapMessage *m = tempMap->value(s);
+            foreach (QString ret, m->getReturnValueNameType().keys())
+            {
+                tmpReturn = m->getReturnValueNameType().value(ret).typeName();
+                break; // This does not support multiple return values!
+            }
+            out << "void " << wsName << "::" << s << "Reply(QString result)" << endl;
+            out << "{" << endl;
+            out << "    // TODO: Add your own data handling here!" << endl;
+            out << "    //" << s << "Result = your_new_value;" << endl;
+            out << "}" << endl;
+            out << endl;
         }
     }
     out << "QUrl " << wsName << "::getHostUrl()" << endl;

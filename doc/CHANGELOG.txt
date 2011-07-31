@@ -105,3 +105,8 @@ Part of the initial development is not expressed here. Refer to git logs or ask 
  - fixed qmake, webServiceName.cpp, headers and sources creation in converter (mostly small typos or omissions). They prevented created code from compiling,
  - in converter: (temporarily) made all messages return QString with exact server reply,
  - in converter: added creation of main.cpp (needed only for successful compilation of pure generated code. It's not needed if code is used for any purpose, as project would have it's own main.cpp in that case).
+
+31.07.2011 : CEST. Since 1f8d25287426c9142aabb782785385196d9217fc:
+ - optimised conversion slightly (lowered amount of wsdl pointer uses),
+ - added support for '--asynchronous' flag,
+ - fixed idfefs in generated header files.
