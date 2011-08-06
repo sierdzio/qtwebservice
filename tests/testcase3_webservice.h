@@ -2,10 +2,7 @@
 #define TESTCASE3_WEBSERVICE_H
 
 #include <QPushButton>
-//#include "../headers/qwsdl.h"
-//#include "../headers/qwebserviceabstract.h"
-#include "../QWebService/headers/qwebservicereaderabstract.h"
-//#include "../headers/qwebservicemethodabstract.h"
+#include "../QWebService/headers/QWebService.h"
 
 class testCase3_webservice : public QPushButton
 {

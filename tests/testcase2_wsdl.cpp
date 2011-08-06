@@ -4,8 +4,8 @@ testCase2_wsdl::testCase2_wsdl(QWidget *parent) :
     QPushButton(parent)
 {
 //    runWsdlTest("http://www.webservicex.net/LondonGoldFix.asmx?WSDL");
-//    runWsdlTest("http://www.webservicex.net/stockquote.asmx?WSDL");
-    runWsdlTest("/home/sierdzio/Dropbox/Code/QWebService/QWebService_main/QWebService/examples/band_ws.asmx");
+    runWsdlTest("http://www.webservicex.net/stockquote.asmx?WSDL");
+//    runWsdlTest("/home/sierdzio/Dropbox/Code/QWebService/QWebService_main/QWebService/examples/band_ws.asmx");
 }
 
 testCase2_wsdl::~testCase2_wsdl()

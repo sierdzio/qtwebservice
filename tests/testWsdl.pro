@@ -11,7 +11,6 @@ TARGET = testWsdl
 
 TEMPLATE = app
 
-
 SOURCES += ../QWebService/sources/qwebserviceabstract.cpp \
     ../QWebService/sources/qwebservicereaderabstract.cpp \
     ../QWebService/sources/qwebservicemethodabstract.cpp \
@@ -27,6 +26,7 @@ HEADERS += ../QWebService/headers/qwebserviceabstract.h \
     ../QWebService/headers/qwebservicemethodabstract.h \
     ../QWebService/headers/qwsdl.h \
     ../QWebService/headers/qsoapmessage.h \
+    ../QWebService/headers/QWebService.h \
     testCase1.h \
     testcase2_wsdl.h \
     testcase3_webservice.h

@@ -32,7 +32,8 @@ HEADERS += headers/wsdlconverter.h \
     ../QWebService/headers/qwebservicereaderabstract.h \
     ../QWebService/headers/qwebservicemethodabstract.h \
     ../QWebService/headers/qwsdl.h \
-    ../QWebService/headers/qsoapmessage.h
+    ../QWebService/headers/qsoapmessage.h \
+    ../QWebService/headers/QWebService.h
 
 OTHER_FILES += \
     examples/band_ws.asmx \
