@@ -10,9 +10,16 @@ QT       += network xml
 QT       -= gui
 
 TARGET = QWebService
+
 TEMPLATE = lib
 
+CONFIG += dll
+
 DEFINES += QWEBSERVICE_LIBRARY
+
+VERSION = 0.2.1
+
+#DESTDIR = ../lib
 
 SOURCES += sources/qwebserviceabstract.cpp \
     sources/qwebservicereaderabstract.cpp \
@@ -25,7 +32,8 @@ HEADERS += headers/QWebService_global.h \
     headers/qwebservicereaderabstract.h \
     headers/qwebservicemethodabstract.h \
     headers/qwsdl.h \
-    headers/qsoapmessage.h
+    headers/qsoapmessage.h \
+    headers/QWebService.h
 
 symbian {
     #Symbian specific definitions
@@ -46,9 +54,3 @@ unix:!symbian {
     }
     INSTALLS += target
 }
-
-OTHER_FILES += examples/stockquote.asmx \
-    examples/bookABand.txt \
-    examples/band_ws.asmx \
-    examples/LondonGoldFix.asmx.xml \
-    examples/wsdlURLs.txt
