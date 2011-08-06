@@ -2,7 +2,7 @@
 #define TESTCASE1_H
 
 #include <QtGui>
-#include "../headers/qwsdl.h"
+#include "../QWebService/headers/qwsdl.h"
 
 class testCase1 : public QPushButton
 {

@@ -1,7 +1,7 @@
 #include <QtCore>
 #include <QtGui/QApplication>
 #include <QtGui/QPushButton>
-#include "../headers/qwsdl.h"
+#include "../QWebService/headers/qwsdl.h"
 #include "testCase1.h"
 #include "testcase2_wsdl.h"
 #include "testcase3_webservice.h"
