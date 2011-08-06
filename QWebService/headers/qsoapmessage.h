@@ -5,8 +5,9 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include "QWebService_global.h"
 
-class QSoapMessage : public QObject
+class QWEBSERVICESHARED_EXPORT QSoapMessage : public QObject
 {
     Q_OBJECT
 

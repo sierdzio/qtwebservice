@@ -2,7 +2,7 @@
 #define STANDARDPATH_H
 
 #include <QObject>
-#include "../../QWebService/headers/QWebService.h"
+#include <QWebService>
 #include "flags.h"
 
 /**

@@ -19,7 +19,7 @@ DEFINES += QWEBSERVICE_LIBRARY
 
 VERSION = 0.2.1
 
-#DESTDIR = ../lib
+DESTDIR = ../lib
 
 SOURCES += sources/qwebserviceabstract.cpp \
     sources/qwebservicereaderabstract.cpp \
@@ -33,7 +33,7 @@ HEADERS += headers/QWebService_global.h \
     headers/qwebservicemethodabstract.h \
     headers/qwsdl.h \
     headers/qsoapmessage.h \
-    headers/QWebService.h
+    headers/QWebService
 
 symbian {
     #Symbian specific definitions

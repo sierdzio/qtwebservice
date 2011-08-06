@@ -2,7 +2,7 @@
 #define TESTCASE2_WSDL_H
 
 #include <QPushButton>
-#include "../QWebService/headers/QWebService.h"
+#include <QWebService>
 
 class testCase2_wsdl : public QPushButton
 {

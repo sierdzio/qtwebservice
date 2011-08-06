@@ -2,11 +2,12 @@
 #define QWEBSERVICEABSTRACT_H
 
 #include <QUrl>
+#include "QWebService_global.h"
 #include "qsoapmessage.h"
 #include "qwsdl.h"
-//#include "QWebService_global.h"
 
-class QWebServiceAbstract : public QObject //QWEBSERVICESHARED_EXPORT
+
+class QWEBSERVICESHARED_EXPORT QWebServiceAbstract : public QObject //QWEBSERVICESHARED_EXPORT
 {
     Q_OBJECT
 

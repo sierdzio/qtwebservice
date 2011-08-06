@@ -3,9 +3,10 @@
 
 #include <QUrl>
 #include <QObject>
+#include "QWebService_global.h"
 #include "qsoapmessage.h"
 
-class QWebServiceMethodAbstract : public QObject
+class QWEBSERVICESHARED_EXPORT QWebServiceMethodAbstract : public QObject
 {
     Q_OBJECT
 

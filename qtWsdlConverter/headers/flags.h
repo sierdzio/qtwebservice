@@ -1,7 +1,7 @@
 #ifndef FLAGS_H
 #define FLAGS_H
 
-#include "../../QWebService/headers/QWebService.h"
+#include <QWebService>
 
 /**
   Holds all converter's switches in one place.

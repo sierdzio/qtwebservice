@@ -15,25 +15,22 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../lib/ -lQWebService
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../lib/ -lQWebServiced
+else:symbian: LIBS += -lQWebService
+else:unix: LIBS += -L$$PWD/../lib/ -lQWebService
+
+INCLUDEPATH += $$PWD/../QWebService/headers
+DEPENDPATH += $$PWD/../QWebService/headers
+
 SOURCES += sources/main.cpp \
     sources/wsdlconverter.cpp \
     sources/standardpath.cpp \
-    sources/flags.cpp \
-    ../QWebService/sources/qwebserviceabstract.cpp \
-    ../QWebService/sources/qwebservicereaderabstract.cpp \
-    ../QWebService/sources/qwebservicemethodabstract.cpp \
-    ../QWebService/sources/qwsdl.cpp \
-    ../QWebService/sources/qsoapmessage.cpp
+    sources/flags.cpp
 
 HEADERS += headers/wsdlconverter.h \
     headers/standardpath.h \
-    headers/flags.h \
-    ../QWebService/headers/qwebserviceabstract.h \
-    ../QWebService/headers/qwebservicereaderabstract.h \
-    ../QWebService/headers/qwebservicemethodabstract.h \
-    ../QWebService/headers/qwsdl.h \
-    ../QWebService/headers/qsoapmessage.h \
-    ../QWebService/headers/QWebService.h
+    headers/flags.h
 
 OTHER_FILES += \
     examples/band_ws.asmx \

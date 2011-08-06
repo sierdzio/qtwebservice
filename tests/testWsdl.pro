@@ -11,22 +11,25 @@ TARGET = testWsdl
 
 TEMPLATE = app
 
-SOURCES += ../QWebService/sources/qwebserviceabstract.cpp \
-    ../QWebService/sources/qwebservicereaderabstract.cpp \
-    ../QWebService/sources/qwebservicemethodabstract.cpp \
-    ../QWebService/sources/qwsdl.cpp \
-    ../QWebService/sources/qsoapmessage.cpp \
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../lib/ -lQWebService
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../lib/ -lQWebServiced
+else:symbian: LIBS += -lQWebService
+else:unix: LIBS += -L$$PWD/../lib/ -lQWebService
+
+INCLUDEPATH += $$PWD/../QWebService/headers
+DEPENDPATH += $$PWD/../QWebService/headers
+
+SOURCES += \
     main.cpp \
     testCase1.cpp \
     testcase2_wsdl.cpp \
     testcase3_webservice.cpp
 
-HEADERS += ../QWebService/headers/qwebserviceabstract.h \
-    ../QWebService/headers/qwebservicereaderabstract.h \
-    ../QWebService/headers/qwebservicemethodabstract.h \
-    ../QWebService/headers/qwsdl.h \
-    ../QWebService/headers/qsoapmessage.h \
-    ../QWebService/headers/QWebService.h \
+HEADERS += \
     testCase1.h \
     testcase2_wsdl.h \
     testcase3_webservice.h
+
+
+
+

@@ -1,9 +1,10 @@
 #ifndef QWEBSERVICEREADERABSTRACT_H
 #define QWEBSERVICEREADERABSTRACT_H
 
+#include "QWebService_global.h"
 #include "qwebserviceabstract.h"
 
-class QWebServiceReaderAbstract : public QWebServiceAbstract
+class QWEBSERVICESHARED_EXPORT QWebServiceReaderAbstract : public QWebServiceAbstract
 {
     Q_OBJECT
 
