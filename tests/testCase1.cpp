@@ -1,5 +1,8 @@
 #include "testCase1.h"
 
+/**
+  This test checks QSoapMessage in operation (requires Internet connection or a working local web service)
+  */
 testCase1::testCase1(QWidget *parent) :
     QPushButton(parent)
 {
@@ -19,9 +22,15 @@ void testCase1::messageResponse(QVariant msg)
 
 void testCase1::soapMessageTest()
 {
+    /**
+      Message parameters are specified here.
+      */
     QMap<QString, QVariant> tmpP;
     tmpP.insert("symbol", QVariant("NOK"));
 
+    /**
+      This is the reply holder.
+      */
     QMap<QString, QVariant> tmpR;
     tmpR.insert("GetQuoteResponse", QVariant("s:string"));
 

@@ -1,9 +1,17 @@
 #include "testcase3_webservice.h"
 
+/**
+  This test case combines previosu two - it checks both QSoapMessage and QWsdl functionality,
+  in a broad spectrum of uses.
+  */
 testCase3_webservice::testCase3_webservice(QPushButton *parent) :
     QPushButton(parent)
 {
-    runWebServiceTest("/home/sierdzio/Dropbox/Code/QWebService/QWebService_main/QWebService/examples/band_ws.asmx");
+    /**
+      Check based on a local WSDL file, placed in 'examples' folder.
+      You can specify your own, or even a web service URL.
+      */
+    runWebServiceTest("../examples/band_ws.asmx");
 }
 
 testCase3_webservice::~testCase3_webservice()
@@ -14,6 +22,9 @@ testCase3_webservice::~testCase3_webservice()
 
 void testCase3_webservice::runWebServiceTest(QString filePathOrUrl)
 {
+    /**
+      Prints out methods with their parameters and return types and names.
+      */
     qDebug() << "Running testCase3";
     reader = new QWebServiceReaderAbstract(filePathOrUrl, this);
     qDebug() << "Getting methods";

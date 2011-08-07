@@ -110,3 +110,12 @@ Part of the initial development is not expressed here. Refer to git logs or ask 
  - optimised conversion slightly (lowered amount of wsdl pointer uses),
  - added support for '--asynchronous' flag,
  - fixed idfefs in generated header files.
+
+06.08.2011 : CEST:
+ - another file reorganisation (separated tests from QWebService),
+ - adjusted QWebService default library generation,
+ - made converter and tests use the library (needs specification of LD_LIBRARY_PATH on runtime, though - at least in current setting). This has also simplified their .pro files,
+ - added QWebService extensionless header - to ease including in other programs.
+
+07.08.2011 : CEST:
+ - added some commentary to test cases.
