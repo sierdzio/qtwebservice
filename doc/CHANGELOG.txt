@@ -1,83 +1,39 @@
 Changelog for QWebService library project & qtWsdlConverter.
 Part of the initial development is not expressed here. Refer to git logs or ask sierdzio at sierdzio@gmail.com
 
-09.06.2011 08:49 BST. Changes since v0.1.1:
- - fixed QWsdl not parsing tags other than 'schema',
- - debug messages for unsupported tags are now displayed only once,
- - added some debug information to testCase2,
- - added method bodies to QWebServiceAbstract,
- - some other initial changes I forgot about :)
+07.08.2011 : CEST:
+ - added some commentary to test cases,
+ - inverted the changelog (newest entries are now at the beginning),
+ - 
 
-10.06.2011 15:10 BST. Since commit 8e1a403b54b1514f61f4a9686808ac89ff1bd0dd:
- - began QWebService classes integration,
- - started testCase3 for QWebService,
- - added simple errorState propagation to QWebServiceAbstract from QWsdl,
- - QWebServiceMethod abstract is rendered obsolete (this has to be revised),
- - reverted QWebServiceAbstract:init() to return 'void',
- - fixed QWebServiceAbstract destructor, there was a memory leak,
- - greatly expanded QWSA functionality.
+06.08.2011 : CEST:
+ - another file reorganisation (separated tests from QWebService),
+ - adjusted QWebService default library generation,
+ - made converter and tests use the library (needs specification of LD_LIBRARY_PATH on runtime, though - at least in current setting). This has also simplified their .pro files,
+ - added QWebService extensionless header - to ease including in other programs.
 
-11.06.2011 19:07 BST. Since 3d0adf998a126f28d9c919157ff46608248ebf14:
- - started qtWsdlConverter development,
- - added numerous new methods and fields to WsdlConverter class.
+31.07.2011 : CEST. Since 1f8d25287426c9142aabb782785385196d9217fc:
+ - optimised conversion slightly (lowered amount of wsdl pointer uses),
+ - added support for '--asynchronous' flag,
+ - fixed idfefs in generated header files.
 
-11.06.2011 21:08 BST. Since 1d0f4b10e6fc6cb9285e7b09bcc8f89c7ed3638d:
- - added command line handling to wsdlConverter. All switches, options and arguments currntly in specs are being taken into account,
- - small fix in QSoapMessage::soap10 handling,
- - added basic and ugly help to wsdlConverter.
+30.07.2011 13:26 CEST, v0.2.1:
+ - reorganised folder structure, moved folders of converter and QWebService into project's root,
+ - fixed qmake, webServiceName.cpp, headers and sources creation in converter (mostly small typos or omissions). They prevented created code from compiling,
+ - in converter: (temporarily) made all messages return QString with exact server reply,
+ - in converter: added creation of main.cpp (needed only for successful compilation of pure generated code. It's not needed if code is used for any purpose, as project would have it's own main.cpp in that case).
 
-11.06.2011 21:16 BST.
- - fixed seg fault when running 'wsdlConverter --help' from last commit.
+25.07.2011 19:06 CEST. Since 02d3b4ebddc61d60401255456834edc4f18daddf and earlier:
+ - finished basic QDoc documentation of QWebService and qtWsdlConverter,
+ - tagged as v0.2.0.
 
-05.07.2011 15:23 CEST.
- - made qtWsdlConverter display help when invoked without arguments,
- - fixed 'args' QList being deleted too early in qtWsdlConverter.
+20.07.2011 : CEST. Since 1cf263e731c32f7669a5e643932bfacfa06fdc58:
+ - began commenting the code,
+ - started QDoc documentation.
 
-05.07.2011 18:00 CEST. Since cc1eddec3f152aeb31db9210648073913c631333:
- - fixed seg fault in QWsdlConverter::setFlags(),
- - fixed converter wrongly assigning appPath as wsdlFileName when reading args,
- - added web service name reading functionality to QWsdl and QWsdlConverter,
- - added conversion algorithm's outline,
- - added new file to converter, "futureFeatures.txt" and put in some ideas.
-
-05.07.2011 20:43 CEST. Since 72e94f7b1bd1f8c2b6b6299de8be3c917c15885d:
- - added new class, "StandardPath", and began it's coding. It's purpose is to create dir structure
-   and files for the standard path,
- - began writing messages' headers creation,
- - added some future ideas.
-
-06.07.2011 15:39 CEST. Since 8ae8fa7e42c834c09e527abe100b1cc3ac8c2a17:
- - added SOAP msg's header creation in full,
- - added SOAP msg's source creation in full,
- - SOAP creation still needs looking at, adjustments, new flags etc., but it at least works.
-
-07.07.2011 10:30 CEST. Since a64544f5526c1ed98d6b5cc4587ff31e572201b0:
- - (StandardPath) made tempMap truly temporary (moved into a new block) in createMessageHeader/Source(),
- - added real list of parameters, taken from WSDL, to .h and .cpp. Params are now declared in header, and properly assigned
-   in relevant methods in source,
- - various other header/ source creation improvements and fixes,
- - added standardPath modes (full, debug, compact).
-
-07.07.2011 11:36 CEST. Since 699e9a04feb85e70e592015af0b7d3ea2010d803, on branch 'newFlags':
- - introduced new "Flag Class" to WSDL converter, which aggregates all flags from converter's classes.
-
-07.07.2011 16:14 CEST. Since last:
- - added error handling to StandardPath class,
- - added web service source and header creation for StandardPath,
- - added QMake .pro file generation for StandardPath,
- - made some code optimisation in StandardPath (file is opened and checked before getting msg info).
-
-11.07.2011 10:13 CEST. Since fc8628bd0bf853d3e3cdba8f8383a70870dd8e0a:
- - adeed synchronous/ asynchronous handling to standardPath,
- - added new build-system switch to Flags class: 'noBuildSystem',
- - updated converter's help message and comments on possible switches,
- - fixed converter not handling URLs properly,
- - fixed service classes' parameter list creation getting WS name instead of parameter name.
-
-11.07.2011 11:dd CEST. Since f9eefb304d899f049ea186108da65ea531c7fa53:
- - made converter read all currently used flags from command line, and properly add them to Flags object,
- - added output dir handling to converter,
- - added custom base class name functionality (it can be specified in command line).
+12.07.2011 11:09 CEST. Since 06545eb583d65c20becf4f51fbaa5263e49955c3:
+ - written the readme for converter,
+ - tagged as v0.1.3.
 
 12.07.2011 10:11 CEST. Since e830316e8d9535de19b765b649f7b518c16736df:
  - numerous changes to doc/ and examples/ directories. They have been merged and moved up
@@ -88,34 +44,80 @@ Part of the initial development is not expressed here. Refer to git logs or ask 
  - modified displayIntro() in converter's main(),
  - began implementing --compact-mode flag.
 
-12.07.2011 11:09 CEST. Since 06545eb583d65c20becf4f51fbaa5263e49955c3:
- - written the readme for converter,
- - tagged as v0.1.3.
+11.07.2011 11:dd CEST. Since f9eefb304d899f049ea186108da65ea531c7fa53:
+ - made converter read all currently used flags from command line, and properly add them to Flags object,
+ - added output dir handling to converter,
+ - added custom base class name functionality (it can be specified in command line).
 
-20.07.2011 : CEST. Since 1cf263e731c32f7669a5e643932bfacfa06fdc58:
- - began commenting the code,
- - started QDoc documentation.
+11.07.2011 10:13 CEST. Since fc8628bd0bf853d3e3cdba8f8383a70870dd8e0a:
+ - adeed synchronous/ asynchronous handling to standardPath,
+ - added new build-system switch to Flags class: 'noBuildSystem',
+ - updated converter's help message and comments on possible switches,
+ - fixed converter not handling URLs properly,
+ - fixed service classes' parameter list creation getting WS name instead of parameter name.
 
-25.07.2011 19:06 CEST. Since 02d3b4ebddc61d60401255456834edc4f18daddf and earlier:
- - finished basic QDoc documentation of QWebService and qtWsdlConverter,
- - tagged as v0.2.0.
+07.07.2011 16:14 CEST. Since last:
+ - added error handling to StandardPath class,
+ - added web service source and header creation for StandardPath,
+ - added QMake .pro file generation for StandardPath,
+ - made some code optimisation in StandardPath (file is opened and checked before getting msg info).
 
-30.07.2011 13:26 CEST, v0.2.1:
- - reorganised folder structure, moved folders of converter and QWebService into project's root,
- - fixed qmake, webServiceName.cpp, headers and sources creation in converter (mostly small typos or omissions). They prevented created code from compiling,
- - in converter: (temporarily) made all messages return QString with exact server reply,
- - in converter: added creation of main.cpp (needed only for successful compilation of pure generated code. It's not needed if code is used for any purpose, as project would have it's own main.cpp in that case).
+07.07.2011 11:36 CEST. Since 699e9a04feb85e70e592015af0b7d3ea2010d803, on branch 'newFlags':
+ - introduced new "Flag Class" to WSDL converter, which aggregates all flags from converter's classes.
 
-31.07.2011 : CEST. Since 1f8d25287426c9142aabb782785385196d9217fc:
- - optimised conversion slightly (lowered amount of wsdl pointer uses),
- - added support for '--asynchronous' flag,
- - fixed idfefs in generated header files.
+07.07.2011 10:30 CEST. Since a64544f5526c1ed98d6b5cc4587ff31e572201b0:
+ - (StandardPath) made tempMap truly temporary (moved into a new block) in createMessageHeader/Source(),
+ - added real list of parameters, taken from WSDL, to .h and .cpp. Params are now declared in header, and properly assigned
+   in relevant methods in source,
+ - various other header/ source creation improvements and fixes,
+ - added standardPath modes (full, debug, compact).
 
-06.08.2011 : CEST:
- - another file reorganisation (separated tests from QWebService),
- - adjusted QWebService default library generation,
- - made converter and tests use the library (needs specification of LD_LIBRARY_PATH on runtime, though - at least in current setting). This has also simplified their .pro files,
- - added QWebService extensionless header - to ease including in other programs.
+06.07.2011 15:39 CEST. Since 8ae8fa7e42c834c09e527abe100b1cc3ac8c2a17:
+ - added SOAP msg's header creation in full,
+ - added SOAP msg's source creation in full,
+ - SOAP creation still needs looking at, adjustments, new flags etc., but it at least works.
 
-07.08.2011 : CEST:
- - added some commentary to test cases.
+05.07.2011 20:43 CEST. Since 72e94f7b1bd1f8c2b6b6299de8be3c917c15885d:
+ - added new class, "StandardPath", and began it's coding. It's purpose is to create dir structure
+   and files for the standard path,
+ - began writing messages' headers creation,
+ - added some future ideas.
+
+05.07.2011 18:00 CEST. Since cc1eddec3f152aeb31db9210648073913c631333:
+ - fixed seg fault in QWsdlConverter::setFlags(),
+ - fixed converter wrongly assigning appPath as wsdlFileName when reading args,
+ - added web service name reading functionality to QWsdl and QWsdlConverter,
+ - added conversion algorithm's outline,
+ - added new file to converter, "futureFeatures.txt" and put in some ideas.
+
+05.07.2011 15:23 CEST.
+ - made qtWsdlConverter display help when invoked without arguments,
+ - fixed 'args' QList being deleted too early in qtWsdlConverter.
+
+11.06.2011 21:16 BST.
+ - fixed seg fault when running 'wsdlConverter --help' from last commit.
+
+11.06.2011 21:08 BST. Since 1d0f4b10e6fc6cb9285e7b09bcc8f89c7ed3638d:
+ - added command line handling to wsdlConverter. All switches, options and arguments currntly in specs are being taken into account,
+ - small fix in QSoapMessage::soap10 handling,
+ - added basic and ugly help to wsdlConverter.
+
+11.06.2011 19:07 BST. Since 3d0adf998a126f28d9c919157ff46608248ebf14:
+ - started qtWsdlConverter development,
+ - added numerous new methods and fields to WsdlConverter class.
+
+10.06.2011 15:10 BST. Since commit 8e1a403b54b1514f61f4a9686808ac89ff1bd0dd:
+ - began QWebService classes integration,
+ - started testCase3 for QWebService,
+ - added simple errorState propagation to QWebServiceAbstract from QWsdl,
+ - QWebServiceMethod abstract is rendered obsolete (this has to be revised),
+ - reverted QWebServiceAbstract:init() to return 'void',
+ - fixed QWebServiceAbstract destructor, there was a memory leak,
+ - greatly expanded QWSA functionality.
+
+09.06.2011 08:49 BST. Changes since v0.1.1:
+ - fixed QWsdl not parsing tags other than 'schema',
+ - debug messages for unsupported tags are now displayed only once,
+ - added some debug information to testCase2,
+ - added method bodies to QWebServiceAbstract,
+ - some other initial changes I forgot about :)
