@@ -3,22 +3,30 @@
 <section ref="classes.html" title="Classes">
     <section ref="flags.html" title="Flags Class Reference">
         <keyword ref="flags.html">Flags</keyword>
-        <keyword ref="flags.html#BuildSystem-enum">BuildSystem</keyword>
-        <keyword ref="flags.html#BuildSystem-enum">Flags::qmake</keyword>
-        <keyword ref="flags.html#BuildSystem-enum">Flags::cmake</keyword>
-        <keyword ref="flags.html#BuildSystem-enum">Flags::scons</keyword>
-        <keyword ref="flags.html#BuildSystem-enum">Flags::noBuildSystem</keyword>
-        <keyword ref="flags.html#Mode-enum">Mode</keyword>
-        <keyword ref="flags.html#Mode-enum">Flags::fullMode</keyword>
-        <keyword ref="flags.html#Mode-enum">Flags::debugMode</keyword>
-        <keyword ref="flags.html#Mode-enum">Flags::compactMode</keyword>
-        <keyword ref="flags.html#Structure-enum">Structure</keyword>
-        <keyword ref="flags.html#Structure-enum">Flags::standardStructure</keyword>
-        <keyword ref="flags.html#Structure-enum">Flags::allInOneDirStructure</keyword>
-        <keyword ref="flags.html#Structure-enum">Flags::noMessagesStructure</keyword>
-        <keyword ref="flags.html#Synchronousness-enum">Synchronousness</keyword>
-        <keyword ref="flags.html#Synchronousness-enum">Flags::synchronous</keyword>
-        <keyword ref="flags.html#Synchronousness-enum">Flags::asynchronous</keyword>
+        <keyword ref="flags.html#Option-enum">Option</keyword>
+        <keyword ref="flags.html#Option-enum">Options</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::fullMode</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::debugMode</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::http</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::json</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::compactMode</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::standardStructure</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::qmake</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::soap10</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::allInOneDirStructure</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::synchronous</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::noMessagesStructure</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::soap12</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::cmake</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::scons</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::noBuildSystem</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::asynchronous</keyword>
+        <keyword ref="flags.html#flagsx">flags</keyword>
+        <keyword ref="flags.html#forced">forced</keyword>
+        <keyword ref="flags.html#isForced">isForced</keyword>
+        <keyword ref="flags.html#resetFlags">resetFlags</keyword>
+        <keyword ref="flags.html#setFlags">setFlags</keyword>
+        <keyword ref="flags.html#setForced">setForced</keyword>
         <section ref="flags-members.html" title="List of all members"/>
     </section>
     <section ref="standardpath.html" title="StandardPath Class Reference">

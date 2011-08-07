@@ -67,42 +67,44 @@ bool populateArgumentsList(QMap<int, QVariant> *lst, Flags *flgs)
             }
             // Protocol flags:
             else if (s == "--soap12")
-                flgs->protocol = QSoapMessage::soap12;
+                flgs->setFlags(Flags::soap12);
             else if (s == "--soap10")
-                flgs->protocol = QSoapMessage::soap10;
-            else if (s == "--html")
-                flgs->protocol = QSoapMessage::http;
+                flgs->setFlags(Flags::soap10);
+            else if (s == "--http")
+                flgs->setFlags(Flags::http);
+            else if (s == "--json")
+                flgs->setFlags(Flags::json);
             // Synchronousness:
             else if (s == "--synchronous")
-                flgs->synchronousness = Flags::synchronous;
+                flgs->setFlags(Flags::synchronous);
             else if (s == "--asynchronous")
-                flgs->synchronousness = Flags::asynchronous;
+                flgs->setFlags(Flags::asynchronous);
             // Modes:
             else if (s == "--full-mode")
-                flgs->mode = Flags::fullMode;
+                flgs->setFlags(Flags::fullMode);
             else if (s == "--debug-mode")
-                flgs->mode = Flags::debugMode;
+                flgs->setFlags(Flags::debugMode);
             else if (s == "--compact-mode")
-                flgs->mode = Flags::compactMode;
+                flgs->setFlags(Flags::compactMode);
             // Structures:
             else if (s == "--standard-structure")
-                flgs->structure = Flags::standardStructure;
+                flgs->setFlags(Flags::standardStructure);
             else if (s == "--no-messages-structure")
-                flgs->structure = Flags::noMessagesStructure;
+                flgs->setFlags(Flags::noMessagesStructure);
             else if (s == "--all-in-one-dir-structure")
-                flgs->structure = Flags::allInOneDirStructure;
+                flgs->setFlags(Flags::allInOneDirStructure);
             // Build systems:
             else if (s == "--qmake")
-                flgs->buildSystem = Flags::qmake;
+                flgs->setFlags(Flags::qmake);
             else if (s == "--cmake")
-                flgs->buildSystem = Flags::cmake;
+                flgs->setFlags(Flags::cmake);
             else if (s == "--scons")
-                flgs->buildSystem = Flags::scons;
+                flgs->setFlags(Flags::scons);
             else if (s == "--no-build-system")
-                flgs->buildSystem = Flags::noBuildSystem;
+                flgs->setFlags(Flags::noBuildSystem);
             // Force:
             else if (s == "--force")
-                flgs->force = true;
+                flgs->setForced(true);
         }
         else if ((s != "") && (s != qApp->applicationFilePath()))
         {
@@ -160,7 +162,7 @@ void displayHelp()
     qDebug() << "Possible options: --soap10, --soap12, --http, --synchronous, --asynchronous, --help.";
     qDebug() << "New ones: --full-mode, --debug-mode, --compact-mode,";
     qDebug() << "--standard-structure, --no-messages-structure, --all-in-one-dir-structure,";
-    qDebug() << "--qmake, --cmake, --scons, --no-build-system, --force";
+    qDebug() << "--qmake, --cmake, --scons, --no-build-system, --force, --json";
     qDebug() << "Default switches are: --synchronous, --soap12, --standard-structure, --full-mode, --qmake.";
     qDebug() << "";
     qDebug() << "qtWsdlConverter Copyright (C) 2011  Tomasz 'sierdzio' Siekierda";

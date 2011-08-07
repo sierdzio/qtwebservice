@@ -3,40 +3,39 @@
 <INDEX url="" title="an app for converting WSDL files into Qt classes" version="">
     <namespace access="public" threadsafety="unspecified" status="commendable" name="" href="" location="" module="">
         <class access="public" threadsafety="unspecified" status="commendable" name="Flags" href="flags.html" location="flags.h" bases="" module="">
-            <enum access="public" threadsafety="unspecified" status="commendable" name="Mode" fullname="Flags::Mode" href="flags.html#Mode-enum" location="flags.h">
-                <value name="fullMode" value="0"/>
-                <value name="debugMode" value="1"/>
-                <value name="compactMode" value="2"/>
+            <enum access="public" threadsafety="unspecified" status="commendable" name="Option" fullname="Flags::Option" href="flags.html#Option-enum" location="flags.h" typedef="Flags::Options">
+                <value name="fullMode" value="0x00001"/>
+                <value name="debugMode" value="0x00002"/>
+                <value name="compactMode" value="0x00004"/>
+                <value name="synchronous" value="0x00010"/>
+                <value name="asynchronous" value="0x00020"/>
+                <value name="standardStructure" value="0x00100"/>
+                <value name="noMessagesStructure" value="0x00200"/>
+                <value name="allInOneDirStructure" value="0x00400"/>
+                <value name="qmake" value="0x01000"/>
+                <value name="cmake" value="0x02000"/>
+                <value name="scons" value="0x04000"/>
+                <value name="noBuildSystem" value="0x08000"/>
+                <value name="http" value="0x10000"/>
+                <value name="soap10" value="0x20000"/>
+                <value name="soap12" value="0x40000"/>
+                <value name="json" value="0x80000"/>
             </enum>
-            <enum access="public" threadsafety="unspecified" status="commendable" name="Synchronousness" fullname="Flags::Synchronousness" href="flags.html#Synchronousness-enum" location="flags.h">
-                <value name="synchronous" value="0"/>
-                <value name="asynchronous" value="1"/>
-            </enum>
-            <enum access="public" threadsafety="unspecified" status="commendable" name="Structure" fullname="Flags::Structure" href="flags.html#Structure-enum" location="flags.h">
-                <value name="standardStructure" value="0"/>
-                <value name="noMessagesStructure" value="1"/>
-                <value name="allInOneDirStructure" value="2"/>
-            </enum>
-            <enum access="public" threadsafety="unspecified" status="commendable" name="BuildSystem" fullname="Flags::BuildSystem" href="flags.html#BuildSystem-enum" location="flags.h">
-                <value name="qmake" value="0"/>
-                <value name="cmake" value="1"/>
-                <value name="scons" value="2"/>
-                <value name="noBuildSystem" value="3"/>
-            </enum>
-            <function access="public" threadsafety="unspecified" status="commendable" name="Flags" fullname="Flags::Flags" href="flags.html#Flags" location="flags.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="Flags(Mode mod, Synchronousness synchronousnes, Structure structur, QSoapMessage::Protocol protoco, BuildSystem system, bool forc)">
-                <parameter left="Mode" right="" name="mod" default="fullMode"/>
-                <parameter left="Synchronousness" right="" name="synchronousnes" default="synchronous"/>
-                <parameter left="Structure" right="" name="structur" default="standardStructure"/>
-                <parameter left="QSoapMessage::Protocol" right="" name="protoco" default="QSoapMessage::soap12"/>
-                <parameter left="BuildSystem" right="" name="system" default="qmake"/>
-                <parameter left="bool" right="" name="forc" default="false"/>
+            <typedef access="public" threadsafety="unspecified" status="commendable" name="Options" fullname="Flags::Options" href="flags.html#Options-typedef" location="flags.h" enum="Flags::Option"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="Flags" fullname="Flags::Flags" href="flags.html#Flags" location="flags.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="Flags(QFlags&lt;Flags::Option&gt; options, bool forced)">
+                <parameter left="QFlags&lt;Flags::Option&gt;" right="" name="options" default="Options( fullMode | synchronous | standardStructure | qmake | soap12 )"/>
+                <parameter left="bool" right="" name="forced" default="false"/>
             </function>
-            <variable access="public" threadsafety="unspecified" status="commendable" name="mode" fullname="Flags::mode" href="flags.html#mode-var" location="flags.h" type="Mode" static="false"/>
-            <variable access="public" threadsafety="unspecified" status="commendable" name="synchronousness" fullname="Flags::synchronousness" href="flags.html#synchronousness-var" location="flags.h" type="Synchronousness" static="false"/>
-            <variable access="public" threadsafety="unspecified" status="commendable" name="structure" fullname="Flags::structure" href="flags.html#structure-var" location="flags.h" type="Structure" static="false"/>
-            <variable access="public" threadsafety="unspecified" status="commendable" name="protocol" fullname="Flags::protocol" href="flags.html#protocol-var" location="flags.h" type="QSoapMessage::Protocol" static="false"/>
-            <variable access="public" threadsafety="unspecified" status="commendable" name="buildSystem" fullname="Flags::buildSystem" href="flags.html#buildSystem-var" location="flags.h" type="BuildSystem" static="false"/>
-            <variable access="public" threadsafety="unspecified" status="commendable" name="force" fullname="Flags::force" href="flags.html#force-var" location="flags.h" type="bool" static="false"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="resetFlags" fullname="Flags::resetFlags" href="flags.html#resetFlags" location="flags.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="resetFlags()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setFlags" fullname="Flags::setFlags" href="flags.html#setFlags" location="flags.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setFlags(QFlags&lt;Flags::Option&gt; options)">
+                <parameter left="QFlags&lt;Flags::Option&gt;" right="" name="options" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setForced" fullname="Flags::setForced" href="flags.html#setForced" location="flags.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setForced(bool forced)">
+                <parameter left="bool" right="" name="forced" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="flags" fullname="Flags::flags" href="flags.html#flags" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="Options" signature="flags() const"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="forced" fullname="Flags::forced" href="flags.html#forced" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="forced() const"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="isForced" fullname="Flags::isForced" href="flags.html#isForced" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="isForced() const"/>
         </class>
         <class access="public" threadsafety="unspecified" status="commendable" name="StandardPath" href="standardpath.html" location="standardpath.h" bases="" module="">
             <function access="public" threadsafety="unspecified" status="commendable" name="StandardPath" fullname="StandardPath::StandardPath" href="standardpath.html#StandardPath" location="standardpath.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="StandardPath(QObject * parent)">

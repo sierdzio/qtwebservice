@@ -29,77 +29,105 @@
 <a name="public-types"></a>
 <h2>Public Types</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="flags.html#BuildSystem-enum">BuildSystem</a></b> { qmake, cmake, scons, noBuildSystem }</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Mode-enum">Mode</a></b> { fullMode, debugMode, compactMode }</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Structure-enum">Structure</a></b> { standardStructure, noMessagesStructure, allInOneDirStructure }</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Synchronousness-enum">Synchronousness</a></b> { synchronous, asynchronous }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Option-enum">Option</a></b> { fullMode, debugMode, compactMode, synchronous, ..., json }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> flags </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Option-enum">Options</a></b></td></tr>
 </table>
 <a name="public-functions"></a>
 <h2>Public Functions</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Flags">Flags</a></b> ( Mode <i>mod</i> = fullMode, Synchronousness <i>synchronousnes</i> = synchronous, Structure <i>structur</i> = standardStructure, QSoapMessage::Protocol <i>protoco</i> = QSoapMessage::soap12, BuildSystem <i>system</i> = qmake, bool <i>forc</i> = false )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Flags">Flags</a></b> ( Options <i>options</i> = Options( fullMode | synchronous | standardStructure | qmake | soap12 ), bool <i>forced</i> = false )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Options </td><td class="memItemRight bottomAlign"><b><a href="flags.html#flagsx">flags</a></b> () const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="flags.html#forced">forced</a></b> () const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="flags.html#isForced">isForced</a></b> () const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#resetFlags">resetFlags</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setFlags">setFlags</a></b> ( Options <i>options</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setForced">setForced</a></b> ( bool <i>forced</i> )</td></tr>
 </table>
 <a name="details"></a>
 <!-- $$$Flags-description -->
 <div class="descr">
 <h2>Detailed Description</h2>
 <p>Holds all important flags used by converter.</p>
-<p>Currently, every setting is held in a different enum, and all variables are public. In the future, flags will probably be unified into one/ two enums, thus enabling easy OR switching.</p>
+<p>All application's switches are unified thus enabling easy OR switching. The only exception is th e--force switch, which is held as a separate bool variable.</p>
 </div>
 <!-- @@@Flags -->
 <div class="types">
 <h2>Member Type Documentation</h2>
-<!-- $$$BuildSystem$$$qmake$$$cmake$$$scons$$$noBuildSystem -->
-<h3 class="fn"><a name="BuildSystem-enum"></a>enum Flags::BuildSystem</h3>
-<p>This enum type specifies the build system to use:</p>
-<table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
-<tr><td  class="topAlign"><tt>Flags::qmake</tt></td><td class=" topAlign"><tt>0</tt></td><td  class="topAlign">qmake will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::cmake</tt></td><td class=" topAlign"><tt>1</tt></td><td  class="topAlign">cmake will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::scons</tt></td><td class=" topAlign"><tt>2</tt></td><td  class="topAlign">scons will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::noBuildSystem</tt></td><td class=" topAlign"><tt>3</tt></td><td  class="topAlign">No build system files will be created.</td></tr>
-</table>
-<!-- @@@BuildSystem -->
-<!-- $$$Mode$$$fullMode$$$debugMode$$$compactMode -->
-<h3 class="fn"><a name="Mode-enum"></a>enum Flags::Mode</h3>
+<!-- $$$Option$$$fullMode$$$debugMode$$$compactMode$$$synchronous$$$asynchronous$$$standardStructure$$$noMessagesStructure$$$allInOneDirStructure$$$qmake$$$cmake$$$scons$$$noBuildSystem$$$http$$$soap10$$$soap12$$$json -->
+<h3 class="flags"><a name="Option-enum"></a>enum Flags::Option<br/>flags Flags::Options</h3>
 <p>This enum type specifies code creation mode:</p>
+<p>Mode:</p>
 <table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
-<tr><td  class="topAlign"><tt>Flags::fullMode</tt></td><td class=" topAlign"><tt>0</tt></td><td  class="topAlign">All enums and variables are copied, enabling some flexibility in use.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::debugMode</tt></td><td class=" topAlign"><tt>1</tt></td><td  class="topAlign">fullMode + debug messages.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::compactMode</tt></td><td class=" topAlign"><tt>2</tt></td><td  class="topAlign">Only most needed methods, variables and enums are preserved. Code is as small, as possible, at the expense of loosing flexibility.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::fullMode</tt></td><td class=" topAlign"><tt>0x00001</tt></td><td  class="topAlign">All enums and variables are copied, enabling some flexibility in use.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::debugMode</tt></td><td class=" topAlign"><tt>0x00002</tt></td><td  class="topAlign">fullMode + debug messages.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::compactMode</tt></td><td class=" topAlign"><tt>0x00004</tt></td><td  class="topAlign">Only most needed methods, variables and enums are preserved. Code is as small, as possible, at the expense of loosing flexibility.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::synchronous</tt></td><td class=" topAlign"><tt>0x00010</tt></td><td  class="topAlign">Web methods will wait for reply and return with data.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::asynchronous</tt></td><td class=" topAlign"><tt>0x00020</tt></td><td  class="topAlign">Web methods will return instantly. Data availability will be announced by emitting a signal.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::standardStructure</tt></td><td class=" topAlign"><tt>0x00100</tt></td><td  class="topAlign">Headers will be placed in &lt;dir&gt;/headers, sources in &lt;dir&gt;/sources, build system and .pro files in &lt;dir&gt;/.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::noMessagesStructure</tt></td><td class=" topAlign"><tt>0x00200</tt></td><td  class="topAlign">Converter will not create messages as separate classes, but use QSoapMessage.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::allInOneDirStructure</tt></td><td class=" topAlign"><tt>0x00400</tt></td><td  class="topAlign">All generated files will be stored in one folder.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::qmake</tt></td><td class=" topAlign"><tt>0x01000</tt></td><td  class="topAlign">qmake will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::cmake</tt></td><td class=" topAlign"><tt>0x02000</tt></td><td  class="topAlign">cmake will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::scons</tt></td><td class=" topAlign"><tt>0x04000</tt></td><td  class="topAlign">scons will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::noBuildSystem</tt></td><td class=" topAlign"><tt>0x08000</tt></td><td  class="topAlign">No build system files will be created.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::http</tt></td><td class=" topAlign"><tt>0x10000</tt></td><td  class="topAlign">http protocol will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::soap10</tt></td><td class=" topAlign"><tt>0x20000</tt></td><td  class="topAlign">SOAP 1.0 protocol will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::soap12</tt></td><td class=" topAlign"><tt>0x40000</tt></td><td  class="topAlign">SOAP 1.2 protocol will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::json</tt></td><td class=" topAlign"><tt>0x80000</tt></td><td  class="topAlign">JSON protocol will be used.</td></tr>
 </table>
-<!-- @@@Mode -->
-<!-- $$$Structure$$$standardStructure$$$noMessagesStructure$$$allInOneDirStructure -->
-<h3 class="fn"><a name="Structure-enum"></a>enum Flags::Structure</h3>
-<p>This enum type specifies the filesystem structure (the way files will be written on disk):</p>
-<table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
-<tr><td  class="topAlign"><tt>Flags::standardStructure</tt></td><td class=" topAlign"><tt>0</tt></td><td  class="topAlign">Headers will be placed in &lt;dir&gt;/headers, sources in &lt;dir&gt;/sources, build system and .pro files in &lt;dir&gt;/.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::noMessagesStructure</tt></td><td class=" topAlign"><tt>1</tt></td><td  class="topAlign">Converter will not create messages as separate classes, but use QSoapMessage.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::allInOneDirStructure</tt></td><td class=" topAlign"><tt>2</tt></td><td  class="topAlign">All generated files will be stored in one folder.</td></tr>
-</table>
-<!-- @@@Structure -->
-<!-- $$$Synchronousness$$$synchronous$$$asynchronous -->
-<h3 class="fn"><a name="Synchronousness-enum"></a>enum Flags::Synchronousness</h3>
-<p>This enum type specifies the way messages will be sent and received:</p>
-<table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
-<tr><td  class="topAlign"><tt>Flags::synchronous</tt></td><td class=" topAlign"><tt>0</tt></td><td  class="topAlign">Web methods will wait for reply and return with data.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::asynchronous</tt></td><td class=" topAlign"><tt>1</tt></td><td  class="topAlign">Web methods will return instantly. Data availability will be announced by emitting a signal.</td></tr>
-</table>
-<!-- @@@Synchronousness -->
+<p>The Options type is a typedef for <a href="qflags.html">QFlags</a>&lt;Option&gt;. It stores an OR combination of Option values.</p>
+<!-- @@@Option -->
 </div>
 <div class="func">
 <h2>Member Function Documentation</h2>
-<!-- $$$Flags[overload1]$$$FlagsModeSynchronousnessStructureQSoapMessage::ProtocolBuildSystembool -->
-<h3 class="fn"><a name="Flags"></a>Flags::Flags ( <a href="flags.html#Mode-enum">Mode</a> <i>mod</i> = fullMode, <a href="flags.html#Synchronousness-enum">Synchronousness</a> <i>synchronousnes</i> = synchronous, <a href="flags.html#Structure-enum">Structure</a> <i>structur</i> = standardStructure, QSoapMessage::Protocol <i>protoco</i> = QSoapMessage::soap12, <a href="flags.html#BuildSystem-enum">BuildSystem</a> <i>system</i> = qmake, bool <i>forc</i> = false )</h3>
+<!-- $$$Flags[overload1]$$$FlagsOptionsbool -->
+<h3 class="fn"><a name="Flags"></a>Flags::Flags ( <a href="flags.html#Option-enum">Options</a> <i>options</i> = Options( fullMode | synchronous | standardStructure | qmake | soap12 ), bool <i>forced</i> = false )</h3>
 <p>Constructs the Flags object. All params are optional. Default values:</p>
 <ul>
-<li><i>mod</i> = <a href="flags.html#Mode-enum">fullMode</a></li>
-<li><i>synchronousnes</i> = synchronous</li>
-<li><i>structur</i> = <a href="flags.html#Structure-enum">standardStructure</a></li>
-<li><i>protoco</i> = QSoapMessage::soap12</li>
-<li><i>system</i> = qmake</li>
-<li><i>forc</i> = false</li>
+<li><i>options</i> :<ul>
+<li><a href="flags.html#Option-enum">fullMode</a></li>
+<li>synchronous</li>
+<li><a href="flags.html#Option-enum">standardStructure</a></li>
+<li>soap12</li>
+<li>qmake</li>
 </ul>
+</li>
+<li><i>forced</i> = false</li>
+</ul>
+<p>See also <a href="flags.html#setFlags">setFlags</a>().</p>
 <!-- @@@Flags -->
+<!-- $$$flags[overload1]$$$flags -->
+<h3 class="fn"><a name="flagsx"></a><a href="flags.html#Option-enum">Options</a> Flags::flags () const</h3>
+<p>Returns currently set options enum.</p>
+<p>See also <a href="flags.html#setFlags">setFlags</a>().</p>
+<!-- @@@flags -->
+<!-- $$$forced[overload1]$$$forced -->
+<h3 class="fn"><a name="forced"></a>bool Flags::forced () const</h3>
+<p>Same as <a href="flags.html#isForced">isForced</a>().</p>
+<p>Returns force state.</p>
+<p>See also <a href="flags.html#setForced">setForced</a>() and <a href="flags.html#isForced">isForced</a>().</p>
+<!-- @@@forced -->
+<!-- $$$isForced[overload1]$$$isForced -->
+<h3 class="fn"><a name="isForced"></a>bool Flags::isForced () const</h3>
+<p>Same as <a href="flags.html#forced">forced</a>().</p>
+<p>Returns force state.</p>
+<p>See also <a href="flags.html#forced">forced</a>().</p>
+<!-- @@@isForced -->
+<!-- $$$resetFlags[overload1]$$$resetFlags -->
+<h3 class="fn"><a name="resetFlags"></a>void Flags::resetFlags ()</h3>
+<p>Resets all flags to default valuses. This does not apply to '--forced'.</p>
+<!-- @@@resetFlags -->
+<!-- $$$setFlags[overload1]$$$setFlagsOptions -->
+<h3 class="fn"><a name="setFlags"></a>void Flags::setFlags ( <a href="flags.html#Option-enum">Options</a> <i>options</i> )</h3>
+<p>Does OR combination of <i>options</i> with those already set.</p>
+<p>See also <a href="flags.html#flagsx">flags</a>().</p>
+<!-- @@@setFlags -->
+<!-- $$$setForced[overload1]$$$setForcedbool -->
+<h3 class="fn"><a name="setForced"></a>void Flags::setForced ( bool <i>forced</i> )</h3>
+<p>Sets the <i>forced</i> value to given one.</p>
+<p>When 'true', converter will delete old sources, and create a fresh copy every time it is run.</p>
+<p>See also <a href="flags.html#forced">forced</a>().</p>
+<!-- @@@setForced -->
 </div>
 </body>
 </html>

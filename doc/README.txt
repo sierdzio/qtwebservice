@@ -17,7 +17,7 @@ Distributed under GNU GPLv3.
   qtwsdlconvert [options] <WSDL file or URL> [output directory, defaults to web service name] [base output class name, defaults to web service name]
 
   2.1.1 Possible options
-    --soap10, --soap12, --http, --synchronous, --asynchronous, --help,
+    --soap10, --soap12, --http, --json, --synchronous, --asynchronous, --help,
     --full-mode, --debug-mode, --compact-mode,
     --standard-structure, --no-messages-structure, --all-in-one-dir-structure,
     --qmake, --cmake, --scons, --no-build-system, --force.
@@ -29,7 +29,8 @@ Distributed under GNU GPLv3.
   2.2.1 Protocols
     --soap10 - classes will contact with web service using SOAP1.0 protocol,
     --soap12 - classes will contact with web service using SOAP1.2 protocol,
-    --http   - classes will contact with web service using HTTP protocol.
+    --http   - classes will contact with web service using HTTP protocol,
+    --json   - classes will contact with web service using JSON protocol.
 
   2.2.2 Synchronousness
     --synchronous  - communication with server will be performed using synchronous calls,

@@ -106,7 +106,7 @@ void WsdlConverter::convert()
     }
     mainDir.setPath(mainPath);
 
-    if (mainDir.exists() && (flags.force == false))
+    if (mainDir.exists() && (flags.isForced() == false))
     {
         // Might be good to add an interactive menu here (to ask for a new dir name)
         enterErrorState("Error - directory already exists!");
@@ -115,7 +115,7 @@ void WsdlConverter::convert()
     }
     else
     {
-        if (flags.force == true)
+        if (flags.isForced() == true)
         {
             if(removeDir(mainPath))
             {
@@ -127,10 +127,10 @@ void WsdlConverter::convert()
         mainDir.mkdir(mainPath);
         mainDir.cd(mainPath);
 
-        if (flags.structure == Flags::standardStructure)
+        if (flags.flags() &= Flags::standardStructure)
         {
-            flags = Flags(Flags::fullMode, flags.synchronousness, flags.structure, flags.protocol, flags.buildSystem,
-                          flags.force);
+            flags.setFlags(Flags::fullMode);
+
             if (!StandardPath::create(wsdl, mainDir, flags, baseClassName, this))
             {
                 // Might be good to add an interactive menu here (to ask for a new dir name)

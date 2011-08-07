@@ -4,53 +4,33 @@
     \class Flags
     \brief Holds all important flags used by converter.
 
-    Currently, every setting is held in a different enum, and all variables are public.
-    In the future, flags will probably be unified into one/ two enums, thus enabling easy
-    OR switching.
+    All application's switches are unified thus enabling easy
+    OR switching. The only exception is th e--force switch, which is held as a separate
+    bool variable.
   */
 
 /*!
-     \enum Flags::Mode
+     \enum Flags::Option
 
      This enum type specifies code creation mode:
 
+        Mode:
      \value fullMode
             All enums and variables are copied, enabling some flexibility in use.
      \value debugMode
             fullMode + debug messages.
      \value compactMode
             Only most needed methods, variables and enums are preserved. Code is as small, as possible, at the expense of loosing flexibility.
- */
-
-/*!
-     \enum Flags::Synchronousness
-
-     This enum type specifies the way messages will be sent and received:
-
      \value synchronous
             Web methods will wait for reply and return with data.
      \value asynchronous
             Web methods will return instantly. Data availability will be announced by emitting a signal.
- */
-
-/*!
-     \enum Flags::Structure
-
-     This enum type specifies the filesystem structure (the way files will be written on disk):
-
      \value standardStructure
             Headers will be placed in <dir>/headers, sources in <dir>/sources, build system and .pro files in <dir>/.
      \value noMessagesStructure
             Converter will not create messages as separate classes, but use QSoapMessage.
      \value allInOneDirStructure
             All generated files will be stored in one folder.
- */
-
-/*!
-     \enum Flags::BuildSystem
-
-     This enum type specifies the build system to use:
-
      \value qmake
             qmake will be used.
      \value cmake
@@ -59,29 +39,111 @@
             scons will be used.
      \value noBuildSystem
             No build system files will be created.
+     \value http
+            http protocol will be used.
+     \value soap10
+            SOAP 1.0 protocol will be used.
+     \value soap12
+            SOAP 1.2 protocol will be used.
+     \value json
+            JSON protocol will be used.
  */
 
 /*!
-    \fn Flags::Flags(Mode mod, Synchronousness synchronousnes, Structure structur, QSoapMessage::Protocol protoco, BuildSystem system, bool forc)
+    \fn Flags::Flags(Options options, bool forced)
 
     Constructs the Flags object. All params are optional.
     Default values:
     \list
-    \o \a mod = fullMode
-    \o \a synchronousnes = synchronous
-    \o \a structur = standardStructure
-    \o \a protoco = QSoapMessage::soap12
-    \o \a system = qmake
-    \o \a forc = false
+    \o \a options :
+    \list
+        \o fullMode
+        \o synchronous
+        \o standardStructure
+        \o soap12
+        \o qmake
+    \endlist
+    \o \a forced = false
     \endlist
   */
-Flags::Flags(Mode mod,
-             Synchronousness synchronousnes,
-             Structure structur,
-             QSoapMessage::Protocol protoco,
-             BuildSystem system,
-             bool forc) :
-    mode(mod), synchronousness(synchronousnes), structure(structur), protocol(protoco), buildSystem(system),
-    force(forc)
+Flags::Flags(Options options, bool forced)
 {
+    this->options = options;
+    this->force = forced;
+}
+
+/*!
+    \fn Flags::resetFlags()
+
+    Resets all flags to default valuses. This does not apply to '--forced'.
+  */
+void Flags::resetFlags()
+{
+    options = fullMode | synchronous | standardStructure | qmake | soap12;
+}
+
+/*!
+    \fn Flags::setFlags(Options options)
+
+    Does OR combination of \a options with those already set.
+  */
+void Flags::setFlags(Options options)
+{
+    Options changed = (options ^ this->options);
+
+    if (!changed)
+            return;
+
+    this->options |= options;
+}
+
+/*!
+    \fn Flags::setForced(bool forced)
+
+    Sets the \a forced value to given one.
+
+    When 'true', converter will delete old sources, and create
+    a fresh copy every time it is run.
+  */
+void Flags::setForced(bool forced)
+{
+    this->force = forced;
+}
+
+/*!
+    \fn Flags::flags() const
+
+    Returns currently set options enum.
+  */
+Flags::Options Flags::flags() const
+{
+    return this->options;
+}
+
+/*!
+    \fn Flags::forced() const
+
+    Same as isForced().
+
+    Returns force state.
+
+    \sa isForced()
+  */
+bool Flags::forced() const
+{
+    return isForced();
+}
+
+/*!
+    \fn Flags::isForced() const
+
+    Same as forced().
+
+    Returns force state.
+
+    \sa forced()
+  */
+bool Flags::isForced() const
+{
+    return this->force;
 }

@@ -176,7 +176,7 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
     out << "    ~" << msgName << "();" << endl;
     out << endl;
     out << "    void setParams(" << msgParameters << ");" << endl;
-    if (flags.mode != Flags::compactMode)
+    if (!(flags.flags() & Flags::compactMode))
         out << "    void setProtocol(Protocol protocol);" << endl;
     out << "    bool sendMessage();" << endl;
     if (msgParameters != "")
@@ -293,12 +293,14 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
     out << "    messageName = \"" << msgName << "\";" << endl;
     { // Defaulting the protocol:
         out << "    protocol = ";
-        if (flags.protocol == QSoapMessage::soap10)
+        if (flags.flags() & Flags::soap10)
             out << "soap10";
-        else if (flags.protocol == QSoapMessage::soap12)
+        else if (flags.flags() & Flags::soap12)
             out << "soap12";
-        else if (flags.protocol == QSoapMessage::http)
+        else if (flags.flags() & Flags::http)
             out << "http";
+        else if (flags.flags() & Flags::json)
+            out << "json";
         out << ";" << endl;
     }
 //    out << "    parameters.clear();" << endl;
@@ -318,12 +320,14 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
 
             // Defaulting the protocol:
             out << "    protocol = ";
-            if (flags.protocol == QSoapMessage::soap10)
+            if (flags.flags() & Flags::soap10)
                 out << "soap10";
-            else if (flags.protocol == QSoapMessage::soap12)
+            else if (flags.flags() & Flags::soap12)
                 out << "soap12";
-            else if (flags.protocol == QSoapMessage::http)
+            else if (flags.flags() & Flags::http)
                 out << "http";
+            else if (flags.flags() & Flags::json)
+                out << "json";
             out << ";" << endl;
         }
         //    out << "    init();" << endl;
@@ -349,7 +353,7 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
     }
     out << "}" << endl;
     out << endl;
-    if (flags.mode != Flags::compactMode)
+    if (!(flags.flags() & Flags::compactMode))
     {
         out << "void " << msgName << "::setProtocol(Protocol prot)" << endl;
         out << "{" << endl;
@@ -368,7 +372,7 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
     out << endl;
     out << "    prepareRequestData();" << endl;
     out << endl;
-    if (flags.mode == Flags::debugMode)
+    if (flags.flags() & Flags::debugMode)
     {
         out << "    qDebug() << request.rawHeaderList() << \" \" << request.url().toString();" << endl;
         out << "    qDebug() << \"*************************\";" << endl;
@@ -682,7 +686,7 @@ bool StandardPath::createServiceHeader()
             tmpP.chop(2);
 // Temporarily, all messages will return QString!
 //            out << "    " << tmpReturn << " ";
-            if (flags.synchronousness == Flags::synchronous)
+            if (flags.flags() & Flags::synchronous)
                 out << "    QString ";
             else
                 out << "    void ";
@@ -693,16 +697,16 @@ bool StandardPath::createServiceHeader()
     out << "    QUrl getHostUrl();" << endl;
     out << "    QString getHost();" << endl;
     out << "    bool isErrorState();" << endl;
-    if (flags.synchronousness == Flags::asynchronous)
+    if (flags.flags() & Flags::asynchronous)
     { // Declare getters of methods' replies.
         out << "    // Method reply getters: " << endl;
         foreach (QString s, tempMap->keys())
         {
-            if (flags.mode == Flags::compactMode)
+            if (flags.flags() & Flags::compactMode)
             {
                 ; // Code compact mode here :)
             }
-            else if (flags.mode == Flags::fullMode || flags.mode == Flags::debugMode)
+            else if (flags.flags() & Flags::fullMode || flags.flags() & Flags::debugMode)
             {
                 QString tmpReturn = "";
                 QSoapMessage *m = tempMap->value(s);
@@ -718,15 +722,15 @@ bool StandardPath::createServiceHeader()
     }
     out << endl;
     out << "protected slots:" << endl;
-    if (flags.synchronousness == Flags::asynchronous)
+    if (flags.flags() & Flags::asynchronous)
     { // Declare methods for processing asynchronous replies.
         foreach (QString s, tempMap->keys())
         {
-            if (flags.mode == Flags::compactMode)
+            if (flags.flags() & Flags::compactMode)
             {
                 ; // Code compact mode here :)
             }
-            else if (flags.mode == Flags::fullMode || flags.mode == Flags::debugMode)
+            else if (flags.flags() & Flags::fullMode || flags.flags() & Flags::debugMode)
             {
                 out << "    void " << s << "Reply(QString result);" << endl;
             }
@@ -739,8 +743,8 @@ bool StandardPath::createServiceHeader()
     out << "    bool errorState;" << endl;
     out << "    QUrl hostUrl;" << endl;
     out << "    QString hostname;" << endl;
-    if (flags.synchronousness == Flags::asynchronous
-            && (flags.mode == Flags::fullMode || flags.mode == Flags::debugMode))
+    if (flags.flags() & Flags::asynchronous
+            && (flags.flags() & Flags::fullMode || flags.flags() & Flags::debugMode))
     { // Declare reply variables for asynchronous mode.
         out << "    // Message replies:" << endl;
         foreach (QString s, tempMap->keys())
@@ -797,17 +801,17 @@ bool StandardPath::createServiceSource()
     out << "" << wsName << "::" << wsName << "(QObject *parent)" << endl;
     out << "    : QObject(parent)" << endl;
     out << "{" << endl;
-    if (flags.synchronousness == Flags::asynchronous)
+    if (flags.flags() & Flags::asynchronous)
     { // Connect signals and slots for asynchronous mode.
         foreach (QString s, tempMap->keys())
         {
             out << "    connect(&" << s.toLower() << ", SIGNAL(replyReady(QString)), this, SLOT(";
 
-            if (flags.mode == Flags::compactMode)
+            if (flags.flags() & Flags::compactMode)
             {
                 ; // Code compact mode here :)
             }
-            else if (flags.mode == Flags::fullMode || flags.mode == Flags::debugMode)
+            else if (flags.flags() & Flags::fullMode || flags.flags() & Flags::debugMode)
             {
                 out << s << "Reply(QString)";
             }
@@ -857,7 +861,7 @@ bool StandardPath::createServiceSource()
             tmpP.chop(2);
             tmpPN.chop(2);
 
-            if (flags.synchronousness == Flags::synchronous)
+            if (flags.flags() & Flags::synchronous)
             {
                 // Temporarily, all messages will return QString!
 //                out << tmpReturn << " " << wsName << "::" << s << "(" << tmpP << ")" << endl;
@@ -873,7 +877,7 @@ bool StandardPath::createServiceSource()
                 out << "}" << endl;
                 out << endl;
             }
-            else if (flags.synchronousness == Flags::asynchronous)
+            else if (flags.flags() & Flags::asynchronous)
             {
                 out << "void " << wsName << "::" << s << "Send(" << tmpP << ")" << endl;
                 out << "{" << endl;
@@ -884,16 +888,16 @@ bool StandardPath::createServiceSource()
         }
     }
 
-    if (flags.synchronousness == Flags::asynchronous)
+    if (flags.flags() & Flags::asynchronous)
     { // Define getters of methods' replies.
         out << "    // Method reply getters: " << endl;
         foreach (QString s, tempMap->keys())
         {
-            if (flags.mode == Flags::compactMode)
+            if (flags.flags() & Flags::compactMode)
             {
                 ; // Code compact mode here :)
             }
-            else if (flags.mode == Flags::fullMode || flags.mode == Flags::debugMode)
+            else if (flags.flags() & Flags::fullMode || flags.flags() & Flags::debugMode)
             {
                 QString tmpReturn = "";
                 QSoapMessage *m = tempMap->value(s);
@@ -912,8 +916,8 @@ bool StandardPath::createServiceSource()
         out << endl;
     }
 
-    if (flags.synchronousness == Flags::asynchronous
-            && (flags.mode == Flags::fullMode || flags.mode == Flags::debugMode))
+    if (flags.flags() & Flags::asynchronous
+            && (flags.flags() & Flags::fullMode || flags.flags() & Flags::debugMode))
     { // Define all slots for asynchronous mode.
         foreach (QString s, tempMap->keys())
         {
@@ -975,9 +979,9 @@ bool StandardPath::createServiceSource()
   */
 bool StandardPath::createBuildSystemFile()
 {
-    if (flags.buildSystem == Flags::qmake)
+    if (flags.flags() & Flags::qmake)
         return createQMakeProject();
-    else if (flags.buildSystem == Flags::noBuildSystem)
+    else if (flags.flags() & Flags::noBuildSystem)
         return true;
 
     return true;

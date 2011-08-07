@@ -3,8 +3,11 @@ Part of the initial development is not expressed here. Refer to git logs or ask 
 
 07.08.2011 : CEST:
  - added some commentary to test cases,
+ - added --json flag (meant to use JSON as communication protocol. Not implemented functionality, just the flag),
  - inverted the changelog (newest entries are now at the beginning),
- - 
+ - changed the Flags class in converter. Now, it's made using Q_FLAGS, and various options can be combined using binary OR. All flags, including protocol, are now unified into one big enum,
+ - Flags class has been greatly expanded by new convenience methods,
+ - Flags's QDoc has been updated to reflect the changes.
 
 06.08.2011 : CEST:
  - another file reorganisation (separated tests from QWebService),
