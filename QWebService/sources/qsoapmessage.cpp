@@ -19,21 +19,10 @@
             SOAP 1.0 will be used.
      \value soap12
             SOAP 1.2 will be used.
- */
-
-/*!
-     \enum QSoapMessage::Role
-
-     This enum type specifies message's role. Currently it is purely internal and NOT USED:
-
-     \value outboundRole
-            Obsolete part, from older implementation.
-     \value inboundRole
-            Obsolete part, from older implementation.
-     \value staticRole
-            Set when used in a static way.
-     \value noRole
-            Obsolete part, from older implementation.
+     \value soap
+            Convenience SOAP aggregator, used internally. If passed to setProtocol(), SOAP 1.2 will be used instead.
+     \value json
+            JSON message will be used.
  */
 
 /*!
@@ -145,7 +134,10 @@ void QSoapMessage::setTargetNamespace(QString tNamespace)
   */
 void QSoapMessage::setProtocol(Protocol prot)
 {
-    protocol = prot;
+    if (prot == soap)
+        protocol = soap12;
+    else
+        protocol = prot;
 }
 
 /*!
@@ -160,9 +152,14 @@ bool QSoapMessage::sendMessage()
 {
     hostUrl.setUrl(hostname);
     QNetworkRequest request;
-    request.setUrl(hostUrl); //"http://www.webserviceX.NET/stockquote.asmx"));
-    //request.setHeader(QNetworkRequest::LocationHeader, QVariant("/stockquote.asmx"));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/soap+xml; charset=utf-8"));
+    request.setUrl(hostUrl);
+    if (protocol & soap)
+        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/soap+xml; charset=utf-8"));
+    else if (protocol == json)
+        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json; charset=utf-8"));
+    else if (protocol == http)
+        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("Content-Type: application/x-www-form-urlencoded"));
+
     if (protocol == soap10)
         request.setRawHeader(QByteArray("SOAPAction"), QByteArray(hostUrl.toString().toAscii()));
 
@@ -170,7 +167,6 @@ bool QSoapMessage::sendMessage()
 
     //qDebug() << request.rawHeaderList() << " " << request.url().toString();
     //qDebug() << data;
-    //qDebug() << "*************************";
 
     manager->post(request, data);
     return true;
@@ -196,7 +192,6 @@ QVariant QSoapMessage::sendMessage(QObject *parent, QUrl url, QString _messageNa
                                    QMap<QString, QVariant> returnVal)
 {
     QSoapMessage qsm(url.host(), _messageName, params, returnVal, parent);
-    qsm.role = staticRole;
     qsm.hostUrl = url;
 
     qsm.sendMessage();
@@ -208,7 +203,6 @@ QVariant QSoapMessage::sendMessage(QObject *parent, QUrl url, QString _messageNa
         else
         {
             qApp->processEvents();
-            //sleep(2);
         }
     }
 }
@@ -331,8 +325,6 @@ void QSoapMessage::init()
     replyReceived = false;
 
     manager = new QNetworkAccessManager(this);
-    //networkReply = new QNetworkReply(this);
-    //data = new QByteArray();
 
     reply.clear();
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
@@ -346,24 +338,63 @@ void QSoapMessage::prepareRequestData()
 {
     data.clear();
     QString header, body, footer;
+    QString endl = "\r\n"; // Replace with something OS-independent, or seriously rethink.
 
-    if (protocol == soap12)
+    if (protocol & soap)
     {
-        header = "<?xml version=\"1.0\" encoding=\"utf-8\"?> \r\n <soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\"> \r\n <soap12:Body> \r\n";
+        if (protocol == soap12)
+        {
+            header = "<?xml version=\"1.0\" encoding=\"utf-8\"?> " + endl +
+                     " <soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
+                     "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"" +
+                     "xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\"> " + endl +
+                     " <soap12:Body> " + endl;
 
-        footer = "</soap12:Body> \r\n</soap12:Envelope>";
+            footer = "</soap12:Body> " + endl + "</soap12:Envelope>";
+        }
+        else if (protocol == soap10)
+        {
+            header = "<?xml version=\"1.0\" encoding=\"utf-8\"?> " + endl +
+                    " <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
+                    "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"" +
+                    "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"> " + endl +
+                    " <soap:Body> " + endl;
+
+            footer = "</soap:Body> " + endl + "</soap:Envelope>";
+        }
+
+        body = "\t<" + messageName + " xmlns=\"" + targetNamespace + "\"> " + endl;
+
+        foreach (const QString currentKey, parameters.keys())
+        {
+            QVariant qv = parameters.value(currentKey);
+            // Currently, this does not handle nested lists
+            body += "\t\t<" + currentKey + ">" + qv.toString() + "</" + currentKey + "> " + endl;
+        }
+
+        body += "\t</" + messageName + "> " + endl;
     }
-
-    body = "\t<" + messageName + " xmlns=\"" + targetNamespace + "\"> \r\n";
-
-    foreach (const QString currentKey, parameters.keys())
+    else if (protocol == http)
     {
-        QVariant qv = parameters.value(currentKey);
-        // Currently, this does not handle nested lists
-        body += "\t\t<" + currentKey + ">" + qv.toString() + "</" + currentKey + "> \r\n";
+        foreach (const QString currentKey, parameters.keys())
+        {
+            QVariant qv = parameters.value(currentKey);
+            // Currently, this does not handle nested lists
+            body += currentKey + "=" + qv.toString() + "&";
+        }
+        body.chop(1);
     }
-
-    body += "\t</" + messageName + "> \r\n";
+    else if (protocol == json)
+    {
+        body += "{" + endl;
+        foreach (const QString currentKey, parameters.keys())
+        {
+            QVariant qv = parameters.value(currentKey);
+            // Currently, this does not handle nested lists
+            body += "{" + endl + "\t\"" + currentKey + "\" : \"" + qv.toString() + "\"" + endl;
+        }
+        body += "}";
+    }
 
     data.append(header + body + footer);
 }

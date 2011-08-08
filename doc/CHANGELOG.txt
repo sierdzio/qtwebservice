@@ -1,7 +1,17 @@
 Changelog for QWebService library project & qtWsdlConverter.
 Part of the initial development is not expressed here. Refer to git logs or ask sierdzio at sierdzio@gmail.com
 
-07.08.2011 : CEST:
+08.08.2011 : CEST:
+ - added --all-in-one-dir-structure implementation,
+ - fixed QSoapMessage SOAP 1.0 implementation,
+ - removed QSoapMessage role enum,
+ - changed QSoapMessage's enum to QFlag,
+ - added 'soap' entry to QSoapMessage QFlag - it combines soap10 and soap12,
+ - added initial HTTP support to QSoapMessage,
+ - added initial JSON support to QSoapMessage,
+ - updated QSoapMessage QDoc.
+
+07.08.2011 13:02 CEST:
  - added some commentary to test cases,
  - added --json flag (meant to use JSON as communication protocol. Not implemented functionality, just the flag),
  - inverted the changelog (newest entries are now at the beginning),

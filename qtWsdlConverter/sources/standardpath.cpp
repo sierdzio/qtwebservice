@@ -54,8 +54,11 @@ bool StandardPath::enterErrorState(QString errMessage)
   */
 void StandardPath::prepare()
 {
-    workingDir.mkdir("headers");
-    workingDir.mkdir("sources");
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+    {
+        workingDir.mkdir("headers");
+        workingDir.mkdir("sources");
+    }
 
     messages = wsdl->getMethods();
 }
@@ -93,7 +96,9 @@ bool StandardPath::create(QWsdl *w, QDir wrkDir, Flags flgs, QString bsClsNme, Q
   */
 bool StandardPath::createMessages()
 {
-    workingDir.cd("headers");
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+        workingDir.cd("headers");
+
     foreach (QString s, messages->keys())
     {
         QSoapMessage *m = messages->value(s);
@@ -101,17 +106,22 @@ bool StandardPath::createMessages()
             return enterErrorState("Creating header for message \"" + m->getMessageName() + "\" failed!");
     }
 
-    workingDir.cdUp();
-    workingDir.cd("sources");
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+    {
+        workingDir.cdUp();
+        workingDir.cd("sources");
+    }
     foreach (QString s, messages->keys())
     {
         QSoapMessage *n = messages->value(s);
         if (!createMessageSource(n))
             return enterErrorState("Creating source for message \"" + n->getMessageName() + "\" failed!");;
     }
-    createMainCpp();
-
-    workingDir.cdUp();
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+    {
+        createMainCpp();
+        workingDir.cdUp();
+    }
     return true;
 }
 
@@ -282,7 +292,10 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
     // ---------------------------------
     // Begin writing:
     QTextStream out(&file);
-    out << "#include \"../headers/" << msgName << ".h\"" << endl;
+    out << "#include \"";
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+        out << "../headers/";
+    out << msgName << ".h\"" << endl;
     out << endl;
     out << msgName << "::" << msgName << "(QObject *parent) :" << endl;
     out << "    QObject(parent)" << endl;
@@ -611,16 +624,21 @@ bool StandardPath::createMainCpp()
   */
 bool StandardPath::createService()
 {
-    workingDir.cd("headers");
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+        workingDir.cd("headers");
     if (!createServiceHeader())
         return enterErrorState("Creating header for Web Service \"" + wsdl->getWebServiceName() + "\" failed!");
 
-    workingDir.cdUp();
-    workingDir.cd("sources");
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+    {
+        workingDir.cdUp();
+        workingDir.cd("sources");
+    }
     if (!createServiceSource())
         return enterErrorState("Creating source for Web Service \"" + wsdl->getWebServiceName() + "\" failed!");
 
-    workingDir.cdUp();
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+        workingDir.cdUp();
     return true;
 }
 
@@ -796,7 +814,10 @@ bool StandardPath::createServiceSource()
     // Begin writing:
     QTextStream out(&file);
     out.setCodec("UTF-8");
-    out << "#include \"../headers/" << wsName << ".h\"" << endl;
+    out << "#include \"";
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+        out << "../headers/";
+    out << wsName << ".h\"" << endl;
     out << endl;
     out << "" << wsName << "::" << wsName << "(QObject *parent)" << endl;
     out << "    : QObject(parent)" << endl;
@@ -1022,26 +1043,41 @@ bool StandardPath::createQMakeProject()
     out << endl;
     out << "TEMPLATE = app" << endl;
     out << endl;
-    out << "SOURCES += sources/" << wsName << ".cpp \\" << endl;
+    out << "SOURCES += ";
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+        out << "sources/";
+    out << wsName << ".cpp \\" << endl;
     // Create main.cpp to prevent compile errors. This file is NOT NEEDED in any other sense.
-    out << "    sources/main.cpp \\" << endl;
+    out << "    ";
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+        out << "sources/";
+    out << "main.cpp \\" << endl;
     { // Include all sources.
         QStringList tempMap = wsdl->getMethodNames();
         foreach (QString s, tempMap)
         {
-            out << "    sources/" << s << ".cpp";
+            out << "    ";
+            if (!(flags.flags() & Flags::allInOneDirStructure))
+                out << "sources/";
+            out << s << ".cpp";
             if (tempMap.indexOf(s) != (tempMap.length() - 1))
                 out << " \\" << endl;
         }
     }
     out << endl;
     out << endl;
-    out << "HEADERS += headers/" << wsName << ".h \\" << endl;
+    out << "HEADERS += ";
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+        out << "headers/";
+    out << wsName << ".h \\" << endl;
     { // Include all headers.
         QStringList tempMap = wsdl->getMethodNames();
         foreach (QString s, tempMap)
         {
-            out << "    headers/" << s << ".h";
+            out << "    ";
+            if (!(flags.flags() & Flags::allInOneDirStructure))
+                out << "headers/";
+            out << s << ".h";
             if (tempMap.indexOf(s) != (tempMap.length() - 1))
                 out << " \\" << endl;
         }

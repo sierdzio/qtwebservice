@@ -10,10 +10,19 @@
 class QWEBSERVICESHARED_EXPORT QSoapMessage : public QObject
 {
     Q_OBJECT
+    Q_ENUMS(Protocol)
+    Q_FLAGS(Protocols)
 
 public:
-    enum Role {outboundRole, inboundRole, staticRole, noRole};
-    enum Protocol {http, soap10, soap12};
+    enum Protocol
+    {
+        http = 0x01,
+        soap10 = 0x02,
+        soap12 = 0x04,
+        soap = 0x06,
+        json = 0x08
+    };
+    Q_DECLARE_FLAGS(Protocols, Protocol)
 
     explicit QSoapMessage(QObject *parent = 0);
     QSoapMessage(QUrl hostUrl, QString messageName, QObject *parent = 0);
@@ -49,7 +58,6 @@ private:
     QString convertReplyToUtf(QString textToConvert);
 
     bool replyReceived;
-    Role role;
     Protocol protocol;
     QUrl hostUrl;
     QString hostname;
@@ -63,4 +71,7 @@ private:
     QNetworkReply *networkReply;
     QByteArray data;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(QSoapMessage::Protocols)
+
 #endif // QSOAPMESSAGE_H

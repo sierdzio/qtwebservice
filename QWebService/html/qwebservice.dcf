@@ -4,14 +4,12 @@
     <section ref="qsoapmessage.html" title="QSoapMessage Class Reference">
         <keyword ref="qsoapmessage.html">QSoapMessage</keyword>
         <keyword ref="qsoapmessage.html#Protocol-enum">Protocol</keyword>
+        <keyword ref="qsoapmessage.html#Protocol-enum">Protocols</keyword>
         <keyword ref="qsoapmessage.html#Protocol-enum">QSoapMessage::http</keyword>
+        <keyword ref="qsoapmessage.html#Protocol-enum">QSoapMessage::json</keyword>
         <keyword ref="qsoapmessage.html#Protocol-enum">QSoapMessage::soap10</keyword>
+        <keyword ref="qsoapmessage.html#Protocol-enum">QSoapMessage::soap</keyword>
         <keyword ref="qsoapmessage.html#Protocol-enum">QSoapMessage::soap12</keyword>
-        <keyword ref="qsoapmessage.html#Role-enum">Role</keyword>
-        <keyword ref="qsoapmessage.html#Role-enum">QSoapMessage::outboundRole</keyword>
-        <keyword ref="qsoapmessage.html#Role-enum">QSoapMessage::noRole</keyword>
-        <keyword ref="qsoapmessage.html#Role-enum">QSoapMessage::inboundRole</keyword>
-        <keyword ref="qsoapmessage.html#Role-enum">QSoapMessage::staticRole</keyword>
         <keyword ref="qsoapmessage.html#getMessageName">getMessageName</keyword>
         <keyword ref="qsoapmessage.html#getParameterNames">getParameterNames</keyword>
         <keyword ref="qsoapmessage.html#getParameterNamesTypes">getParameterNamesTypes</keyword>

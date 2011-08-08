@@ -1,12 +1,14 @@
 TODO'S:
- - (converter) add _ReplyRead() methods to <service>.cpp/.h in asynchronous mode,
+ - (converter) prevent main.cpp from accepting conflicting switches,
  - (converter) review asynchronous 'if' statements - in most, checks are probably too strict,
  - (converter) change names of created message objects, so that they are clearily distinct from class name,
- - (converter) prepare '--asynchronous' part of <service>.cpp and <service>.h,
- - (converter) prepare '--all-in-one-dir' structure,
  - (converter) prepare '--compact-mode' implementation,
- - (converter) review '--debug-mode' implementation,
- - (converter) review protocol implementation.
+ - (converter) review '--debug-mode' implementation - or delete it,
+ - (converter) review protocol implementation,
+ - (QWebService & converter) add JSON support to messages,
+ - (QWebService & converter) add HTTP support to messages,
+ - (QWebService & converter) change 'hostname' to 'host' in all classes,
+ - (QWebService & converter) replace '\r\n' in QSoapMessage and converted code with OS-independent code.
 
 
 IDEAS:

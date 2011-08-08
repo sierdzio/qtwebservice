@@ -31,8 +31,8 @@
 <a name="public-types"></a>
 <h2>Public Types</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#Protocol-enum">Protocol</a></b> { http, soap10, soap12 }</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#Role-enum">Role</a></b> { outboundRole, inboundRole, staticRole, noRole }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#Protocol-enum">Protocol</a></b> { http, soap10, soap12, soap, json }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> flags </td><td class="memItemRight bottomAlign"><b><a href="qsoapmessage.html#Protocol-enum">Protocols</a></b></td></tr>
 </table>
 <a name="public-functions"></a>
 <h2>Public Functions</h2>
@@ -75,25 +75,18 @@
 <!-- @@@QSoapMessage -->
 <div class="types">
 <h2>Member Type Documentation</h2>
-<!-- $$$Protocol$$$http$$$soap10$$$soap12 -->
-<h3 class="fn"><a name="Protocol-enum"></a>enum QSoapMessage::Protocol</h3>
+<!-- $$$Protocol$$$http$$$soap10$$$soap12$$$soap$$$json -->
+<h3 class="flags"><a name="Protocol-enum"></a>enum QSoapMessage::Protocol<br/>flags QSoapMessage::Protocols</h3>
 <p>This enum type specifies the protocol that <a href="qsoapmessage.html">QSoapMessage</a> will use in communicating with the server:</p>
 <table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
-<tr><td  class="topAlign"><tt>QSoapMessage::http</tt></td><td class=" topAlign"><tt>0</tt></td><td  class="topAlign">HTTP protocol will be used.</td></tr>
-<tr><td  class="topAlign"><tt>QSoapMessage::soap10</tt></td><td class=" topAlign"><tt>1</tt></td><td  class="topAlign">SOAP 1.0 will be used.</td></tr>
-<tr><td  class="topAlign"><tt>QSoapMessage::soap12</tt></td><td class=" topAlign"><tt>2</tt></td><td  class="topAlign">SOAP 1.2 will be used.</td></tr>
+<tr><td  class="topAlign"><tt>QSoapMessage::http</tt></td><td class=" topAlign"><tt>0x01</tt></td><td  class="topAlign">HTTP protocol will be used.</td></tr>
+<tr><td  class="topAlign"><tt>QSoapMessage::soap10</tt></td><td class=" topAlign"><tt>0x02</tt></td><td  class="topAlign">SOAP 1.0 will be used.</td></tr>
+<tr><td  class="topAlign"><tt>QSoapMessage::soap12</tt></td><td class=" topAlign"><tt>0x04</tt></td><td  class="topAlign">SOAP 1.2 will be used.</td></tr>
+<tr><td  class="topAlign"><tt>QSoapMessage::soap</tt></td><td class=" topAlign"><tt>0x06</tt></td><td  class="topAlign">Convenience SOAP aggregator, used internally. If passed to <a href="qsoapmessage.html#setProtocol">setProtocol</a>(), SOAP 1.2 will be used instead.</td></tr>
+<tr><td  class="topAlign"><tt>QSoapMessage::json</tt></td><td class=" topAlign"><tt>0x08</tt></td><td  class="topAlign">JSON message will be used.</td></tr>
 </table>
+<p>The Protocols type is a typedef for <a href="qflags.html">QFlags</a>&lt;Protocol&gt;. It stores an OR combination of Protocol values.</p>
 <!-- @@@Protocol -->
-<!-- $$$Role$$$outboundRole$$$inboundRole$$$staticRole$$$noRole -->
-<h3 class="fn"><a name="Role-enum"></a>enum QSoapMessage::Role</h3>
-<p>This enum type specifies message's role. Currently it is purely internal and NOT USED:</p>
-<table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
-<tr><td  class="topAlign"><tt>QSoapMessage::outboundRole</tt></td><td class=" topAlign"><tt>0</tt></td><td  class="topAlign">Obsolete part, from older implementation.</td></tr>
-<tr><td  class="topAlign"><tt>QSoapMessage::inboundRole</tt></td><td class=" topAlign"><tt>1</tt></td><td  class="topAlign">Obsolete part, from older implementation.</td></tr>
-<tr><td  class="topAlign"><tt>QSoapMessage::staticRole</tt></td><td class=" topAlign"><tt>2</tt></td><td  class="topAlign">Set when used in a static way.</td></tr>
-<tr><td  class="topAlign"><tt>QSoapMessage::noRole</tt></td><td class=" topAlign"><tt>3</tt></td><td  class="topAlign">Obsolete part, from older implementation.</td></tr>
-</table>
-<!-- @@@Role -->
 </div>
 <div class="func">
 <h2>Member Function Documentation</h2>

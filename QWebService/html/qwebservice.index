@@ -67,17 +67,14 @@
             </function>
         </class>
         <class access="public" threadsafety="unspecified" status="commendable" name="QSoapMessage" href="qsoapmessage.html" location="qsoapmessage.h" bases="" module="">
-            <enum access="public" threadsafety="unspecified" status="commendable" name="Role" fullname="QSoapMessage::Role" href="qsoapmessage.html#Role-enum" location="qsoapmessage.h">
-                <value name="outboundRole" value="0"/>
-                <value name="inboundRole" value="1"/>
-                <value name="staticRole" value="2"/>
-                <value name="noRole" value="3"/>
+            <enum access="public" threadsafety="unspecified" status="commendable" name="Protocol" fullname="QSoapMessage::Protocol" href="qsoapmessage.html#Protocol-enum" location="qsoapmessage.h" typedef="QSoapMessage::Protocols">
+                <value name="http" value="0x01"/>
+                <value name="soap10" value="0x02"/>
+                <value name="soap12" value="0x04"/>
+                <value name="soap" value="0x06"/>
+                <value name="json" value="0x08"/>
             </enum>
-            <enum access="public" threadsafety="unspecified" status="commendable" name="Protocol" fullname="QSoapMessage::Protocol" href="qsoapmessage.html#Protocol-enum" location="qsoapmessage.h">
-                <value name="http" value="0"/>
-                <value name="soap10" value="1"/>
-                <value name="soap12" value="2"/>
-            </enum>
+            <typedef access="public" threadsafety="unspecified" status="commendable" name="Protocols" fullname="QSoapMessage::Protocols" href="qsoapmessage.html#Protocols-typedef" location="qsoapmessage.h" enum="QSoapMessage::Protocol"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="QSoapMessage" fullname="QSoapMessage::QSoapMessage" href="qsoapmessage.html#QSoapMessage" location="qsoapmessage.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="QSoapMessage(QObject * parent)">
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>

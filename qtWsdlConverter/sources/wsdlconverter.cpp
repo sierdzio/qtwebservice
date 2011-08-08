@@ -78,23 +78,10 @@ bool WsdlConverter::enterErrorState(QString errMessage)
 /*!
     \fn WsdlConverter::convert()
 
-    Performs the WSDL => c++ code conversion.
+    Performs the WSDL => Qt/C++ code conversion.
   */
 void WsdlConverter::convert()
 {
-    /*
-      Algorithm - initial plan:
-      1. Load messages.
-      2. Check and create the directory.
-      3. (optional, for new flags) Dive into specified code creation path.
-      4. (for standard path) Create dirs 'headers' and 'sources'.
-      5. Create headers for messages (yes, a big task in one point :) ).
-      6. Create sources for messages.
-      7. Create the QWebServiceReaderAbstract subclass's header and source, put it into
-            suitable directory.
-      8. Create <webServiceName>.pro file.
-      */
-
     QString mainPath = qApp->applicationDirPath() + "/" + getWebServiceName();
     QDir mainDir;
     if (outputDir != "")
@@ -127,7 +114,7 @@ void WsdlConverter::convert()
         mainDir.mkdir(mainPath);
         mainDir.cd(mainPath);
 
-        if (flags.flags() &= Flags::standardStructure)
+        if (flags.flags() & Flags::standardStructure)
         {
             flags.setFlags(Flags::fullMode);
 

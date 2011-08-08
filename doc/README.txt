@@ -17,10 +17,13 @@ Distributed under GNU GPLv3.
   qtwsdlconvert [options] <WSDL file or URL> [output directory, defaults to web service name] [base output class name, defaults to web service name]
 
   2.1.1 Possible options
-    --soap10, --soap12, --http, --json, --synchronous, --asynchronous, --help,
+    --help,
+    --soap10, --soap12, --http, --json,
+    --synchronous, --asynchronous,
     --full-mode, --debug-mode, --compact-mode,
     --standard-structure, --no-messages-structure, --all-in-one-dir-structure,
-    --qmake, --cmake, --scons, --no-build-system, --force.
+    --qmake, --cmake, --scons, --no-build-system,
+    --force.
 
   2.1.2 Default switches
     --synchronous, --soap12, --standard-structure, --full-mode, --qmake
