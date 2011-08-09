@@ -1221,7 +1221,7 @@ bool CodeGenerator::createCMakeProject()
     out << "add_executable(" << wsName << endl;
     out << "    ${" << wsName << "_SRCS}" << endl;
     out << "    ${" << wsName << "_MOCS})" << endl;
-    out << "target_link_libraries(" << wsName << " ${QT_LIBRARIES}" << endl;
+    out << "target_link_libraries(" << wsName << " ${QT_LIBRARIES})" << endl;
     // EOF (CMake CMakeLists.txt file)
     // ---------------------------------
 
@@ -1292,13 +1292,12 @@ bool CodeGenerator::createSconsProject()
                 out << "]" << endl;
         }
     }
-    out << ")" << endl;
-
-    out << "env.Program(target=\"" << wsName << "\", source=[sources]" << endl;
+    out << "env.Program(target=\"" << wsName << "\", source=[sources])" << endl;
     // EOF (SCons SConstruct file)
     // ---------------------------------
 
     file.close();
 
+    qDebug() << "See the created SConstruct file for warnings on QTDIR and QT4 path.";
     return true;
 }

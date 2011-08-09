@@ -8,7 +8,9 @@ TODO'S:
  - (converter) review protocol implementation,
  - (QWebService & converter) (proposal) replace '\r\n' in QSoapMessage and converted code with OS-independent code,
  - (QWebService & converter) (proposal) change returnValue to QVariant or QString (in QSoapMessage),
- - (QWsdl) implement more parameter types.
+ - (QWsdl) implement more parameter types,
+ - (QWebService & converter) modify .pro files, so that they build cleanly by default, without QtCreator's
+   intervention.
 
 
 IDEAS:

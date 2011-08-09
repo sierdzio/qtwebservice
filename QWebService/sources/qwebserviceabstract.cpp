@@ -4,7 +4,8 @@
     \class QWebServiceAbstract
     \brief Parent Web Service class.
 
-    Currently acts mostly as QWsdl wrapper.
+    Currently acts mostly as QWsdl wrapper. Some functionality might be pushed to
+    QWebServiceReader in the future, to make this class more general.
   */
 
 /*!

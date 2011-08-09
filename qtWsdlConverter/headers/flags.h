@@ -45,6 +45,7 @@ public:
     Flags(Options options = Options(fullMode | synchronous | standardStructure | qmake | soap12), bool force = false);
 
     void resetFlags();
+    void resetFlags(Options whatToReset);
     void setFlags(Options options);
     void setForced(bool forced);
     Options flags() const;

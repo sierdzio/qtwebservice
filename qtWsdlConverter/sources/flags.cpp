@@ -77,11 +77,22 @@ Flags::Flags(Options options, bool forced)
 /*!
     \fn Flags::resetFlags()
 
-    Resets all flags to default valuses. This does not apply to '--forced'.
+    Resets all flags to default values. This does not apply to '--forced'.
   */
 void Flags::resetFlags()
 {
+    options = 0;
     options = fullMode | synchronous | standardStructure | qmake | soap12;
+}
+
+/*!
+    \fn Flags::resetFlags(Options whatToReset)
+
+    Resets (zeroes) flags set to 1 in \a whatToReset. This does not apply to '--forced'.
+  */
+void Flags::resetFlags(Options whatToReset)
+{
+    this->options &= ~whatToReset;
 }
 
 /*!

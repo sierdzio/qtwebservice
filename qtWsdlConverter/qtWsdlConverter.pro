@@ -23,6 +23,8 @@ else:unix: LIBS += -L$$PWD/../lib/ -lQWebService
 INCLUDEPATH += $$PWD/../QWebService/headers
 DEPENDPATH += $$PWD/../QWebService/headers
 
+OBJECTS_DIR = ../build-qtWsdlConverter
+
 SOURCES += sources/main.cpp \
     sources/wsdlconverter.cpp \
     sources/flags.cpp \

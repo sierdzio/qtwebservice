@@ -20,6 +20,7 @@ DEFINES += QWEBSERVICE_LIBRARY
 VERSION = 0.2.2
 
 DESTDIR = ../lib
+OBJECTS_DIR = ../build-QWebService
 
 SOURCES += sources/qwebserviceabstract.cpp \
     sources/qwebservicereaderabstract.cpp \

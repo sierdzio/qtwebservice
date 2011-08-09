@@ -58,6 +58,7 @@ bool populateArgumentsList(QMap<int, QVariant> *lst, Flags *flgs)
 
     foreach (QString s, arguments)
     {
+        // Handles '--' arguments
         if (s.startsWith("--"))
         {
             if (s == "--help")
@@ -69,32 +70,56 @@ bool populateArgumentsList(QMap<int, QVariant> *lst, Flags *flgs)
             else if (s == "--soap12")
                 flgs->setFlags(Flags::soap12);
             else if (s == "--soap10")
+            {
+                flgs->resetFlags(Flags::soap12);
                 flgs->setFlags(Flags::soap10);
+            }
             else if (s == "--soap")
                 flgs->setFlags(Flags::soap);
             else if (s == "--http")
+            {
+                flgs->resetFlags(Flags::soap12);
                 flgs->setFlags(Flags::http);
+            }
             else if (s == "--json")
+            {
+                flgs->resetFlags(Flags::soap12);
                 flgs->setFlags(Flags::json);
+            }
             // Synchronousness:
             else if (s == "--synchronous")
                 flgs->setFlags(Flags::synchronous);
             else if (s == "--asynchronous")
+            {
+                flgs->resetFlags(Flags::synchronous);
                 flgs->setFlags(Flags::asynchronous);
+            }
             // Modes:
             else if (s == "--full-mode")
                 flgs->setFlags(Flags::fullMode);
             else if (s == "--debug-mode")
+            {
+                flgs->resetFlags(Flags::fullMode);
                 flgs->setFlags(Flags::debugMode);
+            }
             else if (s == "--compact-mode")
+            {
+                flgs->resetFlags(Flags::fullMode);
                 flgs->setFlags(Flags::compactMode);
+            }
             // Structures:
             else if (s == "--standard-structure")
                 flgs->setFlags(Flags::standardStructure);
             else if (s == "--no-messages-structure")
+            {
+                flgs->resetFlags(Flags::standardStructure);
                 flgs->setFlags(Flags::noMessagesStructure);
+            }
             else if (s == "--all-in-one-dir-structure")
+            {
+                flgs->resetFlags(Flags::standardStructure);
                 flgs->setFlags(Flags::allInOneDirStructure);
+            }
             // Build systems:
             else if (s == "--qmake")
                 flgs->setFlags(Flags::qmake);
@@ -109,7 +134,7 @@ bool populateArgumentsList(QMap<int, QVariant> *lst, Flags *flgs)
                 flgs->setForced(true);
         }
         else if ((s != "") && (s != qApp->applicationFilePath()))
-        {
+        { // Handles wsdl file, base class name, output dir.
             if (!wasFile)
             {
                 wasFile = true;

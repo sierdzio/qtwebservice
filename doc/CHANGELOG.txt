@@ -1,6 +1,14 @@
 Changelog for QWebService library project & qtWsdlConverter.
 Part of the initial development is not expressed here. Refer to git logs or ask sierdzio at sierdzio@gmail.com
 
+.08.2011 : CEST:
+ - fixed issues with CMake and SCons creation,
+ - fixed protocol not being propagated properly to generated code,
+ - made exclusive switches truly exclusive (they used to be turned on completely independently,
+   which may have lead to potential problems),
+ - added some comments to main.cpp in converter,
+ - added qDebug warning to notify users about lacks in automatic SCons generation.
+
 08.08.2011 12:06 CEST:
  - added 'soap' to Flags enum,
  - added initial implementation for --scons and --cmake.

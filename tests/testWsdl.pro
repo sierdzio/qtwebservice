@@ -19,6 +19,8 @@ else:unix: LIBS += -L$$PWD/../lib/ -lQWebService
 INCLUDEPATH += $$PWD/../QWebService/headers
 DEPENDPATH += $$PWD/../QWebService/headers
 
+OBJECTS_DIR = ../build-testWsdl
+
 SOURCES += \
     main.cpp \
     testCase1.cpp \
