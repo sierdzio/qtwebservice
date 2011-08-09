@@ -124,7 +124,7 @@ QString QWsdl::getWebServiceName()
 }
 
 /*!
-    \fn QWsdl::getHostname()
+    \fn QWsdl::getHost()
 
     Not enirely well-thought method and variable. It returns web service's URL (probably).
     It will almmost certainly be rewritten or deleted in the future.
@@ -141,7 +141,7 @@ QString QWsdl::getHost()
 
     Quite similar tp getHostName(). The very existence of this method will be questioned :)
 
-    \sa getHostname()
+    \sa getHost()
   */
 QUrl QWsdl::getHostUrl()
 {

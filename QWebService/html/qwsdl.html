@@ -33,8 +33,8 @@
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#QWsdl-2">QWsdl</a></b> ( QString <i>wsdlFile</i>, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#dtor.QWsdl">~QWsdl</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#getErrorInfo">getErrorInfo</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#getHost">getHost</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#getHostUrl">getHostUrl</a></b> ()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#getHostname">getHostname</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#getMethodNames">getMethodNames</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QSoapMessage *&gt; * </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#getMethods">getMethods</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#getTargetNamespace">getTargetNamespace</a></b> ()</td></tr>
@@ -82,16 +82,16 @@
 <p>Returns QString with error message in case an error occured. Otherwise, returns empty string.</p>
 <p>See also <a href="qwsdl.html#isErrorState">isErrorState</a>().</p>
 <!-- @@@getErrorInfo -->
+<!-- $$$getHost[overload1]$$$getHost -->
+<h3 class="fn"><a name="getHost"></a>QString QWsdl::getHost ()</h3>
+<p>Not enirely well-thought method and variable. It returns web service's URL (probably). It will almmost certainly be rewritten or deleted in the future.</p>
+<p>See also <a href="qwsdl.html#getHostUrl">getHostUrl</a>().</p>
+<!-- @@@getHost -->
 <!-- $$$getHostUrl[overload1]$$$getHostUrl -->
 <h3 class="fn"><a name="getHostUrl"></a>QUrl QWsdl::getHostUrl ()</h3>
 <p>Quite similar tp getHostName(). The very existence of this method will be questioned :)</p>
-<p>See also <a href="qwsdl.html#getHostname">getHostname</a>().</p>
+<p>See also <a href="qwsdl.html#getHost">getHost</a>().</p>
 <!-- @@@getHostUrl -->
-<!-- $$$getHostname[overload1]$$$getHostname -->
-<h3 class="fn"><a name="getHostname"></a>QString QWsdl::getHostname ()</h3>
-<p>Not enirely well-thought method and variable. It returns web service's URL (probably). It will almmost certainly be rewritten or deleted in the future.</p>
-<p>See also <a href="qwsdl.html#getHostUrl">getHostUrl</a>().</p>
-<!-- @@@getHostname -->
 <!-- $$$getMethodNames[overload1]$$$getMethodNames -->
 <h3 class="fn"><a name="getMethodNames"></a>QStringList QWsdl::getMethodNames ()</h3>
 <p>Returns a QStringList of names of web service's methods.</p>

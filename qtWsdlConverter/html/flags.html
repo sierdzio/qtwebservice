@@ -53,7 +53,7 @@
 <!-- @@@Flags -->
 <div class="types">
 <h2>Member Type Documentation</h2>
-<!-- $$$Option$$$fullMode$$$debugMode$$$compactMode$$$synchronous$$$asynchronous$$$standardStructure$$$noMessagesStructure$$$allInOneDirStructure$$$qmake$$$cmake$$$scons$$$noBuildSystem$$$http$$$soap10$$$soap12$$$json -->
+<!-- $$$Option$$$fullMode$$$debugMode$$$compactMode$$$synchronous$$$asynchronous$$$standardStructure$$$noMessagesStructure$$$allInOneDirStructure$$$qmake$$$cmake$$$scons$$$noBuildSystem$$$http$$$soap10$$$soap12$$$soap$$$json -->
 <h3 class="flags"><a name="Option-enum"></a>enum Flags::Option<br/>flags Flags::Options</h3>
 <p>This enum type specifies code creation mode:</p>
 <p>Mode:</p>
@@ -73,6 +73,7 @@
 <tr><td  class="topAlign"><tt>Flags::http</tt></td><td class=" topAlign"><tt>0x10000</tt></td><td  class="topAlign">http protocol will be used.</td></tr>
 <tr><td  class="topAlign"><tt>Flags::soap10</tt></td><td class=" topAlign"><tt>0x20000</tt></td><td  class="topAlign">SOAP 1.0 protocol will be used.</td></tr>
 <tr><td  class="topAlign"><tt>Flags::soap12</tt></td><td class=" topAlign"><tt>0x40000</tt></td><td  class="topAlign">SOAP 1.2 protocol will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::soap</tt></td><td class=" topAlign"><tt>0x60000</tt></td><td  class="topAlign">Internall wrapper for all SOAP protocols. When used in app, will default to SOAP 1.2</td></tr>
 <tr><td  class="topAlign"><tt>Flags::json</tt></td><td class=" topAlign"><tt>0x80000</tt></td><td  class="topAlign">JSON protocol will be used.</td></tr>
 </table>
 <p>The Options type is a typedef for <a href="qflags.html">QFlags</a>&lt;Option&gt;. It stores an OR combination of Option values.</p>

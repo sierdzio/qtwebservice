@@ -75,10 +75,10 @@ QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *parent) :
 }
 
 /*!
-    \fn QSoapMessage::QSoapMessage(QString url, QString _messageName, QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal, QObject *parent)
+    \fn QSoapMessage::QSoapMessage(QString url, QString _messageName, QMap<QString, QVariant> params, QObject *parent)
 
     Constructs the message using \a url, \a _messageName, and \a parent. This constructor also takes
-    message parameters (\a params) and return value (\a returnVal).
+    message parameters (\a params).
     Does not require specifying any more information, but you still need to manually send the message
     using sendMessage() (without any arguments, or else - if you want to change ones specified here).
 
@@ -115,7 +115,7 @@ void QSoapMessage::setParams(QMap<QString, QVariant> params)
 }
 
 /*!
-    \fn QSoapMessage::setParams(QMap<QString, QVariant> returnVal)
+    \fn QSoapMessage::setReturnValue(QMap<QString, QVariant> returnVal)
 
     Sets method's return value (\a returnVal). This also includes their names.
   */

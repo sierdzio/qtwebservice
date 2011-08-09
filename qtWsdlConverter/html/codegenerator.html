@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- codegenerator.cpp -->
+  <title>CodeGenerator Class Reference</title>
+  <link rel="stylesheet" type="text/css" href="style/style.css" />
+  <script src="scripts/jquery.js" type="text/javascript"></script>
+  <script src="scripts/functions.js" type="text/javascript"></script>
+</head>
+<body class="offline narrow creator">
+              <li><a href="modules.html">Modules</a></li>              <li>CodeGenerator</li>
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<h1 class="title">CodeGenerator Class Reference</h1>
+<!-- $$$CodeGenerator-brief -->
+<p>Creates code in the standard path (standard structure). <a href="#details">More...</a></p>
+<!-- @@@CodeGenerator -->
+<pre class="highlightedCode brush: cpp">    #include &lt;CodeGenerator&gt;</pre><ul>
+<li><a href="codegenerator-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2>Public Functions</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="codegenerator.html#CodeGenerator">CodeGenerator</a></b> ( QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="codegenerator.html#isErrorState">isErrorState</a></b> ()</td></tr>
+</table>
+<a name="signals"></a>
+<h2>Signals</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="codegenerator.html#errorEncountered">errorEncountered</a></b> ( QString <i>errMessage</i> )</td></tr>
+</table>
+<a name="static-public-members"></a>
+<h2>Static Public Members</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="codegenerator.html#create">create</a></b> ( QWsdl * <i>wsdl</i>, QDir <i>workingDir</i>, Flags <i>flgs</i>, QString <i>baseClassName</i> = 0, QObject * <i>parent</i> = 0 )</td></tr>
+</table>
+<a name="details"></a>
+<!-- $$$CodeGenerator-description -->
+<div class="descr">
+<h2>Detailed Description</h2>
+<p>Creates code in the standard path (standard structure).</p>
+<p>This class will most probably be renamed, as it turns out to do almost everything in the conversion process.</p>
+</div>
+<!-- @@@CodeGenerator -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$CodeGenerator[overload1]$$$CodeGeneratorQObject* -->
+<h3 class="fn"><a name="CodeGenerator"></a>CodeGenerator::CodeGenerator ( QObject * <i>parent</i> = 0 )</h3>
+<p>Constructs QObject using <i>parent</i>, initialises <a href="codegenerator.html">CodeGenerator</a>.</p>
+<!-- @@@CodeGenerator -->
+<!-- $$$create[overload1]$$$createQWsdl*QDirFlagsQStringQObject* -->
+<h3 class="fn"><a name="create"></a>bool CodeGenerator::create ( QWsdl * <i>wsdl</i>, QDir <i>workingDir</i>, <a href="flags.html">Flags</a> <i>flgs</i>, QString <i>baseClassName</i> = 0, QObject * <i>parent</i> = 0 )<tt> [static]</tt></h3>
+<p>Performs the conversion in <a href="codegenerator.html">CodeGenerator</a>. Data from WSDL (<i>wsdl</i>) is combined with options specified in flags (<i>flgs</i>), and base class name (<i>baseClassName</i>) to create a complete set of classes in given directory (<i>workingDir</i>). For Qt reasons, <i>parent</i> is also needed, although it defaults to 0.</p>
+<p>Returns true if successful.</p>
+<!-- @@@create -->
+<!-- $$$errorEncountered[overload1]$$$errorEncounteredQString -->
+<h3 class="fn"><a name="errorEncountered"></a>void CodeGenerator::errorEncountered ( QString <i>errMessage</i> )<tt> [signal]</tt></h3>
+<p>Singal emitted when <a href="codegenerator.html">CodeGenerator</a> encounters an error. Carries <i>errMessage</i> for convenience.</p>
+<!-- @@@errorEncountered -->
+<!-- $$$isErrorState[overload1]$$$isErrorState -->
+<h3 class="fn"><a name="isErrorState"></a>bool CodeGenerator::isErrorState ()</h3>
+<p>Returns true if object is in error state.</p>
+<!-- @@@isErrorState -->
+</div>
+</body>
+</html>

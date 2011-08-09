@@ -1,6 +1,13 @@
 <!DOCTYPE DCF>
 <DCF ref="index.html" icon="qtwsdlconverter.png" imagedir="../../gif" title="an app for converting WSDL files into Qt classes">
 <section ref="classes.html" title="Classes">
+    <section ref="codegenerator.html" title="CodeGenerator Class Reference">
+        <keyword ref="codegenerator.html">CodeGenerator</keyword>
+        <keyword ref="codegenerator.html#create">create</keyword>
+        <keyword ref="codegenerator.html#errorEncountered">errorEncountered</keyword>
+        <keyword ref="codegenerator.html#isErrorState">isErrorState</keyword>
+        <section ref="codegenerator-members.html" title="List of all members"/>
+    </section>
     <section ref="flags.html" title="Flags Class Reference">
         <keyword ref="flags.html">Flags</keyword>
         <keyword ref="flags.html#Option-enum">Option</keyword>
@@ -14,6 +21,7 @@
         <keyword ref="flags.html#Option-enum">Flags::qmake</keyword>
         <keyword ref="flags.html#Option-enum">Flags::soap10</keyword>
         <keyword ref="flags.html#Option-enum">Flags::allInOneDirStructure</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::soap</keyword>
         <keyword ref="flags.html#Option-enum">Flags::synchronous</keyword>
         <keyword ref="flags.html#Option-enum">Flags::noMessagesStructure</keyword>
         <keyword ref="flags.html#Option-enum">Flags::soap12</keyword>
@@ -28,13 +36,6 @@
         <keyword ref="flags.html#setFlags">setFlags</keyword>
         <keyword ref="flags.html#setForced">setForced</keyword>
         <section ref="flags-members.html" title="List of all members"/>
-    </section>
-    <section ref="standardpath.html" title="StandardPath Class Reference">
-        <keyword ref="standardpath.html">StandardPath</keyword>
-        <keyword ref="standardpath.html#create">create</keyword>
-        <keyword ref="standardpath.html#errorEncountered">errorEncountered</keyword>
-        <keyword ref="standardpath.html#isErrorState">isErrorState</keyword>
-        <section ref="standardpath-members.html" title="List of all members"/>
     </section>
     <section ref="wsdlconverter.html" title="WsdlConverter Class Reference">
         <keyword ref="wsdlconverter.html">WsdlConverter</keyword>

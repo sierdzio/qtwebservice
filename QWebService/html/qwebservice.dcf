@@ -22,6 +22,7 @@
         <keyword ref="qsoapmessage.html#sendMessage">sendMessage</keyword>
         <keyword ref="qsoapmessage.html#setParams">setParams</keyword>
         <keyword ref="qsoapmessage.html#setProtocol">setProtocol</keyword>
+        <keyword ref="qsoapmessage.html#setReturnValue">setReturnValue</keyword>
         <keyword ref="qsoapmessage.html#setTargetNamespace">setTargetNamespace</keyword>
         <section ref="qsoapmessage-members.html" title="List of all members"/>
     </section>
@@ -54,8 +55,8 @@
         <keyword ref="qwsdl.html">QWsdl</keyword>
         <keyword ref="qwsdl.html#fileReplyFinished">fileReplyFinished</keyword>
         <keyword ref="qwsdl.html#getErrorInfo">getErrorInfo</keyword>
+        <keyword ref="qwsdl.html#getHost">getHost</keyword>
         <keyword ref="qwsdl.html#getHostUrl">getHostUrl</keyword>
-        <keyword ref="qwsdl.html#getHostname">getHostname</keyword>
         <keyword ref="qwsdl.html#getMethodNames">getMethodNames</keyword>
         <keyword ref="qwsdl.html#getMethods">getMethods</keyword>
         <keyword ref="qwsdl.html#getTargetNamespace">getTargetNamespace</keyword>
