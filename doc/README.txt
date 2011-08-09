@@ -13,6 +13,8 @@ Distributed under GNU GPLv3.
 
 2. qtWsdlConverter
 
+WARNING: Remember to first compile QWebService library, and set it's path in run environment for Converter (it requires this lib to run. By default, it puts the library into ../lib).
+
 2.1 Syntax
   qtwsdlconvert [options] <WSDL file or URL> [output directory, defaults to web service name] [base output class name, defaults to web service name]
 
