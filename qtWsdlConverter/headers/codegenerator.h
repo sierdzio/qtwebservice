@@ -35,6 +35,8 @@ private:
     bool createServiceSource();
     bool createBuildSystemFile();
     bool createQMakeProject();
+    bool createCMakeProject();
+    bool createSconsProject();
 
     QMap<QString, QSoapMessage *> *messages;
     QDir workingDir;

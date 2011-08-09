@@ -70,6 +70,8 @@ bool populateArgumentsList(QMap<int, QVariant> *lst, Flags *flgs)
                 flgs->setFlags(Flags::soap12);
             else if (s == "--soap10")
                 flgs->setFlags(Flags::soap10);
+            else if (s == "--soap")
+                flgs->setFlags(Flags::soap);
             else if (s == "--http")
                 flgs->setFlags(Flags::http);
             else if (s == "--json")

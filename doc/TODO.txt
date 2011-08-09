@@ -1,23 +1,19 @@
 TODO'S:
  - (converter) prevent main.cpp from accepting conflicting switches,
+ - (converter) use more standard approach to command line reading,
  - (converter) review asynchronous 'if' statements - in most, checks are probably too strict,
  - (converter) change names of created message objects, so that they are clearily distinct from class name,
  - (converter) prepare '--compact-mode' implementation,
  - (converter) review '--debug-mode' implementation - or delete it,
  - (converter) review protocol implementation,
- - (QWebService & converter) change 'hostname' to 'host' in all classes,
- - (QWebService & converter) replace '\r\n' in QSoapMessage and converted code with OS-independent code,
- - (QWebService & converter) change returnValue to QVariant or QString (in QSoapMessage),
+ - (QWebService & converter) (proposal) replace '\r\n' in QSoapMessage and converted code with OS-independent code,
+ - (QWebService & converter) (proposal) change returnValue to QVariant or QString (in QSoapMessage),
  - (QWsdl) implement more parameter types.
 
 
 IDEAS:
 Should messages (in converter) return QStrings (with text reply) or try to automatically extract relevant data?
-This should also be commented into the code.
 
 When there is dir name conflict, app can ask for a new name, instead of exiting.
 
 File creation may be template-based!
-
-A re-think is needed to accomodate the 'compact' path, as well as role of 'protocol' in file creation
-(IMO (sierdzio) - it should specify the default value in standard path, and the only one in compact).

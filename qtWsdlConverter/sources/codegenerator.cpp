@@ -1,16 +1,16 @@
 #include "../headers/codegenerator.h"
 
 /*!
-    \class StandardPath
+    \class CodeGenerator
     \brief Creates code in the standard path (standard structure).
 
     This class will most probably be renamed, as it turns out to do almost everything in the conversion process.
   */
 
 /*!
-    \fn StandardPath::StandardPath(QObject *parent)
+    \fn CodeGenerator::CodeGenerator(QObject *parent)
 
-    Constructs QObject using \a parent, initialises StandardPath.
+    Constructs QObject using \a parent, initialises CodeGenerator.
   */
 CodeGenerator::CodeGenerator(QObject *parent) :
     QObject(parent)
@@ -20,13 +20,13 @@ CodeGenerator::CodeGenerator(QObject *parent) :
 }
 
 /*!
-    \fn StandardPath::errorEncountered(QString errMessage)
+    \fn CodeGenerator::errorEncountered(QString errMessage)
 
-    Singal emitted when StandardPath encounters an error. Carries \a errMessage for convenience.
+    Singal emitted when CodeGenerator encounters an error. Carries \a errMessage for convenience.
   */
 
 /*!
-    \fn StandardPath::isErrorState()
+    \fn CodeGenerator::isErrorState()
 
     Returns true if object is in error state.
   */
@@ -37,7 +37,7 @@ bool CodeGenerator::isErrorState()
 
 /*!
     \internal
-    \fn StandardPath::enterErrorState(QString errMessage)
+    \fn CodeGenerator::enterErrorState(QString errMessage)
   */
 bool CodeGenerator::enterErrorState(QString errMessage)
 {
@@ -50,7 +50,7 @@ bool CodeGenerator::enterErrorState(QString errMessage)
 
 /*!
     \internal
-    \fn StandardPath::prepare()
+    \fn CodeGenerator::prepare()
   */
 void CodeGenerator::prepare()
 {
@@ -64,9 +64,9 @@ void CodeGenerator::prepare()
 }
 
 /*!
-    \fn StandardPath::create(QWsdl *wsdl, QDir workingDir, Flags flgs, QString baseClassName = 0, QObject *parent = 0)
+    \fn CodeGenerator::create(QWsdl *wsdl, QDir workingDir, Flags flgs, QString baseClassName = 0, QObject *parent = 0)
 
-    Performs the conversion in StandardPath. Data from WSDL (\a wsdl) is combined with options specified
+    Performs the conversion in CodeGenerator. Data from WSDL (\a wsdl) is combined with options specified
     in flags (\a flgs), and base class name (\a baseClassName) to create a complete set of classes
     in given directory (\a workingDir). For Qt reasons, \a parent is also needed, although it defaults to 0.
 
@@ -92,7 +92,7 @@ bool CodeGenerator::create(QWsdl *w, QDir wrkDir, Flags flgs, QString bsClsNme, 
 
 /*!
     \internal
-    \fn StandardPath::createMessages()
+    \fn CodeGenerator::createMessages()
   */
 bool CodeGenerator::createMessages()
 {
@@ -127,7 +127,7 @@ bool CodeGenerator::createMessages()
 
 /*!
     \internal
-    \fn StandardPath::createMessageHeader(QSoapMessage *msg)
+    \fn CodeGenerator::createMessageHeader(QSoapMessage *msg)
   */
 bool CodeGenerator::createMessageHeader(QSoapMessage *msg)
 {
@@ -266,7 +266,7 @@ bool CodeGenerator::createMessageHeader(QSoapMessage *msg)
 
 /*!
     \internal
-    \fn StandardPath::createMessageSource(QSoapMessage *msg)
+    \fn CodeGenerator::createMessageSource(QSoapMessage *msg)
   */
 bool CodeGenerator::createMessageSource(QSoapMessage *msg)
 {
@@ -341,10 +341,10 @@ bool CodeGenerator::createMessageSource(QSoapMessage *msg)
 
             // Defaulting the protocol:
             out << "    protocol = ";
-            if (flags.flags() & Flags::soap10)
-                out << "soap10";
-            else if (flags.flags() & Flags::soap12)
+            if (flags.flags() & Flags::soap12) // also includes 'soap'!
                 out << "soap12";
+            else if (flags.flags() & Flags::soap10)
+                out << "soap10";
             else if (flags.flags() & Flags::http)
                 out << "http";
             else if (flags.flags() & Flags::json)
@@ -675,7 +675,7 @@ bool CodeGenerator::createMainCpp()
 
 /*!
     \internal
-    \fn StandardPath::createService()
+    \fn CodeGenerator::createService()
   */
 bool CodeGenerator::createService()
 {
@@ -699,7 +699,7 @@ bool CodeGenerator::createService()
 
 /*!
     \internal
-    \fn StandardPath::createServiceHeader()
+    \fn CodeGenerator::createServiceHeader()
   */
 bool CodeGenerator::createServiceHeader()
 {
@@ -850,7 +850,7 @@ bool CodeGenerator::createServiceHeader()
 
 /*!
     \internal
-    \fn StandardPath::createServiceSource()
+    \fn CodeGenerator::createServiceSource()
   */
 bool CodeGenerator::createServiceSource()
 {
@@ -1051,21 +1051,27 @@ bool CodeGenerator::createServiceSource()
 
 /*!
     \internal
-    \fn StandardPath::createBuildSystemFile()
+    \fn CodeGenerator::createBuildSystemFile()
   */
 bool CodeGenerator::createBuildSystemFile()
 {
-    if (flags.flags() & Flags::qmake)
-        return createQMakeProject();
-    else if (flags.flags() & Flags::noBuildSystem)
-        return true;
+    bool result = false;
 
-    return true;
+    if (flags.flags() & Flags::noBuildSystem)
+        return true;
+    if (flags.flags() & Flags::qmake)
+        result = createQMakeProject();
+    if (flags.flags() & Flags::cmake)
+        result = createCMakeProject();
+    if (flags.flags() & Flags::scons)
+        result = createSconsProject();
+
+    return result;
 }
 
 /*!
     \internal
-    \fn StandardPath::createQMakeProject()
+    \fn CodeGenerator::createQMakeProject()
   */
 bool CodeGenerator::createQMakeProject()
 {
@@ -1141,5 +1147,158 @@ bool CodeGenerator::createQMakeProject()
     // ---------------------------------
 
     file.close();
+    return true;
+}
+
+/*!
+    \internal
+    \fn CodeGenerator::createCMakeProject()
+  */
+bool CodeGenerator::createCMakeProject()
+{
+    QString wsName = "";
+    if (baseClassName != "")
+        wsName = baseClassName;
+    else
+        wsName = wsdl->getWebServiceName();
+
+    QFile file(workingDir.path() + "/CMakeLists.txt");
+    if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
+        return enterErrorState("Error: could not open Web Service .pro file for writing.");
+
+    // ---------------------------------
+    // Begin writing:
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << "project(" << wsName << ")" << endl;
+    out << "cmake_minimum_required(VERSION 2.4.0)" << endl;
+    out << "find_package(Qt4 REQUIRED)" << endl;
+    out << "include(${QT_USE_FILE})" << endl;
+    // --------------------
+    // Include sources:
+    out << "set(" << wsName << "_SRCS" << endl;
+    out << "    ";
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+        out << "sources/";
+    out << wsName << ".cpp" << endl;
+    // Create main.cpp to prevent compile errors. This file is NOT NEEDED in any other sense.
+    out << "    ";
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+        out << "sources/";
+    out << "main.cpp" << endl;
+    { // Include all sources.
+        QStringList tempMap = wsdl->getMethodNames();
+        foreach (QString s, tempMap)
+        {
+            out << "    ";
+            if (!(flags.flags() & Flags::allInOneDirStructure))
+                out << "sources/";
+            out << s << ".cpp" << endl;
+        }
+    }
+    out << ")" << endl;
+    // --------------------
+    // Include MOC:
+    out << "set(" << wsName << "_MOC_SRCS" << endl;
+    out << "    ";
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+        out << "headers/";
+    out << wsName << ".h" << endl;
+    { // Include all MOC headers.
+        QStringList tempMap = wsdl->getMethodNames();
+        foreach (QString s, tempMap)
+        {
+            out << "    ";
+            if (!(flags.flags() & Flags::allInOneDirStructure))
+                out << "headers/";
+            out << s << ".h" << endl;
+        }
+    }
+    out << ")" << endl;
+    // Add compilation instructions:
+    out << "qt4_wrap_cpp(" << wsName << "_MOCS ${" << wsName << "_MOC_SRCS})" << endl;
+    out << "add_definitions(-DQT_NO_DEBUG)" << endl;
+    out << "add_executable(" << wsName << endl;
+    out << "    ${" << wsName << "_SRCS}" << endl;
+    out << "    ${" << wsName << "_MOCS})" << endl;
+    out << "target_link_libraries(" << wsName << " ${QT_LIBRARIES}" << endl;
+    // EOF (CMake CMakeLists.txt file)
+    // ---------------------------------
+
+    file.close();
+
+    return true;
+}
+
+/*!
+    \internal
+    \fn CodeGenerator::createSconsProject()
+  */
+bool CodeGenerator::createSconsProject()
+{
+    QString wsName = "";
+    if (baseClassName != "")
+        wsName = baseClassName;
+    else
+        wsName = wsdl->getWebServiceName();
+
+    QFile file(workingDir.path() + "/SConstruct");
+    if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
+        return enterErrorState("Error: could not open Web Service .pro file for writing.");
+
+    // ---------------------------------
+    // Begin writing:
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << "#!/usr/bin/env python" << endl;
+    out << endl;
+    out << "import os" << endl;
+    out << endl;
+    out << "QT4_PY_PATH = \".\" # Probably not needed!" << endl;
+    out << "QTDIR = \".\" # WARNING! Set QTDIR properly!" << endl; // WARNING! QTDIR has to be set on end machine!
+    out << endl;
+    out << "pkgpath = os.environ.get(\"PKG_CONFIG_PATH\", \"\")" << endl;
+    out << "pkgpath += \":%s/lib/pkgconfig\" % QTDIR" << endl;
+    out << "os.environ[\"PKG_CONFIG_PATH\"] = pkgpath" << endl;
+    out << "os.environ[\"QTDIR\"] = QTDIR # WARNING! As above." << endl;
+    out << endl;
+    out << "env = Environment(tools=[\"default\", \"qt4\"], toolpath=[QT4_PY_PATH])" << endl;
+    out << "env[\"CXXFILESUFFIX\"] = \".cpp\"" << endl;
+    out << endl;
+    out << "env.EnableQt4Modules([\"QtCore\", \"QtNetwork\"])" << endl;
+    // --------------------
+    // Include sources:
+    out << "sources = [" << endl;
+    out << "    ";
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+        out << "\"sources/";
+    out << wsName << ".cpp\"," << endl;
+    // Create main.cpp to prevent compile errors. This file is NOT NEEDED in any other sense.
+    out << "    ";
+    if (!(flags.flags() & Flags::allInOneDirStructure))
+        out << "\"sources/";
+    out << "main.cpp\"," << endl;
+    { // Include all sources.
+        QStringList tempMap = wsdl->getMethodNames();
+        foreach (QString s, tempMap)
+        {
+            out << "    ";
+            if (!(flags.flags() & Flags::allInOneDirStructure))
+                out << "\"sources/";
+            out << s << ".cpp\"";
+            if (tempMap.indexOf(s) != (tempMap.length() - 1))
+                out << "," << endl;
+            else
+                out << "]" << endl;
+        }
+    }
+    out << ")" << endl;
+
+    out << "env.Program(target=\"" << wsName << "\", source=[sources]" << endl;
+    // EOF (SCons SConstruct file)
+    // ---------------------------------
+
+    file.close();
+
     return true;
 }

@@ -45,6 +45,8 @@
             SOAP 1.0 protocol will be used.
      \value soap12
             SOAP 1.2 protocol will be used.
+     \value soap
+            Internall wrapper for all SOAP protocols. When used in app, will default to SOAP 1.2
      \value json
             JSON protocol will be used.
  */
