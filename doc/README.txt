@@ -16,13 +16,13 @@ Distributed under GNU GPLv3.
 2.1 Syntax
   qtwsdlconvert [options] <WSDL file or URL> [output directory, defaults to web service name] [base output class name, defaults to web service name]
 
-  2.1.1 Possible options
+  2.1.1 Possible options (unavailable marked with *)
     --help,
     --soap10, --soap12, --http, --json,
     --synchronous, --asynchronous,
-    --full-mode, --debug-mode, --compact-mode,
-    --standard-structure, --no-messages-structure, --all-in-one-dir-structure,
-    --qmake, --cmake, --scons, --no-build-system,
+    --full-mode, *--debug-mode, --compact-mode,
+    --standard-structure, *--no-messages-structure, --all-in-one-dir-structure,
+    --qmake, *--cmake, *--scons, --no-build-system,
     --force.
 
   2.1.2 Default switches

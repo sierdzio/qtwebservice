@@ -16,28 +16,29 @@ class QWEBSERVICESHARED_EXPORT QSoapMessage : public QObject
 public:
     enum Protocol
     {
-        http = 0x01,
-        soap10 = 0x02,
-        soap12 = 0x04,
-        soap = 0x06,
-        json = 0x08
+        http    = 0x01,
+        soap10  = 0x02,
+        soap12  = 0x04,
+        soap    = 0x06,
+        json    = 0x08
     };
     Q_DECLARE_FLAGS(Protocols, Protocol)
 
     explicit QSoapMessage(QObject *parent = 0);
     QSoapMessage(QUrl hostUrl, QString messageName, QObject *parent = 0);
-    QSoapMessage(QString hostname, QString messageName, QObject *parent = 0);
-    QSoapMessage(QString hostname, QString messageName, QMap<QString, QVariant> params,
-                 QMap<QString, QVariant> returnValue, QObject *parent = 0);
+    QSoapMessage(QString host, QString messageName, QObject *parent = 0);
+    QSoapMessage(QString host, QString messageName, QMap<QString, QVariant> params,
+                 QObject *parent = 0);
     ~QSoapMessage();
 
-    void setParams(QMap<QString, QVariant> params, QMap<QString, QVariant> returnValue);
+    void setParams(QMap<QString, QVariant> params);
+    void setReturnValue(QMap<QString, QVariant> returnValue);
     void setTargetNamespace(QString tNamespace);
     void setProtocol(Protocol protocol);
     bool sendMessage();
     bool sendMessage(QMap<QString, QVariant> params);
     QVariant static sendMessage(QObject *parent, QUrl url, QString _messageName,
-                                QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal);
+                                QMap<QString, QVariant> params);
     QVariant replyRead();
     QString getMessageName();
     QStringList getParameterNames() const;
@@ -60,11 +61,10 @@ private:
     bool replyReceived;
     Protocol protocol;
     QUrl hostUrl;
-    QString hostname;
+    QString host;
     QString messageName;
     QString targetNamespace;
     QVariant reply;
-//    QVariant returnValue;
     QMap<QString, QVariant> parameters;
     QMap<QString, QVariant> returnValue;
     QNetworkAccessManager *manager;

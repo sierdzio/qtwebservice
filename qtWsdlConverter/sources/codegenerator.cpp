@@ -1,4 +1,4 @@
-#include "../headers/standardpath.h"
+#include "../headers/codegenerator.h"
 
 /*!
     \class StandardPath
@@ -12,7 +12,7 @@
 
     Constructs QObject using \a parent, initialises StandardPath.
   */
-StandardPath::StandardPath(QObject *parent) :
+CodeGenerator::CodeGenerator(QObject *parent) :
     QObject(parent)
 {
     errorState = false;
@@ -30,7 +30,7 @@ StandardPath::StandardPath(QObject *parent) :
 
     Returns true if object is in error state.
   */
-bool StandardPath::isErrorState()
+bool CodeGenerator::isErrorState()
 {
     return errorState;
 }
@@ -39,7 +39,7 @@ bool StandardPath::isErrorState()
     \internal
     \fn StandardPath::enterErrorState(QString errMessage)
   */
-bool StandardPath::enterErrorState(QString errMessage)
+bool CodeGenerator::enterErrorState(QString errMessage)
 {
     errorState = true;
     errorMessage += errMessage + " ";
@@ -52,7 +52,7 @@ bool StandardPath::enterErrorState(QString errMessage)
     \internal
     \fn StandardPath::prepare()
   */
-void StandardPath::prepare()
+void CodeGenerator::prepare()
 {
     if (!(flags.flags() & Flags::allInOneDirStructure))
     {
@@ -72,9 +72,9 @@ void StandardPath::prepare()
 
     Returns true if successful.
   */
-bool StandardPath::create(QWsdl *w, QDir wrkDir, Flags flgs, QString bsClsNme, QObject *parent)
+bool CodeGenerator::create(QWsdl *w, QDir wrkDir, Flags flgs, QString bsClsNme, QObject *parent)
 {
-    StandardPath obj(parent);
+    CodeGenerator obj(parent);
     obj.baseClassName = bsClsNme;
     obj.flags = flgs;
     obj.workingDir = wrkDir;
@@ -94,7 +94,7 @@ bool StandardPath::create(QWsdl *w, QDir wrkDir, Flags flgs, QString bsClsNme, Q
     \internal
     \fn StandardPath::createMessages()
   */
-bool StandardPath::createMessages()
+bool CodeGenerator::createMessages()
 {
     if (!(flags.flags() & Flags::allInOneDirStructure))
         workingDir.cd("headers");
@@ -129,7 +129,7 @@ bool StandardPath::createMessages()
     \internal
     \fn StandardPath::createMessageHeader(QSoapMessage *msg)
   */
-bool StandardPath::createMessageHeader(QSoapMessage *msg)
+bool CodeGenerator::createMessageHeader(QSoapMessage *msg)
 {
     QString msgName = msg->getMessageName();
     QFile file(workingDir.path() + "/" + msgName + ".h");
@@ -175,10 +175,18 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
     out << "class " << msgName << " : public QObject" << endl;
     out << "{" << endl;
     out << "    Q_OBJECT" << endl;
+    out << "    Q_ENUMS(Protocol)" << endl;
+    out << "    Q_FLAGS(Protocols)" << endl;
     out << endl;
     out << "public:" << endl;
-    out << "    enum Role {outboundRole, inboundRole, staticRole, noRole};" << endl;
-    out << "    enum Protocol {http, soap10, soap12};" << endl;
+    out << "    enum Protocol" << endl << "    {" << endl;
+    out << "        http   = 0x01," << endl;
+    out << "        soap10 = 0x02," << endl;
+    out << "        soap12 = 0x04," << endl;
+    out << "        soap   = 0x06," << endl;
+    out << "        json   = 0x08" << endl;
+    out << "    };" << endl;
+    out << "    Q_DECLARE_FLAGS(Protocols, Protocol)" << endl;
     out << endl;
     out << "    explicit " << msgName << "(QObject *parent = 0);" << endl;
     if (msgParameters != "")
@@ -225,10 +233,9 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
     out << "    QString convertReplyToUtf(QString textToConvert);" << endl;
     out << endl;
     out << "    bool replyReceived;" << endl;
-    out << "    Role role;" << endl;
     out << "    Protocol protocol;" << endl;
     out << "    QUrl hostUrl;" << endl;
-    out << "    QString hostname;" << endl;
+    out << "    QString host;" << endl;
     out << "    QString messageName;" << endl;
     out << "    QString targetNamespace;" << endl;
     // Temporarily, all messages will return QString!
@@ -247,7 +254,8 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
     out << "    QNetworkAccessManager *manager;" << endl;
     out << "    QNetworkReply *networkReply;" << endl;
     out << "    QByteArray data;" << endl;
-    out << "};" << endl;
+    out << "};" << endl << endl;
+    out << "Q_DECLARE_OPERATORS_FOR_FLAGS(QSoapMessage::Protocols)" << endl;
     out << "#endif // " << msgName.toUpper() << "_H" << endl;
     // EOF (SOAP message)
     // ---------------------------------
@@ -260,7 +268,7 @@ bool StandardPath::createMessageHeader(QSoapMessage *msg)
     \internal
     \fn StandardPath::createMessageSource(QSoapMessage *msg)
   */
-bool StandardPath::createMessageSource(QSoapMessage *msg)
+bool CodeGenerator::createMessageSource(QSoapMessage *msg)
 {
     QString msgName = msg->getMessageName();
     QFile file(workingDir.path() + "/" + msgName + ".cpp");
@@ -301,8 +309,8 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
     out << "    QObject(parent)" << endl;
     out << "{" << endl;
 //    out << "    init();" << endl;
-    out << "    hostname = \"" << msg->getTargetNamespace() << "\";" << endl;
-    out << "    hostUrl.setHost(hostname);" << endl;
+    out << "    host = \"" << msg->getTargetNamespace() << "\";" << endl;
+    out << "    hostUrl.setHost(host);" << endl;
     out << "    messageName = \"" << msgName << "\";" << endl;
     { // Defaulting the protocol:
         out << "    protocol = ";
@@ -344,7 +352,7 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
             out << ";" << endl;
         }
         //    out << "    init();" << endl;
-        out << "    hostUrl.setHost(hostname + messageName);" << endl;
+        out << "    hostUrl.setHost(host + messageName);" << endl;
         out << "}" << endl;
         out << endl;
     }
@@ -370,16 +378,25 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
     {
         out << "void " << msgName << "::setProtocol(Protocol prot)" << endl;
         out << "{" << endl;
-        out << "    protocol = prot;" << endl;
+        out << "    if (prot == soap)" << endl;
+        out << "        protocol = soap12;" << endl;
+        out << "    else" << endl;
+        out << "        protocol = prot;" << endl;
         out << "}" << endl;
         out << endl;
     }
     out << "bool " << msgName << "::sendMessage()" << endl;
     out << "{" << endl;
-    out << "    hostUrl.setUrl(hostname);" << endl;
+    out << "    hostUrl.setUrl(host);" << endl;
     out << "    QNetworkRequest request;" << endl;
     out << "    request.setUrl(hostUrl);" << endl;
-    out << "    request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(\"application/soap+xml; charset=utf-8\"));" << endl;
+    out << "    if (protocol & soap)" << endl;
+    out << "        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(\"application/soap+xml; charset=utf-8\"));" << endl;
+    out << "    else if (protocol == json)" << endl;
+    out << "        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(\"application/json; charset=utf-8\"));" << endl;
+    out << "    else if (protocol == http)" << endl;
+    out << "        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(\"Content-Type: application/x-www-form-urlencoded\"));" << endl;
+    out << endl;
     out << "    if (protocol == soap10)" << endl;
     out << "        request.setRawHeader(QByteArray(\"SOAPAction\"), QByteArray(hostUrl.toString().toAscii()));" << endl;
     out << endl;
@@ -431,7 +448,6 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
         tempS.chop(2);
         out << tempS << ");" << endl;
     }
-    out << "    qsm.role = staticRole;" << endl;
 //    out << "    qsm.hostUrl = url;" << endl;
     out << endl;
     out << "    qsm.sendMessage();" << endl;
@@ -552,25 +568,64 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
     out << "{" << endl;
     out << "    data.clear();" << endl;
     out << "    QString header, body, footer;" << endl;
-    out << endl;
+    out << "QString endl = \"\\r\\n\"; // Replace with something OS-independent, or seriously rethink." << endl;
+    out << "" << endl;
+    out << "if (protocol & soap)" << endl;
+    out << "{" << endl;
     out << "    if (protocol == soap12)" << endl;
     out << "    {" << endl;
-    out << "        header = \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?> \\r\\n <soap12:Envelope xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" xmlns:xsd=\\\"http://www.w3.org/2001/XMLSchema\\\" xmlns:soap12=\\\"http://www.w3.org/2003/05/soap-envelope\\\"> \\r\\n <soap12:Body> \\r\\n\";" << endl;
+    out << "        header = \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?> \" + endl +" << endl;
+    out << "                 \"<soap12:Envelope xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" \" +" << endl;
+    out << "                 \"xmlns:xsd=\\\"http://www.w3.org/2001/XMLSchema\\\" \" +" << endl;
+    out << "                 \"xmlns:soap12=\\\"http://www.w3.org/2003/05/soap-envelope\\\"> \" + endl +" << endl;
+    out << "                 \"<soap12:Body> \" + endl;" << endl;
     out << endl;
-    out << "        footer = \"</soap12:Body> \\r\\n</soap12:Envelope>\";" << endl;
+    out << "        footer = \"</soap12:Body> \" + endl + \"</soap12:Envelope>\";" << endl;
+    out << "    }" << endl;
+    out << "    else if (protocol == soap10)" << endl;
+    out << "    {" << endl;
+    out << "        header = \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?> \" + endl +" << endl;
+    out << "                \"<soap:Envelope xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" \" +" << endl;
+    out << "                \"xmlns:xsd=\\\"http://www.w3.org/2001/XMLSchema\\\" \" +" << endl;
+    out << "                \"xmlns:soap=\\\"http://www.w3.org/2003/05/soap-envelope\\\"> \" + endl +" << endl;
+    out << "                \"<soap:Body> \" + endl;" << endl;
+    out << endl;
+    out << "        footer = \"</soap:Body> \" + endl + \"</soap:Envelope>\";" << endl;
     out << "    }" << endl;
     out << endl;
-    out << "    body = \"\\t<\" + messageName + \" xmlns=\"\" + targetNamespace + \"\"> \\r\\n\";" << endl;
+    out << "    body = \"\\t<\" + messageName + \" xmlns=\"\" + targetNamespace + \"\"> \" + endl;" << endl;
     out << endl;
-    out << "    QMap<QString, QVariant> parameters;" << endl;
     out << "    foreach (const QString currentKey, parameters.keys())" << endl;
     out << "    {" << endl;
     out << "        QVariant qv = parameters.value(currentKey);" << endl;
     out << "        // Currently, this does not handle nested lists" << endl;
-    out << "        body += \"\\t\\t<\" + currentKey + \">\" + qv.toString() + \"</\" + currentKey + \"> \\r\\n\";" << endl;
+    out << "        body += \"\\t\\t<\" + currentKey + \">\" + qv.toString() + \"</\" + currentKey + \"> \" + endl;" << endl;
     out << "    }" << endl;
     out << endl;
-    out << "    body += \"\\t</\" + messageName + \"> \\r\\n\";" << endl;
+    out << "    body += \"\\t</\" + messageName + \"> \" + endl;" << endl;
+    out << "}" << endl;
+    out << "else if (protocol == http)" << endl;
+    out << "{" << endl;
+    out << "    foreach (const QString currentKey, parameters.keys())" << endl;
+    out << "    {" << endl;
+    out << "        QVariant qv = parameters.value(currentKey);" << endl;
+    out << "        // Currently, this does not handle nested lists" << endl;
+    out << "        body += currentKey + \"=\" + qv.toString() + \"&\";" << endl;
+    out << "    }" << endl;
+    out << "    body.chop(1);" << endl;
+    out << "}" << endl;
+    out << "else if (protocol == json)" << endl;
+    out << "{" << endl;
+    out << "    body += \"{\" + endl;" << endl;
+    out << "    foreach (const QString currentKey, parameters.keys())" << endl;
+    out << "    {" << endl;
+    out << "        QVariant qv = parameters.value(currentKey);" << endl;
+    out << "        // Currently, this does not handle nested lists" << endl;
+    out << "        body += \"{\" + endl + \"\\t\\\"\" + currentKey + \"\\\" : \\\"\" + qv.toString() + \"\\\"\" + endl;"
+        << endl;
+    out << "    }" << endl;
+    out << "    body += \"}\";" << endl;
+    out << "}" << endl;
     out << endl;
     out << "    data.append(header + body + footer);" << endl;
     out << "}" << endl;
@@ -598,7 +653,7 @@ bool StandardPath::createMessageSource(QSoapMessage *msg)
   freshly generated code. It is NOT NEEDED for any other reason. You can safely delete
   it fo your project.
   */
-bool StandardPath::createMainCpp()
+bool CodeGenerator::createMainCpp()
 {
     QFile file(workingDir.path() + "/main.cpp");
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
@@ -622,7 +677,7 @@ bool StandardPath::createMainCpp()
     \internal
     \fn StandardPath::createService()
   */
-bool StandardPath::createService()
+bool CodeGenerator::createService()
 {
     if (!(flags.flags() & Flags::allInOneDirStructure))
         workingDir.cd("headers");
@@ -646,7 +701,7 @@ bool StandardPath::createService()
     \internal
     \fn StandardPath::createServiceHeader()
   */
-bool StandardPath::createServiceHeader()
+bool CodeGenerator::createServiceHeader()
 {
     QString wsName = "";
     QMap<QString, QSoapMessage *> *tempMap = wsdl->getMethods();
@@ -760,7 +815,7 @@ bool StandardPath::createServiceHeader()
     out << endl;
     out << "    bool errorState;" << endl;
     out << "    QUrl hostUrl;" << endl;
-    out << "    QString hostname;" << endl;
+    out << "    QString host;" << endl;
     if (flags.flags() & Flags::asynchronous
             && (flags.flags() & Flags::fullMode || flags.flags() & Flags::debugMode))
     { // Declare reply variables for asynchronous mode.
@@ -797,7 +852,7 @@ bool StandardPath::createServiceHeader()
     \internal
     \fn StandardPath::createServiceSource()
   */
-bool StandardPath::createServiceSource()
+bool CodeGenerator::createServiceSource()
 {
     QString wsName = "";
     QMap<QString, QSoapMessage *> *tempMap = wsdl->getMethods();
@@ -972,7 +1027,7 @@ bool StandardPath::createServiceSource()
     out << endl;
     out << "QString " << wsName << "::getHost()" << endl;
     out << "{" << endl;
-    out << "    return hostname;" << endl;
+    out << "    return host;" << endl;
     out << "}" << endl;
     out << endl;
     out << "bool " << wsName << "::isErrorState()" << endl;
@@ -998,7 +1053,7 @@ bool StandardPath::createServiceSource()
     \internal
     \fn StandardPath::createBuildSystemFile()
   */
-bool StandardPath::createBuildSystemFile()
+bool CodeGenerator::createBuildSystemFile()
 {
     if (flags.flags() & Flags::qmake)
         return createQMakeProject();
@@ -1012,7 +1067,7 @@ bool StandardPath::createBuildSystemFile()
     \internal
     \fn StandardPath::createQMakeProject()
   */
-bool StandardPath::createQMakeProject()
+bool CodeGenerator::createQMakeProject()
 {
     QString wsName = "";
     if (baseClassName != "")

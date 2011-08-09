@@ -72,5 +72,5 @@ QUrl QWebServiceMethodAbstract::getHostUrl()
   */
 QString QWebServiceMethodAbstract::getHost()
 {
-    return hostname;
+    return host;
 }

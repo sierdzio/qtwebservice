@@ -25,7 +25,7 @@ QWsdl::QWsdl(QObject *parent) :
     errorState = false;
     errorMessage = "";
     webServiceName = "";
-    hostname = "";
+    host = "";
     hostUrl = "";
     targetNamespace = "";
 
@@ -47,7 +47,7 @@ QWsdl::QWsdl(QString wsdlFile, QObject *parent) :
     errorState = false;
     errorMessage = "";
     webServiceName = "";
-    hostname = "";
+    host = "";
     hostUrl = ""; //wsdlFile;
     targetNamespace = "";
 
@@ -131,9 +131,9 @@ QString QWsdl::getWebServiceName()
 
     \sa getHostUrl()
   */
-QString QWsdl::getHostname()
+QString QWsdl::getHost()
 {
-    return hostname;
+    return host;
 }
 
 /*!
@@ -296,8 +296,8 @@ bool QWsdl::parse()
             if (tempN == "definitions")
             {
                 targetNamespace = xmlReader.attributes().value("targetNamespace").toString();
-                hostname = targetNamespace;
-                hostUrl = hostname;
+                host = targetNamespace;
+                hostUrl = host;
                 readDefinitions();
             }
             else
@@ -331,7 +331,7 @@ void QWsdl::prepareFile()
 
     if (!QFile::exists(wsdlFilePath) && filePath.isValid())
     {
-        hostname = filePath.host();
+        host = filePath.host();
 
         QNetworkAccessManager *manager = new QNetworkAccessManager(this);
         connect(manager, SIGNAL(finished(QNetworkReply*)),
@@ -639,8 +639,8 @@ void QWsdl::prepareMethods()
             {
                 methods->insert(methodName, new QSoapMessage(targetNamespace,
                                                              methodName,
-                                                             workMethodParameters->value(methodMain),
-                                                             workMethodParameters->value(methodReturn)));
+                                                             workMethodParameters->value(methodMain)));
+                methods->value(methodName)->setReturnValue(workMethodParameters->value(methodReturn));
                 methods->value(methodName)->setTargetNamespace(targetNamespace);
             }
         }

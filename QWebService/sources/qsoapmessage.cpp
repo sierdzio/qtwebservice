@@ -36,8 +36,8 @@ QSoapMessage::QSoapMessage(QObject *parent) :
     QObject(parent)
 {
     init();
-    hostname = "";
-    hostUrl.setHost(hostname);
+    host = "";
+    hostUrl.setHost(host);
     messageName = "";
     parameters.clear();
 }
@@ -54,7 +54,7 @@ QSoapMessage::QSoapMessage(QUrl url, QString _messageName, QObject *parent) :
     QObject(parent), hostUrl(url), messageName(_messageName)
 {
     init();
-    hostname = hostUrl.host();
+    host = hostUrl.host();
     parameters.clear();
 }
 
@@ -67,10 +67,10 @@ QSoapMessage::QSoapMessage(QUrl url, QString _messageName, QObject *parent) :
     \sa setParams(), setProtocol(), sendMessage()
   */
 QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *parent) :
-    QObject(parent), hostname(url), messageName(_messageName)
+    QObject(parent), host(url), messageName(_messageName)
 {
     init();
-    hostUrl.setHost(hostname + messageName);
+    hostUrl.setHost(host + messageName);
     parameters.clear();
 }
 
@@ -85,11 +85,11 @@ QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *parent) :
     \sa sendMessage(), setProtocol()
   */
 QSoapMessage::QSoapMessage(QString url, QString _messageName,
-                           QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal, QObject *parent) :
-    QObject(parent), hostname(url), messageName(_messageName), parameters(params), returnValue(returnVal)
+                           QMap<QString, QVariant> params, QObject *parent) :
+    QObject(parent), host(url), messageName(_messageName), parameters(params)
 {
     init();
-    hostUrl.setHost(hostname + messageName);
+    hostUrl.setHost(host + messageName);
 }
 
 /*!
@@ -105,14 +105,22 @@ QSoapMessage::~QSoapMessage()
 }
 
 /*!
-    \fn QSoapMessage::setParams(QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal)
+    \fn QSoapMessage::setParams(QMap<QString, QVariant> params)
 
-    Sets method's parameters (\a params) and return value (\a returnVal). This also includes their names
-    (that's why you need to specify the return value).
+    Sets method's parameters (\a params). This also includes their names.
   */
-void QSoapMessage::setParams(QMap<QString, QVariant> params, QMap<QString, QVariant> returnVal)
+void QSoapMessage::setParams(QMap<QString, QVariant> params)
 {
     parameters = params;
+}
+
+/*!
+    \fn QSoapMessage::setParams(QMap<QString, QVariant> returnVal)
+
+    Sets method's return value (\a returnVal). This also includes their names.
+  */
+void QSoapMessage::setReturnValue(QMap<QString, QVariant> returnVal)
+{
     returnValue = returnVal;
 }
 
@@ -150,7 +158,7 @@ void QSoapMessage::setProtocol(Protocol prot)
   */
 bool QSoapMessage::sendMessage()
 {
-    hostUrl.setUrl(hostname);
+    hostUrl.setUrl(host);
     QNetworkRequest request;
     request.setUrl(hostUrl);
     if (protocol & soap)
@@ -185,13 +193,12 @@ bool QSoapMessage::sendMessage(QMap<QString, QVariant> params)
 }
 
 /*!
-     STATIC method. Sends the message synchronously, using \a url, \a _messageName, \a params, \a returnVal and \a parent.
+     STATIC method. Sends the message synchronously, using \a url, \a _messageName, \a params and \a parent.
      Returns with web service reply.
   */
-QVariant QSoapMessage::sendMessage(QObject *parent, QUrl url, QString _messageName, QMap<QString, QVariant> params,
-                                   QMap<QString, QVariant> returnVal)
+QVariant QSoapMessage::sendMessage(QObject *parent, QUrl url, QString _messageName, QMap<QString, QVariant> params)
 {
-    QSoapMessage qsm(url.host(), _messageName, params, returnVal, parent);
+    QSoapMessage qsm(url.host(), _messageName, params, parent);
     qsm.hostUrl = url;
 
     qsm.sendMessage();

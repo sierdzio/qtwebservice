@@ -9,7 +9,7 @@ QT       += core network xml
 
 QT       -= gui
 
-TARGET = qtWsdlConverter
+TARGET   = qtWsdlConverter
 CONFIG   += console
 CONFIG   -= app_bundle
 
@@ -25,12 +25,12 @@ DEPENDPATH += $$PWD/../QWebService/headers
 
 SOURCES += sources/main.cpp \
     sources/wsdlconverter.cpp \
-    sources/standardpath.cpp \
-    sources/flags.cpp
+    sources/flags.cpp \
+    sources/codegenerator.cpp
 
 HEADERS += headers/wsdlconverter.h \
-    headers/standardpath.h \
-    headers/flags.h
+    headers/flags.h \
+    headers/codegenerator.h
 
 OTHER_FILES += \
     examples/band_ws.asmx \

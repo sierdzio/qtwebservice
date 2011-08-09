@@ -14,7 +14,7 @@ class QWEBSERVICESHARED_EXPORT QWebServiceAbstract : public QObject //QWEBSERVIC
 public:
     QWebServiceAbstract(QObject *parent = 0);
     QWebServiceAbstract(QWsdl *wsdl, QObject *parent = 0);
-    QWebServiceAbstract(QString hostname, QObject *parent = 0);
+    QWebServiceAbstract(QString host, QObject *parent = 0);
     ~QWebServiceAbstract();
 
     QStringList getMethodNames();
@@ -23,7 +23,7 @@ public:
     QMap<QString, QVariant> getParameterNamesTypes(QString methodName) const;
     QMap<QString, QVariant> getReturnValueNameType(QString methodName) const;
 
-    void setHost(QString hostname);
+    void setHost(QString host);
     void setHost(QUrl hostUrl);
     QUrl getHostUrl();
     QString getHost();
@@ -35,7 +35,7 @@ protected:
 
     bool errorState;
     QUrl hostUrl;
-    QString hostname;
+    QString host;
     QWsdl *wsdl;
     QMap<QString, QSoapMessage *> *messages; // This is general, but should work for custom classes.
 };

@@ -1,5 +1,5 @@
-#ifndef STANDARDPATH_H
-#define STANDARDPATH_H
+#ifndef CODEGENERATOR_H
+#define CODEGENERATOR_H
 
 #include <QObject>
 #include <QWebService>
@@ -10,11 +10,11 @@
 
   In the future, this might be modified to support all switches.
   */
-class StandardPath : public QObject
+class CodeGenerator : public QObject
 {
     Q_OBJECT
 public:
-    explicit StandardPath(QObject *parent = 0);
+    explicit CodeGenerator(QObject *parent = 0);
     static bool create(QWsdl *wsdl, QDir workingDir, Flags flgs, QString baseClassName = 0, QObject *parent = 0);
     bool isErrorState();
 
@@ -45,4 +45,4 @@ private:
     QString baseClassName;
 };
 
-#endif // STANDARDPATH_H
+#endif // CODEGENERATOR_H

@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
       Test cases to choose from:
       */
 //    testCase1 tempButton;
-    testCase2_wsdl tempButton;
-//    testCase3_webservice tempButton;
+//    testCase2_wsdl tempButton;
+    testCase3_webservice tempButton;
 
     tempButton.setGeometry(100, 200, 200, 100);
     tempButton.setText("CLICK ME!");

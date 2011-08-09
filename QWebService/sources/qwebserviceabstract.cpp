@@ -39,10 +39,10 @@ QWebServiceAbstract::QWebServiceAbstract(QWsdl *_wsdl, QObject *parent)
     \a _hostname is used to initialise QWsdl.
   */
 QWebServiceAbstract::QWebServiceAbstract(QString _hostname, QObject *parent)
-    : QObject(parent), hostname(_hostname)
+    : QObject(parent), host(_hostname)
 {
-    hostUrl.setUrl(hostname);
-    wsdl = new QWsdl(hostname, this);
+    hostUrl.setUrl(host);
+    wsdl = new QWsdl(host, this);
     init();
 }
 
@@ -115,7 +115,7 @@ QMap<QString, QVariant> QWebServiceAbstract::getReturnValueNameType(QString meth
   */
 void QWebServiceAbstract::setHost(QString hostname)
 {
-    this->hostname = hostname;
+    this->host = hostname;
     hostUrl.setUrl(hostname);
     wsdl->resetWsdl(hostname);
     init();
@@ -129,8 +129,8 @@ void QWebServiceAbstract::setHost(QString hostname)
 void QWebServiceAbstract::setHost(QUrl hostUrl)
 {
     this->hostUrl = hostUrl;
-    hostname = hostUrl.toString();
-    wsdl->resetWsdl(hostname);
+    host = hostUrl.toString();
+    wsdl->resetWsdl(host);
     init();
 }
 
@@ -151,7 +151,7 @@ QUrl QWebServiceAbstract::getHostUrl()
   */
 QString QWebServiceAbstract::getHost()
 {
-    return hostname;
+    return host;
 }
 
 /*!

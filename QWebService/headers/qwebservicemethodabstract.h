@@ -18,7 +18,7 @@ public:
     //virtual QWebServiceMethodAbstract(QWsdl wsdl, QObject *parent = 0);
 //    bool virtual sendMessage(QList<QVariant> params);
 //    bool virtual sendMessage();
-    void setHost(QString hostname);
+    void setHost(QString host);
     void setHost(QUrl hostUrl);
     QUrl getHostUrl();
     QString getHost();
@@ -31,7 +31,7 @@ public slots:
 
 protected:
     QUrl hostUrl;
-    QString hostname;
+    QString host;
     QSoapMessage *message;
 
 };

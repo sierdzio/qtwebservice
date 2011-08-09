@@ -116,9 +116,9 @@ void WsdlConverter::convert()
 
         if (flags.flags() & Flags::standardStructure)
         {
-            flags.setFlags(Flags::fullMode);
+//            flags.setFlags(Flags::fullMode);
 
-            if (!StandardPath::create(wsdl, mainDir, flags, baseClassName, this))
+            if (!CodeGenerator::create(wsdl, mainDir, flags, baseClassName, this))
             {
                 // Might be good to add an interactive menu here (to ask for a new dir name)
                 enterErrorState("Error - code creation failed.");

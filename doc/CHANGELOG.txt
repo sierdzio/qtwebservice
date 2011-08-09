@@ -1,7 +1,13 @@
 Changelog for QWebService library project & qtWsdlConverter.
 Part of the initial development is not expressed here. Refer to git logs or ask sierdzio at sierdzio@gmail.com
 
-08.08.2011 : CEST:
+09.08.2011 : CEST:
+ - changed 'hostname' to 'host' in all classes,
+ - split setParams() into setParams() and setReturnValue() in QSoapMessage,
+ - removed QMap retunVal from static sendMessage() and QSoapMessage constructor,
+ - implemented recent changes to QSoapMessage into converter's code generation.
+
+08.08.2011 21:06 CEST:
  - added --all-in-one-dir-structure implementation,
  - fixed QSoapMessage SOAP 1.0 implementation,
  - removed QSoapMessage role enum,

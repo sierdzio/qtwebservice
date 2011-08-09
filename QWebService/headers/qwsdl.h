@@ -31,7 +31,7 @@ public:
     // Returns web service's name
     QString getWebServiceName();
     // Returns hostname (URL) - this has to be refactorised, as the name is not intuitive!
-    QString getHostname();
+    QString getHost();
     QUrl getHostUrl();
     QString getTargetNamespace();
     //QFile getWsdl(); Rethink that. Maybe QString? Or saving to file specified in parameter?
@@ -65,7 +65,7 @@ private:
     QString errorMessage;
     QString wsdlFilePath;
     QString webServiceName;
-    QString hostname, hostUrl, targetNamespace;
+    QString host, hostUrl, targetNamespace;
     QXmlStreamReader xmlReader;
 
     QStringList *workMethodList;

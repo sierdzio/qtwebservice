@@ -5,10 +5,10 @@ TODO'S:
  - (converter) prepare '--compact-mode' implementation,
  - (converter) review '--debug-mode' implementation - or delete it,
  - (converter) review protocol implementation,
- - (QWebService & converter) add JSON support to messages,
- - (QWebService & converter) add HTTP support to messages,
  - (QWebService & converter) change 'hostname' to 'host' in all classes,
- - (QWebService & converter) replace '\r\n' in QSoapMessage and converted code with OS-independent code.
+ - (QWebService & converter) replace '\r\n' in QSoapMessage and converted code with OS-independent code,
+ - (QWebService & converter) change returnValue to QVariant or QString (in QSoapMessage),
+ - (QWsdl) implement more parameter types.
 
 
 IDEAS:

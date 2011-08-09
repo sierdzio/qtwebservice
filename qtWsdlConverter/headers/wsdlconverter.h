@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QWebService>
 #include "flags.h"
-#include "standardpath.h"
+#include "codegenerator.h"
 
 /**
   Used to prepare, direct and supervise creation of web service classes, files etc.
