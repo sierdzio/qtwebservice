@@ -1,7 +1,13 @@
 Changelog for QWebService library project & qtWsdlConverter.
 Part of the initial development is not expressed here. Refer to git logs or ask sierdzio at sierdzio@gmail.com
 
-08.08.2011 : CEST:
+10.08.2011 : CEST:
+ - made --no-build-system truly exclusive (in main, it is additionally checked in CodeGenerator),
+ - made most other switches more strictly exclusive,
+ - updated info about switches in README,
+ - 
+
+09.08.2011 : CEST:
  - fixed issues with CMake and SCons creation,
  - fixed protocol not being propagated properly to generated code,
  - made exclusive switches truly exclusive (they used to be turned on completely independently,
@@ -10,7 +16,7 @@ Part of the initial development is not expressed here. Refer to git logs or ask 
  - added qDebug warning to notify users about lacks in automatic SCons generation,
  - added OBJECTS_DIR var to all converter and test projects.
 
-08.08.2011 12:06 CEST:
+09.08.2011 12:06 CEST:
  - added 'soap' to Flags enum,
  - added initial implementation for --scons and --cmake.
 

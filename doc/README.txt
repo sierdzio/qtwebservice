@@ -24,13 +24,15 @@ WARNING: Remember to first compile QWebService library, and set it's path in run
     --synchronous, --asynchronous,
     --full-mode, *--debug-mode, --compact-mode,
     --standard-structure, *--no-messages-structure, --all-in-one-dir-structure,
-    --qmake, *--cmake, *--scons, --no-build-system,
+    --qmake, --cmake, --scons, --no-build-system,
     --force.
 
   2.1.2 Default switches
     --synchronous, --soap12, --standard-structure, --full-mode, --qmake
 
 2.2 Meaning
+All entries in single sections (with an exception of build system related switches) are exclusive - you can use only one at a time (the lates one specified is used). For example, if you use --http and --json, only JSON flag will be set.
+
   2.2.1 Protocols
     --soap10 - classes will contact with web service using SOAP1.0 protocol,
     --soap12 - classes will contact with web service using SOAP1.2 protocol,
@@ -52,6 +54,7 @@ WARNING: Remember to first compile QWebService library, and set it's path in run
     --all-in-one-dir-structure - as sandard-structure, but all files are copied into <wsName>.
 
   2.2.5 Build systems
+  All build systems can be built simultaneously (that is, you can use --qmake, --scons, --cmake all at once). When --no-build-system is chosen, it overrides all previous settings - turns them off.
     --qmake - a .pro file will be created for the project,
     --cmake - files needed by cmake will be created for the project,
     --scons - files needed by scons will be created for the project,

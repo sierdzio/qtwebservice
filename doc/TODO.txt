@@ -1,5 +1,4 @@
 TODO'S:
- - (converter) prevent main.cpp from accepting conflicting switches,
  - (converter) use more standard approach to command line reading,
  - (converter) review asynchronous 'if' statements - in most, checks are probably too strict,
  - (converter) change names of created message objects, so that they are clearily distinct from class name,

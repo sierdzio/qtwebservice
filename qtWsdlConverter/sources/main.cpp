@@ -68,27 +68,36 @@ bool populateArgumentsList(QMap<int, QVariant> *lst, Flags *flgs)
             }
             // Protocol flags:
             else if (s == "--soap12")
+            {
+                flgs->resetFlags(Flags::soap10 | Flags::http | Flags::json);
                 flgs->setFlags(Flags::soap12);
+            }
             else if (s == "--soap10")
             {
-                flgs->resetFlags(Flags::soap12);
+                flgs->resetFlags(Flags::soap12 | Flags::http | Flags::json);
                 flgs->setFlags(Flags::soap10);
             }
             else if (s == "--soap")
+            {
+                flgs->resetFlags(Flags::http | Flags::json);
                 flgs->setFlags(Flags::soap);
+            }
             else if (s == "--http")
             {
-                flgs->resetFlags(Flags::soap12);
+                flgs->resetFlags(Flags::soap | Flags::json);
                 flgs->setFlags(Flags::http);
             }
             else if (s == "--json")
             {
-                flgs->resetFlags(Flags::soap12);
+                flgs->resetFlags(Flags::soap | Flags::http);
                 flgs->setFlags(Flags::json);
             }
             // Synchronousness:
             else if (s == "--synchronous")
+            {
+                flgs->resetFlags(Flags::asynchronous);
                 flgs->setFlags(Flags::synchronous);
+            }
             else if (s == "--asynchronous")
             {
                 flgs->resetFlags(Flags::synchronous);
@@ -96,31 +105,37 @@ bool populateArgumentsList(QMap<int, QVariant> *lst, Flags *flgs)
             }
             // Modes:
             else if (s == "--full-mode")
+            {
+                flgs->resetFlags(Flags::debugMode | Flags::compactMode);
                 flgs->setFlags(Flags::fullMode);
+            }
             else if (s == "--debug-mode")
             {
-                flgs->resetFlags(Flags::fullMode);
+                flgs->resetFlags(Flags::fullMode) | Flags::compactMode;
                 flgs->setFlags(Flags::debugMode);
             }
             else if (s == "--compact-mode")
             {
-                flgs->resetFlags(Flags::fullMode);
+                flgs->resetFlags(Flags::fullMode | Flags::compactMode);
                 flgs->setFlags(Flags::compactMode);
             }
             // Structures:
             else if (s == "--standard-structure")
+            {
+                flgs->resetFlags(Flags::noMessagesStructure | Flags::allInOneDirStructure);
                 flgs->setFlags(Flags::standardStructure);
+            }
             else if (s == "--no-messages-structure")
             {
-                flgs->resetFlags(Flags::standardStructure);
+                flgs->resetFlags(Flags::standardStructure | Flags::allInOneDirStructure);
                 flgs->setFlags(Flags::noMessagesStructure);
             }
             else if (s == "--all-in-one-dir-structure")
             {
-                flgs->resetFlags(Flags::standardStructure);
+                flgs->resetFlags(Flags::standardStructure | Flags::noMessagesStructure);
                 flgs->setFlags(Flags::allInOneDirStructure);
             }
-            // Build systems:
+            // Build systems (qmake, cmake and scons can be build simultaneously):
             else if (s == "--qmake")
                 flgs->setFlags(Flags::qmake);
             else if (s == "--cmake")
@@ -128,7 +143,10 @@ bool populateArgumentsList(QMap<int, QVariant> *lst, Flags *flgs)
             else if (s == "--scons")
                 flgs->setFlags(Flags::scons);
             else if (s == "--no-build-system")
+            {
+                flgs->resetFlags(Flags::qmake | Flags::cmake | Flags::scons);
                 flgs->setFlags(Flags::noBuildSystem);
+            }
             // Force:
             else if (s == "--force")
                 flgs->setForced(true);
