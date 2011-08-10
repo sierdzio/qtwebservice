@@ -14,6 +14,7 @@
 <div class="toc">
 <h3><a name="toc">Contents</a></h3>
 <ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
 <li class="level1"><a href="#public-functions">Public Functions</a></li>
 <li class="level1"><a href="#signals">Signals</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
@@ -26,15 +27,21 @@
 <pre class="highlightedCode brush: cpp">    #include &lt;WsdlConverter&gt;</pre><ul>
 <li><a href="wsdlconverter-members.html">List of all members, including inherited members</a></li>
 </ul>
+<a name="public-types"></a>
+<h2>Public Types</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> flags </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#ArgumentDescriptionFlag-enum">ArgumentDescription</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#ArgumentDescriptionFlag-enum">ArgumentDescriptionFlag</a></b> { AppName, Path, Dir, ClassName, FlagHelp }</td></tr>
+</table>
 <a name="public-functions"></a>
 <h2>Public Functions</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#WsdlConverter">WsdlConverter</a></b> ( QString <i>wsdlFileOrUrl</i>, QObject * <i>parent</i> = 0, QString <i>outputD</i> = &quot;&quot;, QString <i>baseOutputCls</i> = &quot;&quot; )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#WsdlConverter">WsdlConverter</a></b> ( QStringList <i>appArguments</i>, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#dtor.WsdlConverter">~WsdlConverter</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#convert">convert</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#getWebServiceName">getWebServiceName</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#isErrorState">isErrorState</a></b> ()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#setFlags">setFlags</a></b> ( Flags <i>flgs</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#setFlags">setFlags</a></b> ( Flags <i>flags</i> )</td></tr>
 </table>
 <a name="signals"></a>
 <h2>Signals</h2>
@@ -49,11 +56,27 @@
 <p>Uses WSDL file or URL to transform WSDL code into set of Qt/C++ classes, according to options specified in Flags class.</p>
 </div>
 <!-- @@@WsdlConverter -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$ArgumentDescriptionFlag$$$AppName$$$Path$$$Dir$$$ClassName$$$FlagHelp -->
+<h3 class="flags"><a name="ArgumentDescriptionFlag-enum"></a>enum WsdlConverter::ArgumentDescriptionFlag<br/>flags WsdlConverter::ArgumentDescription</h3>
+<p>This enum type is used internally to mark app arguments:</p>
+<p>Mode:</p>
+<table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td  class="topAlign"><tt>WsdlConverter::AppName</tt></td><td class=" topAlign"><tt>0x01</tt></td><td  class="topAlign">Holds index of application name, if present.</td></tr>
+<tr><td  class="topAlign"><tt>WsdlConverter::Path</tt></td><td class=" topAlign"><tt>0x02</tt></td><td  class="topAlign">Holds index of application path.</td></tr>
+<tr><td  class="topAlign"><tt>WsdlConverter::Dir</tt></td><td class=" topAlign"><tt>0x04</tt></td><td  class="topAlign">Holds index of directory to create.</td></tr>
+<tr><td  class="topAlign"><tt>WsdlConverter::ClassName</tt></td><td class=" topAlign"><tt>0x08</tt></td><td  class="topAlign">Holds index of class name to use.</td></tr>
+<tr><td  class="topAlign"><tt>WsdlConverter::FlagHelp</tt></td><td class=" topAlign"><tt>0x0F</tt></td><td  class="topAlign">Holds index of help flag.</td></tr>
+</table>
+<p>The ArgumentDescription type is a typedef for <a href="qflags.html">QFlags</a>&lt;ArgumentDescriptionFlag&gt;. It stores an OR combination of ArgumentDescriptionFlag values.</p>
+<!-- @@@ArgumentDescriptionFlag -->
+</div>
 <div class="func">
 <h2>Member Function Documentation</h2>
-<!-- $$$WsdlConverter[overload1]$$$WsdlConverterQStringQObject*QStringQString -->
-<h3 class="fn"><a name="WsdlConverter"></a>WsdlConverter::WsdlConverter ( QString <i>wsdlFileOrUrl</i>, QObject * <i>parent</i> = 0, QString <i>outputD</i> = &quot;&quot;, QString <i>baseOutputCls</i> = &quot;&quot; )</h3>
-<p>Uses <i>wsdlFileOrUrl</i>, <i>outputD</i>, <i>baseOutputCls</i> and <i>parent</i> to construct the object. Only the WSDL QString is compulsory.</p>
+<!-- $$$WsdlConverter[overload1]$$$WsdlConverterQStringListQObject* -->
+<h3 class="fn"><a name="WsdlConverter"></a>WsdlConverter::WsdlConverter ( QStringList <i>appArguments</i>, QObject * <i>parent</i> = 0 )</h3>
+<p>Uses application's arguments (<i>appArguments</i>) to initialise QWsdl Flags and itself, and <i>parent</i> to construct the object.</p>
 <!-- @@@WsdlConverter -->
 <!-- $$$~WsdlConverter[overload1]$$$~WsdlConverter -->
 <h3 class="fn"><a name="dtor.WsdlConverter"></a>WsdlConverter::~WsdlConverter ()</h3>
@@ -76,8 +99,8 @@
 <p>Returns true if object is in error state.</p>
 <!-- @@@isErrorState -->
 <!-- $$$setFlags[overload1]$$$setFlagsFlags -->
-<h3 class="fn"><a name="setFlags"></a>void WsdlConverter::setFlags ( <a href="flags.html">Flags</a> <i>flgs</i> )</h3>
-<p>Sets the flags using <i>flgs</i> object.</p>
+<h3 class="fn"><a name="setFlags"></a>void WsdlConverter::setFlags ( <a href="flags.html">Flags</a> <i>flags</i> )</h3>
+<p>Sets the flags using <i>flags</i> object.</p>
 <!-- @@@setFlags -->
 </div>
 </body>

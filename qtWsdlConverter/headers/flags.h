@@ -39,7 +39,6 @@ public:
         soap                    = 0x60000,
         json                    = 0x80000
     };
-
     Q_DECLARE_FLAGS(Options, Option)
 
     Flags(Options options = Options(fullMode | synchronous | standardStructure | qmake | soap12), bool force = false);

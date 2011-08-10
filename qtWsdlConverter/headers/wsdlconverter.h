@@ -12,12 +12,21 @@
 class WsdlConverter : public QObject
 {
     Q_OBJECT
+    Q_ENUMS(ArgumentDescriptionFlag)
+    Q_FLAGS(ArgumentDescription)
 
 public:
-    explicit WsdlConverter(QString wsdlFileOrUrl,
-                           QObject *parent = 0,
-                           QString outputDirectory = "",
-                           QString baseOutputClassName = "");
+    enum ArgumentDescriptionFlag
+    {
+        AppName     = 0x01,
+        Path        = 0x02,
+        Dir         = 0x04,
+        ClassName   = 0x08,
+        FlagHelp    = 0x0F
+    };
+    Q_DECLARE_FLAGS(ArgumentDescription, ArgumentDescriptionFlag)
+
+    explicit WsdlConverter(QStringList appArguments, QObject *parent = 0);
     ~WsdlConverter();
 
     void setFlags(Flags flgs);
@@ -31,6 +40,11 @@ signals:
 public slots:
 
 private:
+    bool populateArgumentsList(QStringList arguments);
+    void displayHelp();
+    void displayIntro();
+    void displayOutro();
+
     bool enterErrorState(QString errMessage = "");
     bool removeDir(QString path);
 
@@ -39,7 +53,10 @@ private:
     QString baseClassName;
     QString outputDir;
     QWsdl *wsdl;
-    Flags flags;
+    QMap<int, QVariant> *argList;
+    Flags *flags;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(WsdlConverter::ArgumentDescription)
 
 #endif // WSDLCONVERTER_H

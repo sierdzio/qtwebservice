@@ -39,6 +39,13 @@
     </section>
     <section ref="wsdlconverter.html" title="WsdlConverter Class Reference">
         <keyword ref="wsdlconverter.html">WsdlConverter</keyword>
+        <keyword ref="wsdlconverter.html#ArgumentDescriptionFlag-enum">ArgumentDescriptionFlag</keyword>
+        <keyword ref="wsdlconverter.html#ArgumentDescriptionFlag-enum">ArgumentDescription</keyword>
+        <keyword ref="wsdlconverter.html#ArgumentDescriptionFlag-enum">WsdlConverter::AppName</keyword>
+        <keyword ref="wsdlconverter.html#ArgumentDescriptionFlag-enum">WsdlConverter::Path</keyword>
+        <keyword ref="wsdlconverter.html#ArgumentDescriptionFlag-enum">WsdlConverter::FlagHelp</keyword>
+        <keyword ref="wsdlconverter.html#ArgumentDescriptionFlag-enum">WsdlConverter::Dir</keyword>
+        <keyword ref="wsdlconverter.html#ArgumentDescriptionFlag-enum">WsdlConverter::ClassName</keyword>
         <keyword ref="wsdlconverter.html#convert">convert</keyword>
         <keyword ref="wsdlconverter.html#errorEncountered">errorEncountered</keyword>
         <keyword ref="wsdlconverter.html#getWebServiceName">getWebServiceName</keyword>

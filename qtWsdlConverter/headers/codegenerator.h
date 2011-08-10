@@ -15,7 +15,7 @@ class CodeGenerator : public QObject
     Q_OBJECT
 public:
     explicit CodeGenerator(QObject *parent = 0);
-    static bool create(QWsdl *wsdl, QDir workingDir, Flags flgs, QString baseClassName = 0, QObject *parent = 0);
+    static bool create(QWsdl *wsdl, QDir workingDir, Flags *flgs, QString baseClassName = 0, QObject *parent = 0);
     bool isErrorState();
 
 signals:
@@ -41,7 +41,7 @@ private:
     QMap<QString, QSoapMessage *> *messages;
     QDir workingDir;
     QWsdl *wsdl;
-    Flags flags;
+    Flags *flags;
     bool errorState;
     QString errorMessage;
     QString baseClassName;

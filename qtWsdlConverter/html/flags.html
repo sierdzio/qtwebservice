@@ -40,6 +40,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="flags.html#forced">forced</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="flags.html#isForced">isForced</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#resetFlags">resetFlags</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#resetFlags-2">resetFlags</a></b> ( Options <i>whatToReset</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setFlags">setFlags</a></b> ( Options <i>options</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setForced">setForced</a></b> ( bool <i>forced</i> )</td></tr>
 </table>
@@ -116,7 +117,11 @@
 <!-- @@@isForced -->
 <!-- $$$resetFlags[overload1]$$$resetFlags -->
 <h3 class="fn"><a name="resetFlags"></a>void Flags::resetFlags ()</h3>
-<p>Resets all flags to default valuses. This does not apply to '--forced'.</p>
+<p>Resets all flags to default values. This does not apply to '--forced'.</p>
+<!-- @@@resetFlags -->
+<!-- $$$resetFlags$$$resetFlagsOptions -->
+<h3 class="fn"><a name="resetFlags-2"></a>void Flags::resetFlags ( <a href="flags.html#Option-enum">Options</a> <i>whatToReset</i> )</h3>
+<p>Resets (zeroes) flags set to 1 in <i>whatToReset</i>. This does not apply to '--forced'.</p>
 <!-- @@@resetFlags -->
 <!-- $$$setFlags[overload1]$$$setFlagsOptions -->
 <h3 class="fn"><a name="setFlags"></a>void Flags::setFlags ( <a href="flags.html#Option-enum">Options</a> <i>options</i> )</h3>

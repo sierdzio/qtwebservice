@@ -28,6 +28,9 @@
                 <parameter left="bool" right="" name="forced" default="false"/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="resetFlags" fullname="Flags::resetFlags" href="flags.html#resetFlags" location="flags.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="resetFlags()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="resetFlags" fullname="Flags::resetFlags" href="flags.html#resetFlags-2" location="flags.cpp" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="void" signature="resetFlags(QFlags&lt;Flags::Option&gt; whatToReset)">
+                <parameter left="QFlags&lt;Flags::Option&gt;" right="" name="whatToReset" default=""/>
+            </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="setFlags" fullname="Flags::setFlags" href="flags.html#setFlags" location="flags.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setFlags(QFlags&lt;Flags::Option&gt; options)">
                 <parameter left="QFlags&lt;Flags::Option&gt;" right="" name="options" default=""/>
             </function>
@@ -39,15 +42,21 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="isForced" fullname="Flags::isForced" href="flags.html#isForced" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="isForced() const"/>
         </class>
         <class access="public" threadsafety="unspecified" status="commendable" name="WsdlConverter" href="wsdlconverter.html" location="wsdlconverter.h" bases="" module="">
-            <function access="public" threadsafety="unspecified" status="commendable" name="WsdlConverter" fullname="WsdlConverter::WsdlConverter" href="wsdlconverter.html#WsdlConverter" location="wsdlconverter.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="WsdlConverter(QString wsdlFileOrUrl, QObject * parent, QString outputD, QString baseOutputCls)">
-                <parameter left="QString" right="" name="wsdlFileOrUrl" default=""/>
+            <enum access="public" threadsafety="unspecified" status="commendable" name="ArgumentDescriptionFlag" fullname="WsdlConverter::ArgumentDescriptionFlag" href="wsdlconverter.html#ArgumentDescriptionFlag-enum" location="wsdlconverter.h" typedef="WsdlConverter::ArgumentDescription">
+                <value name="AppName" value="0x01"/>
+                <value name="Path" value="0x02"/>
+                <value name="Dir" value="0x04"/>
+                <value name="ClassName" value="0x08"/>
+                <value name="FlagHelp" value="0x0F"/>
+            </enum>
+            <typedef access="public" threadsafety="unspecified" status="commendable" name="ArgumentDescription" fullname="WsdlConverter::ArgumentDescription" href="wsdlconverter.html#ArgumentDescription-typedef" location="wsdlconverter.h" enum="WsdlConverter::ArgumentDescriptionFlag"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="WsdlConverter" fullname="WsdlConverter::WsdlConverter" href="wsdlconverter.html#WsdlConverter" location="wsdlconverter.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="WsdlConverter(QStringList appArguments, QObject * parent)">
+                <parameter left="QStringList" right="" name="appArguments" default=""/>
                 <parameter left="QObject *" right="" name="parent" default="0"/>
-                <parameter left="QString" right="" name="outputD" default="&quot;&quot;"/>
-                <parameter left="QString" right="" name="baseOutputCls" default="&quot;&quot;"/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="~WsdlConverter" fullname="WsdlConverter::~WsdlConverter" href="wsdlconverter.html#dtor.WsdlConverter" location="wsdlconverter.cpp" virtual="non" meta="destructor" const="false" static="false" overload="false" type="" signature="~WsdlConverter()"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setFlags" fullname="WsdlConverter::setFlags" href="wsdlconverter.html#setFlags" location="wsdlconverter.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setFlags(Flags flgs)">
-                <parameter left="Flags" right="" name="flgs" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setFlags" fullname="WsdlConverter::setFlags" href="wsdlconverter.html#setFlags" location="wsdlconverter.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setFlags(Flags flags)">
+                <parameter left="Flags" right="" name="flags" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="isErrorState" fullname="WsdlConverter::isErrorState" href="wsdlconverter.html#isErrorState" location="wsdlconverter.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="isErrorState()"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="convert" fullname="WsdlConverter::convert" href="wsdlconverter.html#convert" location="wsdlconverter.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="convert()"/>
@@ -60,10 +69,10 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="CodeGenerator" fullname="CodeGenerator::CodeGenerator" href="codegenerator.html#CodeGenerator" location="codegenerator.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="CodeGenerator(QObject * parent)">
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="create" fullname="CodeGenerator::create" href="codegenerator.html#create" location="codegenerator.cpp" virtual="non" meta="plain" const="false" static="true" overload="false" type="bool" signature="create(QWsdl * wsdl, QDir workingDir, Flags flgs, QString baseClassName, QObject * parent)">
+            <function access="public" threadsafety="unspecified" status="commendable" name="create" fullname="CodeGenerator::create" href="codegenerator.html#create" location="codegenerator.cpp" virtual="non" meta="plain" const="false" static="true" overload="false" type="bool" signature="create(QWsdl * wsdl, QDir workingDir, Flags * flgs, QString baseClassName, QObject * parent)">
                 <parameter left="QWsdl *" right="" name="wsdl" default=""/>
                 <parameter left="QDir" right="" name="workingDir" default=""/>
-                <parameter left="Flags" right="" name="flgs" default=""/>
+                <parameter left="Flags *" right="" name="flgs" default=""/>
                 <parameter left="QString" right="" name="baseClassName" default="0"/>
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
