@@ -13,7 +13,6 @@ class Flags
     Q_FLAGS(Options)
 
 public:
-    // Experimental flag redoing:
     enum Option
     {
         // Mode

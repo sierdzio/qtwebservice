@@ -3,7 +3,7 @@
  # practices. For that reason, any QDoc configuration file needs to
  # include compat.qdocconf.
 
- #
+ ##
  # To run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtwsdlconverter.qdocconf
  #
 
