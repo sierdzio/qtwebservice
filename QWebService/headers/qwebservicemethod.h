@@ -4,17 +4,17 @@
 #include <QUrl>
 #include <QObject>
 #include "QWebService_global.h"
-#include "qsoapmessage.h"
+#include "qwebmethod.h"
 
-class QWEBSERVICESHARED_EXPORT QWebServiceMethodAbstract : public QObject
+class QWEBSERVICESHARED_EXPORT QWebServiceMethod : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit QWebServiceMethodAbstract(QObject *parent = 0);
+    explicit QWebServiceMethod(QObject *parent = 0);
 //    QWebServiceMethodAbstract(QString hostname, QObject *parent = 0);
-    QWebServiceMethodAbstract(QSoapMessage *msg, QObject *parent = 0);
-    ~QWebServiceMethodAbstract();
+    QWebServiceMethod(QWebMethod *msg, QObject *parent = 0);
+    ~QWebServiceMethod();
     //virtual QWebServiceMethodAbstract(QWsdl wsdl, QObject *parent = 0);
 //    bool virtual sendMessage(QList<QVariant> params);
 //    bool virtual sendMessage();
@@ -32,7 +32,7 @@ public slots:
 protected:
     QUrl hostUrl;
     QString host;
-    QSoapMessage *message;
+    QWebMethod *message;
 
 };
 

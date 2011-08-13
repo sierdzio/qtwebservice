@@ -19,7 +19,7 @@ public slots:
 private:
     void runWebServiceTest(QString filePathOrUrl);
 
-    QWebServiceReaderAbstract *reader;
+    QWebServiceReader *reader;
 //    QWsdl *wsdl;
 };
 

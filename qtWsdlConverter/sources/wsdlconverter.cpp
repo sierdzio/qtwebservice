@@ -403,9 +403,9 @@ void WsdlConverter::displayIntro()
         tempFlags += "synchronous, ";
     else
         tempFlags += "asynchronous, ";
-    if (flags->protocol == QSoapMessage::http)
+    if (flags->protocol == QWebMethod::http)
         tempFlags += "http, ";
-    else if (flags->protocol == QSoapMessage::soap10)
+    else if (flags->protocol == QWebMethod::soap10)
         tempFlags += "soap10, ";
     else
         tempFlags += "soap12";

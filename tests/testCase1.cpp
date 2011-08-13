@@ -1,7 +1,7 @@
 #include "testCase1.h"
 
 /**
-  This test checks QSoapMessage in operation (requires Internet connection or a working local web service)
+  This test checks QWebMethod in operation (requires Internet connection or a working local web service)
   */
 testCase1::testCase1(QWidget *parent) :
     QPushButton(parent)
@@ -34,7 +34,7 @@ void testCase1::soapMessageTest()
     QMap<QString, QVariant> tmpR;
     tmpR.insert("GetQuoteResponse", QVariant("s:string"));
 
-    message = new QSoapMessage("http://www.webservicex.net/stockquote.asmx", "GetQuote", tmpP, this);
+    message = new QWebMethod("http://www.webservicex.net/stockquote.asmx", "GetQuote", tmpP, this);
 
     connect(message, SIGNAL(replyReady(QVariant)), this, SLOT(messageResponse(QVariant)));
 

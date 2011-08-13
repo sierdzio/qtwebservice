@@ -27,8 +27,8 @@ private:
     bool enterErrorState(QString errMessage = "");
     void prepare();
     bool createMessages();
-    bool createMessageHeader(QSoapMessage *msg);
-    bool createMessageSource(QSoapMessage *msg);
+    bool createMessageHeader(QWebMethod *msg);
+    bool createMessageSource(QWebMethod *msg);
     bool createMainCpp();
     bool createService();
     bool createServiceHeader();
@@ -38,7 +38,7 @@ private:
     bool createCMakeProject();
     bool createSconsProject();
 
-    QMap<QString, QSoapMessage *> *messages;
+    QMap<QString, QWebMethod *> *messages;
     QDir workingDir;
     QWsdl *wsdl;
     Flags *flags;

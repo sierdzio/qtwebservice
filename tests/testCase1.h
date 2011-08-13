@@ -18,7 +18,7 @@ public slots:
 private:
     void soapMessageTest();
 
-    QSoapMessage *message;
+    QWebMethod *message;
 };
 
 #endif

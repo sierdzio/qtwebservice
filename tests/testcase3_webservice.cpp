@@ -1,7 +1,7 @@
 #include "testcase3_webservice.h"
 
 /**
-  This test case combines previosu two - it checks both QSoapMessage and QWsdl functionality,
+  This test case combines previosu two - it checks both QWebMethod and QWsdl functionality,
   in a broad spectrum of uses.
   */
 testCase3_webservice::testCase3_webservice(QPushButton *parent) :
@@ -26,7 +26,7 @@ void testCase3_webservice::runWebServiceTest(QString filePathOrUrl)
       Prints out methods with their parameters and return types and names.
       */
     qDebug() << "Running testCase3";
-    reader = new QWebServiceReaderAbstract(filePathOrUrl, this);
+    reader = new QWebServiceReader(filePathOrUrl, this);
     qDebug() << "Getting methods";
     QStringList tempList = reader->getMethodNames();
     qDebug() << "Listing methods";

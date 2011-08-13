@@ -101,7 +101,7 @@ bool CodeGenerator::createMessages()
 
     foreach (QString s, messages->keys())
     {
-        QSoapMessage *m = messages->value(s);
+        QWebMethod *m = messages->value(s);
         if (!createMessageHeader(m))
             return enterErrorState("Creating header for message \"" + m->getMessageName() + "\" failed!");
     }
@@ -113,7 +113,7 @@ bool CodeGenerator::createMessages()
     }
     foreach (QString s, messages->keys())
     {
-        QSoapMessage *n = messages->value(s);
+        QWebMethod *n = messages->value(s);
         if (!createMessageSource(n))
             return enterErrorState("Creating source for message \"" + n->getMessageName() + "\" failed!");;
     }
@@ -127,9 +127,9 @@ bool CodeGenerator::createMessages()
 
 /*!
     \internal
-    \fn CodeGenerator::createMessageHeader(QSoapMessage *msg)
+    \fn CodeGenerator::createMessageHeader(QWebMethod *msg)
   */
-bool CodeGenerator::createMessageHeader(QSoapMessage *msg)
+bool CodeGenerator::createMessageHeader(QWebMethod *msg)
 {
     QString msgName = msg->getMessageName();
     QFile file(workingDir.path() + "/" + msgName + ".h");
@@ -255,7 +255,7 @@ bool CodeGenerator::createMessageHeader(QSoapMessage *msg)
     out << "    QNetworkReply *networkReply;" << endl;
     out << "    QByteArray data;" << endl;
     out << "};" << endl << endl;
-    out << "Q_DECLARE_OPERATORS_FOR_FLAGS(QSoapMessage::Protocols)" << endl;
+    out << "Q_DECLARE_OPERATORS_FOR_FLAGS(QWebMethod::Protocols)" << endl;
     out << "#endif // " << msgName.toUpper() << "_H" << endl;
     // EOF (SOAP message)
     // ---------------------------------
@@ -266,9 +266,9 @@ bool CodeGenerator::createMessageHeader(QSoapMessage *msg)
 
 /*!
     \internal
-    \fn CodeGenerator::createMessageSource(QSoapMessage *msg)
+    \fn CodeGenerator::createMessageSource(QWebMethod *msg)
   */
-bool CodeGenerator::createMessageSource(QSoapMessage *msg)
+bool CodeGenerator::createMessageSource(QWebMethod *msg)
 {
     QString msgName = msg->getMessageName();
     QFile file(workingDir.path() + "/" + msgName + ".cpp");
@@ -704,7 +704,7 @@ bool CodeGenerator::createService()
 bool CodeGenerator::createServiceHeader()
 {
     QString wsName = "";
-    QMap<QString, QSoapMessage *> *tempMap = wsdl->getMethods();
+    QMap<QString, QWebMethod *> *tempMap = wsdl->getMethods();
     if (baseClassName != "")
         wsName = baseClassName;
     else
@@ -743,7 +743,7 @@ bool CodeGenerator::createServiceHeader()
         foreach (QString s, tempMap->keys())
         {
             QString tmpReturn = "", tmpP = "";
-            QSoapMessage *m = tempMap->value(s);
+            QWebMethod *m = tempMap->value(s);
             foreach (QString ret, m->getReturnValueNameType().keys())
             {
                 tmpReturn = m->getReturnValueNameType().value(ret).typeName();
@@ -782,7 +782,7 @@ bool CodeGenerator::createServiceHeader()
             else if (flags->flags() & Flags::fullMode || flags->flags() & Flags::debugMode)
             {
                 QString tmpReturn = "";
-                QSoapMessage *m = tempMap->value(s);
+                QWebMethod *m = tempMap->value(s);
                 foreach (QString ret, m->getReturnValueNameType().keys())
                 {
                     tmpReturn = m->getReturnValueNameType().value(ret).typeName();
@@ -823,7 +823,7 @@ bool CodeGenerator::createServiceHeader()
         foreach (QString s, tempMap->keys())
         {
             QString tmpReturn = "";
-            QSoapMessage *m = tempMap->value(s);
+            QWebMethod *m = tempMap->value(s);
             foreach (QString ret, m->getReturnValueNameType().keys())
             {
                 tmpReturn = m->getReturnValueNameType().value(ret).typeName();
@@ -855,7 +855,7 @@ bool CodeGenerator::createServiceHeader()
 bool CodeGenerator::createServiceSource()
 {
     QString wsName = "";
-    QMap<QString, QSoapMessage *> *tempMap = wsdl->getMethods();
+    QMap<QString, QWebMethod *> *tempMap = wsdl->getMethods();
     if (baseClassName != "")
         wsName = baseClassName;
     else
@@ -909,7 +909,7 @@ bool CodeGenerator::createServiceSource()
         out << "    QStringList result;" << endl;
         foreach (QString s, tempMap->keys())
         {
-            QSoapMessage *m = tempMap->value(s);
+            QWebMethod *m = tempMap->value(s);
             out << "    result.append(\"" << m->getMessageName() << "\");" << endl;
         }
         out << "    return result;" << endl;
@@ -920,7 +920,7 @@ bool CodeGenerator::createServiceSource()
         foreach (QString s, tempMap->keys())
         {
             QString tmpReturn = "", tmpP = "", tmpPN = "";
-            QSoapMessage *m = tempMap->value(s);
+            QWebMethod *m = tempMap->value(s);
             foreach (QString ret, m->getReturnValueNameType().keys())
             {
                 tmpReturn = m->getReturnValueNameType().value(ret).typeName();
@@ -976,7 +976,7 @@ bool CodeGenerator::createServiceSource()
             else if (flags->flags() & Flags::fullMode || flags->flags() & Flags::debugMode)
             {
                 QString tmpReturn = "";
-                QSoapMessage *m = tempMap->value(s);
+                QWebMethod *m = tempMap->value(s);
                 foreach (QString ret, m->getReturnValueNameType().keys())
                 {
                     tmpReturn = m->getReturnValueNameType().value(ret).typeName();
@@ -1006,7 +1006,7 @@ bool CodeGenerator::createServiceSource()
             */
 
             QString tmpReturn = "";
-            QSoapMessage *m = tempMap->value(s);
+            QWebMethod *m = tempMap->value(s);
             foreach (QString ret, m->getReturnValueNameType().keys())
             {
                 tmpReturn = m->getReturnValueNameType().value(ret).typeName();

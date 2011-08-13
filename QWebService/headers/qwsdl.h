@@ -4,7 +4,7 @@
 #include <QXmlStreamReader>
 #include <QFile>
 #include <QtCore>
-#include "qsoapmessage.h"
+#include "qwebmethod.h"
 #include "QWebService_global.h"
 
 /**
@@ -26,8 +26,8 @@ public:
     void setWsdlFile(QString wsdlFile); // == resetWsdl()
     // Returns a list of methods' names (as declared in WSDL)
     QStringList getMethodNames();
-    // Returns methods themselves (as QSoapMessages)
-    QMap<QString, QSoapMessage *> *getMethods();
+    // Returns methods themselves (as QWebMethods)
+    QMap<QString, QWebMethod *> *getMethods();
     // Returns web service's name
     QString getWebServiceName();
     // Returns hostname (URL) - this has to be refactorised, as the name is not intuitive!
@@ -71,7 +71,7 @@ private:
     QStringList *workMethodList;
     QMap<int, QMap<QString, QVariant> > *workMethodParameters; // Param if one, QList if many.
     //QMap<int, QVariant> *workMethodReturnParmeters;
-    QMap<QString, QSoapMessage *> *methods;
+    QMap<QString, QWebMethod *> *methods;
 };
 
 #endif // QWSDL_H

@@ -3,19 +3,19 @@
 
 #include <QUrl>
 #include "QWebService_global.h"
-#include "qsoapmessage.h"
+#include "qwebmethod.h"
 #include "qwsdl.h"
 
 
-class QWEBSERVICESHARED_EXPORT QWebServiceAbstract : public QObject //QWEBSERVICESHARED_EXPORT
+class QWEBSERVICESHARED_EXPORT QWebService : public QObject
 {
     Q_OBJECT
 
 public:
-    QWebServiceAbstract(QObject *parent = 0);
-    QWebServiceAbstract(QWsdl *wsdl, QObject *parent = 0);
-    QWebServiceAbstract(QString host, QObject *parent = 0);
-    ~QWebServiceAbstract();
+    QWebService(QObject *parent = 0);
+    QWebService(QWsdl *wsdl, QObject *parent = 0);
+    QWebService(QString host, QObject *parent = 0);
+    ~QWebService();
 
     QStringList getMethodNames();
     QStringList getMethodParameters(QString methodName) const;
@@ -37,7 +37,7 @@ protected:
     QUrl hostUrl;
     QString host;
     QWsdl *wsdl;
-    QMap<QString, QSoapMessage *> *messages; // This is general, but should work for custom classes.
+    QMap<QString, QWebMethod *> *messages; // This is general, but should work for custom classes.
 };
 
 #endif // QWEBSERVICEABSTRACT_H

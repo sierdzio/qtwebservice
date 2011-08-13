@@ -1,5 +1,5 @@
-#ifndef QSOAPMESSAGE_H
-#define QSOAPMESSAGE_H
+#ifndef QWebMethod_H
+#define QWebMethod_H
 
 #include <QtCore>
 #include <QNetworkAccessManager>
@@ -7,7 +7,7 @@
 #include <QNetworkReply>
 #include "QWebService_global.h"
 
-class QWEBSERVICESHARED_EXPORT QSoapMessage : public QObject
+class QWEBSERVICESHARED_EXPORT QWebMethod : public QObject
 {
     Q_OBJECT
     Q_ENUMS(Protocol)
@@ -24,12 +24,12 @@ public:
     };
     Q_DECLARE_FLAGS(Protocols, Protocol)
 
-    explicit QSoapMessage(QObject *parent = 0);
-    QSoapMessage(QUrl hostUrl, QString messageName, QObject *parent = 0);
-    QSoapMessage(QString host, QString messageName, QObject *parent = 0);
-    QSoapMessage(QString host, QString messageName, QMap<QString, QVariant> params,
+    explicit QWebMethod(QObject *parent = 0);
+    QWebMethod(QUrl hostUrl, QString messageName, QObject *parent = 0);
+    QWebMethod(QString host, QString messageName, QObject *parent = 0);
+    QWebMethod(QString host, QString messageName, QMap<QString, QVariant> params,
                  QObject *parent = 0);
-    ~QSoapMessage();
+    ~QWebMethod();
 
     void setParams(QMap<QString, QVariant> params);
     void setReturnValue(QMap<QString, QVariant> returnValue);
@@ -72,6 +72,6 @@ private:
     QByteArray data;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(QSoapMessage::Protocols)
+Q_DECLARE_OPERATORS_FOR_FLAGS(QWebMethod::Protocols)
 
-#endif // QSOAPMESSAGE_H
+#endif // QWebMethod_H

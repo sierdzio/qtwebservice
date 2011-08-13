@@ -17,24 +17,25 @@ CONFIG += dll
 
 DEFINES += QWEBSERVICE_LIBRARY
 
-VERSION = 0.2.2
+VERSION = 0.3.0
 
 DESTDIR = ../lib
 OBJECTS_DIR = ../build-QWebService
 
-SOURCES += sources/qwebserviceabstract.cpp \
-    sources/qwebservicereaderabstract.cpp \
-    sources/qwebservicemethodabstract.cpp \
+SOURCES += \
     sources/qwsdl.cpp \
-    sources/qsoapmessage.cpp
+    sources/qwebservice.cpp \
+    sources/qwebservicemethod.cpp \
+    sources/qwebservicereader.cpp \
+    sources/qwebmethod.cpp
 
 HEADERS += headers/QWebService_global.h \
-    headers/qwebserviceabstract.h \
-    headers/qwebservicereaderabstract.h \
-    headers/qwebservicemethodabstract.h \
     headers/qwsdl.h \
-    headers/qsoapmessage.h \
-    headers/QWebService
+    headers/QWebService \
+    headers/qwebservice.h \
+    headers/qwebservicemethod.h \
+    headers/qwebservicereader.h \
+    headers/qwebmethod.h
 
 symbian {
     #Symbian specific definitions

@@ -1,7 +1,7 @@
-#include "../headers/qwebserviceabstract.h"
+#include "../headers/qwebservice.h"
 
 /*!
-    \class QWebServiceAbstract
+    \class QWebService
     \brief Parent Web Service class.
 
     Currently acts mostly as QWsdl wrapper. Some functionality might be pushed to
@@ -9,11 +9,11 @@
   */
 
 /*!
-    \fn QWebServiceAbstract::QWebServiceAbstract(QObject *parent)
+    \fn QWebService::QWebService(QObject *parent)
 
     Constructs the object with empty QWsdl and using \a parent (defaults to 0).
   */
-QWebServiceAbstract::QWebServiceAbstract(QObject *parent)
+QWebService::QWebService(QObject *parent)
     : QObject(parent)
 {
     wsdl = new QWsdl(this);
@@ -22,11 +22,11 @@ QWebServiceAbstract::QWebServiceAbstract(QObject *parent)
 }
 
 /*!
-    \fn QWebServiceAbstract::QWebServiceAbstract(QWsdl *_wsdl, QObject *parent)
+    \fn QWebService::QWebService(QWsdl *_wsdl, QObject *parent)
 
     Constructs and initializes the object with \a _wsdl and using \a parent (defaults to 0).
   */
-QWebServiceAbstract::QWebServiceAbstract(QWsdl *_wsdl, QObject *parent)
+QWebService::QWebService(QWsdl *_wsdl, QObject *parent)
     : QObject(parent)
 {
     this->wsdl = _wsdl;
@@ -34,12 +34,12 @@ QWebServiceAbstract::QWebServiceAbstract(QWsdl *_wsdl, QObject *parent)
 }
 
 /*!
-    \fn QWebServiceAbstract::QWebServiceAbstract(QString _hostname, QObject *parent)
+    \fn QWebService::QWebService(QString _hostname, QObject *parent)
 
     Constructs and initializes the object using \a parent (defaults to 0).
     \a _hostname is used to initialise QWsdl.
   */
-QWebServiceAbstract::QWebServiceAbstract(QString _hostname, QObject *parent)
+QWebService::QWebService(QString _hostname, QObject *parent)
     : QObject(parent), host(_hostname)
 {
     hostUrl.setUrl(host);
@@ -48,73 +48,73 @@ QWebServiceAbstract::QWebServiceAbstract(QString _hostname, QObject *parent)
 }
 
 /*!
-    \fn QWebServiceAbstract::~QWebServiceAbstract()
+    \fn QWebService::~QWebService()
 
     Deletes wsdl pointer.
   */
-QWebServiceAbstract::~QWebServiceAbstract()
+QWebService::~QWebService()
 {
     delete wsdl;
 }
 
 /*!
-    \fn QWebServiceAbstract::getMethodNames()
+    \fn QWebService::getMethodNames()
 
     Returns a list of methods' names.
   */
-QStringList QWebServiceAbstract::getMethodNames()
+QStringList QWebService::getMethodNames()
 {
     return (QStringList) messages->keys(); //wsdl->getMethodNames();
 }
 
 /*!
-    \fn QWebServiceAbstract::getMethodParameters(QString methodName) const
+    \fn QWebService::getMethodParameters(QString methodName) const
 
     Returns list of names of parameters of a method specified by \a methodName.
   */
-QStringList QWebServiceAbstract::getMethodParameters(QString methodName) const
+QStringList QWebService::getMethodParameters(QString methodName) const
 {
     return messages->value(methodName)->getParameterNames();
 }
 
 /*!
-    \fn QWebServiceAbstract::getMethodReturnValue(QString methodName) const
+    \fn QWebService::getMethodReturnValue(QString methodName) const
 
     Returns names of return values, for a given method (\a methodName).
   */
-QStringList QWebServiceAbstract::getMethodReturnValue(QString methodName) const
+QStringList QWebService::getMethodReturnValue(QString methodName) const
 {
     return messages->value(methodName)->getReturnValueName();
 }
 
 /*!
-    \fn QWebServiceAbstract::getParameterNamesTypes(QString methodName) const
+    \fn QWebService::getParameterNamesTypes(QString methodName) const
 
     For a given \a methodName, returns a QMap with QString paramater name as a key, and QVariant value.
     By running QVariant::typeName() you can determine the type of the parameter.
   */
-QMap<QString, QVariant> QWebServiceAbstract::getParameterNamesTypes(QString methodName) const
+QMap<QString, QVariant> QWebService::getParameterNamesTypes(QString methodName) const
 {
     return messages->value(methodName)->getParameterNamesTypes();
 }
 
 /*!
-    \fn QWebServiceAbstract::getReturnValueNameType(QString methodName) const
+    \fn QWebService::getReturnValueNameType(QString methodName) const
 
     For a given \a methodName, returns a QMap with QString paramater name as a key, and QVariant value.
     By running QVariant::typeName() you can determine the type of the parameter.
   */
-QMap<QString, QVariant> QWebServiceAbstract::getReturnValueNameType(QString methodName) const
+QMap<QString, QVariant> QWebService::getReturnValueNameType(QString methodName) const
 {
     return messages->value(methodName)->getReturnValueNameType();
 }
 
 /*!
-    \fn QWebServiceAbstract::setHost(QString hostname)
+    \fn QWebService::setHost(QString hostname)
 
     Sets new \a hostname URL, resets the WSDL, and reinitialises.
   */
-void QWebServiceAbstract::setHost(QString hostname)
+void QWebService::setHost(QString hostname)
 {
     this->host = hostname;
     hostUrl.setUrl(hostname);
@@ -123,11 +123,11 @@ void QWebServiceAbstract::setHost(QString hostname)
 }
 
 /*!
-    \fn QWebServiceAbstract::setHost(QUrl hostUrl)
+    \fn QWebService::setHost(QUrl hostUrl)
 
     Sets new \a hostUrl URL, resets the WSDL, and reinitialises.
   */
-void QWebServiceAbstract::setHost(QUrl hostUrl)
+void QWebService::setHost(QUrl hostUrl)
 {
     this->hostUrl = hostUrl;
     host = hostUrl.toString();
@@ -136,52 +136,52 @@ void QWebServiceAbstract::setHost(QUrl hostUrl)
 }
 
 /*!
-    \fn QWebServiceAbstract::getHostUrl()
+    \fn QWebService::getHostUrl()
 
     Returns QUrl of the web service.
   */
-QUrl QWebServiceAbstract::getHostUrl()
+QUrl QWebService::getHostUrl()
 {
     return hostUrl;
 }
 
 /*!
-    \fn QWebServiceAbstract::getHost()
+    \fn QWebService::getHost()
 
     Returns QString with URL of the web service.
   */
-QString QWebServiceAbstract::getHost()
+QString QWebService::getHost()
 {
     return host;
 }
 
 /*!
-    \fn QWebServiceAbstract::isErrorState()
+    \fn QWebService::isErrorState()
 
     Returns true if object is in error state.
   */
-bool QWebServiceAbstract::isErrorState()
+bool QWebService::isErrorState()
 {
     if (wsdl->isErrorState())
         errorState = true;
     return errorState;
 }
 
-//QString QWebServiceAbstract::getWsdl()
+//QString QWebService::getWsdl()
 //{
 
 //}
 
 /*!
     \internal
-    \fn QWebServiceAbstract::init()
+    \fn QWebService::init()
 
     Initialises the object, resets error state.
   */
-void QWebServiceAbstract::init()
+void QWebService::init()
 {
     errorState = false;
-    messages = new QMap<QString, QSoapMessage *>();
+    messages = new QMap<QString, QWebMethod *>();
 
     if (isErrorState())
         return;

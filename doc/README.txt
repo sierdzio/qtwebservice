@@ -7,10 +7,28 @@ Email: sierdzio@gmail.com
 
 Distributed under GNU GPLv3.
 
-1. QWebService.
+------------------
+1. QWebService
+This project provides a set of classes (compilable into a library, if you prefer), that help quickly access a web service, send and receive messages, gather web service information etc.
 
+1.1 Clases (* indicates possible major API changes in the future)
 
+  1.1.1 QWebMethod (formerly QSoapMessage)
+  Supports HTTP, SOAP 1.0, SOAP 1.2 and JSON.
 
+  Used to send messages to a web service, and read replys from it. Can be used both synchronously (through static sendMessage() method), or asynchronously (indicates, when reply is ready by emitting a replyReady() signal).
+
+  1.1.2 QWsdl
+  Useful for reading web service description contained in WSDL file. In the constructor, or using setWsdlFile(), or resetWsdl(), you can specify an URL to a web service's description, or - if you have one - a path to a local WSDL file. Some example files can be found in 'examples' forlder in project's source.
+
+  1.1.3 QWebService (formerly QWebServiceAbstract)
+
+  1.1.4 QWebServiceReader (formerly QWebServiceReaderAbstract)
+
+  1.1.5 QWebServiceMethod (formerly QWebServiceMethodAbstract)
+  Unused class, will probably be deleted from this project.
+
+------------------
 2. qtWsdlConverter
 
 WARNING: Remember to first compile QWebService library, and set it's path in run environment for Converter (it requires this lib to run. By default, it puts the library into ../lib).

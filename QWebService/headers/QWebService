@@ -2,10 +2,10 @@
 #define QWEBSERVICE_H
 
 #include "QWebService_global.h"
-#include "qsoapmessage.h"
+#include "qwebmethod.h"
 #include "qwsdl.h"
-#include "qwebserviceabstract.h"
-#include "qwebservicereaderabstract.h"
-#include "qwebservicemethodabstract.h"
+#include "qwebservice.h"
+#include "qwebservicereader.h"
+#include "qwebservicemethod.h"
 
 #endif // QWEBSERVICE_H

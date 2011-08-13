@@ -28,7 +28,7 @@
      \value standardStructure
             Headers will be placed in <dir>/headers, sources in <dir>/sources, build system and .pro files in <dir>/.
      \value noMessagesStructure
-            Converter will not create messages as separate classes, but use QSoapMessage.
+            Converter will not create messages as separate classes, but use QWebMethod.
      \value allInOneDirStructure
             All generated files will be stored in one folder.
      \value qmake

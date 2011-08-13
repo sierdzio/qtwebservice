@@ -1,7 +1,7 @@
-#include "../headers/qsoapmessage.h"
+#include "../headers/qwebmethod.h"
 
 /*!
-    \class QSoapMessage
+    \class QWebMethod
     \brief Class that can be used to asnchronously and synchronously send HTTP, SOAP1.0 and SOAP1.2 messages to web services.
 
     To send a message and receive reply synchronously, use the static sendMessage() method. Otherwise, you can use
@@ -9,9 +9,9 @@
   */
 
 /*!
-     \enum QSoapMessage::Protocol
+     \enum QWebMethod::Protocol
 
-     This enum type specifies the protocol that QSoapMessage will use in communicating with the server:
+     This enum type specifies the protocol that QWebMethod will use in communicating with the server:
 
      \value http
             HTTP protocol will be used.
@@ -26,13 +26,13 @@
  */
 
 /*!
-    \fn QSoapMessage::QSoapMessage(QObject *parent)
+    \fn QWebMethod::QWebMethod(QObject *parent)
 
     Constructs the message usign \a parent. Requires specifying other params later (setParams()).
 
     \sa setParams(), setProtocol(), sendMessage()
   */
-QSoapMessage::QSoapMessage(QObject *parent) :
+QWebMethod::QWebMethod(QObject *parent) :
     QObject(parent)
 {
     init();
@@ -43,14 +43,14 @@ QSoapMessage::QSoapMessage(QObject *parent) :
 }
 
 /*!
-    \fn QSoapMessage::QSoapMessage(QUrl url, QString _messageName, QObject *parent)
+    \fn QWebMethod::QWebMethod(QUrl url, QString _messageName, QObject *parent)
 
     Constructs the message using \a url, \a _messageName, and \a parent.
     Requires params to be specified later.
 
     \sa setParams(), setProtocol(), sendMessage()
   */
-QSoapMessage::QSoapMessage(QUrl url, QString _messageName, QObject *parent) :
+QWebMethod::QWebMethod(QUrl url, QString _messageName, QObject *parent) :
     QObject(parent), hostUrl(url), messageName(_messageName)
 {
     init();
@@ -59,14 +59,14 @@ QSoapMessage::QSoapMessage(QUrl url, QString _messageName, QObject *parent) :
 }
 
 /*!
-    \fn QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *parent)
+    \fn QWebMethod::QWebMethod(QString url, QString _messageName, QObject *parent)
 
     Constructs the message using \a url, \a _messageName, and \a parent.
     Requires params to be specified later.
 
     \sa setParams(), setProtocol(), sendMessage()
   */
-QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *parent) :
+QWebMethod::QWebMethod(QString url, QString _messageName, QObject *parent) :
     QObject(parent), host(url), messageName(_messageName)
 {
     init();
@@ -75,7 +75,7 @@ QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *parent) :
 }
 
 /*!
-    \fn QSoapMessage::QSoapMessage(QString url, QString _messageName, QMap<QString, QVariant> params, QObject *parent)
+    \fn QWebMethod::QWebMethod(QString url, QString _messageName, QMap<QString, QVariant> params, QObject *parent)
 
     Constructs the message using \a url, \a _messageName, and \a parent. This constructor also takes
     message parameters (\a params).
@@ -84,7 +84,7 @@ QSoapMessage::QSoapMessage(QString url, QString _messageName, QObject *parent) :
 
     \sa sendMessage(), setProtocol()
   */
-QSoapMessage::QSoapMessage(QString url, QString _messageName,
+QWebMethod::QWebMethod(QString url, QString _messageName,
                            QMap<QString, QVariant> params, QObject *parent) :
     QObject(parent), host(url), messageName(_messageName), parameters(params)
 {
@@ -93,11 +93,11 @@ QSoapMessage::QSoapMessage(QString url, QString _messageName,
 }
 
 /*!
-    \fn QSoapMessage::~QSoapMessage()
+    \fn QWebMethod::~QWebMethod()
 
     Deletes internal pointers.
   */
-QSoapMessage::~QSoapMessage()
+QWebMethod::~QWebMethod()
 {
     delete manager;
     delete networkReply;
@@ -105,42 +105,42 @@ QSoapMessage::~QSoapMessage()
 }
 
 /*!
-    \fn QSoapMessage::setParams(QMap<QString, QVariant> params)
+    \fn QWebMethod::setParams(QMap<QString, QVariant> params)
 
     Sets method's parameters (\a params). This also includes their names.
   */
-void QSoapMessage::setParams(QMap<QString, QVariant> params)
+void QWebMethod::setParams(QMap<QString, QVariant> params)
 {
     parameters = params;
 }
 
 /*!
-    \fn QSoapMessage::setReturnValue(QMap<QString, QVariant> returnVal)
+    \fn QWebMethod::setReturnValue(QMap<QString, QVariant> returnVal)
 
     Sets method's return value (\a returnVal). This also includes their names.
   */
-void QSoapMessage::setReturnValue(QMap<QString, QVariant> returnVal)
+void QWebMethod::setReturnValue(QMap<QString, QVariant> returnVal)
 {
     returnValue = returnVal;
 }
 
 /*!
-    \fn QSoapMessage::setTargetNamespace(QString tNamespace)
+    \fn QWebMethod::setTargetNamespace(QString tNamespace)
 
     Sets message's target namespace (\a tNamespace), which is needed in SOAP messaging.
   */
-void QSoapMessage::setTargetNamespace(QString tNamespace)
+void QWebMethod::setTargetNamespace(QString tNamespace)
 {
     targetNamespace = tNamespace;
 }
 
 /*!
-    \fn QSoapMessage::setProtocol(Protocol prot)
+    \fn QWebMethod::setProtocol(Protocol prot)
 
-    Sets the protocol flag (\a prot, being one of the values of QSoapMessage::Protocol).
+    Sets the protocol flag (\a prot, being one of the values of QWebMethod::Protocol).
     This determines the protocol used later, when sending request. Defaults to SOAP1.2
   */
-void QSoapMessage::setProtocol(Protocol prot)
+void QWebMethod::setProtocol(Protocol prot)
 {
     if (prot == soap)
         protocol = soap12;
@@ -149,14 +149,14 @@ void QSoapMessage::setProtocol(Protocol prot)
 }
 
 /*!
-    \fn QSoapMessage::sendMessage()
+    \fn QWebMethod::sendMessage()
 
     Sends the message asynchronously, assuming that all neccessary data was specified earlier.
     Returns true on success.
 
     \sa setParams(), setProtocol(), setTargetNamespace()
   */
-bool QSoapMessage::sendMessage()
+bool QWebMethod::sendMessage()
 {
     hostUrl.setUrl(host);
     QNetworkRequest request;
@@ -181,11 +181,11 @@ bool QSoapMessage::sendMessage()
 }
 
 /*!
-    \fn QSoapMessage::sendMessage(QMap<QString, QVariant> params)
+    \fn QWebMethod::sendMessage(QMap<QString, QVariant> params)
 
     Sends the message asynchronously using parameters specified in \a params.
   */
-bool QSoapMessage::sendMessage(QMap<QString, QVariant> params)
+bool QWebMethod::sendMessage(QMap<QString, QVariant> params)
 {
     parameters = params;
     sendMessage();
@@ -196,9 +196,9 @@ bool QSoapMessage::sendMessage(QMap<QString, QVariant> params)
      STATIC method. Sends the message synchronously, using \a url, \a _messageName, \a params and \a parent.
      Returns with web service reply.
   */
-QVariant QSoapMessage::sendMessage(QObject *parent, QUrl url, QString _messageName, QMap<QString, QVariant> params)
+QVariant QWebMethod::sendMessage(QObject *parent, QUrl url, QString _messageName, QMap<QString, QVariant> params)
 {
-    QSoapMessage qsm(url.host(), _messageName, params, parent);
+    QWebMethod qsm(url.host(), _messageName, params, parent);
     qsm.hostUrl = url;
 
     qsm.sendMessage();
@@ -215,88 +215,88 @@ QVariant QSoapMessage::sendMessage(QObject *parent, QUrl url, QString _messageNa
 }
 
 /*!
-    \fn QSoapMessage::replyRead()
+    \fn QWebMethod::replyRead()
 
     After making asynchronous call, and getting the replyReady() signal, this method can be used to read the reply.
   */
-QVariant QSoapMessage::replyRead()
+QVariant QWebMethod::replyRead()
 {
     return reply;
 }
 
 /*!
-    \fn QSoapMessage::replyReady(QVariant rply)
+    \fn QWebMethod::replyReady(QVariant rply)
 
     Signal invoked when the reply (\a rply) from web service's server is ready for reading.
   */
 
 /*!
-    \fn QSoapMessage::getMessageName()
+    \fn QWebMethod::getMessageName()
 
     Returns message's name.
   */
-QString QSoapMessage::getMessageName()
+QString QWebMethod::getMessageName()
 {
     return messageName;
 }
 
 /*!
-    \fn QSoapMessage::getParameterNames() const
+    \fn QWebMethod::getParameterNames() const
 
     Retrurns list of parameters' names.
   */
-QStringList QSoapMessage::getParameterNames() const
+QStringList QWebMethod::getParameterNames() const
 {
     return (QStringList) parameters.keys();
 }
 
 /*!
-    \fn QSoapMessage::getReturnValueName() const
+    \fn QWebMethod::getReturnValueName() const
 
     Returns return value's name.
   */
-QStringList QSoapMessage::getReturnValueName() const
+QStringList QWebMethod::getReturnValueName() const
 {
     return (QStringList) returnValue.keys();
 }
 
 /*!
-    \fn QSoapMessage::getParameterNamesTypes() const
+    \fn QWebMethod::getParameterNamesTypes() const
 
     Returns whole parameter information (name and type).
   */
-QMap<QString, QVariant> QSoapMessage::getParameterNamesTypes() const
+QMap<QString, QVariant> QWebMethod::getParameterNamesTypes() const
 {
     return parameters;
 }
 
 /*!
-    \fn QSoapMessage::getReturnValueNameType() const
+    \fn QWebMethod::getReturnValueNameType() const
 
     Returns whole return value information (name and type).
   */
-QMap<QString, QVariant> QSoapMessage::getReturnValueNameType() const
+QMap<QString, QVariant> QWebMethod::getReturnValueNameType() const
 {
     return returnValue;
 }
 
 /*!
-    \fn QSoapMessage::getTargetNamespace()
+    \fn QWebMethod::getTargetNamespace()
 
     Returns target namespace.
   */
-QString QSoapMessage::getTargetNamespace()
+QString QWebMethod::getTargetNamespace()
 {
     return targetNamespace;
 }
 
 /*!
-    \fn QSoapMessage::replyFinished(QNetworkReply *netReply)
+    \fn QWebMethod::replyFinished(QNetworkReply *netReply)
 
     Public (will probably be private in the future) slot, which processes the reply (\a netReply) from the server.
     Emits the replyReady() signal.
   */
-void QSoapMessage::replyFinished(QNetworkReply *netReply)
+void QWebMethod::replyFinished(QNetworkReply *netReply)
 {
     networkReply = netReply;
     QByteArray replyBytes;
@@ -324,9 +324,9 @@ void QSoapMessage::replyFinished(QNetworkReply *netReply)
 
 /*!
     \internal
-    \fn QSoapMessage::init()
+    \fn QWebMethod::init()
   */
-void QSoapMessage::init()
+void QWebMethod::init()
 {
     protocol = soap12;
     replyReceived = false;
@@ -339,9 +339,9 @@ void QSoapMessage::init()
 
 /*!
     \internal
-    \fn QSoapMessage::prepareRequestData()
+    \fn QWebMethod::prepareRequestData()
   */
-void QSoapMessage::prepareRequestData()
+void QWebMethod::prepareRequestData()
 {
     data.clear();
     QString header, body, footer;
@@ -408,11 +408,11 @@ void QSoapMessage::prepareRequestData()
 
 /*!
     \internal
-    \fn QSoapMessage::convertReplyToUtf(QString textToConvert)
+    \fn QWebMethod::convertReplyToUtf(QString textToConvert)
 
     Changes the encoding of the reply, in a rather crude fashion.
   */
-QString QSoapMessage::convertReplyToUtf(QString textToConvert)
+QString QWebMethod::convertReplyToUtf(QString textToConvert)
 {
     QString result = textToConvert;
 
