@@ -42,6 +42,8 @@
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-3">QWebMethod</a></b> ( QString <i>url</i>, QString <i>_messageName</i>, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-4">QWebMethod</a></b> ( QString <i>url</i>, QString <i>_messageName</i>, QMap&lt;QString, QVariant&gt; <i>params</i>, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#dtor.QWebMethod">~QWebMethod</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#getHost">getHost</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#getHostUrl">getHostUrl</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#getMessageName">getMessageName</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#getParameterNames">getParameterNames</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#getParameterNamesTypes">getParameterNamesTypes</a></b> () const</td></tr>
@@ -115,6 +117,14 @@
 <h3 class="fn"><a name="dtor.QWebMethod"></a>QWebMethod::~QWebMethod ()</h3>
 <p>Deletes internal pointers.</p>
 <!-- @@@~QWebMethod -->
+<!-- $$$getHost[overload1]$$$getHost -->
+<h3 class="fn"><a name="getHost"></a>QString QWebMethod::getHost ()</h3>
+<p>Returns host's URL (in QString). If you want a QUrl, call <a href="qwebmethod.html#getHostUrl">getHostUrl</a>(), or QUrl(QWebMethod::getHost());</p>
+<!-- @@@getHost -->
+<!-- $$$getHostUrl[overload1]$$$getHostUrl -->
+<h3 class="fn"><a name="getHostUrl"></a>QUrl QWebMethod::getHostUrl ()</h3>
+<p>Returns host's URL. If you want a QString, call <a href="qwebmethod.html#getHost">getHost</a>() or getHostUrl().host();</p>
+<!-- @@@getHostUrl -->
 <!-- $$$getMessageName[overload1]$$$getMessageName -->
 <h3 class="fn"><a name="getMessageName"></a>QString QWebMethod::getMessageName ()</h3>
 <p>Returns message's name.</p>
