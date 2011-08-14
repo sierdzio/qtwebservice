@@ -49,33 +49,34 @@
 <div class="descr">
 <h2>Detailed Description</h2>
 <p>Holds all important flags used by converter.</p>
-<p>All application's switches are unified thus enabling easy OR switching. The only exception is th e--force switch, which is held as a separate bool variable.</p>
+<p>All application's switches are unified thus enabling easy OR switching. The only exception is the --force switch, which is held as a separate bool variable.</p>
+<p>All entries in single sections (with an exception of build system related switches) are exclusive - you can use only one at a time (the lates one specified is used). For example, if you use --http and --json, only JSON flag will be set. Sections are specified in enum documentation (the table below).</p>
 </div>
 <!-- @@@Flags -->
 <div class="types">
 <h2>Member Type Documentation</h2>
 <!-- $$$Option$$$fullMode$$$debugMode$$$compactMode$$$synchronous$$$asynchronous$$$standardStructure$$$noMessagesStructure$$$allInOneDirStructure$$$qmake$$$cmake$$$scons$$$noBuildSystem$$$http$$$soap10$$$soap12$$$soap$$$json -->
 <h3 class="flags"><a name="Option-enum"></a>enum Flags::Option<br/>flags Flags::Options</h3>
-<p>This enum type specifies code creation mode:</p>
+<p>This enum type specifies code creation mode. Sections are indicated in brackets:</p>
 <p>Mode:</p>
 <table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
-<tr><td  class="topAlign"><tt>Flags::fullMode</tt></td><td class=" topAlign"><tt>0x00001</tt></td><td  class="topAlign">All enums and variables are copied, enabling some flexibility in use.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::debugMode</tt></td><td class=" topAlign"><tt>0x00002</tt></td><td  class="topAlign">fullMode + debug messages.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::compactMode</tt></td><td class=" topAlign"><tt>0x00004</tt></td><td  class="topAlign">Only most needed methods, variables and enums are preserved. Code is as small, as possible, at the expense of loosing flexibility.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::synchronous</tt></td><td class=" topAlign"><tt>0x00010</tt></td><td  class="topAlign">Web methods will wait for reply and return with data.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::asynchronous</tt></td><td class=" topAlign"><tt>0x00020</tt></td><td  class="topAlign">Web methods will return instantly. Data availability will be announced by emitting a signal.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::standardStructure</tt></td><td class=" topAlign"><tt>0x00100</tt></td><td  class="topAlign">Headers will be placed in &lt;dir&gt;/headers, sources in &lt;dir&gt;/sources, build system and .pro files in &lt;dir&gt;/.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::noMessagesStructure</tt></td><td class=" topAlign"><tt>0x00200</tt></td><td  class="topAlign">Converter will not create messages as separate classes, but use QWebMethod.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::allInOneDirStructure</tt></td><td class=" topAlign"><tt>0x00400</tt></td><td  class="topAlign">All generated files will be stored in one folder.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::qmake</tt></td><td class=" topAlign"><tt>0x01000</tt></td><td  class="topAlign">qmake will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::cmake</tt></td><td class=" topAlign"><tt>0x02000</tt></td><td  class="topAlign">cmake will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::scons</tt></td><td class=" topAlign"><tt>0x04000</tt></td><td  class="topAlign">scons will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::noBuildSystem</tt></td><td class=" topAlign"><tt>0x08000</tt></td><td  class="topAlign">No build system files will be created.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::http</tt></td><td class=" topAlign"><tt>0x10000</tt></td><td  class="topAlign">http protocol will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::soap10</tt></td><td class=" topAlign"><tt>0x20000</tt></td><td  class="topAlign">SOAP 1.0 protocol will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::soap12</tt></td><td class=" topAlign"><tt>0x40000</tt></td><td  class="topAlign">SOAP 1.2 protocol will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::soap</tt></td><td class=" topAlign"><tt>0x60000</tt></td><td  class="topAlign">Internall wrapper for all SOAP protocols. When used in app, will default to SOAP 1.2</td></tr>
-<tr><td  class="topAlign"><tt>Flags::json</tt></td><td class=" topAlign"><tt>0x80000</tt></td><td  class="topAlign">JSON protocol will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::fullMode</tt></td><td class=" topAlign"><tt>0x00001</tt></td><td  class="topAlign">(mode) All enums and variables are copied, enabling some flexibility in use.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::debugMode</tt></td><td class=" topAlign"><tt>0x00002</tt></td><td  class="topAlign">(mode) fullMode + debug messages.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::compactMode</tt></td><td class=" topAlign"><tt>0x00004</tt></td><td  class="topAlign">(mode) Only most needed methods, variables and enums are preserved. Code is as small, as possible, at the expense of loosing flexibility.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::synchronous</tt></td><td class=" topAlign"><tt>0x00010</tt></td><td  class="topAlign">(synchronousness) Web methods will wait for reply and return with data.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::asynchronous</tt></td><td class=" topAlign"><tt>0x00020</tt></td><td  class="topAlign">(synchronousness) Web methods will return instantly. Data availability will be announced by emitting a signal.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::standardStructure</tt></td><td class=" topAlign"><tt>0x00100</tt></td><td  class="topAlign">(structure) Headers will be placed in &lt;dir&gt;/headers, sources in &lt;dir&gt;/sources, build system and .pro files in &lt;dir&gt;/.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::noMessagesStructure</tt></td><td class=" topAlign"><tt>0x00200</tt></td><td  class="topAlign">(structure) Converter will not create messages as separate classes, but use QWebMethod.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::allInOneDirStructure</tt></td><td class=" topAlign"><tt>0x00400</tt></td><td  class="topAlign">(structure) All generated files will be stored in one folder.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::qmake</tt></td><td class=" topAlign"><tt>0x01000</tt></td><td  class="topAlign">(build system) qmake will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::cmake</tt></td><td class=" topAlign"><tt>0x02000</tt></td><td  class="topAlign">(build system) cmake will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::scons</tt></td><td class=" topAlign"><tt>0x04000</tt></td><td  class="topAlign">(build system) scons will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::noBuildSystem</tt></td><td class=" topAlign"><tt>0x08000</tt></td><td  class="topAlign">(build system) No build system files will be created.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::http</tt></td><td class=" topAlign"><tt>0x10000</tt></td><td  class="topAlign">(protocol) http protocol will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::soap10</tt></td><td class=" topAlign"><tt>0x20000</tt></td><td  class="topAlign">(protocol) SOAP 1.0 protocol will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::soap12</tt></td><td class=" topAlign"><tt>0x40000</tt></td><td  class="topAlign">(protocol) SOAP 1.2 protocol will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::soap</tt></td><td class=" topAlign"><tt>0x60000</tt></td><td  class="topAlign">(protocol) Internall wrapper for all SOAP protocols. When used in app, will default to SOAP 1.2</td></tr>
+<tr><td  class="topAlign"><tt>Flags::json</tt></td><td class=" topAlign"><tt>0x80000</tt></td><td  class="topAlign">(protocol) JSON protocol will be used.</td></tr>
 </table>
 <p>The Options type is a typedef for <a href="qflags.html">QFlags</a>&lt;Option&gt;. It stores an OR combination of Option values.</p>
 <!-- @@@Option -->

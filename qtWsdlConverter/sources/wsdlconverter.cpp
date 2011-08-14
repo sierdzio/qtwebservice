@@ -5,6 +5,8 @@
     \brief Main class, supervizes code creation.
 
     Uses WSDL file or URL to transform WSDL code into set of Qt/C++ classes, according to options specified in Flags class.
+
+    CodeGenerator class is used to create the actual code, while this class reads application switches, prepares the environment etc.
   */
 
 /*!
@@ -145,10 +147,9 @@ void WsdlConverter::convert()
         mainDir.mkdir(mainPath);
         mainDir.cd(mainPath);
 
+        // The if shoud be dropped, Structure flag should be chcecked and handled inside CodeGenerator
         if (flags->flags() & Flags::standardStructure)
         {
-//            flags->setFlags(Flags::fullMode);
-
             if (!CodeGenerator::create(wsdl, mainDir, flags, baseClassName, this))
             {
                 // Might be good to add an interactive menu here (to ask for a new dir name)
@@ -314,6 +315,11 @@ bool WsdlConverter::populateArgumentsList(QStringList arguments)
                 flags->resetFlags(Flags::qmake | Flags::cmake | Flags::scons);
                 flags->setFlags(Flags::noBuildSystem);
             }
+            // Suffixes:
+            else if (s.startsWith("--msgSuffix="))
+                flags->setMsgSuffix(s.mid(12));
+            else if (s.startsWith("--objSuffix="))
+                flags->setObjSuffix(s.mid(12));
             // Force:
             else if (s == "--force")
                 flags->setForced(true);

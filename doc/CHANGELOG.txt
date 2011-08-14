@@ -1,7 +1,7 @@
 Changelog for QWebService library project & qtWsdlConverter.
 Part of the initial development is not expressed here. Refer to git logs or ask sierdzio at sierdzio@gmail.com
 
-Updating QDoc:
+Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link if needed):
  - QWebService: run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./QWebService/qwebservice.qdocconf
  - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
 
@@ -9,11 +9,15 @@ Updating QDoc:
  - added getHost() to QWebMethod,
  - added getHostUrl() to QWebMethod,
  - added QDoc instructions to to of CHANGELOG,
+ - added parametrization of generated methods' and objects' suffixes (default are "Msg" for objects, "Send" for sending methods). Suffixes are stored in Flags object. They can be specified by using new application switches: "--objSuffix=<var>" and "--msgSuffix=<var>",
  - removed QString host from QWebMethod. Internally, everything is handled purely by QUrl hostUrl now.
    Public API remained unchanged,
- - changed QWebService lib version to 0.3.1 to mark recen changes,
- - updated QDoc,
- - updated README with more descriptions of QWebService
+ - changed QWebService lib version to 0.3.1 to mark recent changes,
+ - changed asynchronous 'if' statements in CodeGenerator - they are a bit more easy to read and universal,
+ - changed names of created message objects, so that they are clearily distinct from class name (Msg suffix, by default),
+ - updated QDoc, added some better class and enum descriptions to the project,
+ - updated README with more descriptions of QWebService,
+ - fixed some minor issues in code generation.
 
 13.08.2011 13:22 CEST:
  - added some info to readme (part concerning QWebService),

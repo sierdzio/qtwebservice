@@ -4,7 +4,12 @@
     \class CodeGenerator
     \brief Creates code in the standard path (standard structure).
 
-    This class will most probably be renamed, as it turns out to do almost everything in the conversion process.
+    Generates code, based on WSDL information and user defined flags.
+
+    Note:
+    Generator also creates a dummy main.cpp file. It's needed only for successful compilation of
+    freshly generated code. It is NOT NEEDED for any other reason. You can safely delete
+    it in your project.
   */
 
 /*!
@@ -255,7 +260,7 @@ bool CodeGenerator::createMessageHeader(QWebMethod *msg)
     out << "    QNetworkReply *networkReply;" << endl;
     out << "    QByteArray data;" << endl;
     out << "};" << endl << endl;
-    out << "Q_DECLARE_OPERATORS_FOR_FLAGS(QWebMethod::Protocols)" << endl;
+    out << "Q_DECLARE_OPERATORS_FOR_FLAGS(" << msgName << "::Protocols)" << endl;
     out << "#endif // " << msgName.toUpper() << "_H" << endl;
     // EOF (SOAP message)
     // ---------------------------------
@@ -568,7 +573,8 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
     out << "{" << endl;
     out << "    data.clear();" << endl;
     out << "    QString header, body, footer;" << endl;
-    out << "QString endl = \"\\r\\n\"; // Replace with something OS-independent, or seriously rethink." << endl;
+    out << "    QString endl = \"\\r\\n\"; // Replace with something OS-independent, or seriously rethink." << endl;
+    out << "    QMap<QString, QVariant> parameters = getParameterNamesTypes();" << endl;
     out << "" << endl;
     out << "if (protocol & soap)" << endl;
     out << "{" << endl;
@@ -758,12 +764,11 @@ bool CodeGenerator::createServiceHeader()
             }
             tmpP.chop(2);
 // Temporarily, all messages will return QString!
-//            out << "    " << tmpReturn << " ";
             if (flags->flags() & Flags::synchronous)
                 out << "    QString ";
             else
                 out << "    void ";
-            out << s << "Send(" << tmpP << ");" << endl;
+            out << s << flags->messageSuffix() << "(" << tmpP << ");" << endl;
         }
     }
     out << endl;
@@ -817,7 +822,7 @@ bool CodeGenerator::createServiceHeader()
     out << "    QUrl hostUrl;" << endl;
     out << "    QString host;" << endl;
     if (flags->flags() & Flags::asynchronous
-            && (flags->flags() & Flags::fullMode || flags->flags() & Flags::debugMode))
+            && !(flags->flags() & Flags::compactMode))
     { // Declare reply variables for asynchronous mode.
         out << "    // Message replies:" << endl;
         foreach (QString s, tempMap->keys())
@@ -835,7 +840,7 @@ bool CodeGenerator::createServiceHeader()
         out << "    // Messages:" << endl;
         foreach (QString s, tempMap->keys())
         {
-            out << "    " << s << " " << s.toLower() << ";" << endl;
+            out << "    " << s << " " << s.toLower() << flags->objectSuffix() << ";" << endl;
         }
     }
     out << "};" << endl;
@@ -881,7 +886,7 @@ bool CodeGenerator::createServiceSource()
     { // Connect signals and slots for asynchronous mode.
         foreach (QString s, tempMap->keys())
         {
-            out << "    connect(&" << s.toLower() << ", SIGNAL(replyReady(QString)), this, SLOT(";
+            out << "    connect(&" << s.toLower() << flags->objectSuffix() << ", SIGNAL(replyReady(QString)), this, SLOT(";
 
             if (flags->flags() & Flags::compactMode)
             {
@@ -941,7 +946,7 @@ bool CodeGenerator::createServiceSource()
             {
                 // Temporarily, all messages will return QString!
 //                out << tmpReturn << " " << wsName << "::" << s << "(" << tmpP << ")" << endl;
-                out << "QString " << wsName << "::" << s << "Send(" << tmpP << ")" << endl;
+                out << "QString " << wsName << "::" << s << flags->messageSuffix() << "(" << tmpP << ")" << endl;
                 out << "{" << endl;
                 out << "    // TODO: You can add your own data handling here, and make the whole method return" << endl;
                 out << "    //       proper type." << endl;
@@ -955,9 +960,9 @@ bool CodeGenerator::createServiceSource()
             }
             else if (flags->flags() & Flags::asynchronous)
             {
-                out << "void " << wsName << "::" << s << "Send(" << tmpP << ")" << endl;
+                out << "void " << wsName << "::" << s << flags->messageSuffix() << "(" << tmpP << ")" << endl;
                 out << "{" << endl;
-                out << "    " << s.toLower() << ".sendMessage(" << tmpPN << ");" << endl;
+                out << "    " << s.toLower() << flags->objectSuffix() << ".sendMessage(" << tmpPN << ");" << endl;
                 out << "}" << endl;
                 out << endl;
             }
@@ -973,7 +978,7 @@ bool CodeGenerator::createServiceSource()
             {
                 ; // Code compact mode here :)
             }
-            else if (flags->flags() & Flags::fullMode || flags->flags() & Flags::debugMode)
+            else if (!(flags->flags() & Flags::compactMode))
             {
                 QString tmpReturn = "";
                 QWebMethod *m = tempMap->value(s);
@@ -993,7 +998,7 @@ bool CodeGenerator::createServiceSource()
     }
 
     if (flags->flags() & Flags::asynchronous
-            && (flags->flags() & Flags::fullMode || flags->flags() & Flags::debugMode))
+            && !(flags->flags() & Flags::compactMode))
     { // Define all slots for asynchronous mode.
         foreach (QString s, tempMap->keys())
         {

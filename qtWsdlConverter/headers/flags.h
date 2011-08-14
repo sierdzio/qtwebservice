@@ -46,13 +46,19 @@ public:
     void resetFlags(Options whatToReset);
     void setFlags(Options options);
     void setForced(bool forced);
+    void setMsgSuffix(QString newMsgSuffix);
+    void setObjSuffix(QString newObjSuffix);
     Options flags() const;
     bool forced() const;
     bool isForced() const;
+    QString messageSuffix() const;
+    QString objectSuffix() const;
 
 private:
     Options options;
     bool force;
+    QString msgSuffix;
+    QString objSuffix;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Flags::Options)

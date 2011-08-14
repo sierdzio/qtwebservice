@@ -15,7 +15,6 @@ This project provides a set of classes (compilable into a library, if you prefer
 
   1.1.1 QWebMethod (formerly QSoapMessage)
   Supports HTTP, SOAP 1.0, SOAP 1.2 and JSON.
-
   Used to send messages to a web service, and read replys from it. Can be used both synchronously (through static sendMessage() method), or asynchronously (indicates, when reply is ready by emitting a replyReady() signal).
 
   1.1.2 QWsdl
@@ -24,8 +23,8 @@ This project provides a set of classes (compilable into a library, if you prefer
   1.1.3 QWebService (formerly QWebServiceAbstract)
   In it's current shape, this is mostly a QWsdl wrapper class which hides the WSDL parsing machinery and exposes useful stuff only.
 
-  1.1.4 QWebServiceReader (formerly QWebServiceReaderAbstract)
-  A derivative of QWebService, more focused on "reading" a web service (that is, sending messages and receiving replies).
+  1.1.4 QWebServiceReader (formerly QWebServiceReaderAbstract) (*)
+  A derivative of QWebService, more focused on "reading" a web service (that is, sending messages and receiving replies). Currently not very innovative, it does nothing more that QWebService. Possible updates in the future, bringing new functionality.
 
   1.1.5 QWebServiceMethod (formerly QWebServiceMethodAbstract)
   Unused class, will probably be deleted from this project.
@@ -45,6 +44,7 @@ WARNING: Remember to first compile QWebService library, and set it's path in run
     --full-mode, *--debug-mode, --compact-mode,
     --standard-structure, *--no-messages-structure, --all-in-one-dir-structure,
     --qmake, --cmake, --scons, --no-build-system,
+    --objSuffix=, --msgSuffix=,
     --force.
 
   2.1.2 Default switches
@@ -80,6 +80,10 @@ All entries in single sections (with an exception of build system related switch
     --scons - files needed by scons will be created for the project,
     --no-build-system - no build-system-related files will be created.
 
-  2.2.6 Miscellaneous
+  2.2.6 Suffixes
+  --objSuffix=<var>	- appends <var> to object names created in asynchronous mode (default "Msg"),
+  --msgSuffix=<var>	- appends <var> to sending methods' names created in asynchronous mode (default "Send").
+
+  2.2.7 Miscellaneous
     --force - if the <wsName> dir already exists, converter will delete and recreate it,
     --help  - displays a simple help message and information. Does not proceed with any other action.

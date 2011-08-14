@@ -5,56 +5,59 @@
     \brief Holds all important flags used by converter.
 
     All application's switches are unified thus enabling easy
-    OR switching. The only exception is th e--force switch, which is held as a separate
+    OR switching. The only exception is the --force switch, which is held as a separate
     bool variable.
+
+    All entries in single sections (with an exception of build system related switches) are exclusive - you can use only one at a time (the lates one specified is used). For example, if you use --http and --json, only JSON flag will be set. Sections are specified in enum documentation (the table below).
   */
 
 /*!
      \enum Flags::Option
 
-     This enum type specifies code creation mode:
+     This enum type specifies code creation mode. Sections are indicated in brackets:
 
         Mode:
      \value fullMode
-            All enums and variables are copied, enabling some flexibility in use.
+            (mode) All enums and variables are copied, enabling some flexibility in use.
      \value debugMode
-            fullMode + debug messages.
+            (mode) fullMode + debug messages.
      \value compactMode
-            Only most needed methods, variables and enums are preserved. Code is as small, as possible, at the expense of loosing flexibility.
+            (mode) Only most needed methods, variables and enums are preserved. Code is as small, as possible, at the expense of loosing flexibility.
      \value synchronous
-            Web methods will wait for reply and return with data.
+            (synchronousness) Web methods will wait for reply and return with data.
      \value asynchronous
-            Web methods will return instantly. Data availability will be announced by emitting a signal.
+            (synchronousness) Web methods will return instantly. Data availability will be announced by emitting a signal.
      \value standardStructure
-            Headers will be placed in <dir>/headers, sources in <dir>/sources, build system and .pro files in <dir>/.
+            (structure) Headers will be placed in <dir>/headers, sources in <dir>/sources, build system and .pro files in <dir>/.
      \value noMessagesStructure
-            Converter will not create messages as separate classes, but use QWebMethod.
+            (structure) Converter will not create messages as separate classes, but use QWebMethod.
      \value allInOneDirStructure
-            All generated files will be stored in one folder.
+            (structure) All generated files will be stored in one folder.
      \value qmake
-            qmake will be used.
+            (build system) qmake will be used.
      \value cmake
-            cmake will be used.
+            (build system) cmake will be used.
      \value scons
-            scons will be used.
+            (build system) scons will be used.
      \value noBuildSystem
-            No build system files will be created.
+            (build system) No build system files will be created.
      \value http
-            http protocol will be used.
+            (protocol) http protocol will be used.
      \value soap10
-            SOAP 1.0 protocol will be used.
+            (protocol) SOAP 1.0 protocol will be used.
      \value soap12
-            SOAP 1.2 protocol will be used.
+            (protocol) SOAP 1.2 protocol will be used.
      \value soap
-            Internall wrapper for all SOAP protocols. When used in app, will default to SOAP 1.2
+            (protocol) Internall wrapper for all SOAP protocols. When used in app, will default to SOAP 1.2
      \value json
-            JSON protocol will be used.
+            (protocol) JSON protocol will be used.
  */
 
 /*!
     \fn Flags::Flags(Options options, bool forced)
 
-    Constructs the Flags object. All params are optional.
+    Constructs the Flags object. All params are optional. If you want to set non-default suffixes, use setObjSuffix() and setMsgSuffix().
+
     Default values:
     \list
     \o \a options :
@@ -72,6 +75,9 @@ Flags::Flags(Options options, bool forced)
 {
     this->options = options;
     this->force = forced;
+
+    msgSuffix = "Send";
+    objSuffix = "Msg";
 }
 
 /*!
@@ -124,6 +130,26 @@ void Flags::setForced(bool forced)
 }
 
 /*!
+    \fn Flags::setMsgSuffix(QString newMsgSuffix)
+
+    Sets the message suffix using \a newMsgSuffix..
+    */
+void Flags::setMsgSuffix(QString newMsgSuffix)
+{
+    msgSuffix = newMsgSuffix;
+}
+
+/*!
+    \fn Flags::setObjSuffix(QString newObjSuffix)
+
+    Sets the object suffix using \a newObjSuffix..
+    */
+void Flags::setObjSuffix(QString newObjSuffix)
+{
+    objSuffix = newObjSuffix;
+}
+
+/*!
     \fn Flags::flags() const
 
     Returns currently set options enum.
@@ -159,4 +185,24 @@ bool Flags::forced() const
 bool Flags::isForced() const
 {
     return this->force;
+}
+
+/*!
+  \fn Flags::messageSuffix() const
+
+  Returns message suffix, which is appended to methods (ones that send the message) in generated code.
+  */
+QString Flags::messageSuffix() const
+{
+    return msgSuffix;
+}
+
+/*!
+  \fn Flags::objectSuffix() const
+
+  Returns the suffix, which is appended to object names (used in service header and source when in asynchronous).
+  */
+QString Flags::objectSuffix() const
+{
+    return objSuffix;
 }
