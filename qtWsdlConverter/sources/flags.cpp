@@ -132,7 +132,7 @@ void Flags::setForced(bool forced)
 /*!
     \fn Flags::setMsgSuffix(QString newMsgSuffix)
 
-    Sets the message suffix using \a newMsgSuffix..
+    Sets the message suffix using \a newMsgSuffix.
     */
 void Flags::setMsgSuffix(QString newMsgSuffix)
 {
@@ -142,7 +142,7 @@ void Flags::setMsgSuffix(QString newMsgSuffix)
 /*!
     \fn Flags::setObjSuffix(QString newObjSuffix)
 
-    Sets the object suffix using \a newObjSuffix..
+    Sets the object suffix using \a newObjSuffix.
     */
 void Flags::setObjSuffix(QString newObjSuffix)
 {

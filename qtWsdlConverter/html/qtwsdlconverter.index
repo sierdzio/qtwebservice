@@ -37,9 +37,17 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="setForced" fullname="Flags::setForced" href="flags.html#setForced" location="flags.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setForced(bool forced)">
                 <parameter left="bool" right="" name="forced" default=""/>
             </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setMsgSuffix" fullname="Flags::setMsgSuffix" href="flags.html#setMsgSuffix" location="flags.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setMsgSuffix(QString newMsgSuffix)">
+                <parameter left="QString" right="" name="newMsgSuffix" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setObjSuffix" fullname="Flags::setObjSuffix" href="flags.html#setObjSuffix" location="flags.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setObjSuffix(QString newObjSuffix)">
+                <parameter left="QString" right="" name="newObjSuffix" default=""/>
+            </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="flags" fullname="Flags::flags" href="flags.html#flags" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="Options" signature="flags() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="forced" fullname="Flags::forced" href="flags.html#forced" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="forced() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="isForced" fullname="Flags::isForced" href="flags.html#isForced" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="isForced() const"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="messageSuffix" fullname="Flags::messageSuffix" href="flags.html#messageSuffix" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="messageSuffix() const"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="objectSuffix" fullname="Flags::objectSuffix" href="flags.html#objectSuffix" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="objectSuffix() const"/>
         </class>
         <class access="public" threadsafety="unspecified" status="commendable" name="WsdlConverter" href="wsdlconverter.html" location="wsdlconverter.h" bases="" module="">
             <enum access="public" threadsafety="unspecified" status="commendable" name="ArgumentDescriptionFlag" fullname="WsdlConverter::ArgumentDescriptionFlag" href="wsdlconverter.html#ArgumentDescriptionFlag-enum" location="wsdlconverter.h" typedef="WsdlConverter::ArgumentDescription">

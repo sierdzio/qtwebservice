@@ -39,10 +39,14 @@
 <tr><td class="memItemLeft rightAlign topAlign"> Options </td><td class="memItemRight bottomAlign"><b><a href="flags.html#flagsx">flags</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="flags.html#forced">forced</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="flags.html#isForced">isForced</a></b> () const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="flags.html#messageSuffix">messageSuffix</a></b> () const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="flags.html#objectSuffix">objectSuffix</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#resetFlags">resetFlags</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#resetFlags-2">resetFlags</a></b> ( Options <i>whatToReset</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setFlags">setFlags</a></b> ( Options <i>options</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setForced">setForced</a></b> ( bool <i>forced</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setMsgSuffix">setMsgSuffix</a></b> ( QString <i>newMsgSuffix</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setObjSuffix">setObjSuffix</a></b> ( QString <i>newObjSuffix</i> )</td></tr>
 </table>
 <a name="details"></a>
 <!-- $$$Flags-description -->
@@ -85,7 +89,8 @@
 <h2>Member Function Documentation</h2>
 <!-- $$$Flags[overload1]$$$FlagsOptionsbool -->
 <h3 class="fn"><a name="Flags"></a>Flags::Flags ( <a href="flags.html#Option-enum">Options</a> <i>options</i> = Options( fullMode | synchronous | standardStructure | qmake | soap12 ), bool <i>forced</i> = false )</h3>
-<p>Constructs the Flags object. All params are optional. Default values:</p>
+<p>Constructs the Flags object. All params are optional. If you want to set non-default suffixes, use <a href="flags.html#setObjSuffix">setObjSuffix</a>() and <a href="flags.html#setMsgSuffix">setMsgSuffix</a>().</p>
+<p>Default values:</p>
 <ul>
 <li><i>options</i> :<ul>
 <li><a href="flags.html#Option-enum">fullMode</a></li>
@@ -116,6 +121,14 @@
 <p>Returns force state.</p>
 <p>See also <a href="flags.html#forced">forced</a>().</p>
 <!-- @@@isForced -->
+<!-- $$$messageSuffix[overload1]$$$messageSuffix -->
+<h3 class="fn"><a name="messageSuffix"></a>QString Flags::messageSuffix () const</h3>
+<p>Returns message suffix, which is appended to methods (ones that send the message) in generated code.</p>
+<!-- @@@messageSuffix -->
+<!-- $$$objectSuffix[overload1]$$$objectSuffix -->
+<h3 class="fn"><a name="objectSuffix"></a>QString Flags::objectSuffix () const</h3>
+<p>Returns the suffix, which is appended to object names (used in service header and source when in asynchronous).</p>
+<!-- @@@objectSuffix -->
 <!-- $$$resetFlags[overload1]$$$resetFlags -->
 <h3 class="fn"><a name="resetFlags"></a>void Flags::resetFlags ()</h3>
 <p>Resets all flags to default values. This does not apply to '--forced'.</p>
@@ -135,6 +148,14 @@
 <p>When 'true', converter will delete old sources, and create a fresh copy every time it is run.</p>
 <p>See also <a href="flags.html#forced">forced</a>().</p>
 <!-- @@@setForced -->
+<!-- $$$setMsgSuffix[overload1]$$$setMsgSuffixQString -->
+<h3 class="fn"><a name="setMsgSuffix"></a>void Flags::setMsgSuffix ( QString <i>newMsgSuffix</i> )</h3>
+<p>Sets the message suffix using <i>newMsgSuffix</i>.</p>
+<!-- @@@setMsgSuffix -->
+<!-- $$$setObjSuffix[overload1]$$$setObjSuffixQString -->
+<h3 class="fn"><a name="setObjSuffix"></a>void Flags::setObjSuffix ( QString <i>newObjSuffix</i> )</h3>
+<p>Sets the object suffix using <i>newObjSuffix</i>.</p>
+<!-- @@@setObjSuffix -->
 </div>
 </body>
 </html>

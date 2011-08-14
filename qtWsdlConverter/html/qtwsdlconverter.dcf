@@ -32,9 +32,13 @@
         <keyword ref="flags.html#flagsx">flags</keyword>
         <keyword ref="flags.html#forced">forced</keyword>
         <keyword ref="flags.html#isForced">isForced</keyword>
+        <keyword ref="flags.html#messageSuffix">messageSuffix</keyword>
+        <keyword ref="flags.html#objectSuffix">objectSuffix</keyword>
         <keyword ref="flags.html#resetFlags">resetFlags</keyword>
         <keyword ref="flags.html#setFlags">setFlags</keyword>
         <keyword ref="flags.html#setForced">setForced</keyword>
+        <keyword ref="flags.html#setMsgSuffix">setMsgSuffix</keyword>
+        <keyword ref="flags.html#setObjSuffix">setObjSuffix</keyword>
         <section ref="flags-members.html" title="List of all members"/>
     </section>
     <section ref="wsdlconverter.html" title="WsdlConverter Class Reference">
