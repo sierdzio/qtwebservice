@@ -46,4 +46,5 @@ QWebServiceReader::QWebServiceReader(QString hostname, QObject *parent) :
   */
 void QWebServiceReader::methodHandler(QVariant param)
 {
+    Q_UNUSED(param)
 }

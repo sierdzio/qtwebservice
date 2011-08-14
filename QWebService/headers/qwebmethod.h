@@ -46,6 +46,8 @@ public:
     QMap<QString, QVariant> getParameterNamesTypes() const;
     QMap<QString, QVariant> getReturnValueNameType() const;
     QString getTargetNamespace();
+    QString getHost();
+    QUrl getHostUrl();
 
 signals:
     void replyReady(QVariant rply);
@@ -61,7 +63,6 @@ private:
     bool replyReceived;
     Protocol protocol;
     QUrl hostUrl;
-    QString host;
     QString messageName;
     QString targetNamespace;
     QVariant reply;

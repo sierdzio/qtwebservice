@@ -22,8 +22,10 @@ This project provides a set of classes (compilable into a library, if you prefer
   Useful for reading web service description contained in WSDL file. In the constructor, or using setWsdlFile(), or resetWsdl(), you can specify an URL to a web service's description, or - if you have one - a path to a local WSDL file. Some example files can be found in 'examples' forlder in project's source.
 
   1.1.3 QWebService (formerly QWebServiceAbstract)
+  In it's current shape, this is mostly a QWsdl wrapper class which hides the WSDL parsing machinery and exposes useful stuff only.
 
   1.1.4 QWebServiceReader (formerly QWebServiceReaderAbstract)
+  A derivative of QWebService, more focused on "reading" a web service (that is, sending messages and receiving replies).
 
   1.1.5 QWebServiceMethod (formerly QWebServiceMethodAbstract)
   Unused class, will probably be deleted from this project.

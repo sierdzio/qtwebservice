@@ -1,10 +1,25 @@
 Changelog for QWebService library project & qtWsdlConverter.
 Part of the initial development is not expressed here. Refer to git logs or ask sierdzio at sierdzio@gmail.com
 
-.08.2011 : CEST:
+Updating QDoc:
+ - QWebService: run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./QWebService/qwebservice.qdocconf
+ - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
+
+14.08.2011 : CEST:
+ - added getHost() to QWebMethod,
+ - added getHostUrl() to QWebMethod,
+ - added QDoc instructions to to of CHANGELOG,
+ - removed QString host from QWebMethod. Internally, everything is handled purely by QUrl hostUrl now.
+   Public API remained unchanged,
+ - changed QWebService lib version to 0.3.1 to mark recen changes,
+ - updated QDoc,
+ - updated README with more descriptions of QWebService
+
+13.08.2011 13:22 CEST:
  - added some info to readme (part concerning QWebService),
  - renamed classes in QWebService (removed Abstract suffix, changed QSoapMessage into QWebMethod),
- - updated QDoc
+ - updated QDoc,
+ - marked as v0.3.0.
 
 10.08.2011 18:19 CEST:
  - made --no-build-system truly exclusive (in main, it is additionally checked in CodeGenerator),

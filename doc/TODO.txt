@@ -1,5 +1,5 @@
 TODO'S:
- - (converter) use more standard approach to command line reading,
+ - (converter) (proposal) use more standard approach to command line reading,
  - (converter) review asynchronous 'if' statements - in most, checks are probably too strict,
  - (converter) change names of created message objects, so that they are clearily distinct from class name,
  - (converter) prepare '--compact-mode' implementation,
@@ -7,9 +7,7 @@ TODO'S:
  - (converter) review protocol implementation,
  - (QWebService & converter) (proposal) replace '\r\n' in QSoapMessage and converted code with OS-independent code,
  - (QWebService & converter) (proposal) change returnValue to QVariant or QString (in QSoapMessage),
- - (QWsdl) implement more parameter types,
- - (QWebService & converter) modify .pro files, so that they build cleanly by default, without QtCreator's
-   intervention.
+ - (QWsdl) implement more parameter types.
 
 
 IDEAS:

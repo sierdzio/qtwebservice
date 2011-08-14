@@ -44,6 +44,7 @@ QWebServiceMethod::~QWebServiceMethod()
   */
 void QWebServiceMethod::setHost(QString hostname)
 {
+    Q_UNUSED(hostname)
 }
 
 /*!
@@ -53,6 +54,7 @@ void QWebServiceMethod::setHost(QString hostname)
   */
 void QWebServiceMethod::setHost(QUrl hostUrl)
 {
+    Q_UNUSED(hostUrl)
 }
 
 /*!

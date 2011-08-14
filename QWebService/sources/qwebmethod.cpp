@@ -36,8 +36,7 @@ QWebMethod::QWebMethod(QObject *parent) :
     QObject(parent)
 {
     init();
-    host = "";
-    hostUrl.setHost(host);
+    hostUrl.setHost("");
     messageName = "";
     parameters.clear();
 }
@@ -54,7 +53,6 @@ QWebMethod::QWebMethod(QUrl url, QString _messageName, QObject *parent) :
     QObject(parent), hostUrl(url), messageName(_messageName)
 {
     init();
-    host = hostUrl.host();
     parameters.clear();
 }
 
@@ -67,10 +65,10 @@ QWebMethod::QWebMethod(QUrl url, QString _messageName, QObject *parent) :
     \sa setParams(), setProtocol(), sendMessage()
   */
 QWebMethod::QWebMethod(QString url, QString _messageName, QObject *parent) :
-    QObject(parent), host(url), messageName(_messageName)
+    QObject(parent), messageName(_messageName)
 {
     init();
-    hostUrl.setHost(host + messageName);
+    hostUrl.setHost(url + messageName);
     parameters.clear();
 }
 
@@ -86,10 +84,10 @@ QWebMethod::QWebMethod(QString url, QString _messageName, QObject *parent) :
   */
 QWebMethod::QWebMethod(QString url, QString _messageName,
                            QMap<QString, QVariant> params, QObject *parent) :
-    QObject(parent), host(url), messageName(_messageName), parameters(params)
+    QObject(parent), messageName(_messageName), parameters(params)
 {
     init();
-    hostUrl.setHost(host + messageName);
+    hostUrl.setHost(url + messageName);
 }
 
 /*!
@@ -158,7 +156,6 @@ void QWebMethod::setProtocol(Protocol prot)
   */
 bool QWebMethod::sendMessage()
 {
-    hostUrl.setUrl(host);
     QNetworkRequest request;
     request.setUrl(hostUrl);
     if (protocol & soap)
@@ -288,6 +285,26 @@ QMap<QString, QVariant> QWebMethod::getReturnValueNameType() const
 QString QWebMethod::getTargetNamespace()
 {
     return targetNamespace;
+}
+
+/*!
+    \fn QWebMethod::getHost()
+
+    Returns host's URL (in QString). If you want a QUrl, call getHostUrl(), or QUrl(QWebMethod::getHost());
+  */
+QString QWebMethod::getHost()
+{
+    return hostUrl.host();
+}
+
+/*!
+    \fn QWebMethod::getHostUrl()
+
+    Returns host's URL. If you want a QString, call getHost() or getHostUrl().host();
+  */
+QUrl QWebMethod::getHostUrl()
+{
+    return hostUrl;
 }
 
 /*!

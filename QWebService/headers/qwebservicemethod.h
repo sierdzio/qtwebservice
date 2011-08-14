@@ -6,6 +6,7 @@
 #include "QWebService_global.h"
 #include "qwebmethod.h"
 
+// NOTE: this class is confidered to be unecessary in this project, and may e deleted in the future.
 class QWEBSERVICESHARED_EXPORT QWebServiceMethod : public QObject
 {
     Q_OBJECT
