@@ -5,7 +5,7 @@
 # sierdzio@gmail.com
 #-------------------------------------------------
 
-QT += core gui network xml
+QT += core gui network
 
 TARGET = testWsdl
 

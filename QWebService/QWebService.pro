@@ -5,7 +5,7 @@
 # sierdzio@gmail.com
 #-------------------------------------------------
 
-QT       += network xml
+QT       += network
 
 QT       -= gui
 

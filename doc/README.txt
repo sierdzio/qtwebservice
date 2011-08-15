@@ -73,7 +73,7 @@ All entries in single sections (with an exception of build system related switch
 
   2.2.4 Structures
     --standard-structure - headers are copied to <wsName>/headers, sources to <wsName>/sources, build file to <wsName>/<buildFile>,
-    --no-messages-structure - no custom message code will be created. All messages will be sent by using general QSoapMessage objects,
+    --no-messages-structure - no custom message code will be created. All messages will be sent by using general QWebMethod objects,
     --all-in-one-dir-structure - as sandard-structure, but all files are copied into <wsName>.
 
   2.2.5 Build systems

@@ -1,11 +1,13 @@
 TODO'S:
+ - change licence to LGPL or CPL,
+ - (QWebService) (proposal) add REST functionality,
  - (QWsdl) implement more parameter types,
  - (converter) prepare '--compact-mode' implementation,
  - (converter) review '--debug-mode' implementation - or delete it,
  - (converter) review protocol implementation,
  - (converter) (proposal) use more standard approach to command line reading,
  - (QWebService & converter) (proposal) replace '\r\n' in QSoapMessage and converted code with OS-independent code,
- - (QWebService & converter) (proposal) change returnValue to QVariant or QString (in QSoapMessage).
+ - (QWebService & converter) (proposal) change returnValue to QVariant or QString (in QWebMethod).
 
 
 IDEAS:
