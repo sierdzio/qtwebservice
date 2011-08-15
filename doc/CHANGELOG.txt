@@ -5,7 +5,7 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
  - QWebService: run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./QWebService/qwebservice.qdocconf
  - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
 
-14.08.2011 : CEST:
+14.08.2011 11:32 CEST - v0.3.2:
  - added getHost() to QWebMethod,
  - added getHostUrl() to QWebMethod,
  - added QDoc instructions to to of CHANGELOG,

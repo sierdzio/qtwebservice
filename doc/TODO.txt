@@ -1,6 +1,5 @@
 TODO'S:
  - (QWsdl) implement more parameter types,
- - (converter) parametrise object and method names' suffixes (currently, they are Send for method, Msg for object),
  - (converter) prepare '--compact-mode' implementation,
  - (converter) review '--debug-mode' implementation - or delete it,
  - (converter) review protocol implementation,

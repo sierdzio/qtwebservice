@@ -11,7 +11,7 @@ Distributed under GNU GPLv3.
 1. QWebService
 This project provides a set of classes (compilable into a library, if you prefer), that help quickly access a web service, send and receive messages, gather web service information etc.
 
-1.1 Clases (* indicates possible major API changes in the future)
+1.1 Classes (* indicates possible major API changes in the future)
 
   1.1.1 QWebMethod (formerly QSoapMessage)
   Supports HTTP, SOAP 1.0, SOAP 1.2 and JSON.
@@ -26,7 +26,10 @@ This project provides a set of classes (compilable into a library, if you prefer
   1.1.4 QWebServiceReader (formerly QWebServiceReaderAbstract) (*)
   A derivative of QWebService, more focused on "reading" a web service (that is, sending messages and receiving replies). Currently not very innovative, it does nothing more that QWebService. Possible updates in the future, bringing new functionality.
 
-  1.1.5 QWebServiceMethod (formerly QWebServiceMethodAbstract)
+  1.1.5 QwebServiceServer (or QWebServiceWriter) (*)
+  Currently does not exist. A proposed class, derived from QWebService, aimed at providing web service server functionality.
+
+  1.1.6 QWebServiceMethod (formerly QWebServiceMethodAbstract)
   Unused class, will probably be deleted from this project.
 
 ------------------
