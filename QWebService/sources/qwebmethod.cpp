@@ -103,6 +103,36 @@ QWebMethod::~QWebMethod()
 }
 
 /*!
+  \fn QWebMethod::setHost(QString newHost)
+
+  Set's message's host to \a newHost.
+  */
+void QWebMethod::setHost(QString newHost)
+{
+    hostUrl.setHost(newHost);
+}
+
+/*!
+  \fn QWebMethod::setHost(QUrl newHost)
+
+  Set's message's host to \a newHost.
+  */
+void QWebMethod::setHost(QUrl newHost)
+{
+    hostUrl = newHost;
+}
+
+/*!
+  \fn QWebMethod::setMessageName(QString newName)
+
+  Set's message's name to \a newName.
+  */
+void QWebMethod::setMessageName(QString newName)
+{
+    messageName = newName;
+}
+
+/*!
     \fn QWebMethod::setParams(QMap<QString, QVariant> params)
 
     Sets method's parameters (\a params). This also includes their names.

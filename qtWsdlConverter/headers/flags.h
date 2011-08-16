@@ -3,10 +3,6 @@
 
 #include <QWebService>
 
-/**
-  Holds all converter's switches in one place.
-  WARNING: all flag variables are PUBLIC, so be careful not to assign value instead of comparing!
-  */
 class Flags
 {
     Q_ENUMS(Option)

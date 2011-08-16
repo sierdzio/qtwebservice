@@ -5,11 +5,6 @@
 #include <QWebService>
 #include "flags.h"
 
-/**
-  Used to generate files in the standard path (with --standard-structure switch on).
-
-  In the future, this might be modified to support all switches.
-  */
 class CodeGenerator : public QObject
 {
     Q_OBJECT

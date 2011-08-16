@@ -31,6 +31,9 @@ public:
                  QObject *parent = 0);
     ~QWebMethod();
 
+    void setHost(QString newHost);
+    void setHost(QUrl newHost);
+    void setMessageName(QString newName);
     void setParams(QMap<QString, QVariant> params);
     void setReturnValue(QMap<QString, QVariant> returnValue);
     void setTargetNamespace(QString tNamespace);

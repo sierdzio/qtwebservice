@@ -22,6 +22,8 @@
         <keyword ref="qwebmethod.html#replyRead">replyRead</keyword>
         <keyword ref="qwebmethod.html#replyReady">replyReady</keyword>
         <keyword ref="qwebmethod.html#sendMessage">sendMessage</keyword>
+        <keyword ref="qwebmethod.html#setHost">setHost</keyword>
+        <keyword ref="qwebmethod.html#setMessageName">setMessageName</keyword>
         <keyword ref="qwebmethod.html#setParams">setParams</keyword>
         <keyword ref="qwebmethod.html#setProtocol">setProtocol</keyword>
         <keyword ref="qwebmethod.html#setReturnValue">setReturnValue</keyword>

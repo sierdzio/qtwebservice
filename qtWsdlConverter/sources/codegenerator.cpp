@@ -101,6 +101,20 @@ bool CodeGenerator::create(QWsdl *w, QDir wrkDir, Flags *flgs, QString bsClsNme,
   */
 bool CodeGenerator::createMessages()
 {
+    if (flags->flags() & Flags::noMessagesStructure)
+    {
+        if (!(flags->flags() & Flags::allInOneDirStructure))
+        {
+            workingDir.cd("sources");
+            createMainCpp();
+            workingDir.cdUp();
+        }
+        else
+            createMainCpp();
+
+        return true;
+    }
+
     if (!(flags->flags() & Flags::allInOneDirStructure))
         workingDir.cd("headers");
 
@@ -728,12 +742,18 @@ bool CodeGenerator::createServiceHeader()
     out << "#define " << wsName.toUpper() << "_H" << endl;
     out << endl;
     out << "#include <QUrl>" << endl;
+    if (!(flags->flags() & Flags::noMessagesStructure))
     { // Include all messages.
         QStringList tempMp = wsdl->getMethodNames();
         foreach (QString s, tempMp)
         {
             out << "#include \"" << s << ".h\"" << endl;
         }
+    }
+    else
+    {
+//        out << "#include <QWebService/qwebmethod.h>" << endl;
+        out << "#include <QWebService>" << endl;
     }
     out << endl;
     out << "class " << wsName << " : public QObject" << endl;
@@ -837,11 +857,20 @@ bool CodeGenerator::createServiceHeader()
             out << "    " << tmpReturn << " " << s << "Result;" << endl;
         }
 
+
+
         out << "    // Messages:" << endl;
         foreach (QString s, tempMap->keys())
         {
-            out << "    " << s << " " << s.toLower() << flags->objectSuffix() << ";" << endl;
+            if (!(flags->flags() & Flags::noMessagesStructure))
+                out << "    " << s << " ";
+            else // sierdzioL I don;t particurarily like this implementation, will rethink it later.
+                out << "    QWebMethod ";
+
+            out << s.toLower() << flags->objectSuffix() << ";" << endl;
         }
+
+
     }
     out << "};" << endl;
     out << endl;
@@ -926,6 +955,7 @@ bool CodeGenerator::createServiceSource()
         {
             QString tmpReturn = "", tmpP = "", tmpPN = "";
             QWebMethod *m = tempMap->value(s);
+
             foreach (QString ret, m->getReturnValueNameType().keys())
             {
                 tmpReturn = m->getReturnValueNameType().value(ret).typeName();
@@ -933,6 +963,7 @@ bool CodeGenerator::createServiceSource()
             }
 
             QMap<QString, QVariant> tempParam = m->getParameterNamesTypes();
+
             // Create msgParameters (comma separated list)
             foreach (QString param, tempParam.keys())
             {
@@ -942,6 +973,7 @@ bool CodeGenerator::createServiceSource()
             tmpP.chop(2);
             tmpPN.chop(2);
 
+
             if (flags->flags() & Flags::synchronous)
             {
                 // Temporarily, all messages will return QString!
@@ -950,19 +982,56 @@ bool CodeGenerator::createServiceSource()
                 out << "{" << endl;
                 out << "    // TODO: You can add your own data handling here, and make the whole method return" << endl;
                 out << "    //       proper type." << endl;
-                out << "    return " << m->getMessageName() << "::sendMessage(this";
-                if (tmpPN != "")
-                    out << ", " << tmpPN << ");" << endl;
+                if (flags->flags() & Flags::noMessagesStructure)
+                {
+                    out << "    QMap<QString, QVariant> parameters;" << endl;
+                    foreach (QString param, tempParam.keys())
+                    {
+                        out << "    parameters.insert(\"" << param;
+                        out << "\", QVariant(" << param << "));" << endl;
+                    }
+
+                    out << endl;
+                    out << "    return QWebMethod::sendMessage(this";
+                    out << ", QUrl(\"" << m->getHost() << "\"), \"" << m->getMessageName()
+                        << "\", parameters).toString();" << endl;
+                }
                 else
-                    out << ");" << endl;
+                {
+                    out << "    return " << m->getMessageName() << "::sendMessage(this";
+
+                    if (tmpPN != "")
+                        out << ", " << tmpPN << ");" << endl;
+                    else
+                        out << ");" << endl;
+                }
                 out << "}" << endl;
                 out << endl;
             }
             else if (flags->flags() & Flags::asynchronous)
             {
+                QString objName = s.toLower() + flags->objectSuffix(); // Name of the message object.
                 out << "void " << wsName << "::" << s << flags->messageSuffix() << "(" << tmpP << ")" << endl;
                 out << "{" << endl;
-                out << "    " << s.toLower() << flags->objectSuffix() << ".sendMessage(" << tmpPN << ");" << endl;
+
+                if (flags->flags() & Flags::noMessagesStructure)
+                {
+                    out << "    QMap<QString, QVariant> parameters;" << endl;
+                    foreach (QString param, tempParam.keys())
+                    {
+                        out << "    parameters.insert(\"" << param;
+                        out << "\", QVariant(" << param << "));" << endl;
+                    }
+
+                    out << endl;
+                    out << "    " << objName << ".setHost(\"" << m->getHost() << "\");" << endl;
+                    out << "    " << objName << ".setTargetNamespace(\"" << m->getTargetNamespace() << "\");" << endl;
+                    out << "    " << objName << ".setMessageName(\"" << m->getMessageName() << "\");" << endl;
+                    out << "    " << objName << ".sendMessage(parameters);" << endl;
+                }
+                else
+                    out << "    " << objName << ".sendMessage(" << tmpPN << ");" << endl;
+
                 out << "}" << endl;
                 out << endl;
             }
@@ -1062,6 +1131,9 @@ bool CodeGenerator::createBuildSystemFile()
 {
     bool result = false;
 
+    if (flags->flags() & Flags::noMessagesStructure)
+        qDebug() << "Remember to include QWebService library in your build system file!";
+
     if (flags->flags() & Flags::noBuildSystem)
         return true;
     if (flags->flags() & Flags::qmake)
@@ -1117,8 +1189,10 @@ bool CodeGenerator::createQMakeProject()
     out << "    ";
     if (!(flags->flags() & Flags::allInOneDirStructure))
         out << "sources/";
-    out << "main.cpp \\" << endl;
+    out << "main.cpp ";
+    if (!(flags->flags() & Flags::noMessagesStructure))
     { // Include all sources.
+        out << "\\" << endl;
         QStringList tempMap = wsdl->getMethodNames();
         foreach (QString s, tempMap)
         {
@@ -1135,8 +1209,10 @@ bool CodeGenerator::createQMakeProject()
     out << "HEADERS += ";
     if (!(flags->flags() & Flags::allInOneDirStructure))
         out << "headers/";
-    out << wsName << ".h \\" << endl;
+    out << wsName << ".h ";
+    if (!(flags->flags() & Flags::noMessagesStructure))
     { // Include all headers.
+        out << "\\" << endl;
         QStringList tempMap = wsdl->getMethodNames();
         foreach (QString s, tempMap)
         {
@@ -1191,6 +1267,7 @@ bool CodeGenerator::createCMakeProject()
     if (!(flags->flags() & Flags::allInOneDirStructure))
         out << "sources/";
     out << "main.cpp" << endl;
+    if (!(flags->flags() & Flags::noMessagesStructure))
     { // Include all sources.
         QStringList tempMap = wsdl->getMethodNames();
         foreach (QString s, tempMap)
@@ -1209,6 +1286,7 @@ bool CodeGenerator::createCMakeProject()
     if (!(flags->flags() & Flags::allInOneDirStructure))
         out << "headers/";
     out << wsName << ".h" << endl;
+    if (!(flags->flags() & Flags::noMessagesStructure))
     { // Include all MOC headers.
         QStringList tempMap = wsdl->getMethodNames();
         foreach (QString s, tempMap)
@@ -1282,8 +1360,10 @@ bool CodeGenerator::createSconsProject()
     out << "    ";
     if (!(flags->flags() & Flags::allInOneDirStructure))
         out << "\"sources/";
-    out << "main.cpp\"," << endl;
+    out << "main.cpp\"";
+    if (!(flags->flags() & Flags::noMessagesStructure))
     { // Include all sources.
+        out << "," << endl;
         QStringList tempMap = wsdl->getMethodNames();
         foreach (QString s, tempMap)
         {
@@ -1296,6 +1376,10 @@ bool CodeGenerator::createSconsProject()
             else
                 out << "]" << endl;
         }
+    }
+    else
+    {
+        out << "]" << endl;
     }
     out << "env.Program(target=\"" << wsName << "\", source=[sources])" << endl;
     // EOF (SCons SConstruct file)

@@ -148,7 +148,7 @@ void WsdlConverter::convert()
         mainDir.cd(mainPath);
 
         // The if shoud be dropped, Structure flag should be chcecked and handled inside CodeGenerator
-        if (flags->flags() & Flags::standardStructure)
+//        if (flags->flags() & Flags::standardStructure)
         {
             if (!CodeGenerator::create(wsdl, mainDir, flags, baseClassName, this))
             {

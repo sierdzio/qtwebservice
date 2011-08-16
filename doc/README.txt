@@ -5,7 +5,7 @@ Author: Tomasz Siekierda
 Nickname: sierdzio
 Email: sierdzio@gmail.com
 
-Distributed under GNU GPLv3.
+Distributed under GNU GPLv3 (will possibly change to LGPL 2.1).
 
 ------------------
 1. QWebService
@@ -44,8 +44,8 @@ WARNING: Remember to first compile QWebService library, and set it's path in run
     --help,
     --soap10, --soap12, --http, --json,
     --synchronous, --asynchronous,
-    --full-mode, *--debug-mode, --compact-mode,
-    --standard-structure, *--no-messages-structure, --all-in-one-dir-structure,
+    --full-mode, *--debug-mode, *(partial) --compact-mode,
+    --standard-structure, --no-messages-structure, --all-in-one-dir-structure,
     --qmake, --cmake, --scons, --no-build-system,
     --objSuffix=, --msgSuffix=,
     --force.

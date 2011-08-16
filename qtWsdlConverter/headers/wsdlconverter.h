@@ -6,9 +6,6 @@
 #include "flags.h"
 #include "codegenerator.h"
 
-/**
-  Used to prepare, direct and supervise creation of web service classes, files etc.
-  */
 class WsdlConverter : public QObject
 {
     Q_OBJECT

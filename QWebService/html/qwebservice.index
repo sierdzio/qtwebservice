@@ -136,6 +136,15 @@
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="~QWebMethod" fullname="QWebMethod::~QWebMethod" href="qwebmethod.html#dtor.QWebMethod" location="qwebmethod.cpp" virtual="non" meta="destructor" const="false" static="false" overload="false" type="" signature="~QWebMethod()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setHost" fullname="QWebMethod::setHost" href="qwebmethod.html#setHost" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setHost(QString newHost)">
+                <parameter left="QString" right="" name="newHost" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setHost" fullname="QWebMethod::setHost" href="qwebmethod.html#setHost-2" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="void" signature="setHost(QUrl newHost)">
+                <parameter left="QUrl" right="" name="newHost" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setMessageName" fullname="QWebMethod::setMessageName" href="qwebmethod.html#setMessageName" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setMessageName(QString newName)">
+                <parameter left="QString" right="" name="newName" default=""/>
+            </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="setParams" fullname="QWebMethod::setParams" href="qwebmethod.html#setParams" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setParams(QMap&lt;QString, QVariant&gt; params)">
                 <parameter left="QMap&lt;QString, QVariant&gt;" right="" name="params" default=""/>
             </function>

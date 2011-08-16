@@ -5,11 +5,17 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
  - QWebService: run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./QWebService/qwebservice.qdocconf
  - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
 
-15.08.2011 : CEST:
+16.08.2011 14:40 CEST:
+ - added LICENCE_PROPOSED, filled with LGPL 2.1 terms,
+ - added support for --no-messages-structure, implementation is somewhat ugly (but it works),
+ - added host and message name setters to QWebMethod (I somehow overlooked the fact they were not there... sierdzio),
+ - changed lib version to 0.3.2,
+ - recrerated QDoc.
+
+15.08.2011 20:04 CEST:
  - some fixes in docs,
  - removed XML module dependency, which turned out not to be needed,
- - cleaned some old comments from converter and QWebService,
- - 
+ - cleaned some old comments from converter and QWebService.
 
 14.08.2011 11:32 CEST - v0.3.2:
  - added getHost() to QWebMethod,
