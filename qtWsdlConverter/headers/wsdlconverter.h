@@ -37,7 +37,7 @@ signals:
 public slots:
 
 private:
-    bool populateArgumentsList(QStringList arguments);
+    bool parseArguments(QStringList arguments);
     void displayHelp();
     void displayIntro();
     void displayOutro();

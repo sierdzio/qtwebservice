@@ -1,18 +1,13 @@
+Remote Features and TODO's list can be found at: http://goo.gl/L1C6X
+
 TODO'S:
- - change licence to LGPL or CPL,
- - (QWebService) (proposal) add REST functionality,
- - (QWsdl) implement more parameter types,
- - (converter) prepare '--compact-mode' implementation,
- - (converter) review '--debug-mode' implementation - or delete it,
- - (converter) review protocol implementation,
- - (converter) (proposal) use more standard approach to command line reading,
- - (QWebService & converter) (proposal) replace '\r\n' in QSoapMessage and converted code with OS-independent code,
- - (QWebService & converter) (proposal) change returnValue to QVariant or QString (in QWebMethod).
-
-
-IDEAS:
-Should messages (in converter) return QStrings (with text reply) or try to automatically extract relevant data?
-
-When there is dir name conflict, app can ask for a new name, instead of exiting.
-
-File creation may be template-based!
+ - (QWebService) (proposal) add REST functionality
+ - (QWsdl) finish implementation (include all tags)
+ - (QWsdl) implement more parameter types
+ - (QWsdl) fix host-hostUrl mismatch, remove QString host just as in QWebMethod
+ - (converter) optimise code generation - current implementation is crude and ugly (but it works!)
+ - (converter) prepare '--compact-mode' implementation
+ - (converter) review '--debug-mode' implementation - or delete it
+ - (converter) review protocol implementation
+ - (converter) (proposal) use more standard approach to command line reading
+ - (QWebService & converter) (proposal) replace '\r\n' in QSoapMessage and converted code with OS-independent code

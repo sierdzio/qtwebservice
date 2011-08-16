@@ -7,10 +7,6 @@
 #include "qwebmethod.h"
 #include "QWebService_global.h"
 
-/**
-  Reads web service data (message names, parameters, return values, ws name etc)
-  from a WSDL file or URL.
-  */
 class QWEBSERVICESHARED_EXPORT QWsdl : public QObject
 {
     Q_OBJECT

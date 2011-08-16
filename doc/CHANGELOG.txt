@@ -1,9 +1,18 @@
 Changelog for QWebService library project & qtWsdlConverter.
 Part of the initial development is not expressed here. Refer to git logs or ask sierdzio at sierdzio@gmail.com
 
+Remote Features and TODO's list can be found at: http://goo.gl/L1C6X
+
 Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link if needed):
  - QWebService: run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./QWebService/qwebservice.qdocconf
  - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
+
+16.08.2011 20:39 CEST:
+ - changed licence to LGPL 2.1,
+ - created online version of Features & TODO list - http://goo.gl/L1C6X,
+ - optimised handling of --help flag in converter,
+ - changed populateArgumentsList() into parseArguments() in wsdlconverter.cpp, as it better reflects it's current function,
+ - added some comments to QWsdl.
 
 16.08.2011 14:40 CEST:
  - added LICENCE_PROPOSED, filled with LGPL 2.1 terms,

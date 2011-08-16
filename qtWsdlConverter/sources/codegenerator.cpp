@@ -857,8 +857,6 @@ bool CodeGenerator::createServiceHeader()
             out << "    " << tmpReturn << " " << s << "Result;" << endl;
         }
 
-
-
         out << "    // Messages:" << endl;
         foreach (QString s, tempMap->keys())
         {
@@ -869,8 +867,6 @@ bool CodeGenerator::createServiceHeader()
 
             out << s.toLower() << flags->objectSuffix() << ";" << endl;
         }
-
-
     }
     out << "};" << endl;
     out << endl;

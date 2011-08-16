@@ -41,7 +41,7 @@ WsdlConverter::WsdlConverter(QStringList appArguments, QObject *parent) :
     errorState = false;
     errorMessage = "";
 
-    if (!populateArgumentsList(appArguments))
+    if (!parseArguments(appArguments))
     {
         enterErrorState("Encountered an error when parsing arguments.");
         return;
@@ -147,15 +147,10 @@ void WsdlConverter::convert()
         mainDir.mkdir(mainPath);
         mainDir.cd(mainPath);
 
-        // The if shoud be dropped, Structure flag should be chcecked and handled inside CodeGenerator
-//        if (flags->flags() & Flags::standardStructure)
+        if (!CodeGenerator::create(wsdl, mainDir, flags, baseClassName, this))
         {
-            if (!CodeGenerator::create(wsdl, mainDir, flags, baseClassName, this))
-            {
-                // Might be good to add an interactive menu here (to ask for a new dir name)
-                enterErrorState("Error - code creation failed.");
-                return;
-            }
+            enterErrorState("Error - code creation failed.");
+            return;
         }
     }
     displayOutro();
@@ -213,29 +208,24 @@ bool WsdlConverter::removeDir(QString path)
 
   Reads application's command line, sets Flags, paths etc.
   */
-bool WsdlConverter::populateArgumentsList(QStringList arguments)
+bool WsdlConverter::parseArguments(QStringList arguments)
 {
-    bool wasFile = false, wasOutDir = false, wasClassName = false;
-    QString appFilePath = qApp->applicationFilePath();
-
-    if (arguments.length() <= 1)
+    if (arguments.length() <= 1 || arguments.contains("--help"))
     {
         displayHelp();
         return false;
     }
+
+    bool wasFile = false, wasOutDir = false, wasClassName = false;
+    QString appFilePath = qApp->applicationFilePath();
 
     foreach (QString s, arguments)
     {
         // Handles '--' arguments
         if (s.startsWith("--"))
         {
-            if (s == "--help")
-            {
-                displayHelp();
-                return false;
-            }
             // Protocol flags:
-            else if (s == "--soap12")
+            if (s == "--soap12")
             {
                 flags->resetFlags(Flags::soap10 | Flags::http | Flags::json);
                 flags->setFlags(Flags::soap12);

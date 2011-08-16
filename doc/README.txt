@@ -5,7 +5,8 @@ Author: Tomasz Siekierda
 Nickname: sierdzio
 Email: sierdzio@gmail.com
 
-Distributed under GNU GPLv3 (will possibly change to LGPL 2.1).
+Distributed under GNU LGPL 2.1.
+Remote Features and TODO's list can be found at: http://goo.gl/L1C6X
 
 ------------------
 1. QWebService

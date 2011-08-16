@@ -265,6 +265,8 @@ bool QWsdl::parse()
 
       Algorithm extracts method names from "types" tags, which is most probably wrong,
       as it should be cross-checked with other tags ("message", etc.)
+
+      Most probably, use of QtXmlPatterns would solve a lot of that.
     */
 
     if (errorState)
@@ -324,6 +326,9 @@ bool QWsdl::parse()
 
 /*!
     \internal
+
+    If the host path is not a local file, but URL, QWsdl will download it into a temporary file,
+    then read, and delete at exit.
   */
 void QWsdl::prepareFile()
 {
@@ -384,8 +389,6 @@ void QWsdl::readDefinitions()
             continue;
         }
 
-//        if (!xmlReader.isEndElement())
-//        {
         if (tempName == "types")
         {
             readTypes();
@@ -432,11 +435,6 @@ void QWsdl::readDefinitions()
         {
             xmlReader.readNext();
         }
-//    }
-//        else
-//        {
-//            xmlReader.readNext();
-//        }
     }
 }
 
@@ -538,7 +536,7 @@ void QWsdl::readTypeSchemaElement()
 
             QVariant element;
             elementType = elementType.split(':').at(1);
-
+            // NEEDS MANY MORE VALUE TYPES! VERY SHAKY IMPLEMENTATION!
             if (elementType == "int")
             {
                 element.setValue(0);
