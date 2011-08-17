@@ -33,14 +33,14 @@
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#QWebService-2">QWebService</a></b> ( QWsdl * <i>_wsdl</i>, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#QWebService-3">QWebService</a></b> ( QString <i>_hostname</i>, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#dtor.QWebService">~QWebService</a></b> ()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#getHost">getHost</a></b> ()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#getHostUrl">getHostUrl</a></b> ()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#getMethodNames">getMethodNames</a></b> ()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#getMethodParameters">getMethodParameters</a></b> ( QString <i>methodName</i> ) const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#getMethodReturnValue">getMethodReturnValue</a></b> ( QString <i>methodName</i> ) const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#getParameterNamesTypes">getParameterNamesTypes</a></b> ( QString <i>methodName</i> ) const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#getReturnValueNameType">getReturnValueNameType</a></b> ( QString <i>methodName</i> ) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#host">host</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#hostUrl">hostUrl</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#isErrorState">isErrorState</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#methodNames">methodNames</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#methodParameters">methodParameters</a></b> ( QString <i>methodName</i> ) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#methodReturnValue">methodReturnValue</a></b> ( QString <i>methodName</i> ) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#parameterNamesTypes">parameterNamesTypes</a></b> ( QString <i>methodName</i> ) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#returnValueNameType">returnValueNameType</a></b> ( QString <i>methodName</i> ) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#setHost">setHost</a></b> ( QString <i>hostname</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#setHost-2">setHost</a></b> ( QUrl <i>hostUrl</i> )</td></tr>
 </table>
@@ -70,41 +70,43 @@
 <h3 class="fn"><a name="dtor.QWebService"></a>QWebService::~QWebService ()</h3>
 <p>Deletes wsdl pointer.</p>
 <!-- @@@~QWebService -->
-<!-- $$$getHost[overload1]$$$getHost -->
-<h3 class="fn"><a name="getHost"></a>QString QWebService::getHost ()</h3>
+<!-- $$$host[overload1]$$$host -->
+<h3 class="fn"><a name="host"></a>QString QWebService::host ()</h3>
 <p>Returns QString with URL of the web service.</p>
-<!-- @@@getHost -->
-<!-- $$$getHostUrl[overload1]$$$getHostUrl -->
-<h3 class="fn"><a name="getHostUrl"></a>QUrl QWebService::getHostUrl ()</h3>
+<p>See also <a href="qwebservice.html#setHost">setHost</a>().</p>
+<!-- @@@host -->
+<!-- $$$hostUrl[overload1]$$$hostUrl -->
+<h3 class="fn"><a name="hostUrl"></a>QUrl QWebService::hostUrl ()</h3>
 <p>Returns QUrl of the web service.</p>
-<!-- @@@getHostUrl -->
-<!-- $$$getMethodNames[overload1]$$$getMethodNames -->
-<h3 class="fn"><a name="getMethodNames"></a>QStringList QWebService::getMethodNames ()</h3>
-<p>Returns a list of methods' names.</p>
-<!-- @@@getMethodNames -->
-<!-- $$$getMethodParameters[overload1]$$$getMethodParametersQString -->
-<h3 class="fn"><a name="getMethodParameters"></a>QStringList QWebService::getMethodParameters ( QString <i>methodName</i> ) const</h3>
-<p>Returns list of names of parameters of a method specified by <i>methodName</i>.</p>
-<!-- @@@getMethodParameters -->
-<!-- $$$getMethodReturnValue[overload1]$$$getMethodReturnValueQString -->
-<h3 class="fn"><a name="getMethodReturnValue"></a>QStringList QWebService::getMethodReturnValue ( QString <i>methodName</i> ) const</h3>
-<p>Returns names of return values, for a given method (<i>methodName</i>).</p>
-<!-- @@@getMethodReturnValue -->
-<!-- $$$getParameterNamesTypes[overload1]$$$getParameterNamesTypesQString -->
-<h3 class="fn"><a name="getParameterNamesTypes"></a>QMap&lt;QString, QVariant&gt; QWebService::getParameterNamesTypes ( QString <i>methodName</i> ) const</h3>
-<p>For a given <i>methodName</i>, returns a QMap with QString paramater name as a key, and QVariant value. By running QVariant::typeName() you can determine the type of the parameter.</p>
-<!-- @@@getParameterNamesTypes -->
-<!-- $$$getReturnValueNameType[overload1]$$$getReturnValueNameTypeQString -->
-<h3 class="fn"><a name="getReturnValueNameType"></a>QMap&lt;QString, QVariant&gt; QWebService::getReturnValueNameType ( QString <i>methodName</i> ) const</h3>
-<p>For a given <i>methodName</i>, returns a QMap with QString paramater name as a key, and QVariant value. By running QVariant::typeName() you can determine the type of the parameter.</p>
-<!-- @@@getReturnValueNameType -->
+<!-- @@@hostUrl -->
 <!-- $$$isErrorState[overload1]$$$isErrorState -->
 <h3 class="fn"><a name="isErrorState"></a>bool QWebService::isErrorState ()</h3>
 <p>Returns true if object is in error state.</p>
 <!-- @@@isErrorState -->
+<!-- $$$methodNames[overload1]$$$methodNames -->
+<h3 class="fn"><a name="methodNames"></a>QStringList QWebService::methodNames ()</h3>
+<p>Returns a list of methods' names.</p>
+<!-- @@@methodNames -->
+<!-- $$$methodParameters[overload1]$$$methodParametersQString -->
+<h3 class="fn"><a name="methodParameters"></a>QStringList QWebService::methodParameters ( QString <i>methodName</i> ) const</h3>
+<p>Returns list of names of parameters of a method specified by <i>methodName</i>.</p>
+<!-- @@@methodParameters -->
+<!-- $$$methodReturnValue[overload1]$$$methodReturnValueQString -->
+<h3 class="fn"><a name="methodReturnValue"></a>QStringList QWebService::methodReturnValue ( QString <i>methodName</i> ) const</h3>
+<p>Returns names of return values, for a given method (<i>methodName</i>).</p>
+<!-- @@@methodReturnValue -->
+<!-- $$$parameterNamesTypes[overload1]$$$parameterNamesTypesQString -->
+<h3 class="fn"><a name="parameterNamesTypes"></a>QMap&lt;QString, QVariant&gt; QWebService::parameterNamesTypes ( QString <i>methodName</i> ) const</h3>
+<p>For a given <i>methodName</i>, returns a QMap with QString paramater name as a key, and QVariant value. By running QVariant::typeName() you can determine the type of the parameter.</p>
+<!-- @@@parameterNamesTypes -->
+<!-- $$$returnValueNameType[overload1]$$$returnValueNameTypeQString -->
+<h3 class="fn"><a name="returnValueNameType"></a>QMap&lt;QString, QVariant&gt; QWebService::returnValueNameType ( QString <i>methodName</i> ) const</h3>
+<p>For a given <i>methodName</i>, returns a QMap with QString paramater name as a key, and QVariant value. By running QVariant::typeName() you can determine the type of the parameter.</p>
+<!-- @@@returnValueNameType -->
 <!-- $$$setHost[overload1]$$$setHostQString -->
 <h3 class="fn"><a name="setHost"></a>void QWebService::setHost ( QString <i>hostname</i> )</h3>
 <p>Sets new <i>hostname</i> URL, resets the WSDL, and reinitialises.</p>
+<p>See also <a href="qwebservice.html#host">host</a>().</p>
 <!-- @@@setHost -->
 <!-- $$$setHost$$$setHostQUrl -->
 <h3 class="fn"><a name="setHost-2"></a>void QWebService::setHost ( QUrl <i>hostUrl</i> )</h3>

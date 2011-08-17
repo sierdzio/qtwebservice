@@ -111,7 +111,7 @@ void Flags::setFlags(Options options)
     Options changed = (options ^ this->options);
 
     if (!changed)
-            return;
+        return;
 
     this->options |= options;
 }

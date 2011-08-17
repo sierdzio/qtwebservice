@@ -24,13 +24,13 @@ QWsdl::QWsdl(QObject *parent) :
     replyReceived = false;
     errorState = false;
     errorMessage = "";
-    webServiceName = "";
-    hostUrl.setHost("");
-    targetNamespace = "";
+    m_webServiceName = "";
+    m_hostUrl.setHost("");
+    m_targetNamespace = "";
 
     workMethodList = new QStringList();
     workMethodParameters = new QMap<int, QMap<QString, QVariant> >();
-    methods = new QMap<QString, QWebMethod *>;
+    methodsMap = new QMap<QString, QWebMethod *>;
 }
 
 /*!
@@ -45,13 +45,13 @@ QWsdl::QWsdl(QString wsdlFile, QObject *parent) :
     replyReceived = false;
     errorState = false;
     errorMessage = "";
-    webServiceName = "";
-    hostUrl.setHost("");
-    targetNamespace = "";
+    m_webServiceName = "";
+    m_hostUrl.setHost("");
+    m_targetNamespace = "";
 
     workMethodList = new QStringList();
     workMethodParameters = new QMap<int, QMap<QString, QVariant> >();
-    methods = new QMap<QString, QWebMethod *>;
+    methodsMap = new QMap<QString, QWebMethod *>;
 
     parse();
 }
@@ -63,7 +63,7 @@ QWsdl::QWsdl(QString wsdlFile, QObject *parent) :
   */
 QWsdl::~QWsdl()
 {
-    delete methods;
+    delete methodsMap;
     delete workMethodList;
     delete workMethodParameters;
 }
@@ -82,15 +82,15 @@ void QWsdl::setWsdlFile(QString wsdlFile) // == resetWsdl()
 }
 
 /*!
-    \fn QWsdl::getMethodNames()
+    \fn QWsdl::methodNames()
 
     Returns a QStringList of names of web service's methods.
 
-    \sa getMethods()
+    \sa methods()
   */
-QStringList QWsdl::getMethodNames()
+QStringList QWsdl::methodNames()
 {
-    QList<QString> tempMethods = methods->keys();
+    QList<QString> tempMethods = methodsMap->keys();
     QStringList result;
     result.append(tempMethods);
 
@@ -98,61 +98,61 @@ QStringList QWsdl::getMethodNames()
 }
 
 /*!
-    \fn QWsdl::getMethods()
+    \fn QWsdl::methods()
 
     Returns a QMap<QString, QWebMethod *> pointer. Keys are method names (just as in
     getMethodNames()), and values are QWebMethods themselves (which means they can be used
     not only to get information, but also to send messages, set them up etc.).
 
-    \sa getMethodNames()
+    \sa methodNames()
   */
-QMap<QString, QWebMethod *> *QWsdl::getMethods()
+QMap<QString, QWebMethod *> *QWsdl::methods()
 {
-    return methods;
+    return methodsMap;
 }
 
 /*!
-    \fn QWsdl::getWebServiceName()
+    \fn QWsdl::webServiceName()
 
     Returns QString with the name of the web service specified in WSDL.
   */
-QString QWsdl::getWebServiceName()
+QString QWsdl::webServiceName()
 {
-    return webServiceName;
+    return m_webServiceName;
 }
 
 /*!
-    \fn QWsdl::getHost()
+    \fn QWsdl::host()
 
     Returns web service's URL.
 
-    \sa getHostUrl()
+    \sa hostUrl()
   */
-QString QWsdl::getHost()
+QString QWsdl::host()
 {
-    return hostUrl.host();
+    return m_hostUrl.host();
 }
 
 /*!
-    \fn QWsdl::getHostUrl()
+    \fn QWsdl::hostUrl()
 
     Quite similar to getHostName().
 
-    \sa getHost()
+    \sa host()
   */
-QUrl QWsdl::getHostUrl()
+QUrl QWsdl::hostUrl()
 {
-    return hostUrl;
+    return m_hostUrl;
 }
 
 /*!
-    \fn QWsdl::getTargetNamespace()
+    \fn QWsdl::targetNamespace()
 
     Returns target namespace specified in WSDL.
   */
-QString QWsdl::getTargetNamespace()
+QString QWsdl::targetNamespace()
 {
-    return targetNamespace;
+    return m_targetNamespace;
 }
 
 //QFile QWsdl::getWsdl()
@@ -161,13 +161,13 @@ QString QWsdl::getTargetNamespace()
 //}
 
 /*!
-    \fn QWsdl::getErrorInfo()
+    \fn QWsdl::errorInfo()
 
     Returns QString with error message in case an error occured. Otherwise, returns empty string.
 
     \sa isErrorState()
   */
-QString QWsdl::getErrorInfo()
+QString QWsdl::errorInfo()
 {
     return errorMessage;
 }
@@ -178,7 +178,7 @@ QString QWsdl::getErrorInfo()
     Returns true if there was an error, false otherwise. Details about an error can be read with
     getErrorInfo().
 
-    \sa getErrorInfo()
+    \sa errorInfo()
   */
 bool QWsdl::isErrorState()
 {
@@ -197,7 +197,7 @@ void QWsdl::resetWsdl(QString newWsdlPath)
 {    
     wsdlFilePath = newWsdlPath;
 
-    methods->clear();
+    methodsMap->clear();
     workMethodList->clear();
     replyReceived = false;
     errorState = false;
@@ -225,18 +225,17 @@ void QWsdl::fileReplyFinished(QNetworkReply *rply)
 
     wsdlFilePath = "tempWsdl.asmx~";    
     QFile file("tempWsdl.asmx~");
+
     if (file.exists())
         file.remove();
 
-    if (!file.open(QFile::WriteOnly))
-    {
+    if (!file.open(QFile::WriteOnly)) {
         errorMessage = "Error: cannot write WSDL file from remote location. Reason: " + file.errorString();
         qDebug() << errorMessage;
         errorState = true;
         return;
     }
-    else
-    {
+    else {
         file.write(replyString.toUtf8());
     }
 
@@ -266,8 +265,7 @@ bool QWsdl::parse()
       Most probably, use of QtXmlPatterns would solve a lot of that.
     */
 
-    if (errorState)
-    {
+    if (errorState) {
         errorMessage = "WSDL reader is in error state and cannot parse the file.";
         qDebug() << errorMessage;
         return false;
@@ -276,8 +274,7 @@ bool QWsdl::parse()
     prepareFile();
 
     QFile file(wsdlFilePath);
-    if (!file.open(QFile::ReadOnly | QFile::Text))
-    {
+    if (!file.open(QFile::ReadOnly | QFile::Text)) {
         errorMessage = "Error: cannot read WSDL file: " + wsdlFilePath + ". Reason: " + file.errorString();
         qDebug() << errorMessage;
         errorState = true;
@@ -287,28 +284,24 @@ bool QWsdl::parse()
     xmlReader.setDevice(&file);
     xmlReader.readNext();
 
-    while (!xmlReader.atEnd())
-    {
-        if (xmlReader.isStartElement())
-        {
-            QString tempN = xmlReader.name().toString() ;
-            if (tempN == "definitions")
-            {
-                targetNamespace = xmlReader.attributes().value("targetNamespace").toString();
+    while (!xmlReader.atEnd()) {
+        if (xmlReader.isStartElement()) {
+            QString tempN = xmlReader.name().toString();
+
+            if (tempN == "definitions") {
+                m_targetNamespace = xmlReader.attributes().value("targetNamespace").toString();
 //                host = targetNamespace;
 //                hostUrl = host;
                 readDefinitions();
             }
-            else
-            {
+            else {
                 errorMessage = "Error: file does not have WSDL definitions inside!";
                 qDebug() << errorMessage;
                 errorState = true;
                 return false;
             }
         }
-        else
-        {
+        else {
             xmlReader.readNext();
         }
     }
@@ -331,9 +324,8 @@ void QWsdl::prepareFile()
 {
     QUrl filePath(wsdlFilePath);
 
-    if (!QFile::exists(wsdlFilePath) && filePath.isValid())
-    {
-        hostUrl = filePath;
+    if (!QFile::exists(wsdlFilePath) && filePath.isValid()) {
+        m_hostUrl = filePath;
 
         QNetworkAccessManager *manager = new QNetworkAccessManager(this);
         connect(manager, SIGNAL(finished(QNetworkReply*)),
@@ -341,8 +333,7 @@ void QWsdl::prepareFile()
 
         manager->get(QNetworkRequest(filePath));
 
-        forever
-        {
+        forever {
             if (replyReceived == true)
                 return;
             else
@@ -371,65 +362,55 @@ void QWsdl::readDefinitions()
     xmlReader.readNext();
     QString tempName = xmlReader.name().toString();
 
-    while(!xmlReader.atEnd())
-    {
+    while(!xmlReader.atEnd()) {
         tempName = xmlReader.name().toString();
 
-        if (xmlReader.isEndElement() && (tempName == "definitions"))
-        {
+        if (xmlReader.isEndElement() && (tempName == "definitions")) {
             xmlReader.readNext();
             break;
         }
-        else if (xmlReader.isEndElement())
-        {
+        else if (xmlReader.isEndElement()) {
             xmlReader.readNext();
             continue;
         }
 
-        if (tempName == "types")
-        {
+        if (tempName == "types") {
             readTypes();
 //            tagUsed.insert("types", true);
             xmlReader.readNext();
         }
-        else if (tempName == "message")
-        {
+        else if (tempName == "message") {
             if (!tagUsed.value("message"))
                 readMessages();
             tagUsed.insert("message", true);
             xmlReader.readNext();
         }
-        else if (tempName == "portType")
-        {
+        else if (tempName == "portType") {
             if (!tagUsed.value("portType"))
                 readPorts();
             tagUsed.insert("portType", true);
             xmlReader.readNext();
         }
-        else if (tempName == "binding")
-        {
+        else if (tempName == "binding") {
 
             if (!tagUsed.value("binding"))
                 readBindings();
             tagUsed.insert("binding", true);
             xmlReader.readNext();
         }
-        else if (tempName == "service")
-        {
+        else if (tempName == "service") {
 //            if (!tagUsed.value("service"))
                 readService();
             tagUsed.insert("service", true);
             xmlReader.readNext();
         }
-        else if (tempName == "documentation")
-        {
+        else if (tempName == "documentation") {
             if (!tagUsed.value("documentation"))
                 readDocumentation();
             tagUsed.insert("documentation", true);
             xmlReader.readNext();
         }
-        else
-        {
+        else {
             xmlReader.readNext();
         }
     }
@@ -443,12 +424,11 @@ void QWsdl::readTypes()
     xmlReader.readNext();
     xmlReader.readNext();
     QString tempName = xmlReader.name().toString();
-    if (xmlReader.name().toString() == "schema")
-    {
+
+    if (xmlReader.name().toString() == "schema") {
         xmlReader.readNext();
     }
-    else
-    {
+    else {
         errorMessage = "Error: file does not have WSDL schema tag inside!";
         qDebug() << errorMessage;
         errorState = true;
@@ -457,25 +437,21 @@ void QWsdl::readTypes()
 
     QString lastName = "";
     tempName = "";
-    while(!xmlReader.atEnd())
-    {
+    while(!xmlReader.atEnd()) {
         if (tempName != "")
             lastName = tempName;
         tempName = xmlReader.name().toString();
 
-        if (tempName == "element" && (xmlReader.attributes().count() == 1))
-        {
+        if (tempName == "element" && (xmlReader.attributes().count() == 1)) {
             QString elementName = xmlReader.attributes().value("name").toString();
             workMethodList->append(elementName);
             readTypeSchemaElement();
         }
-        else if (xmlReader.isEndElement() && (tempName == "schema"))
-        {
+        else if (xmlReader.isEndElement() && (tempName == "schema")) {
             xmlReader.readNext();
             break;
         }
-        else
-        {
+        else {
             xmlReader.readNext();
         }
     }
@@ -492,8 +468,7 @@ void QWsdl::readTypeSchemaElement()
     bool firstElem = true;
     QString tempName = ""; //xmlReader.name().toString();
     QString lastName = "";
-    while(!xmlReader.atEnd())
-    {
+    while(!xmlReader.atEnd()) {
         if (tempName != "")
             lastName = tempName;
         tempName = xmlReader.name().toString();
@@ -501,32 +476,27 @@ void QWsdl::readTypeSchemaElement()
         if (xmlReader.isEndElement()
                 && (xmlReader.name() == "element")
                 && ((lastName == "complexType") || (lastName == "sequence"))
-                && (firstElem == false)
-                )
-        {
+                && (firstElem == false)) {
             int currentMethodIndex = workMethodList->length() - 1;
             workMethodParameters->insert(currentMethodIndex, params);
             xmlReader.readNext();
             break;
         }
 
-        if ((tempName == "complexType") || (tempName == "sequence"))
-        {
+        if ((tempName == "complexType") || (tempName == "sequence")) {
             firstElem = false;
             xmlReader.readNext();
             continue;
         }
 
-        if (tempName == "element")
-        {
+        if (tempName == "element") {
             firstElem = false;
             // Min and max occurences are not taken into account!
             QString elementName = xmlReader.attributes().value("name").toString();
             // Ommits namespace ("s:int" => "int")
             QString elementType = xmlReader.attributes().value("type").toString();
 
-            if ((elementName == "") || (elementType == "") )
-            {
+            if ((elementName == "") || (elementType == "")) {
                 xmlReader.readNext();
                 continue;
             }
@@ -535,35 +505,23 @@ void QWsdl::readTypeSchemaElement()
             elementType = elementType.split(':').at(1);
             // NEEDS MANY MORE VALUE TYPES! VERY SHAKY IMPLEMENTATION!
             if (elementType == "int")
-            {
                 element.setValue(0);
-            }
             else if (elementType == "boolean")
-            {
                 element.setValue(true);
-            }
             else if (elementType == "dateTime")
-            {
                 element.setValue(QDateTime());
-            }
             else if (elementType == "string")
-            {
                 element.setValue(QString(""));
-            }
             else if (elementType == "ArrayOfString")
-            {
                 element.setValue(QStringList());
-            }
             else
-            {
                 element.setValue(QString("temp"));
-            }// NEEDS MANY MORE VALUE TYPES! VERY SHAKY IMPLEMENTATION!
+            // NEEDS MANY MORE VALUE TYPES! VERY SHAKY IMPLEMENTATION!
 
             params.insert(elementName, element);
             xmlReader.readNext();
         }
-        else
-        {
+        else {
             xmlReader.readNext();
         }
     }
@@ -586,26 +544,21 @@ void QWsdl::prepareMethods()
         methodsDone[x] = false;
 
 
-    for (int i = 0; (i < workMethodList->length()); i++)
-    {
-        if (methodsDone[i] == false)
-        {
+    for (int i = 0; (i < workMethodList->length()); i++) {
+        if (methodsDone[i] == false) {
             bool isMethodAndResponsePresent = false;
             int methodMain = 0;
             int methodReturn = 0;
             QString methodName = workMethodList->at(i);
 
-            if (methodName.contains("Response"))
-            {
+            if (methodName.contains("Response")) {
                 methodReturn = i;
                 methodsDone[i] = true;
                 QString tempMethodName = methodName;
                 tempMethodName.chop(8);
 
-                for (int j = 0; j < workMethodList->length(); j++)
-                {
-                    if (workMethodList->at(j) == tempMethodName)
-                    {
+                for (int j = 0; j < workMethodList->length(); j++) {
+                    if (workMethodList->at(j) == tempMethodName) {
                         methodMain = j;
                         methodsDone[j] = true;
                         isMethodAndResponsePresent = true;
@@ -614,14 +567,11 @@ void QWsdl::prepareMethods()
                     }
                 }
             }
-            else
-            {
+            else {
                 methodMain = i;
 
-                for (int j = 0; j < workMethodList->length(); j++)
-                {
-                    if (workMethodList->at(j) == (methodName + "Response"))
-                    {
+                for (int j = 0; j < workMethodList->length(); j++) {
+                    if (workMethodList->at(j) == (methodName + "Response")) {
                         methodReturn = j;
                         methodsDone[j] = true;
                         isMethodAndResponsePresent = true;
@@ -630,13 +580,12 @@ void QWsdl::prepareMethods()
                 }
             }
 
-            if (isMethodAndResponsePresent == true)
-            {
-                methods->insert(methodName, new QWebMethod(targetNamespace,
+            if (isMethodAndResponsePresent == true) {
+                methodsMap->insert(methodName, new QWebMethod(m_targetNamespace,
                                                              methodName,
                                                              workMethodParameters->value(methodMain)));
-                methods->value(methodName)->setReturnValue(workMethodParameters->value(methodReturn));
-                methods->value(methodName)->setTargetNamespace(targetNamespace);
+                methodsMap->value(methodName)->setReturnValue(workMethodParameters->value(methodReturn));
+                methodsMap->value(methodName)->setTargetNamespace(m_targetNamespace);
             }
         }
     }
@@ -676,8 +625,8 @@ void QWsdl::readService()
 {
 //    qDebug() << "WSDL :service tag not supported yet.";
 //    xmlReader.readNext(); xmlReader.readNext();
-    if (webServiceName == "")
-        webServiceName = xmlReader.attributes().value("name").toString();
+    if (m_webServiceName == "")
+        m_webServiceName = xmlReader.attributes().value("name").toString();
 //    qDebug() << "Web service's name is now set.";
     xmlReader.readNext();
 }

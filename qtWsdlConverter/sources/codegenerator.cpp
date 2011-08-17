@@ -59,13 +59,12 @@ bool CodeGenerator::enterErrorState(QString errMessage)
   */
 void CodeGenerator::prepare()
 {
-    if (!(flags->flags() & Flags::allInOneDirStructure))
-    {
+    if (!(flags->flags() & Flags::allInOneDirStructure)) {
         workingDir.mkdir("headers");
         workingDir.mkdir("sources");
     }
 
-    messages = wsdl->getMethods();
+    messages = wsdl->methods();
 }
 
 /*!
@@ -101,16 +100,15 @@ bool CodeGenerator::create(QWsdl *w, QDir wrkDir, Flags *flgs, QString bsClsNme,
   */
 bool CodeGenerator::createMessages()
 {
-    if (flags->flags() & Flags::noMessagesStructure)
-    {
-        if (!(flags->flags() & Flags::allInOneDirStructure))
-        {
+    if (flags->flags() & Flags::noMessagesStructure) {
+        if (!(flags->flags() & Flags::allInOneDirStructure)) {
             workingDir.cd("sources");
             createMainCpp();
             workingDir.cdUp();
         }
-        else
+        else {
             createMainCpp();
+        }
 
         return true;
     }
@@ -118,29 +116,28 @@ bool CodeGenerator::createMessages()
     if (!(flags->flags() & Flags::allInOneDirStructure))
         workingDir.cd("headers");
 
-    foreach (QString s, messages->keys())
-    {
+    foreach (QString s, messages->keys()) {
         QWebMethod *m = messages->value(s);
         if (!createMessageHeader(m))
-            return enterErrorState("Creating header for message \"" + m->getMessageName() + "\" failed!");
+            return enterErrorState("Creating header for message \"" + m->messageName() + "\" failed!");
     }
 
-    if (!(flags->flags() & Flags::allInOneDirStructure))
-    {
+    if (!(flags->flags() & Flags::allInOneDirStructure)) {
         workingDir.cdUp();
         workingDir.cd("sources");
     }
-    foreach (QString s, messages->keys())
-    {
+
+    foreach (QString s, messages->keys()) {
         QWebMethod *n = messages->value(s);
         if (!createMessageSource(n))
-            return enterErrorState("Creating source for message \"" + n->getMessageName() + "\" failed!");;
+            return enterErrorState("Creating source for message \"" + n->messageName() + "\" failed!");;
     }
-    if (!(flags->flags() & Flags::allInOneDirStructure))
-    {
+
+    if (!(flags->flags() & Flags::allInOneDirStructure)) {
         createMainCpp();
         workingDir.cdUp();
     }
+
     return true;
 }
 
@@ -150,30 +147,29 @@ bool CodeGenerator::createMessages()
   */
 bool CodeGenerator::createMessageHeader(QWebMethod *msg)
 {
-    QString msgName = msg->getMessageName();
+    QString msgName = msg->messageName();
     QFile file(workingDir.path() + "/" + msgName + ".h");
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
         return enterErrorState("Error: could not open message header file for writing.");
 
-    QString msgReplyName = msg->getReturnValueName().first(); // Possible problem in case of multi-return.
+    QString msgReplyName = msg->returnValueName().first(); // Possible problem in case of multi-return.
 
     QString msgReplyType = "";
     QString msgParameters = "";
     {
         // Create msgReplyType
-        QMap<QString, QVariant> tempMap = msg->getReturnValueNameType();
-        foreach (QString s, tempMap.keys())
-        {
+        QMap<QString, QVariant> tempMap = msg->returnValueNameType();
+
+        foreach (QString s, tempMap.keys()) {
             msgReplyType += tempMap.value(s).typeName();
             break;
         }
 
         tempMap.clear();
-        tempMap = msg->getParameterNamesTypes();
+        tempMap = msg->parameterNamesTypes();
 
         // Create msgParameters (comma separated list)
-        foreach (QString s, tempMap.keys())
-        {
+        foreach (QString s, tempMap.keys()) {
             msgParameters += QString(tempMap.value(s).typeName()) + " " + s + ", ";
         }
         msgParameters.chop(2);
@@ -223,13 +219,13 @@ bool CodeGenerator::createMessageHeader(QWebMethod *msg)
     if (!((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::asynchronous)))
     {
         out << "    QString static sendMessage(QObject *parent";
-        if (msgParameters != "")
-        {
+        if (msgParameters != "") {
             out << "," << endl;
             out << "                                " << msgParameters << ");" << endl;
         }
-        else
+        else {
             out << ");" << endl;
+        }
     }
     // Temporarily, all messages will return QString!
 //    out << "    " << msgReplyType << " replyRead();" << endl;
@@ -263,9 +259,9 @@ bool CodeGenerator::createMessageHeader(QWebMethod *msg)
     out << "    QString reply;" << endl;
     { // Create parameters list in declarative form.
         out << "    // -------------------------" << endl << "    // Parameters:" << endl;
-        QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
-        foreach (QString s, tempMap.keys())
-        {
+        QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
+
+        foreach (QString s, tempMap.keys()) {
             out << "    " << tempMap.value(s).typeName() << " " << s  << ";" << endl;
         }
         out << "    // End of parameters." << endl << "    // -------------------------" << endl;
@@ -290,28 +286,27 @@ bool CodeGenerator::createMessageHeader(QWebMethod *msg)
   */
 bool CodeGenerator::createMessageSource(QWebMethod *msg)
 {
-    QString msgName = msg->getMessageName();
+    QString msgName = msg->messageName();
     QFile file(workingDir.path() + "/" + msgName + ".cpp");
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
         return enterErrorState("Error: could not open message source file for writing.");
 
-    QString msgReplyName = msg->getReturnValueName().first(); // Possible problem in case of multi-return.
+    QString msgReplyName = msg->returnValueName().first(); // Possible problem in case of multi-return.
 
     QString msgReplyType = "";
     QString msgParameters = "";
     {
-        QMap<QString, QVariant> tempMap = msg->getReturnValueNameType();
-        foreach (QString s, tempMap.keys())
-        {
+        QMap<QString, QVariant> tempMap = msg->returnValueNameType();
+
+        foreach (QString s, tempMap.keys()) {
             msgReplyType += tempMap.value(s).typeName();
             break;
         }
 
         tempMap.clear();
-        tempMap = msg->getParameterNamesTypes();
+        tempMap = msg->parameterNamesTypes();
 
-        foreach (QString s, tempMap.keys())
-        {
+        foreach (QString s, tempMap.keys()) {
             msgParameters += QString(tempMap.value(s).typeName()) + " " + s + ", ";
         }
         msgParameters.chop(2);
@@ -329,10 +324,10 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
     out << "    QObject(parent)" << endl;
     out << "{" << endl;
 
-    if (msg->getHost() != "")
-        out << "    hostUrl.setHost(\"" << msg->getHost() << "\");" << endl;
+    if (msg->host() != "")
+        out << "    hostUrl.setHost(\"" << msg->host() << "\");" << endl;
     else
-        out << "    hostUrl.setHost(\"" << msg->getTargetNamespace() << "\");" << endl;
+        out << "    hostUrl.setHost(\"" << msg->targetNamespace() << "\");" << endl;
 
     out << "    messageName = \"" << msgName << "\";" << endl;
     out << "    replyReceived = false;" << endl;
@@ -353,15 +348,14 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
 
     out << "}" << endl;
     out << endl;
-    if (msgParameters != "")
-    {
+    if (msgParameters != "") {
         out << msgName << "::" << msgName << "(" << msgParameters << ", QObject *parent) :" << endl;
         out << "    QObject(parent)" << endl;
         out << "{" << endl;
         { // Assign all parameters.
-            QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
-            foreach (QString s, tempMap.keys())
-            {
+            QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
+
+            foreach (QString s, tempMap.keys()) {
                 out << "    this->" << s << " = " << s << ";" << endl;
             }
 
@@ -378,10 +372,10 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
             out << ";" << endl;
         }
 
-        if (msg->getHost() != "")
-            out << "    hostUrl.setHost(\"" << msg->getHost() << "\");" << endl;
+        if (msg->host() != "")
+            out << "    hostUrl.setHost(\"" << msg->host() << "\");" << endl;
         else
-            out << "    hostUrl.setHost(\"" << msg->getTargetNamespace() << "\");" << endl;
+            out << "    hostUrl.setHost(\"" << msg->targetNamespace() << "\");" << endl;
 //        out << "    hostUrl.setHost(host + messageName);" << endl; // This is probably wrong, vars are not set!
 
         out << "    messageName = \"" << msgName << "\";" << endl;
@@ -401,16 +395,15 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
     out << "void " << msgName << "::setParams(" << msgParameters << ")" << endl;
     out << "{" << endl;
     { // Assign all parameters.
-        QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
-        foreach (QString s, tempMap.keys())
-        {
+        QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
+
+        foreach (QString s, tempMap.keys()) {
             out << "    this->" << s << " = " << s << ";" << endl;
         }
     }
     out << "}" << endl;
     out << endl;
-    if (!(flags->flags() & Flags::compactMode))
-    {
+    if (!(flags->flags() & Flags::compactMode)) {
         out << "void " << msgName << "::setProtocol(Protocol prot)" << endl;
         out << "{" << endl;
         out << "    if (prot == soap)" << endl;
@@ -436,8 +429,7 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
     out << endl;
     out << "    prepareRequestData();" << endl;
     out << endl;
-    if (flags->flags() & Flags::debugMode)
-    {
+    if (flags->flags() & Flags::debugMode) {
         out << "    qDebug() << request.rawHeaderList() << \" \" << request.url().toString();" << endl;
         out << "    qDebug() << \"*************************\";" << endl;
         out << endl;
@@ -446,14 +438,12 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
     out << "    return true;" << endl;
     out << "}" << endl;
     out << endl;
-    if ((msgParameters != "") && !((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous)))
-    {
+    if ((msgParameters != "") && !((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous))) {
         out << "bool " << msgName << "::sendMessage(" << msgParameters << ")" << endl;
         out << "{" << endl;
         { // Assign all parameters.
-            QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
-            foreach (QString s, tempMap.keys())
-            {
+            QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
+            foreach (QString s, tempMap.keys()) {
                 out << "    this->" << s << " = " << s << ";" << endl;
             }
         }
@@ -462,8 +452,7 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
         out << "}" << endl;
         out << endl;
     }
-    if (!((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::asynchronous)))
-    {
+    if (!((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::asynchronous))) {
         out << "/* STATIC */" << endl;
         // Temporarily, all messages will return QString!
         //    out << "" << msgReplyType << " " << msgName << "::sendMessage(QObject *parent, " << msgParameters << ")" << endl;
@@ -476,9 +465,9 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
         { // Assign all parameters.
             out << "    qsm.setParams(";
             QString tempS = "";
-            QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
-            foreach (QString s, tempMap.keys())
-            {
+            QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
+
+            foreach (QString s, tempMap.keys()) {
                 tempS += s + ", ";
             }
             tempS.chop(2);
@@ -516,9 +505,9 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
     out << "{" << endl;
     out << "    QMap<QString, QVariant> parameters;" << endl;
     { // Assign all parameters.
-        QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
-        foreach (QString s, tempMap.keys())
-        {
+        QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
+
+        foreach (QString s, tempMap.keys()) {
             out << "    parameters.insert(\"" << s << "\", QVariant(";
             QString tmpName = tempMap.value(s).typeName();
             if (tmpName != "int")
@@ -538,9 +527,9 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
     out << "{" << endl;
     out << "    QMap<QString, QVariant> parameters;" << endl;
     { // Assign all parameters.
-        QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
-        foreach (QString s, tempMap.keys())
-        {
+        QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
+
+        foreach (QString s, tempMap.keys()) {
             out << "    parameters.insert(\"" << s << "\", QVariant(";
             QString tmpName = tempMap.value(s).typeName();
             if (tmpName != "int")
@@ -707,15 +696,15 @@ bool CodeGenerator::createService()
     if (!(flags->flags() & Flags::allInOneDirStructure))
         workingDir.cd("headers");
     if (!createServiceHeader())
-        return enterErrorState("Creating header for Web Service \"" + wsdl->getWebServiceName() + "\" failed!");
+        return enterErrorState("Creating header for Web Service \"" + wsdl->webServiceName() + "\" failed!");
 
-    if (!(flags->flags() & Flags::allInOneDirStructure))
-    {
+    if (!(flags->flags() & Flags::allInOneDirStructure)) {
         workingDir.cdUp();
         workingDir.cd("sources");
     }
+
     if (!createServiceSource())
-        return enterErrorState("Creating source for Web Service \"" + wsdl->getWebServiceName() + "\" failed!");
+        return enterErrorState("Creating source for Web Service \"" + wsdl->webServiceName() + "\" failed!");
 
     if (!(flags->flags() & Flags::allInOneDirStructure))
         workingDir.cdUp();
@@ -729,11 +718,12 @@ bool CodeGenerator::createService()
 bool CodeGenerator::createServiceHeader()
 {
     QString wsName = "";
-    QMap<QString, QWebMethod *> *tempMap = wsdl->getMethods();
+    QMap<QString, QWebMethod *> *tempMap = wsdl->methods();
+
     if (baseClassName != "")
         wsName = baseClassName;
     else
-        wsName = wsdl->getWebServiceName();
+        wsName = wsdl->webServiceName();
 
     QFile file(workingDir.path() + "/" + wsName + ".h");
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
@@ -747,11 +737,11 @@ bool CodeGenerator::createServiceHeader()
     out << "#define " << wsName.toUpper() << "_H" << endl;
     out << endl;
     out << "#include <QUrl>" << endl;
-    if (!(flags->flags() & Flags::noMessagesStructure))
-    { // Include all messages.
-        QStringList tempMp = wsdl->getMethodNames();
-        foreach (QString s, tempMp)
-        {
+    if (!(flags->flags() & Flags::noMessagesStructure)) {
+        // Include all messages.
+        QStringList tempMp = wsdl->methodNames();
+
+        foreach (QString s, tempMp) {
             out << "#include \"" << s << ".h\"" << endl;
         }
     }
@@ -771,20 +761,18 @@ bool CodeGenerator::createServiceHeader()
     out << endl;
     out << "    QStringList getMethodNames();" << endl;
     { // Declare all messages (as wrappers for message classes).
-        foreach (QString s, tempMap->keys())
-        {
+        foreach (QString s, tempMap->keys()) {
             QString tmpReturn = "", tmpP = "";
             QWebMethod *m = tempMap->value(s);
-            foreach (QString ret, m->getReturnValueNameType().keys())
-            {
-                tmpReturn = m->getReturnValueNameType().value(ret).typeName();
+
+            foreach (QString ret, m->returnValueNameType().keys()) {
+                tmpReturn = m->returnValueNameType().value(ret).typeName();
                 break; // This does not support multiple return values!
             }
 
-            QMap<QString, QVariant> tempParam = m->getParameterNamesTypes();
+            QMap<QString, QVariant> tempParam = m->parameterNamesTypes();
             // Create msgParameters (comma separated list)
-            foreach (QString param, tempParam.keys())
-            {
+            foreach (QString param, tempParam.keys()) {
                 tmpP += QString(tempParam.value(param).typeName()) + " " + param + ", ";
             }
             tmpP.chop(2);
@@ -800,11 +788,11 @@ bool CodeGenerator::createServiceHeader()
     out << "    QUrl getHostUrl();" << endl;
     out << "    QString getHost();" << endl;
     out << "    bool isErrorState();" << endl;
-    if (flags->flags() & Flags::asynchronous)
-    { // Declare getters of methods' replies.
+    if (flags->flags() & Flags::asynchronous) {
+        // Declare getters of methods' replies.
         out << "    // Method reply getters: " << endl;
-        foreach (QString s, tempMap->keys())
-        {
+
+        foreach (QString s, tempMap->keys()) {
             /* Code not ready for compact mode checking.
             if (flags->flags() & Flags::compactMode)
             {
@@ -815,9 +803,8 @@ bool CodeGenerator::createServiceHeader()
             {
                 QString tmpReturn = "";
                 QWebMethod *m = tempMap->value(s);
-                foreach (QString ret, m->getReturnValueNameType().keys())
-                {
-                    tmpReturn = m->getReturnValueNameType().value(ret).typeName();
+                foreach (QString ret, m->returnValueNameType().keys()) {
+                    tmpReturn = m->returnValueNameType().value(ret).typeName();
                     break; // This does not support multiple return values!
                 }
                 out << "    " << tmpReturn << " " << s << "ReplyRead();" << endl;
@@ -827,10 +814,9 @@ bool CodeGenerator::createServiceHeader()
     }
     out << endl;
     out << "protected slots:" << endl;
-    if (flags->flags() & Flags::asynchronous)
-    { // Declare methods for processing asynchronous replies.
-        foreach (QString s, tempMap->keys())
-        {
+    if (flags->flags() & Flags::asynchronous) {
+        // Declare methods for processing asynchronous replies.
+        foreach (QString s, tempMap->keys()) {
             /* Code not ready for compact mode checking.
             if (flags->flags() & Flags::compactMode)
             {
@@ -848,25 +834,23 @@ bool CodeGenerator::createServiceHeader()
     out << "    bool errorState;" << endl;
     out << "    QUrl hostUrl;" << endl;
 
-    if (flags->flags() & Flags::asynchronous)
-//            && !(flags->flags() & Flags::compactMode))
-    { // Declare reply variables for asynchronous mode.
+    if (flags->flags() & Flags::asynchronous) {
+        // Declare reply variables for asynchronous mode.
         out << "    // Message replies:" << endl;
-        foreach (QString s, tempMap->keys())
-        {
+
+        foreach (QString s, tempMap->keys()) {
             QString tmpReturn = "";
             QWebMethod *m = tempMap->value(s);
-            foreach (QString ret, m->getReturnValueNameType().keys())
-            {
-                tmpReturn = m->getReturnValueNameType().value(ret).typeName();
+
+            foreach (QString ret, m->returnValueNameType().keys()) {
+                tmpReturn = m->returnValueNameType().value(ret).typeName();
                 break; // This does not support multiple return values!
             }
             out << "    " << tmpReturn << " " << s << "Result;" << endl;
         }
 
         out << "    // Messages:" << endl;
-        foreach (QString s, tempMap->keys())
-        {
+        foreach (QString s, tempMap->keys()) {
             if (!(flags->flags() & Flags::noMessagesStructure))
                 out << "    " << s << " ";
             else // sierdzioL I don't particurarly like this implementation, will rethink it later.
@@ -892,11 +876,11 @@ bool CodeGenerator::createServiceHeader()
 bool CodeGenerator::createServiceSource()
 {
     QString wsName = "";
-    QMap<QString, QWebMethod *> *tempMap = wsdl->getMethods();
+    QMap<QString, QWebMethod *> *tempMap = wsdl->methods();
     if (baseClassName != "")
         wsName = baseClassName;
     else
-        wsName = wsdl->getWebServiceName();
+        wsName = wsdl->webServiceName();
 
     QFile file(workingDir.path() + "/" + wsName + ".cpp");
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
@@ -914,10 +898,11 @@ bool CodeGenerator::createServiceSource()
     out << "" << wsName << "::" << wsName << "(QObject *parent)" << endl;
     out << "    : QObject(parent)" << endl;
     out << "{" << endl;
-    if (flags->flags() & Flags::asynchronous)
-    { // Connect signals and slots for asynchronous mode.
-        foreach (QString s, tempMap->keys())
-        {
+
+    if (flags->flags() & Flags::asynchronous) {
+        // Connect signals and slots for asynchronous mode.
+
+        foreach (QString s, tempMap->keys()) {
             out << "    connect(&" << s.toLower() << flags->objectSuffix() << ", SIGNAL(replyReady(QString)), this, SLOT(";
             /* Code not ready for compact mode checking.
             if (flags->flags() & Flags::compactMode)
@@ -933,7 +918,7 @@ bool CodeGenerator::createServiceSource()
             out << "));" << endl;
         }
     }
-    out << "    hostUrl.setHost(\"" << wsdl->getHost() << "\");" << endl;
+    out << "    hostUrl.setHost(\"" << wsdl->host() << "\");" << endl;
     out << "    errorState = false;" << endl;
     out << "    isErrorState();" << endl;
     out << "}" << endl;
@@ -946,32 +931,29 @@ bool CodeGenerator::createServiceSource()
     out << "{" << endl;
     { // Create and return the QStringList containing method names:
         out << "    QStringList result;" << endl;
-        foreach (QString s, tempMap->keys())
-        {
+
+        foreach (QString s, tempMap->keys()) {
             QWebMethod *m = tempMap->value(s);
-            out << "    result.append(\"" << m->getMessageName() << "\");" << endl;
+            out << "    result.append(\"" << m->messageName() << "\");" << endl;
         }
         out << "    return result;" << endl;
     }
     out << "}" << endl;
     out << endl;
     { // Define all messages (as wrappers for message classes).
-        foreach (QString s, tempMap->keys())
-        {
+        foreach (QString s, tempMap->keys()) {
             QString tmpReturn = "", tmpP = "", tmpPN = "";
             QWebMethod *m = tempMap->value(s);
 
-            foreach (QString ret, m->getReturnValueNameType().keys())
-            {
-                tmpReturn = m->getReturnValueNameType().value(ret).typeName();
+            foreach (QString ret, m->returnValueNameType().keys()) {
+                tmpReturn = m->returnValueNameType().value(ret).typeName();
                 break; // This does not support multiple return values!
             }
 
-            QMap<QString, QVariant> tempParam = m->getParameterNamesTypes();
+            QMap<QString, QVariant> tempParam = m->parameterNamesTypes();
 
             // Create msgParameters (comma separated list)
-            foreach (QString param, tempParam.keys())
-            {
+            foreach (QString param, tempParam.keys()) {
                 tmpP += QString(tempParam.value(param).typeName()) + " " + param + ", ";
                 tmpPN += param + ", ";
             }
@@ -979,31 +961,29 @@ bool CodeGenerator::createServiceSource()
             tmpPN.chop(2);
 
 
-            if (flags->flags() & Flags::synchronous)
-            {
+            if (flags->flags() & Flags::synchronous) {
                 // Temporarily, all messages will return QString!
 //                out << tmpReturn << " " << wsName << "::" << s << "(" << tmpP << ")" << endl;
                 out << "QString " << wsName << "::" << s << flags->messageSuffix() << "(" << tmpP << ")" << endl;
                 out << "{" << endl;
                 out << "    // TODO: You can add your own data handling here, and make the whole method return" << endl;
                 out << "    //       proper type." << endl;
-                if (flags->flags() & Flags::noMessagesStructure)
-                {
+
+                if (flags->flags() & Flags::noMessagesStructure) {
                     out << "    QMap<QString, QVariant> parameters;" << endl;
-                    foreach (QString param, tempParam.keys())
-                    {
+
+                    foreach (QString param, tempParam.keys()) {
                         out << "    parameters.insert(\"" << param;
                         out << "\", QVariant(" << param << "));" << endl;
                     }
 
                     out << endl;
                     out << "    return QWebMethod::sendMessage(this";
-                    out << ", QUrl(\"" << m->getHost() << "\"), \"" << m->getMessageName()
+                    out << ", QUrl(\"" << m->host() << "\"), \"" << m->messageName()
                         << "\", parameters).toString();" << endl;
                 }
-                else
-                {
-                    out << "    return " << m->getMessageName() << "::sendMessage(this";
+                else {
+                    out << "    return " << m->messageName() << "::sendMessage(this";
 
                     if (tmpPN != "")
                         out << ", " << tmpPN << ");" << endl;
@@ -1013,29 +993,28 @@ bool CodeGenerator::createServiceSource()
                 out << "}" << endl;
                 out << endl;
             }
-            else if (flags->flags() & Flags::asynchronous)
-            {
+            else if (flags->flags() & Flags::asynchronous) {
                 QString objName = s.toLower() + flags->objectSuffix(); // Name of the message object.
                 out << "void " << wsName << "::" << s << flags->messageSuffix() << "(" << tmpP << ")" << endl;
                 out << "{" << endl;
 
-                if (flags->flags() & Flags::noMessagesStructure)
-                {
+                if (flags->flags() & Flags::noMessagesStructure) {
                     out << "    QMap<QString, QVariant> parameters;" << endl;
-                    foreach (QString param, tempParam.keys())
-                    {
+
+                    foreach (QString param, tempParam.keys()) {
                         out << "    parameters.insert(\"" << param;
                         out << "\", QVariant(" << param << "));" << endl;
                     }
 
                     out << endl;
-                    out << "    " << objName << ".setHost(\"" << m->getHost() << "\");" << endl;
-                    out << "    " << objName << ".setTargetNamespace(\"" << m->getTargetNamespace() << "\");" << endl;
-                    out << "    " << objName << ".setMessageName(\"" << m->getMessageName() << "\");" << endl;
+                    out << "    " << objName << ".setHost(\"" << m->host() << "\");" << endl;
+                    out << "    " << objName << ".setTargetNamespace(\"" << m->targetNamespace() << "\");" << endl;
+                    out << "    " << objName << ".setMessageName(\"" << m->messageName() << "\");" << endl;
                     out << "    " << objName << ".sendMessage(parameters);" << endl;
                 }
-                else
+                else {
                     out << "    " << objName << ".sendMessage(" << tmpPN << ");" << endl;
+                }
 
                 out << "}" << endl;
                 out << endl;
@@ -1043,11 +1022,11 @@ bool CodeGenerator::createServiceSource()
         }
     }
 
-    if (flags->flags() & Flags::asynchronous)
-    { // Define getters of methods' replies.
+    if (flags->flags() & Flags::asynchronous) {
+        // Define getters of methods' replies.
         out << "    // Method reply getters: " << endl;
-        foreach (QString s, tempMap->keys())
-        {
+
+        foreach (QString s, tempMap->keys()) {
             /* Code not ready for compact mode checking.
             if (flags->flags() & Flags::compactMode)
             {
@@ -1058,9 +1037,9 @@ bool CodeGenerator::createServiceSource()
             {
                 QString tmpReturn = "";
                 QWebMethod *m = tempMap->value(s);
-                foreach (QString ret, m->getReturnValueNameType().keys())
-                {
-                    tmpReturn = m->getReturnValueNameType().value(ret).typeName();
+
+                foreach (QString ret, m->returnValueNameType().keys()) {
+                    tmpReturn = m->returnValueNameType().value(ret).typeName();
                     break; // This does not support multiple return values!
                 }
                 out << tmpReturn << " " << wsName << "::" << s << "ReplyRead()" << endl;
@@ -1073,11 +1052,10 @@ bool CodeGenerator::createServiceSource()
         out << endl;
     }
 
-    if (flags->flags() & Flags::asynchronous)
-//            && !(flags->flags() & Flags::compactMode))
-    { // Define all slots for asynchronous mode.
-        foreach (QString s, tempMap->keys())
-        {
+    if (flags->flags() & Flags::asynchronous) {
+        // Define all slots for asynchronous mode.
+
+        foreach (QString s, tempMap->keys()) {
             /*
             if (flags->mode == Flags::compactMode)
             {
@@ -1088,9 +1066,9 @@ bool CodeGenerator::createServiceSource()
 
             QString tmpReturn = "";
             QWebMethod *m = tempMap->value(s);
-            foreach (QString ret, m->getReturnValueNameType().keys())
-            {
-                tmpReturn = m->getReturnValueNameType().value(ret).typeName();
+
+            foreach (QString ret, m->returnValueNameType().keys()) {
+                tmpReturn = m->returnValueNameType().value(ret).typeName();
                 break; // This does not support multiple return values!
             }
             out << "void " << wsName << "::" << s << "Reply(QString result)" << endl;
@@ -1156,7 +1134,7 @@ bool CodeGenerator::createQMakeProject()
     if (baseClassName != "")
         wsName = baseClassName;
     else
-        wsName = wsdl->getWebServiceName();
+        wsName = wsdl->webServiceName();
 
     QFile file(workingDir.path() + "/" + wsName + ".pro");
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
@@ -1190,12 +1168,12 @@ bool CodeGenerator::createQMakeProject()
     if (!(flags->flags() & Flags::allInOneDirStructure))
         out << "sources/";
     out << "main.cpp ";
-    if (!(flags->flags() & Flags::noMessagesStructure))
-    { // Include all sources.
+    if (!(flags->flags() & Flags::noMessagesStructure)) {
+        // Include all sources.
         out << "\\" << endl;
-        QStringList tempMap = wsdl->getMethodNames();
-        foreach (QString s, tempMap)
-        {
+        QStringList tempMap = wsdl->methodNames();
+
+        foreach (QString s, tempMap) {
             out << "    ";
             if (!(flags->flags() & Flags::allInOneDirStructure))
                 out << "sources/";
@@ -1213,9 +1191,9 @@ bool CodeGenerator::createQMakeProject()
     if (!(flags->flags() & Flags::noMessagesStructure))
     { // Include all headers.
         out << "\\" << endl;
-        QStringList tempMap = wsdl->getMethodNames();
-        foreach (QString s, tempMap)
-        {
+        QStringList tempMap = wsdl->methodNames();
+
+        foreach (QString s, tempMap) {
             out << "    ";
             if (!(flags->flags() & Flags::allInOneDirStructure))
                 out << "headers/";
@@ -1241,7 +1219,7 @@ bool CodeGenerator::createCMakeProject()
     if (baseClassName != "")
         wsName = baseClassName;
     else
-        wsName = wsdl->getWebServiceName();
+        wsName = wsdl->webServiceName();
 
     QFile file(workingDir.path() + "/CMakeLists.txt");
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
@@ -1267,11 +1245,12 @@ bool CodeGenerator::createCMakeProject()
     if (!(flags->flags() & Flags::allInOneDirStructure))
         out << "sources/";
     out << "main.cpp" << endl;
-    if (!(flags->flags() & Flags::noMessagesStructure))
-    { // Include all sources.
-        QStringList tempMap = wsdl->getMethodNames();
-        foreach (QString s, tempMap)
-        {
+
+    if (!(flags->flags() & Flags::noMessagesStructure)) {
+        // Include all sources.
+        QStringList tempMap = wsdl->methodNames();
+
+        foreach (QString s, tempMap) {
             out << "    ";
             if (!(flags->flags() & Flags::allInOneDirStructure))
                 out << "sources/";
@@ -1288,9 +1267,9 @@ bool CodeGenerator::createCMakeProject()
     out << wsName << ".h" << endl;
     if (!(flags->flags() & Flags::noMessagesStructure))
     { // Include all MOC headers.
-        QStringList tempMap = wsdl->getMethodNames();
-        foreach (QString s, tempMap)
-        {
+        QStringList tempMap = wsdl->methodNames();
+
+        foreach (QString s, tempMap) {
             out << "    ";
             if (!(flags->flags() & Flags::allInOneDirStructure))
                 out << "headers/";
@@ -1323,7 +1302,7 @@ bool CodeGenerator::createSconsProject()
     if (baseClassName != "")
         wsName = baseClassName;
     else
-        wsName = wsdl->getWebServiceName();
+        wsName = wsdl->webServiceName();
 
     QFile file(workingDir.path() + "/SConstruct");
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
@@ -1361,12 +1340,13 @@ bool CodeGenerator::createSconsProject()
     if (!(flags->flags() & Flags::allInOneDirStructure))
         out << "\"sources/";
     out << "main.cpp\"";
-    if (!(flags->flags() & Flags::noMessagesStructure))
-    { // Include all sources.
+
+    if (!(flags->flags() & Flags::noMessagesStructure)) {
+        // Include all sources.
         out << "," << endl;
-        QStringList tempMap = wsdl->getMethodNames();
-        foreach (QString s, tempMap)
-        {
+        QStringList tempMap = wsdl->methodNames();
+
+        foreach (QString s, tempMap) {
             out << "    ";
             if (!(flags->flags() & Flags::allInOneDirStructure))
                 out << "\"sources/";
@@ -1377,8 +1357,7 @@ bool CodeGenerator::createSconsProject()
                 out << "]" << endl;
         }
     }
-    else
-    {
+    else {
         out << "]" << endl;
     }
     out << "env.Program(target=\"" << wsName << "\", source=[sources])" << endl;

@@ -34,23 +34,23 @@ public:
     void setHost(QString newHost);
     void setHost(QUrl newHost);
     void setMessageName(QString newName);
-    void setParams(QMap<QString, QVariant> params);
+    void setParameters(QMap<QString, QVariant> params);
     void setReturnValue(QMap<QString, QVariant> returnValue);
     void setTargetNamespace(QString tNamespace);
     void setProtocol(Protocol protocol);
     bool sendMessage();
     bool sendMessage(QMap<QString, QVariant> params);
     QVariant static sendMessage(QObject *parent, QUrl url, QString _messageName,
-                                QMap<QString, QVariant> params);
+                                QMap<QString, QVariant> params, Protocol protocol = soap12);
     QVariant replyRead();
-    QString getMessageName();
-    QStringList getParameterNames() const;
-    QStringList getReturnValueName() const;
-    QMap<QString, QVariant> getParameterNamesTypes() const;
-    QMap<QString, QVariant> getReturnValueNameType() const;
-    QString getTargetNamespace();
-    QString getHost();
-    QUrl getHostUrl();
+    QString messageName();
+    QStringList parameterNames() const;
+    QStringList returnValueName() const;
+    QMap<QString, QVariant> parameterNamesTypes() const;
+    QMap<QString, QVariant> returnValueNameType() const;
+    QString targetNamespace();
+    QString host();
+    QUrl hostUrl();
 
 signals:
     void replyReady(QVariant rply);
@@ -65,9 +65,9 @@ private:
 
     bool replyReceived;
     Protocol protocol;
-    QUrl hostUrl;
-    QString messageName;
-    QString targetNamespace;
+    QUrl m_hostUrl;
+    QString m_messageName;
+    QString m_targetNamespace;
     QVariant reply;
     QMap<QString, QVariant> parameters;
     QMap<QString, QVariant> returnValue;

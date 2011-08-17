@@ -39,9 +39,9 @@
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#WsdlConverter">WsdlConverter</a></b> ( QStringList <i>appArguments</i>, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#dtor.WsdlConverter">~WsdlConverter</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#convert">convert</a></b> ()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#getWebServiceName">getWebServiceName</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#isErrorState">isErrorState</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#setFlags">setFlags</a></b> ( Flags <i>flags</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#webServiceName">webServiceName</a></b> ()</td></tr>
 </table>
 <a name="signals"></a>
 <h2>Signals</h2>
@@ -91,10 +91,6 @@
 <h3 class="fn"><a name="errorEncountered"></a>void WsdlConverter::errorEncountered ( QString <i>errMessage</i> )<tt> [signal]</tt></h3>
 <p>Singal emitted when <a href="wsdlconverter.html">WsdlConverter</a> encounters an error. Carries <i>errMessage</i> for convenience.</p>
 <!-- @@@errorEncountered -->
-<!-- $$$getWebServiceName[overload1]$$$getWebServiceName -->
-<h3 class="fn"><a name="getWebServiceName"></a>QString WsdlConverter::getWebServiceName ()</h3>
-<p>Returns web service's name.</p>
-<!-- @@@getWebServiceName -->
 <!-- $$$isErrorState[overload1]$$$isErrorState -->
 <h3 class="fn"><a name="isErrorState"></a>bool WsdlConverter::isErrorState ()</h3>
 <p>Returns true if object is in error state.</p>
@@ -103,6 +99,10 @@
 <h3 class="fn"><a name="setFlags"></a>void WsdlConverter::setFlags ( <a href="flags.html">Flags</a> <i>flags</i> )</h3>
 <p>Sets the flags using <i>flags</i> object.</p>
 <!-- @@@setFlags -->
+<!-- $$$webServiceName[overload1]$$$webServiceName -->
+<h3 class="fn"><a name="webServiceName"></a>QString WsdlConverter::webServiceName ()</h3>
+<p>Returns web service's name.</p>
+<!-- @@@webServiceName -->
 </div>
 </body>
 </html>

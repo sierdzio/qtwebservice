@@ -30,7 +30,7 @@ void testCase2_wsdl::runWsdlTest(QString filePathOrUrl)
     qDebug() << "Running testCase2";
     wsdl = new QWsdl(filePathOrUrl, this);
     qDebug() << "Getting methods";
-    QStringList tempList = wsdl->getMethodNames();
+    QStringList tempList = wsdl->methodNames();
     qDebug() << "Listing methods";
     if (!wsdl->isErrorState())
     {

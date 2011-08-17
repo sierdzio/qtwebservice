@@ -28,14 +28,14 @@ void testCase3_webservice::runWebServiceTest(QString filePathOrUrl)
     qDebug() << "Running testCase3";
     reader = new QWebServiceReader(filePathOrUrl, this);
     qDebug() << "Getting methods";
-    QStringList tempList = reader->getMethodNames();
+    QStringList tempList = reader->methodNames();
     qDebug() << "Listing methods";
     if (!reader->isErrorState())
     {
         int i = 1;
         foreach (QString s, tempList)
         {
-            QMap<QString, QVariant> tempParams = reader->getParameterNamesTypes(s);
+            QMap<QString, QVariant> tempParams = reader->parameterNamesTypes(s);
             QString params = "";
             foreach (QString p, tempParams.keys())
             {
@@ -44,7 +44,7 @@ void testCase3_webservice::runWebServiceTest(QString filePathOrUrl)
                 params += p + ":" + tempParams.value(p).typeName();
             }
 
-            QMap<QString, QVariant> tempReturns = reader->getReturnValueNameType(s);
+            QMap<QString, QVariant> tempReturns = reader->returnValueNameType(s);
             QString returns = "";
             foreach (QString r, tempReturns.keys())
             {

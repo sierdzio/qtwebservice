@@ -52,9 +52,9 @@
         <keyword ref="wsdlconverter.html#ArgumentDescriptionFlag-enum">WsdlConverter::ClassName</keyword>
         <keyword ref="wsdlconverter.html#convert">convert</keyword>
         <keyword ref="wsdlconverter.html#errorEncountered">errorEncountered</keyword>
-        <keyword ref="wsdlconverter.html#getWebServiceName">getWebServiceName</keyword>
         <keyword ref="wsdlconverter.html#isErrorState">isErrorState</keyword>
         <keyword ref="wsdlconverter.html#setFlags">setFlags</keyword>
+        <keyword ref="wsdlconverter.html#webServiceName">webServiceName</keyword>
         <section ref="wsdlconverter-members.html" title="List of all members"/>
     </section>
 </section>

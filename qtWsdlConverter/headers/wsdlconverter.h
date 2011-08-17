@@ -29,7 +29,7 @@ public:
     void setFlags(Flags flgs);
     bool isErrorState();
     void convert();
-    QString getWebServiceName();
+    QString webServiceName();
 
 signals:
     void errorEncountered(QString errMessage);

@@ -7,7 +7,15 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
  - QWebService: run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./QWebService/qwebservice.qdocconf
  - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
 
-17.08.2011 : CEST:
+17.08.2011 21:48 CEST:
+ - added Protocol to static QWebMethod::sendMessage(),
+ - cleaned host-hostUrl mismatch from QWebService,
+ - made code compliant with Qt Coding Conventions,
+ - removed 'get' from all getters,
+ - changed lib version to 0.3.4, since recent code changes also changed the API,
+ - recreated QDoc.
+
+17.08.2011 09:42 CEST:
  - cleaned host-hostUrl mismatch in QWsdl. QString host is deleted from QWsdl. Also, hostUrl is now clearily distinct from targetNamespace. All that did not change public API in any way,
  - cleaned host-hostUrl mismatch in generated code. QString host is deleted. Also, hostUrl is now clearily distinct from targetNamespace,
  - removed init() from generated code,

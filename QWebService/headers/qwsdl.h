@@ -17,15 +17,15 @@ public:
     ~QWsdl();
 
     void setWsdlFile(QString wsdlFile); // == resetWsdl()
-    QStringList getMethodNames();
-    QMap<QString, QWebMethod *> *getMethods();
-    QString getWebServiceName();
-    QString getHost();
-    QUrl getHostUrl();
-    QString getTargetNamespace();
+    QStringList methodNames();
+    QMap<QString, QWebMethod *> *methods();
+    QString webServiceName();
+    QString host();
+    QUrl hostUrl();
+    QString targetNamespace();
     //QFile getWsdl(); Rethink that. Maybe QString? Or saving to file specified in parameter?
 
-    QString getErrorInfo();
+    QString errorInfo();
     bool isErrorState();
     void resetWsdl(QString newWsdl);
 
@@ -51,16 +51,16 @@ private:
     bool errorState;
     bool replyReceived;
 //    QFile wsdlFile;
-    QUrl hostUrl;
+    QUrl m_hostUrl;
     QString errorMessage;
     QString wsdlFilePath;
-    QString webServiceName;
-    QString targetNamespace;
+    QString m_webServiceName;
+    QString m_targetNamespace;
     QXmlStreamReader xmlReader;
 
     QStringList *workMethodList;
     QMap<int, QMap<QString, QVariant> > *workMethodParameters; // Param if one, QList if many.
-    QMap<QString, QWebMethod *> *methods;
+    QMap<QString, QWebMethod *> *methodsMap;
 };
 
 #endif // QWSDL_H

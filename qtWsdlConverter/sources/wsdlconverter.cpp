@@ -41,8 +41,7 @@ WsdlConverter::WsdlConverter(QStringList appArguments, QObject *parent) :
     errorState = false;
     errorMessage = "";
 
-    if (!parseArguments(appArguments))
-    {
+    if (!parseArguments(appArguments)) {
         enterErrorState("Encountered an error when parsing arguments.");
         return;
     }
@@ -115,10 +114,9 @@ bool WsdlConverter::enterErrorState(QString errMessage)
 void WsdlConverter::convert()
 {
     displayIntro();
-    QString mainPath = qApp->applicationDirPath() + "/" + getWebServiceName();
+    QString mainPath = qApp->applicationDirPath() + "/" + webServiceName();
     QDir mainDir;
-    if (outputDir != "")
-    {
+    if (outputDir != "") {
         if (outputDir.at(0) != '/')
             mainPath = qApp->applicationDirPath() + "/" + outputDir;
         else
@@ -126,19 +124,15 @@ void WsdlConverter::convert()
     }
     mainDir.setPath(mainPath);
 
-    if (mainDir.exists() && (flags->isForced() == false))
-    {
+    if (mainDir.exists() && (flags->isForced() == false)) {
         // Might be good to add an interactive menu here (to ask for a new dir name)
         enterErrorState("Error - directory already exists!");
 
         return;
     }
-    else
-    {
-        if (flags->isForced() == true)
-        {
-            if(removeDir(mainPath))
-            {
+    else {
+        if (flags->isForced() == true) {
+            if(removeDir(mainPath)) {
                 enterErrorState("When using '--force': Removing preexisting directory failed.");
                 return;
             }
@@ -147,8 +141,7 @@ void WsdlConverter::convert()
         mainDir.mkdir(mainPath);
         mainDir.cd(mainPath);
 
-        if (!CodeGenerator::create(wsdl, mainDir, flags, baseClassName, this))
-        {
+        if (!CodeGenerator::create(wsdl, mainDir, flags, baseClassName, this)) {
             enterErrorState("Error - code creation failed.");
             return;
         }
@@ -158,13 +151,13 @@ void WsdlConverter::convert()
 }
 
 /*!
-    \fn WsdlConverter::getWebServiceName()
+    \fn WsdlConverter::webServiceName()
 
     Returns web service's name.
   */
-QString WsdlConverter::getWebServiceName()
+QString WsdlConverter::webServiceName()
 {
-    return wsdl->getWebServiceName();
+    return wsdl->webServiceName();
 }
 
 /*!
@@ -177,26 +170,25 @@ bool WsdlConverter::removeDir(QString path)
 {
     QDir dir(path);
     bool err = false;
-    if (dir.exists())
-    {
+    if (dir.exists()) {
         QFileInfoList entries = dir.entryInfoList(QDir::NoDotAndDotDot |
                                                    QDir::Dirs | QDir::Files);
+
         int count = entries.size();
-        for (int i = 0; ((i < count) && (err == false)); i++)
-        {
+        for (int i = 0; ((i < count) && (err == false)); i++) {
             QFileInfo entryInfo = entries[i];
             QString tpath = entryInfo.absoluteFilePath();
-            if (entryInfo.isDir())
-            {
+
+            if (entryInfo.isDir()) {
                 err = removeDir(tpath);
             }
-            else
-            {
+            else {
                 QFile file(tpath);
                 if (!file.remove())
                     err = true;
             }
         }
+
         if (!dir.rmdir(dir.absolutePath()))
             err = true;
     }
@@ -210,8 +202,7 @@ bool WsdlConverter::removeDir(QString path)
   */
 bool WsdlConverter::parseArguments(QStringList arguments)
 {
-    if (arguments.length() <= 1 || arguments.contains("--help"))
-    {
+    if (arguments.length() <= 1 || arguments.contains("--help")) {
         displayHelp();
         return false;
     }
@@ -219,137 +210,122 @@ bool WsdlConverter::parseArguments(QStringList arguments)
     bool wasFile = false, wasOutDir = false, wasClassName = false;
     QString appFilePath = qApp->applicationFilePath();
 
-    foreach (QString s, arguments)
-    {
+    foreach (QString s, arguments) {
         // Handles '--' arguments
-        if (s.startsWith("--"))
-        {
+        if (s.startsWith("--")) {
             // Protocol flags:
-            if (s == "--soap12")
-            {
+            if (s == "--soap12") {
                 flags->resetFlags(Flags::soap10 | Flags::http | Flags::json);
                 flags->setFlags(Flags::soap12);
             }
-            else if (s == "--soap10")
-            {
+            else if (s == "--soap10") {
                 flags->resetFlags(Flags::soap12 | Flags::http | Flags::json);
                 flags->setFlags(Flags::soap10);
             }
-            else if (s == "--soap")
-            {
+            else if (s == "--soap") {
                 flags->resetFlags(Flags::http | Flags::json);
                 flags->setFlags(Flags::soap);
             }
-            else if (s == "--http")
-            {
+            else if (s == "--http") {
                 flags->resetFlags(Flags::soap | Flags::json);
                 flags->setFlags(Flags::http);
             }
-            else if (s == "--json")
-            {
+            else if (s == "--json") {
                 flags->resetFlags(Flags::soap | Flags::http);
                 flags->setFlags(Flags::json);
             }
             // Synchronousness:
-            else if (s == "--synchronous")
-            {
+            else if (s == "--synchronous") {
                 flags->resetFlags(Flags::asynchronous);
                 flags->setFlags(Flags::synchronous);
             }
-            else if (s == "--asynchronous")
-            {
+            else if (s == "--asynchronous") {
                 flags->resetFlags(Flags::synchronous);
                 flags->setFlags(Flags::asynchronous);
             }
             // Modes:
-            else if (s == "--full-mode")
-            {
+            else if (s == "--full-mode") {
                 flags->resetFlags(Flags::debugMode | Flags::compactMode);
                 flags->setFlags(Flags::fullMode);
             }
-            else if (s == "--debug-mode")
-            {
+            else if (s == "--debug-mode") {
                 flags->resetFlags(Flags::fullMode | Flags::compactMode);
                 flags->setFlags(Flags::debugMode);
             }
-            else if (s == "--compact-mode")
-            {
+            else if (s == "--compact-mode") {
                 flags->resetFlags(Flags::fullMode | Flags::compactMode);
                 flags->setFlags(Flags::compactMode);
             }
             // Structures:
-            else if (s == "--standard-structure")
-            {
+            else if (s == "--standard-structure") {
                 flags->resetFlags(Flags::noMessagesStructure | Flags::allInOneDirStructure);
                 flags->setFlags(Flags::standardStructure);
             }
-            else if (s == "--no-messages-structure")
-            {
+            else if (s == "--no-messages-structure") {
                 flags->resetFlags(Flags::standardStructure | Flags::allInOneDirStructure);
                 flags->setFlags(Flags::noMessagesStructure);
             }
-            else if (s == "--all-in-one-dir-structure")
-            {
+            else if (s == "--all-in-one-dir-structure") {
                 flags->resetFlags(Flags::standardStructure | Flags::noMessagesStructure);
                 flags->setFlags(Flags::allInOneDirStructure);
             }
             // Build systems (qmake, cmake and scons can be build simultaneously):
-            else if (s == "--qmake")
+            else if (s == "--qmake") {
                 flags->setFlags(Flags::qmake);
-            else if (s == "--cmake")
+            }
+            else if (s == "--cmake") {
                 flags->setFlags(Flags::cmake);
-            else if (s == "--scons")
+            }
+            else if (s == "--scons") {
                 flags->setFlags(Flags::scons);
-            else if (s == "--no-build-system")
-            {
+            }
+            else if (s == "--no-build-system") {
                 flags->resetFlags(Flags::qmake | Flags::cmake | Flags::scons);
                 flags->setFlags(Flags::noBuildSystem);
             }
             // Suffixes:
-            else if (s.startsWith("--msgSuffix="))
+            else if (s.startsWith("--msgSuffix=")) {
                 flags->setMsgSuffix(s.mid(12));
-            else if (s.startsWith("--objSuffix="))
+            }
+            else if (s.startsWith("--objSuffix=")) {
                 flags->setObjSuffix(s.mid(12));
+            }
             // Force:
-            else if (s == "--force")
+            else if (s == "--force") {
                 flags->setForced(true);
+            }
         }
-        else if ((s != "") && (s != appFilePath))
-        { // Handles wsdl file, base class name, output dir.
-            if (!wasFile)
-            {
+        else if ((s != "") && (s != appFilePath)) {
+            // Handles wsdl file, base class name, output dir.
+            if (!wasFile) {
                 wasFile = true;
                 QString tmp = s;
                 QUrl tempUrl(tmp);
-                if (!QFile::exists(tmp) && tempUrl.isValid())
-                {
+
+                if (!QFile::exists(tmp) && tempUrl.isValid()) {
                     argList->insert(Path, tmp);;
                 }
-                else
-                {
+                else {
                     QFileInfo tempInfo(tmp);
-                    if (tempInfo.isRelative())
-                    {
+
+                    if (tempInfo.isRelative()) {
                         tmp.prepend(qApp->applicationDirPath() + "/");
                         argList->insert(Path, tmp);
                     }
                 }
             }
-            else if (!wasOutDir)
-            {
+            else if (!wasOutDir) {
                 wasOutDir = true;
                 argList->insert(Dir, s);
             }
-            else if (!wasClassName)
-            {
+            else if (!wasClassName) {
                 wasClassName = true;
                 argList->insert(ClassName, s);
             }
         }
     }
 
-    if (!argList->contains(Path))
-    {
+    if (!argList->contains(Path)) {
         qDebug() << "No WSDL file specified, conversion can no continue. For help, type wsdlConvert --help.";
         return false;
     }
@@ -390,7 +366,7 @@ void WsdlConverter::displayHelp()
 */
 void WsdlConverter::displayIntro()
 {
-    qDebug() << "Creating code for web service:" << getWebServiceName();
+    qDebug() << "Creating code for web service:" << webServiceName();
     if (argList->value(Dir).toString() == "")
         qDebug() << "Output dir not specified. Defaulting to web service name.";
 /*

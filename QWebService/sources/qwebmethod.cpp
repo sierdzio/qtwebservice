@@ -28,16 +28,16 @@
 /*!
     \fn QWebMethod::QWebMethod(QObject *parent)
 
-    Constructs the message usign \a parent. Requires specifying other params later (setParams()).
+    Constructs the message usign \a parent. Requires specifying other params later (setParameters()).
 
-    \sa setParams(), setProtocol(), sendMessage()
+    \sa setParameters(), setProtocol(), sendMessage()
   */
 QWebMethod::QWebMethod(QObject *parent) :
     QObject(parent)
 {
     init();
-    hostUrl.setHost("");
-    messageName = "";
+    m_hostUrl.setHost("");
+    m_messageName = "";
     parameters.clear();
 }
 
@@ -47,10 +47,10 @@ QWebMethod::QWebMethod(QObject *parent) :
     Constructs the message using \a url, \a _messageName, and \a parent.
     Requires params to be specified later.
 
-    \sa setParams(), setProtocol(), sendMessage()
+    \sa setParameters(), setProtocol(), sendMessage()
   */
 QWebMethod::QWebMethod(QUrl url, QString _messageName, QObject *parent) :
-    QObject(parent), hostUrl(url), messageName(_messageName)
+    QObject(parent), m_hostUrl(url), m_messageName(_messageName)
 {
     init();
     parameters.clear();
@@ -62,13 +62,13 @@ QWebMethod::QWebMethod(QUrl url, QString _messageName, QObject *parent) :
     Constructs the message using \a url, \a _messageName, and \a parent.
     Requires params to be specified later.
 
-    \sa setParams(), setProtocol(), sendMessage()
+    \sa setParameters(), setProtocol(), sendMessage()
   */
 QWebMethod::QWebMethod(QString url, QString _messageName, QObject *parent) :
-    QObject(parent), messageName(_messageName)
+    QObject(parent), m_messageName(_messageName)
 {
     init();
-    hostUrl.setHost(url + messageName);
+    m_hostUrl.setHost(url + m_messageName);
     parameters.clear();
 }
 
@@ -84,10 +84,10 @@ QWebMethod::QWebMethod(QString url, QString _messageName, QObject *parent) :
   */
 QWebMethod::QWebMethod(QString url, QString _messageName,
                            QMap<QString, QVariant> params, QObject *parent) :
-    QObject(parent), messageName(_messageName), parameters(params)
+    QObject(parent), m_messageName(_messageName), parameters(params)
 {
     init();
-    hostUrl.setHost(url + messageName);
+    m_hostUrl.setHost(url + m_messageName);
 }
 
 /*!
@@ -109,7 +109,7 @@ QWebMethod::~QWebMethod()
   */
 void QWebMethod::setHost(QString newHost)
 {
-    hostUrl.setHost(newHost);
+    m_hostUrl.setHost(newHost);
 }
 
 /*!
@@ -119,7 +119,7 @@ void QWebMethod::setHost(QString newHost)
   */
 void QWebMethod::setHost(QUrl newHost)
 {
-    hostUrl = newHost;
+    m_hostUrl = newHost;
 }
 
 /*!
@@ -129,15 +129,15 @@ void QWebMethod::setHost(QUrl newHost)
   */
 void QWebMethod::setMessageName(QString newName)
 {
-    messageName = newName;
+    m_messageName = newName;
 }
 
 /*!
-    \fn QWebMethod::setParams(QMap<QString, QVariant> params)
+    \fn QWebMethod::setParameters(QMap<QString, QVariant> params)
 
     Sets method's parameters (\a params). This also includes their names.
   */
-void QWebMethod::setParams(QMap<QString, QVariant> params)
+void QWebMethod::setParameters(QMap<QString, QVariant> params)
 {
     parameters = params;
 }
@@ -159,7 +159,7 @@ void QWebMethod::setReturnValue(QMap<QString, QVariant> returnVal)
   */
 void QWebMethod::setTargetNamespace(QString tNamespace)
 {
-    targetNamespace = tNamespace;
+    m_targetNamespace = tNamespace;
 }
 
 /*!
@@ -182,12 +182,13 @@ void QWebMethod::setProtocol(Protocol prot)
     Sends the message asynchronously, assuming that all neccessary data was specified earlier.
     Returns true on success.
 
-    \sa setParams(), setProtocol(), setTargetNamespace()
+    \sa setParameters(), setProtocol(), setTargetNamespace()
   */
 bool QWebMethod::sendMessage()
 {
     QNetworkRequest request;
-    request.setUrl(hostUrl);
+    request.setUrl(m_hostUrl);
+
     if (protocol & soap)
         request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/soap+xml; charset=utf-8"));
     else if (protocol == json)
@@ -196,7 +197,7 @@ bool QWebMethod::sendMessage()
         request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("Content-Type: application/x-www-form-urlencoded"));
 
     if (protocol == soap10)
-        request.setRawHeader(QByteArray("SOAPAction"), QByteArray(hostUrl.toString().toAscii()));
+        request.setRawHeader(QByteArray("SOAPAction"), QByteArray(m_hostUrl.toString().toAscii()));
 
     prepareRequestData();
 
@@ -221,21 +222,22 @@ bool QWebMethod::sendMessage(QMap<QString, QVariant> params)
 
 /*!
      STATIC method. Sends the message synchronously, using \a url, \a _messageName, \a params and \a parent.
+     Protocol can optionally be specified by \a protocol.
      Returns with web service reply.
   */
-QVariant QWebMethod::sendMessage(QObject *parent, QUrl url, QString _messageName, QMap<QString, QVariant> params)
+QVariant QWebMethod::sendMessage(QObject *parent, QUrl url, QString _messageName,
+                                 QMap<QString, QVariant> params, Protocol protocol)
 {
     QWebMethod qsm(url.host(), _messageName, params, parent);
-    qsm.hostUrl = url;
+    qsm.m_hostUrl = url;
+    qsm.protocol = protocol;
 
     qsm.sendMessage();
     // TODO: ADD ERROR HANDLING!
-    forever
-    {
-        if (qsm.replyReceived)
+    forever {
+        if (qsm.replyReceived) {
             return qsm.reply;
-        else
-        {
+        } else {
             qApp->processEvents();
         }
     }
@@ -258,83 +260,83 @@ QVariant QWebMethod::replyRead()
   */
 
 /*!
-    \fn QWebMethod::getMessageName()
+    \fn QWebMethod::messageName()
 
     Returns message's name.
   */
-QString QWebMethod::getMessageName()
+QString QWebMethod::messageName()
 {
-    return messageName;
+    return m_messageName;
 }
 
 /*!
-    \fn QWebMethod::getParameterNames() const
+    \fn QWebMethod::parameterNames() const
 
     Retrurns list of parameters' names.
   */
-QStringList QWebMethod::getParameterNames() const
+QStringList QWebMethod::parameterNames() const
 {
     return (QStringList) parameters.keys();
 }
 
 /*!
-    \fn QWebMethod::getReturnValueName() const
+    \fn QWebMethod::returnValueName() const
 
     Returns return value's name.
   */
-QStringList QWebMethod::getReturnValueName() const
+QStringList QWebMethod::returnValueName() const
 {
     return (QStringList) returnValue.keys();
 }
 
 /*!
-    \fn QWebMethod::getParameterNamesTypes() const
+    \fn QWebMethod::parameterNamesTypes() const
 
     Returns whole parameter information (name and type).
   */
-QMap<QString, QVariant> QWebMethod::getParameterNamesTypes() const
+QMap<QString, QVariant> QWebMethod::parameterNamesTypes() const
 {
     return parameters;
 }
 
 /*!
-    \fn QWebMethod::getReturnValueNameType() const
+    \fn QWebMethod::returnValueNameType() const
 
     Returns whole return value information (name and type).
   */
-QMap<QString, QVariant> QWebMethod::getReturnValueNameType() const
+QMap<QString, QVariant> QWebMethod::returnValueNameType() const
 {
     return returnValue;
 }
 
 /*!
-    \fn QWebMethod::getTargetNamespace()
+    \fn QWebMethod::targetNamespace()
 
     Returns target namespace.
   */
-QString QWebMethod::getTargetNamespace()
+QString QWebMethod::targetNamespace()
 {
-    return targetNamespace;
+    return m_targetNamespace;
 }
 
 /*!
-    \fn QWebMethod::getHost()
+    \fn QWebMethod::host()
 
     Returns host's URL (in QString). If you want a QUrl, call getHostUrl(), or QUrl(QWebMethod::getHost());
   */
-QString QWebMethod::getHost()
+QString QWebMethod::host()
 {
-    return hostUrl.host();
+    return m_hostUrl.host();
 }
 
 /*!
-    \fn QWebMethod::getHostUrl()
+    \fn QWebMethod::hostUrl()
 
     Returns host's URL. If you want a QString, call getHost() or getHostUrl().host();
   */
-QUrl QWebMethod::getHostUrl()
+QUrl QWebMethod::hostUrl()
 {
-    return hostUrl;
+    return m_hostUrl;
 }
 
 /*!
@@ -351,11 +353,11 @@ void QWebMethod::replyFinished(QNetworkReply *netReply)
     replyBytes = (networkReply->readAll());
     QString replyString = convertReplyToUtf(replyBytes);
 
-    QString tempBegin = "<" + messageName + "Result>";
+    QString tempBegin = "<" + m_messageName + "Result>";
     int replyBeginIndex = replyString.indexOf(tempBegin, 0, Qt::CaseSensitive);
     replyBeginIndex += tempBegin.length();
 
-    QString tempFinish = "</" + messageName + "Result>";
+    QString tempFinish = "</" + m_messageName + "Result>";
     int replyFinishIndex = replyString.indexOf(tempFinish, replyBeginIndex, Qt::CaseSensitive);
 
     if (replyBeginIndex == -1)
@@ -394,10 +396,8 @@ void QWebMethod::prepareRequestData()
     QString header, body, footer;
     QString endl = "\r\n"; // Replace with something OS-independent, or seriously rethink.
 
-    if (protocol & soap)
-    {
-        if (protocol == soap12)
-        {
+    if (protocol & soap) {
+        if (protocol == soap12) {
             header = "<?xml version=\"1.0\" encoding=\"utf-8\"?> " + endl +
                      " <soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
                      "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"" +
@@ -406,8 +406,7 @@ void QWebMethod::prepareRequestData()
 
             footer = "</soap12:Body> " + endl + "</soap12:Envelope>";
         }
-        else if (protocol == soap10)
-        {
+        else if (protocol == soap10) {
             header = "<?xml version=\"1.0\" encoding=\"utf-8\"?> " + endl +
                     " <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
                     "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"" +
@@ -417,32 +416,27 @@ void QWebMethod::prepareRequestData()
             footer = "</soap:Body> " + endl + "</soap:Envelope>";
         }
 
-        body = "\t<" + messageName + " xmlns=\"" + targetNamespace + "\"> " + endl;
+        body = "\t<" + m_messageName + " xmlns=\"" + m_targetNamespace + "\"> " + endl;
 
-        foreach (const QString currentKey, parameters.keys())
-        {
+        foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
             // Currently, this does not handle nested lists
             body += "\t\t<" + currentKey + ">" + qv.toString() + "</" + currentKey + "> " + endl;
         }
 
-        body += "\t</" + messageName + "> " + endl;
+        body += "\t</" + m_messageName + "> " + endl;
     }
-    else if (protocol == http)
-    {
-        foreach (const QString currentKey, parameters.keys())
-        {
+    else if (protocol == http) {
+        foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
             // Currently, this does not handle nested lists
             body += currentKey + "=" + qv.toString() + "&";
         }
         body.chop(1);
     }
-    else if (protocol == json)
-    {
+    else if (protocol == json) {
         body += "{" + endl;
-        foreach (const QString currentKey, parameters.keys())
-        {
+        foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
             // Currently, this does not handle nested lists
             body += "{" + endl + "\t\"" + currentKey + "\" : \"" + qv.toString() + "\"" + endl;

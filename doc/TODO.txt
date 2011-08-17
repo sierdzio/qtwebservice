@@ -7,9 +7,7 @@ TODO'S:
  - write test suite
  - adjust code to be fully Qt Coding Standard compliant
  - don’t use ‘get’ in getters’ prefixes
- - (converter) fix host-hostUrl mismatch in gewnerated code (also, separate it frop tNamespace)
  - (converter) optimise code generation - current implementation is crude and ugly (but it works!)
- - (converter) prepare '--compact-mode' implementation
  - (converter) review '--debug-mode' implementation - or delete it
  - (converter) review protocol implementation
  - (converter) (proposal) use more standard approach to command line reading

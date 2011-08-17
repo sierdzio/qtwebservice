@@ -10,36 +10,36 @@
         <keyword ref="qwebmethod.html#Protocol-enum">QWebMethod::soap10</keyword>
         <keyword ref="qwebmethod.html#Protocol-enum">QWebMethod::soap</keyword>
         <keyword ref="qwebmethod.html#Protocol-enum">QWebMethod::soap12</keyword>
-        <keyword ref="qwebmethod.html#getHost">getHost</keyword>
-        <keyword ref="qwebmethod.html#getHostUrl">getHostUrl</keyword>
-        <keyword ref="qwebmethod.html#getMessageName">getMessageName</keyword>
-        <keyword ref="qwebmethod.html#getParameterNames">getParameterNames</keyword>
-        <keyword ref="qwebmethod.html#getParameterNamesTypes">getParameterNamesTypes</keyword>
-        <keyword ref="qwebmethod.html#getReturnValueName">getReturnValueName</keyword>
-        <keyword ref="qwebmethod.html#getReturnValueNameType">getReturnValueNameType</keyword>
-        <keyword ref="qwebmethod.html#getTargetNamespace">getTargetNamespace</keyword>
+        <keyword ref="qwebmethod.html#host">host</keyword>
+        <keyword ref="qwebmethod.html#hostUrl">hostUrl</keyword>
+        <keyword ref="qwebmethod.html#messageName">messageName</keyword>
+        <keyword ref="qwebmethod.html#parameterNames">parameterNames</keyword>
+        <keyword ref="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</keyword>
         <keyword ref="qwebmethod.html#replyFinished">replyFinished</keyword>
         <keyword ref="qwebmethod.html#replyRead">replyRead</keyword>
         <keyword ref="qwebmethod.html#replyReady">replyReady</keyword>
+        <keyword ref="qwebmethod.html#returnValueName">returnValueName</keyword>
+        <keyword ref="qwebmethod.html#returnValueNameType">returnValueNameType</keyword>
         <keyword ref="qwebmethod.html#sendMessage">sendMessage</keyword>
         <keyword ref="qwebmethod.html#setHost">setHost</keyword>
         <keyword ref="qwebmethod.html#setMessageName">setMessageName</keyword>
-        <keyword ref="qwebmethod.html#setParams">setParams</keyword>
+        <keyword ref="qwebmethod.html#setParameters">setParameters</keyword>
         <keyword ref="qwebmethod.html#setProtocol">setProtocol</keyword>
         <keyword ref="qwebmethod.html#setReturnValue">setReturnValue</keyword>
         <keyword ref="qwebmethod.html#setTargetNamespace">setTargetNamespace</keyword>
+        <keyword ref="qwebmethod.html#targetNamespace">targetNamespace</keyword>
         <section ref="qwebmethod-members.html" title="List of all members"/>
     </section>
     <section ref="qwebservice.html" title="QWebService Class Reference">
         <keyword ref="qwebservice.html">QWebService</keyword>
-        <keyword ref="qwebservice.html#getHost">getHost</keyword>
-        <keyword ref="qwebservice.html#getHostUrl">getHostUrl</keyword>
-        <keyword ref="qwebservice.html#getMethodNames">getMethodNames</keyword>
-        <keyword ref="qwebservice.html#getMethodParameters">getMethodParameters</keyword>
-        <keyword ref="qwebservice.html#getMethodReturnValue">getMethodReturnValue</keyword>
-        <keyword ref="qwebservice.html#getParameterNamesTypes">getParameterNamesTypes</keyword>
-        <keyword ref="qwebservice.html#getReturnValueNameType">getReturnValueNameType</keyword>
+        <keyword ref="qwebservice.html#host">host</keyword>
+        <keyword ref="qwebservice.html#hostUrl">hostUrl</keyword>
         <keyword ref="qwebservice.html#isErrorState">isErrorState</keyword>
+        <keyword ref="qwebservice.html#methodNames">methodNames</keyword>
+        <keyword ref="qwebservice.html#methodParameters">methodParameters</keyword>
+        <keyword ref="qwebservice.html#methodReturnValue">methodReturnValue</keyword>
+        <keyword ref="qwebservice.html#parameterNamesTypes">parameterNamesTypes</keyword>
+        <keyword ref="qwebservice.html#returnValueNameType">returnValueNameType</keyword>
         <keyword ref="qwebservice.html#setHost">setHost</keyword>
         <section ref="qwebservice-members.html" title="List of all members"/>
     </section>
@@ -57,17 +57,17 @@
     </section>
     <section ref="qwsdl.html" title="QWsdl Class Reference">
         <keyword ref="qwsdl.html">QWsdl</keyword>
+        <keyword ref="qwsdl.html#errorInfo">errorInfo</keyword>
         <keyword ref="qwsdl.html#fileReplyFinished">fileReplyFinished</keyword>
-        <keyword ref="qwsdl.html#getErrorInfo">getErrorInfo</keyword>
-        <keyword ref="qwsdl.html#getHost">getHost</keyword>
-        <keyword ref="qwsdl.html#getHostUrl">getHostUrl</keyword>
-        <keyword ref="qwsdl.html#getMethodNames">getMethodNames</keyword>
-        <keyword ref="qwsdl.html#getMethods">getMethods</keyword>
-        <keyword ref="qwsdl.html#getTargetNamespace">getTargetNamespace</keyword>
-        <keyword ref="qwsdl.html#getWebServiceName">getWebServiceName</keyword>
+        <keyword ref="qwsdl.html#host">host</keyword>
+        <keyword ref="qwsdl.html#hostUrl">hostUrl</keyword>
         <keyword ref="qwsdl.html#isErrorState">isErrorState</keyword>
+        <keyword ref="qwsdl.html#methodNames">methodNames</keyword>
+        <keyword ref="qwsdl.html#methods">methods</keyword>
         <keyword ref="qwsdl.html#resetWsdl">resetWsdl</keyword>
         <keyword ref="qwsdl.html#setWsdlFile">setWsdlFile</keyword>
+        <keyword ref="qwsdl.html#targetNamespace">targetNamespace</keyword>
+        <keyword ref="qwsdl.html#webServiceName">webServiceName</keyword>
         <section ref="qwsdl-members.html" title="List of all members"/>
     </section>
 </section>

@@ -29,7 +29,7 @@ QWebService::QWebService(QObject *parent)
 QWebService::QWebService(QWsdl *_wsdl, QObject *parent)
     : QObject(parent)
 {
-    this->wsdl = _wsdl;
+    wsdl = _wsdl;
     init();
 }
 
@@ -40,10 +40,10 @@ QWebService::QWebService(QWsdl *_wsdl, QObject *parent)
     \a _hostname is used to initialise QWsdl.
   */
 QWebService::QWebService(QString _hostname, QObject *parent)
-    : QObject(parent), host(_hostname)
+    : QObject(parent)
 {
-    hostUrl.setUrl(host);
-    wsdl = new QWsdl(host, this);
+    m_hostUrl.setUrl(_hostname);
+    wsdl = new QWsdl(_hostname, this);
     init();
 }
 
@@ -58,55 +58,55 @@ QWebService::~QWebService()
 }
 
 /*!
-    \fn QWebService::getMethodNames()
+    \fn QWebService::methodNames()
 
     Returns a list of methods' names.
   */
-QStringList QWebService::getMethodNames()
+QStringList QWebService::methodNames()
 {
     return (QStringList) messages->keys(); //wsdl->getMethodNames();
 }
 
 /*!
-    \fn QWebService::getMethodParameters(QString methodName) const
+    \fn QWebService::methodParameters(QString methodName) const
 
     Returns list of names of parameters of a method specified by \a methodName.
   */
-QStringList QWebService::getMethodParameters(QString methodName) const
+QStringList QWebService::methodParameters(QString methodName) const
 {
-    return messages->value(methodName)->getParameterNames();
+    return messages->value(methodName)->parameterNames();
 }
 
 /*!
-    \fn QWebService::getMethodReturnValue(QString methodName) const
+    \fn QWebService::methodReturnValue(QString methodName) const
 
     Returns names of return values, for a given method (\a methodName).
   */
-QStringList QWebService::getMethodReturnValue(QString methodName) const
+QStringList QWebService::methodReturnValue(QString methodName) const
 {
-    return messages->value(methodName)->getReturnValueName();
+    return messages->value(methodName)->returnValueName();
 }
 
 /*!
-    \fn QWebService::getParameterNamesTypes(QString methodName) const
+    \fn QWebService::parameterNamesTypes(QString methodName) const
 
     For a given \a methodName, returns a QMap with QString paramater name as a key, and QVariant value.
     By running QVariant::typeName() you can determine the type of the parameter.
   */
-QMap<QString, QVariant> QWebService::getParameterNamesTypes(QString methodName) const
+QMap<QString, QVariant> QWebService::parameterNamesTypes(QString methodName) const
 {
-    return messages->value(methodName)->getParameterNamesTypes();
+    return messages->value(methodName)->parameterNamesTypes();
 }
 
 /*!
-    \fn QWebService::getReturnValueNameType(QString methodName) const
+    \fn QWebService::returnValueNameType(QString methodName) const
 
     For a given \a methodName, returns a QMap with QString paramater name as a key, and QVariant value.
     By running QVariant::typeName() you can determine the type of the parameter.
   */
-QMap<QString, QVariant> QWebService::getReturnValueNameType(QString methodName) const
+QMap<QString, QVariant> QWebService::returnValueNameType(QString methodName) const
 {
-    return messages->value(methodName)->getReturnValueNameType();
+    return messages->value(methodName)->returnValueNameType();
 }
 
 /*!
@@ -116,8 +116,7 @@ QMap<QString, QVariant> QWebService::getReturnValueNameType(QString methodName) 
   */
 void QWebService::setHost(QString hostname)
 {
-    this->host = hostname;
-    hostUrl.setUrl(hostname);
+    m_hostUrl.setUrl(hostname);
     wsdl->resetWsdl(hostname);
     init();
 }
@@ -129,30 +128,29 @@ void QWebService::setHost(QString hostname)
   */
 void QWebService::setHost(QUrl hostUrl)
 {
-    this->hostUrl = hostUrl;
-    host = hostUrl.toString();
-    wsdl->resetWsdl(host);
+    this->m_hostUrl = hostUrl;
+    wsdl->resetWsdl(hostUrl.host());
     init();
 }
 
 /*!
-    \fn QWebService::getHostUrl()
+    \fn QWebService::hostUrl()
 
     Returns QUrl of the web service.
   */
-QUrl QWebService::getHostUrl()
+QUrl QWebService::hostUrl()
 {
-    return hostUrl;
+    return m_hostUrl;
 }
 
 /*!
-    \fn QWebService::getHost()
+    \fn QWebService::host()
 
     Returns QString with URL of the web service.
   */
-QString QWebService::getHost()
+QString QWebService::host()
 {
-    return host;
+    return m_hostUrl.host();
 }
 
 /*!
@@ -186,5 +184,5 @@ void QWebService::init()
     if (isErrorState())
         return;
 
-    messages = wsdl->getMethods();
+    messages = wsdl->methods();
 }

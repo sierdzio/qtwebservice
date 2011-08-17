@@ -17,16 +17,16 @@ public:
     QWebService(QString host, QObject *parent = 0);
     ~QWebService();
 
-    QStringList getMethodNames();
-    QStringList getMethodParameters(QString methodName) const;
-    QStringList getMethodReturnValue(QString methodName) const;
-    QMap<QString, QVariant> getParameterNamesTypes(QString methodName) const;
-    QMap<QString, QVariant> getReturnValueNameType(QString methodName) const;
+    QStringList methodNames();
+    QStringList methodParameters(QString methodName) const;
+    QStringList methodReturnValue(QString methodName) const;
+    QMap<QString, QVariant> parameterNamesTypes(QString methodName) const;
+    QMap<QString, QVariant> returnValueNameType(QString methodName) const;
 
     void setHost(QString host);
     void setHost(QUrl hostUrl);
-    QUrl getHostUrl();
-    QString getHost();
+    QUrl hostUrl();
+    QString host();
     bool isErrorState();
 //    QString getWsdl();
 
@@ -34,8 +34,7 @@ protected:
     void init();
 
     bool errorState;
-    QUrl hostUrl;
-    QString host;
+    QUrl m_hostUrl;
     QWsdl *wsdl;
     QMap<QString, QWebMethod *> *messages; // This is general, but should work for custom classes.
 };
