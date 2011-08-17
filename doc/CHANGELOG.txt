@@ -7,6 +7,9 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
  - QWebService: run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./QWebService/qwebservice.qdocconf
  - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
 
+17.08.2011 : CEST:
+ - 
+
 16.08.2011 20:39 CEST:
  - changed licence to LGPL 2.1,
  - created online version of Features & TODO list - http://goo.gl/L1C6X,
