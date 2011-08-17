@@ -13,8 +13,9 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
  - removed init() from generated code,
  - fixed some variables not being set in generated code,
  - fixed singnals and slots not being connected in generated code,
+ - fixed wrong conditional statements for --compact-mode,
  - partially implemented --compact-mode,
- - tagged as v0.3.3 (lib version has also changed! To 0.3.3)
+ - tagged as v0.3.3 (lib version has also changed! To 0.3.3).
 
 16.08.2011 20:39 CEST:
  - changed licence to LGPL 2.1,

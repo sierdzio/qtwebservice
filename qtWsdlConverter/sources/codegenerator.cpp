@@ -216,11 +216,11 @@ bool CodeGenerator::createMessageHeader(QWebMethod *msg)
     if (!(flags->flags() & Flags::compactMode))
         out << "    void setProtocol(Protocol protocol);" << endl;
     out << "    bool sendMessage();" << endl;
-    if (msgParameters != "")
+    if ((msgParameters != "") && !((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous)))
         out << "    bool sendMessage(" << msgParameters << ");" << endl;
     // Temporarily, all messages will return QString!
 //    out << "    " << msgReplyType << " static sendMessage(QObject *parent";
-    if ((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous))
+    if (!((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::asynchronous)))
     {
         out << "    QString static sendMessage(QObject *parent";
         if (msgParameters != "")
@@ -446,7 +446,7 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
     out << "    return true;" << endl;
     out << "}" << endl;
     out << endl;
-    if (msgParameters != "")
+    if ((msgParameters != "") && !((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous)))
     {
         out << "bool " << msgName << "::sendMessage(" << msgParameters << ")" << endl;
         out << "{" << endl;
@@ -462,7 +462,7 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
         out << "}" << endl;
         out << endl;
     }
-    if ((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous))
+    if (!((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::asynchronous)))
     {
         out << "/* STATIC */" << endl;
         // Temporarily, all messages will return QString!
@@ -805,11 +805,13 @@ bool CodeGenerator::createServiceHeader()
         out << "    // Method reply getters: " << endl;
         foreach (QString s, tempMap->keys())
         {
+            /* Code not ready for compact mode checking.
             if (flags->flags() & Flags::compactMode)
             {
                 ; // Code compact mode here :)
             }
             else if (flags->flags() & Flags::fullMode || flags->flags() & Flags::debugMode)
+            */
             {
                 QString tmpReturn = "";
                 QWebMethod *m = tempMap->value(s);
@@ -829,11 +831,13 @@ bool CodeGenerator::createServiceHeader()
     { // Declare methods for processing asynchronous replies.
         foreach (QString s, tempMap->keys())
         {
+            /* Code not ready for compact mode checking.
             if (flags->flags() & Flags::compactMode)
             {
                 ; // Code compact mode here :)
             }
             else if (flags->flags() & Flags::fullMode || flags->flags() & Flags::debugMode)
+            */
             {
                 out << "    void " << s << "Reply(QString result);" << endl;
             }
@@ -844,8 +848,8 @@ bool CodeGenerator::createServiceHeader()
     out << "    bool errorState;" << endl;
     out << "    QUrl hostUrl;" << endl;
 
-    if (flags->flags() & Flags::asynchronous
-            && !(flags->flags() & Flags::compactMode))
+    if (flags->flags() & Flags::asynchronous)
+//            && !(flags->flags() & Flags::compactMode))
     { // Declare reply variables for asynchronous mode.
         out << "    // Message replies:" << endl;
         foreach (QString s, tempMap->keys())
@@ -865,7 +869,7 @@ bool CodeGenerator::createServiceHeader()
         {
             if (!(flags->flags() & Flags::noMessagesStructure))
                 out << "    " << s << " ";
-            else // sierdzioL I don;t particurarily like this implementation, will rethink it later.
+            else // sierdzioL I don't particurarly like this implementation, will rethink it later.
                 out << "    QWebMethod ";
 
             out << s.toLower() << flags->objectSuffix() << ";" << endl;
@@ -915,12 +919,13 @@ bool CodeGenerator::createServiceSource()
         foreach (QString s, tempMap->keys())
         {
             out << "    connect(&" << s.toLower() << flags->objectSuffix() << ", SIGNAL(replyReady(QString)), this, SLOT(";
-
+            /* Code not ready for compact mode checking.
             if (flags->flags() & Flags::compactMode)
             {
                 ; // Code compact mode here :)
             }
             else if (flags->flags() & Flags::fullMode || flags->flags() & Flags::debugMode)
+            */
             {
                 out << s << "Reply(QString)";
             }
@@ -1043,11 +1048,13 @@ bool CodeGenerator::createServiceSource()
         out << "    // Method reply getters: " << endl;
         foreach (QString s, tempMap->keys())
         {
+            /* Code not ready for compact mode checking.
             if (flags->flags() & Flags::compactMode)
             {
                 ; // Code compact mode here :)
             }
             else if (!(flags->flags() & Flags::compactMode))
+            */
             {
                 QString tmpReturn = "";
                 QWebMethod *m = tempMap->value(s);
@@ -1066,8 +1073,8 @@ bool CodeGenerator::createServiceSource()
         out << endl;
     }
 
-    if (flags->flags() & Flags::asynchronous
-            && !(flags->flags() & Flags::compactMode))
+    if (flags->flags() & Flags::asynchronous)
+//            && !(flags->flags() & Flags::compactMode))
     { // Define all slots for asynchronous mode.
         foreach (QString s, tempMap->keys())
         {
