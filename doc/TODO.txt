@@ -4,7 +4,10 @@ TODO'S:
  - (QWebService) (proposal) add REST functionality
  - (QWsdl) finish implementation (include all tags)
  - (QWsdl) implement more parameter types
- - (QWsdl) fix host-hostUrl mismatch, remove QString host just as in QWebMethod
+ - write test suite
+ - adjust code to be fully Qt Coding Standard compliant
+ - don’t use ‘get’ in getters’ prefixes
+ - (converter) fix host-hostUrl mismatch in gewnerated code (also, separate it frop tNamespace)
  - (converter) optimise code generation - current implementation is crude and ugly (but it works!)
  - (converter) prepare '--compact-mode' implementation
  - (converter) review '--debug-mode' implementation - or delete it

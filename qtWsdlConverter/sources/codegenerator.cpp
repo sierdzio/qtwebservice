@@ -220,14 +220,17 @@ bool CodeGenerator::createMessageHeader(QWebMethod *msg)
         out << "    bool sendMessage(" << msgParameters << ");" << endl;
     // Temporarily, all messages will return QString!
 //    out << "    " << msgReplyType << " static sendMessage(QObject *parent";
-    out << "    QString static sendMessage(QObject *parent";
-    if (msgParameters != "")
+    if ((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous))
     {
-        out << "," << endl;
-        out << "                                " << msgParameters << ");" << endl;
+        out << "    QString static sendMessage(QObject *parent";
+        if (msgParameters != "")
+        {
+            out << "," << endl;
+            out << "                                " << msgParameters << ");" << endl;
+        }
+        else
+            out << ");" << endl;
     }
-    else
-        out << ");" << endl;
     // Temporarily, all messages will return QString!
 //    out << "    " << msgReplyType << " replyRead();" << endl;
     out << "    QString replyRead();" << endl;
@@ -247,14 +250,12 @@ bool CodeGenerator::createMessageHeader(QWebMethod *msg)
     out << "    void replyFinished(QNetworkReply *reply);" << endl;
     out << endl;
     out << "private:" << endl;
-//    out << "    void init();" << endl;
     out << "    void prepareRequestData();" << endl;
     out << "    QString convertReplyToUtf(QString textToConvert);" << endl;
     out << endl;
     out << "    bool replyReceived;" << endl;
     out << "    Protocol protocol;" << endl;
     out << "    QUrl hostUrl;" << endl;
-    out << "    QString host;" << endl;
     out << "    QString messageName;" << endl;
     out << "    QString targetNamespace;" << endl;
     // Temporarily, all messages will return QString!
@@ -327,10 +328,16 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
     out << msgName << "::" << msgName << "(QObject *parent) :" << endl;
     out << "    QObject(parent)" << endl;
     out << "{" << endl;
-//    out << "    init();" << endl;
-    out << "    host = \"" << msg->getTargetNamespace() << "\";" << endl;
-    out << "    hostUrl.setHost(host);" << endl;
+
+    if (msg->getHost() != "")
+        out << "    hostUrl.setHost(\"" << msg->getHost() << "\");" << endl;
+    else
+        out << "    hostUrl.setHost(\"" << msg->getTargetNamespace() << "\");" << endl;
+
     out << "    messageName = \"" << msgName << "\";" << endl;
+    out << "    replyReceived = false;" << endl;
+    out << "    reply.clear();" << endl;
+    out << "    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));" << endl;
     { // Defaulting the protocol:
         out << "    protocol = ";
         if (flags->flags() & Flags::soap10)
@@ -343,7 +350,7 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
             out << "json";
         out << ";" << endl;
     }
-//    out << "    parameters.clear();" << endl;
+
     out << "}" << endl;
     out << endl;
     if (msgParameters != "")
@@ -370,8 +377,17 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
                 out << "json";
             out << ";" << endl;
         }
-        //    out << "    init();" << endl;
-        out << "    hostUrl.setHost(host + messageName);" << endl;
+
+        if (msg->getHost() != "")
+            out << "    hostUrl.setHost(\"" << msg->getHost() << "\");" << endl;
+        else
+            out << "    hostUrl.setHost(\"" << msg->getTargetNamespace() << "\");" << endl;
+//        out << "    hostUrl.setHost(host + messageName);" << endl; // This is probably wrong, vars are not set!
+
+        out << "    messageName = \"" << msgName << "\";" << endl;
+        out << "    replyReceived = false;" << endl;
+        out << "    reply.clear();" << endl;
+        out << "    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));" << endl;
         out << "}" << endl;
         out << endl;
     }
@@ -406,7 +422,6 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
     }
     out << "bool " << msgName << "::sendMessage()" << endl;
     out << "{" << endl;
-    out << "    hostUrl.setUrl(host);" << endl;
     out << "    QNetworkRequest request;" << endl;
     out << "    request.setUrl(hostUrl);" << endl;
     out << "    if (protocol & soap)" << endl;
@@ -447,41 +462,44 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
         out << "}" << endl;
         out << endl;
     }
-    out << "/* STATIC */" << endl;
-    // Temporarily, all messages will return QString!
-//    out << "" << msgReplyType << " " << msgName << "::sendMessage(QObject *parent, " << msgParameters << ")" << endl;
-    out << "QString " << msgName << "::sendMessage(QObject *parent";
-    if (msgParameters != "")
-        out << ", " << msgParameters;
-    out << ")" << endl;
-    out << "{" << endl;
-    out << "    " << msgName << " qsm(parent);" << endl;
-    { // Assign all parameters.
-        out << "    qsm.setParams(";
-        QString tempS = "";
-        QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
-        foreach (QString s, tempMap.keys())
-        {
-            tempS += s + ", ";
+    if ((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous))
+    {
+        out << "/* STATIC */" << endl;
+        // Temporarily, all messages will return QString!
+        //    out << "" << msgReplyType << " " << msgName << "::sendMessage(QObject *parent, " << msgParameters << ")" << endl;
+        out << "QString " << msgName << "::sendMessage(QObject *parent";
+        if (msgParameters != "")
+            out << ", " << msgParameters;
+        out << ")" << endl;
+        out << "{" << endl;
+        out << "    " << msgName << " qsm(parent);" << endl;
+        { // Assign all parameters.
+            out << "    qsm.setParams(";
+            QString tempS = "";
+            QMap<QString, QVariant> tempMap = msg->getParameterNamesTypes();
+            foreach (QString s, tempMap.keys())
+            {
+                tempS += s + ", ";
+            }
+            tempS.chop(2);
+            out << tempS << ");" << endl;
         }
-        tempS.chop(2);
-        out << tempS << ");" << endl;
+
+        out << endl;
+        out << "    qsm.sendMessage();" << endl;
+        out << "    // TODO: ADD ERROR HANDLING!" << endl;
+        out << "    forever" << endl;
+        out << "    {" << endl;
+        out << "        if (qsm.replyReceived)" << endl;
+        out << "            return qsm.reply;" << endl;
+        out << "        else" << endl;
+        out << "        {" << endl;
+        out << "            qApp->processEvents();" << endl;
+        out << "        }" << endl;
+        out << "    }" << endl;
+        out << "}" << endl;
+        out << endl;
     }
-//    out << "    qsm.hostUrl = url;" << endl;
-    out << endl;
-    out << "    qsm.sendMessage();" << endl;
-    out << "    // TODO: ADD ERROR HANDLING!" << endl;
-    out << "    forever" << endl;
-    out << "    {" << endl;
-    out << "        if (qsm.replyReceived)" << endl;
-    out << "            return qsm.reply;" << endl;
-    out << "        else" << endl;
-    out << "        {" << endl;
-    out << "            qApp->processEvents();" << endl;
-    out << "        }" << endl;
-    out << "    }" << endl;
-    out << "}" << endl;
-    out << endl;
     // Temporarily, all messages will return QString!
 //    out << "" << msgReplyType << " " << msgName << "::replyRead()" << endl;
     out << "QString " << msgName << "::replyRead()" << endl;
@@ -570,19 +588,6 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
     out << "    emit replyReady(reply);" << endl;
     out << "}" << endl;
     out << endl;
-    /*
-    out << "void " << msgName << "::init()" << endl;
-    out << "{" << endl;
-    out << "    protocol = soap12;" << endl;
-    out << "    replyReceived = false;" << endl;
-    out << endl;
-    out << "    manager = new QNetworkAccessManager(this);" << endl;
-    out << endl;
-    out << "    reply.clear();" << endl;
-    out << "    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));" << endl;
-    out << "}" << endl;
-    out << endl;
-    */
     out << "void " << msgName << "::prepareRequestData()" << endl;
     out << "{" << endl;
     out << "    data.clear();" << endl;
@@ -836,11 +841,9 @@ bool CodeGenerator::createServiceHeader()
         out << endl;
     }
     out << "protected:" << endl;
-    out << "    void init();" << endl;
-    out << endl;
     out << "    bool errorState;" << endl;
     out << "    QUrl hostUrl;" << endl;
-    out << "    QString host;" << endl;
+
     if (flags->flags() & Flags::asynchronous
             && !(flags->flags() & Flags::compactMode))
     { // Declare reply variables for asynchronous mode.
@@ -925,6 +928,7 @@ bool CodeGenerator::createServiceSource()
             out << "));" << endl;
         }
     }
+    out << "    hostUrl.setHost(\"" << wsdl->getHost() << "\");" << endl;
     out << "    errorState = false;" << endl;
     out << "    isErrorState();" << endl;
     out << "}" << endl;
@@ -1097,7 +1101,7 @@ bool CodeGenerator::createServiceSource()
     out << endl;
     out << "QString " << wsName << "::getHost()" << endl;
     out << "{" << endl;
-    out << "    return host;" << endl;
+    out << "    return hostUrl.host();" << endl;
     out << "}" << endl;
     out << endl;
     out << "bool " << wsName << "::isErrorState()" << endl;
@@ -1105,13 +1109,6 @@ bool CodeGenerator::createServiceSource()
     out << "    return errorState;" << endl;
     out << "}" << endl;
     out << endl;
-    out << "void " << wsName << "::init()" << endl;
-    out << "{" << endl;
-    out << "    errorState = false;" << endl;
-    out << endl;
-    out << "    if (isErrorState())" << endl;
-    out << "        return;" << endl;
-    out << "}" << endl;
     // EOF (Web Service source)
     // ---------------------------------
 

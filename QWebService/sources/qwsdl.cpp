@@ -25,8 +25,7 @@ QWsdl::QWsdl(QObject *parent) :
     errorState = false;
     errorMessage = "";
     webServiceName = "";
-    host = "";
-    hostUrl = "";
+    hostUrl.setHost("");
     targetNamespace = "";
 
     workMethodList = new QStringList();
@@ -47,8 +46,7 @@ QWsdl::QWsdl(QString wsdlFile, QObject *parent) :
     errorState = false;
     errorMessage = "";
     webServiceName = "";
-    host = "";
-    hostUrl = ""; //wsdlFile;
+    hostUrl.setHost("");
     targetNamespace = "";
 
     workMethodList = new QStringList();
@@ -126,20 +124,19 @@ QString QWsdl::getWebServiceName()
 /*!
     \fn QWsdl::getHost()
 
-    Not enirely well-thought method and variable. It returns web service's URL (probably).
-    It will almmost certainly be rewritten or deleted in the future.
+    Returns web service's URL.
 
     \sa getHostUrl()
   */
 QString QWsdl::getHost()
 {
-    return host;
+    return hostUrl.host();
 }
 
 /*!
     \fn QWsdl::getHostUrl()
 
-    Quite similar tp getHostName(). The very existence of this method will be questioned :)
+    Quite similar to getHostName().
 
     \sa getHost()
   */
@@ -298,8 +295,8 @@ bool QWsdl::parse()
             if (tempN == "definitions")
             {
                 targetNamespace = xmlReader.attributes().value("targetNamespace").toString();
-                host = targetNamespace;
-                hostUrl = host;
+//                host = targetNamespace;
+//                hostUrl = host;
                 readDefinitions();
             }
             else
@@ -336,7 +333,7 @@ void QWsdl::prepareFile()
 
     if (!QFile::exists(wsdlFilePath) && filePath.isValid())
     {
-        host = filePath.host();
+        hostUrl = filePath;
 
         QNetworkAccessManager *manager = new QNetworkAccessManager(this);
         connect(manager, SIGNAL(finished(QNetworkReply*)),

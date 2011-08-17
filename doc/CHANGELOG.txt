@@ -8,7 +8,13 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
  - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
 
 17.08.2011 : CEST:
- - 
+ - cleaned host-hostUrl mismatch in QWsdl. QString host is deleted from QWsdl. Also, hostUrl is now clearily distinct from targetNamespace. All that did not change public API in any way,
+ - cleaned host-hostUrl mismatch in generated code. QString host is deleted. Also, hostUrl is now clearily distinct from targetNamespace,
+ - removed init() from generated code,
+ - fixed some variables not being set in generated code,
+ - fixed singnals and slots not being connected in generated code,
+ - partially implemented --compact-mode,
+ - tagged as v0.3.3 (lib version has also changed! To 0.3.3)
 
 16.08.2011 20:39 CEST:
  - changed licence to LGPL 2.1,

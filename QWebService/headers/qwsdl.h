@@ -51,10 +51,11 @@ private:
     bool errorState;
     bool replyReceived;
 //    QFile wsdlFile;
+    QUrl hostUrl;
     QString errorMessage;
     QString wsdlFilePath;
     QString webServiceName;
-    QString host, hostUrl, targetNamespace;
+    QString targetNamespace;
     QXmlStreamReader xmlReader;
 
     QStringList *workMethodList;
