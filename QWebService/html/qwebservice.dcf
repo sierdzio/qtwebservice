@@ -3,15 +3,25 @@
 <section ref="classes.html" title="Classes">
     <section ref="qwebmethod.html" title="QWebMethod Class Reference">
         <keyword ref="qwebmethod.html">QWebMethod</keyword>
+        <keyword ref="qwebmethod.html#HttpMethod-enum">HttpMethod</keyword>
+        <keyword ref="qwebmethod.html#HttpMethod-enum">HttpMethods</keyword>
+        <keyword ref="qwebmethod.html#HttpMethod-enum">QWebMethod::POST</keyword>
+        <keyword ref="qwebmethod.html#HttpMethod-enum">QWebMethod::GET</keyword>
+        <keyword ref="qwebmethod.html#HttpMethod-enum">QWebMethod::PUT</keyword>
+        <keyword ref="qwebmethod.html#HttpMethod-enum">QWebMethod::DELETE</keyword>
         <keyword ref="qwebmethod.html#Protocol-enum">Protocol</keyword>
         <keyword ref="qwebmethod.html#Protocol-enum">Protocols</keyword>
+        <keyword ref="qwebmethod.html#Protocol-enum">QWebMethod::xml</keyword>
+        <keyword ref="qwebmethod.html#Protocol-enum">QWebMethod::rest</keyword>
         <keyword ref="qwebmethod.html#Protocol-enum">QWebMethod::http</keyword>
         <keyword ref="qwebmethod.html#Protocol-enum">QWebMethod::json</keyword>
         <keyword ref="qwebmethod.html#Protocol-enum">QWebMethod::soap10</keyword>
         <keyword ref="qwebmethod.html#Protocol-enum">QWebMethod::soap</keyword>
         <keyword ref="qwebmethod.html#Protocol-enum">QWebMethod::soap12</keyword>
+        <keyword ref="qwebmethod.html#configure">configure</keyword>
         <keyword ref="qwebmethod.html#host">host</keyword>
         <keyword ref="qwebmethod.html#hostUrl">hostUrl</keyword>
+        <keyword ref="qwebmethod.html#init">init</keyword>
         <keyword ref="qwebmethod.html#messageName">messageName</keyword>
         <keyword ref="qwebmethod.html#parameterNames">parameterNames</keyword>
         <keyword ref="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</keyword>

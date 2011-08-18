@@ -15,21 +15,25 @@
 <p>This is the complete list of members for <a href="qwebmethod.html">QWebMethod</a>, including inherited members.</p>
 <table class="propsummary">
 <tr><td  class="topAlign"><ul>
+<li class="fn">enum <b><a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a></b></li>
+<li class="fn">flags <b><a href="qwebmethod.html#HttpMethod-enum">HttpMethods</a></b></li>
 <li class="fn">enum <b><a href="qwebmethod.html#Protocol-enum">Protocol</a></b></li>
 <li class="fn">flags <b><a href="qwebmethod.html#Protocol-enum">Protocols</a></b></li>
-<li class="fn"><b><a href="qwebmethod.html#QWebMethod">QWebMethod</a></b> ( QObject * )</li>
-<li class="fn"><b><a href="qwebmethod.html#QWebMethod-2">QWebMethod</a></b> ( QUrl, QString, QObject * )</li>
-<li class="fn"><b><a href="qwebmethod.html#QWebMethod-3">QWebMethod</a></b> ( QString, QString, QObject * )</li>
-<li class="fn"><b><a href="qwebmethod.html#QWebMethod-4">QWebMethod</a></b> ( QString, QString, QMap&lt;QString, QVariant&gt;, QObject * )</li>
+<li class="fn"><b><a href="qwebmethod.html#QWebMethod">QWebMethod</a></b> ( QObject *, Protocol )</li>
+<li class="fn"><b><a href="qwebmethod.html#QWebMethod-2">QWebMethod</a></b> ( QUrl, QString, QObject *, Protocol )</li>
+<li class="fn"><b><a href="qwebmethod.html#QWebMethod-3">QWebMethod</a></b> ( QString, QString, QObject *, Protocol )</li>
+<li class="fn"><b><a href="qwebmethod.html#QWebMethod-4">QWebMethod</a></b> ( QString, QString, QMap&lt;QString, QVariant&gt;, QObject *, Protocol )</li>
 <li class="fn"><b><a href="qwebmethod.html#dtor.QWebMethod">~QWebMethod</a></b> ()</li>
+<li class="fn"><b><a href="qwebmethod.html#configure">configure</a></b> ()</li>
 <li class="fn"><b><a href="qwebmethod.html#host">host</a></b> () : QString</li>
 <li class="fn"><b><a href="qwebmethod.html#hostUrl">hostUrl</a></b> () : QUrl</li>
+<li class="fn"><b><a href="qwebmethod.html#init">init</a></b> ()</li>
 <li class="fn"><b><a href="qwebmethod.html#messageName">messageName</a></b> () : QString</li>
 <li class="fn"><b><a href="qwebmethod.html#parameterNames">parameterNames</a></b> () const : QStringList</li>
 <li class="fn"><b><a href="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</a></b> () const : QMap&lt;QString, QVariant&gt;</li>
+</ul></td><td class="topAlign"><ul>
 <li class="fn"><b><a href="qwebmethod.html#replyFinished">replyFinished</a></b> ( QNetworkReply * )</li>
 <li class="fn"><b><a href="qwebmethod.html#replyRead">replyRead</a></b> () : QVariant</li>
-</ul></td><td class="topAlign"><ul>
 <li class="fn"><b><a href="qwebmethod.html#replyReady">replyReady</a></b> ( QVariant )</li>
 <li class="fn"><b><a href="qwebmethod.html#returnValueName">returnValueName</a></b> () const : QStringList</li>
 <li class="fn"><b><a href="qwebmethod.html#returnValueNameType">returnValueNameType</a></b> () const : QMap&lt;QString, QVariant&gt;</li>

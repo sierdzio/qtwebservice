@@ -12,6 +12,8 @@ class QWEBSERVICESHARED_EXPORT QWebMethod : public QObject
     Q_OBJECT
     Q_ENUMS(Protocol)
     Q_FLAGS(Protocols)
+    Q_ENUMS(HttpMethod)
+    Q_FLAGS(HttpMethods)
 
 public:
     enum Protocol
@@ -20,15 +22,26 @@ public:
         soap10  = 0x02,
         soap12  = 0x04,
         soap    = 0x06,
-        json    = 0x08
+        json    = 0x08,
+        xml     = 0x10,
+        rest    = 0x20
     };
     Q_DECLARE_FLAGS(Protocols, Protocol)
 
-    explicit QWebMethod(QObject *parent = 0);
-    QWebMethod(QUrl hostUrl, QString messageName, QObject *parent = 0);
-    QWebMethod(QString host, QString messageName, QObject *parent = 0);
+    enum HttpMethod
+    {
+        POST    = 0x1,
+        GET     = 0x2,
+        PUT     = 0x4,
+        DELETE  = 0x8
+    };
+    Q_DECLARE_FLAGS(HttpMethods, HttpMethod)
+
+    explicit QWebMethod(QObject *parent = 0, Protocol protocol = soap12);
+    QWebMethod(QUrl hostUrl, QString messageName, QObject *parent = 0, Protocol protocol = soap12);
+    QWebMethod(QString host, QString messageName, QObject *parent = 0, Protocol protocol = soap12);
     QWebMethod(QString host, QString messageName, QMap<QString, QVariant> params,
-                 QObject *parent = 0);
+                 QObject *parent = 0, Protocol protocol = soap12);
     ~QWebMethod();
 
     void setHost(QString newHost);
@@ -42,6 +55,8 @@ public:
     bool sendMessage(QMap<QString, QVariant> params);
     QVariant static sendMessage(QObject *parent, QUrl url, QString _messageName,
                                 QMap<QString, QVariant> params, Protocol protocol = soap12);
+//    QVariant static sendRestMessage(QObject *parent, QUrl fullPath, QString parameters,
+//                                Protocol protocol = soap12, HttpMethod httpMethod = POST);
     QVariant replyRead();
     QString messageName();
     QStringList parameterNames() const;
@@ -58,13 +73,16 @@ signals:
 public slots:
     void replyFinished(QNetworkReply *reply);
 
-private:
+protected: // Changed for 0.3.5, but precisely what should be protected and what private shall be decided later.
     void init();
+    virtual void configure();
     void prepareRequestData();
     QString convertReplyToUtf(QString textToConvert);
 
+private:
     bool replyReceived;
-    Protocol protocol;
+    Protocol protocolUsed;
+    HttpMethod httpMethodUsed;
     QUrl m_hostUrl;
     QString m_messageName;
     QString m_targetNamespace;
@@ -77,5 +95,6 @@ private:
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QWebMethod::Protocols)
+Q_DECLARE_OPERATORS_FOR_FLAGS(QWebMethod::HttpMethods)
 
 #endif // QWebMethod_H

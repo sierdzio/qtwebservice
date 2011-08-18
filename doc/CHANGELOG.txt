@@ -7,6 +7,13 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
  - QWebService: run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./QWebService/qwebservice.qdocconf
  - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
 
+18.08.2011 : CEST:
+ - added virtual configure() method to QWebMethod, which can be used in a subclass to easily set up the class,
+ - added default protocol to every QWebMethod constructor,
+ - began REST implementation:
+   - added 'xml' and 'rest' to QWebMessage::Protocol enum,
+   - added 'HttpMethod' enum, with default 'POST',
+
 17.08.2011 21:48 CEST:
  - added Protocol to static QWebMethod::sendMessage(),
  - cleaned host-hostUrl mismatch from QWebService,
