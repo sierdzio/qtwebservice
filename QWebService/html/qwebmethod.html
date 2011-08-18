@@ -40,16 +40,18 @@
 <a name="public-functions"></a>
 <h2>Public Functions</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod">QWebMethod</a></b> ( QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = soap12 )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-2">QWebMethod</a></b> ( QUrl <i>url</i>, QString <i>messageName</i>, QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = soap12 )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-3">QWebMethod</a></b> ( QString <i>url</i>, QString <i>messageName</i>, QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = soap12 )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-4">QWebMethod</a></b> ( QString <i>url</i>, QString <i>messageName</i>, QMap&lt;QString, QVariant&gt; <i>params</i>, QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = soap12 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod">QWebMethod</a></b> ( QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = soap12, HttpMethod <i>method</i> = POST )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-2">QWebMethod</a></b> ( QUrl <i>url</i>, QString <i>messageName</i>, QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = soap12, HttpMethod <i>method</i> = POST )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-3">QWebMethod</a></b> ( QString <i>url</i>, QString <i>messageName</i>, QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = soap12, HttpMethod <i>method</i> = POST )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-4">QWebMethod</a></b> ( QString <i>url</i>, QString <i>messageName</i>, QMap&lt;QString, QVariant&gt; <i>params</i>, QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = soap12, HttpMethod <i>method</i> = POST )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#dtor.QWebMethod">~QWebMethod</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#host">host</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#hostUrl">hostUrl</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> HttpMethod </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#httpMethod">httpMethod</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#messageName">messageName</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#parameterNames">parameterNames</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</a></b> () const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Protocol </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#protocol">protocol</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariant </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#replyRead">replyRead</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#returnValueName">returnValueName</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#returnValueNameType">returnValueNameType</a></b> () const</td></tr>
@@ -57,6 +59,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#sendMessage-2">sendMessage</a></b> ( QMap&lt;QString, QVariant&gt; <i>params</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setHost">setHost</a></b> ( QString <i>newHost</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setHost-2">setHost</a></b> ( QUrl <i>newHost</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setHttpMethod">setHttpMethod</a></b> ( HttpMethod <i>method</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setMessageName">setMessageName</a></b> ( QString <i>newName</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setParameters">setParameters</a></b> ( QMap&lt;QString, QVariant&gt; <i>params</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setProtocol">setProtocol</a></b> ( Protocol <i>prot</i> )</td></tr>
@@ -128,24 +131,24 @@
 </div>
 <div class="func">
 <h2>Member Function Documentation</h2>
-<!-- $$$QWebMethod[overload1]$$$QWebMethodQObject*Protocol -->
-<h3 class="fn"><a name="QWebMethod"></a>QWebMethod::QWebMethod ( QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = soap12 )</h3>
-<p>Constructs the message usign <i>parent</i> and <i>protocol</i> (which defaults to soap12). Requires specifying other params later (<a href="qwebmethod.html#setParameters">setParameters</a>()).</p>
+<!-- $$$QWebMethod[overload1]$$$QWebMethodQObject*ProtocolHttpMethod -->
+<h3 class="fn"><a name="QWebMethod"></a>QWebMethod::QWebMethod ( QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = POST )</h3>
+<p>Constructs the message usign <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST). Requires specifying other params later (<a href="qwebmethod.html#setParameters">setParameters</a>()).</p>
 <p>See also <a href="qwebmethod.html#init">init</a>(), <a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#sendMessage">sendMessage</a>().</p>
 <!-- @@@QWebMethod -->
-<!-- $$$QWebMethod$$$QWebMethodQUrlQStringQObject*Protocol -->
-<h3 class="fn"><a name="QWebMethod-2"></a>QWebMethod::QWebMethod ( QUrl <i>url</i>, QString <i>messageName</i>, QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = soap12 )</h3>
-<p>Constructs the message using <i>url</i>, <i>messageName</i>, <i>parent</i> and <i>protocol</i> (which defaults to soap12). Requires params to be specified later.</p>
+<!-- $$$QWebMethod$$$QWebMethodQUrlQStringQObject*ProtocolHttpMethod -->
+<h3 class="fn"><a name="QWebMethod-2"></a>QWebMethod::QWebMethod ( QUrl <i>url</i>, QString <i>messageName</i>, QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = POST )</h3>
+<p>Constructs the message using <i>url</i>, <i>messageName</i>, <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST). Requires params to be specified later.</p>
 <p>See also <a href="qwebmethod.html#init">init</a>(), <a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#sendMessage">sendMessage</a>().</p>
 <!-- @@@QWebMethod -->
-<!-- $$$QWebMethod$$$QWebMethodQStringQStringQObject*Protocol -->
-<h3 class="fn"><a name="QWebMethod-3"></a>QWebMethod::QWebMethod ( QString <i>url</i>, QString <i>messageName</i>, QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = soap12 )</h3>
-<p>Constructs the message using <i>url</i>, <i>messageName</i>, <i>parent</i> and <i>protocol</i> (which defaults to soap12). Requires params to be specified later.</p>
+<!-- $$$QWebMethod$$$QWebMethodQStringQStringQObject*ProtocolHttpMethod -->
+<h3 class="fn"><a name="QWebMethod-3"></a>QWebMethod::QWebMethod ( QString <i>url</i>, QString <i>messageName</i>, QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = POST )</h3>
+<p>Constructs the message using <i>url</i>, <i>messageName</i>, <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST). Requires params to be specified later.</p>
 <p>See also <a href="qwebmethod.html#init">init</a>(), <a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#sendMessage">sendMessage</a>().</p>
 <!-- @@@QWebMethod -->
-<!-- $$$QWebMethod$$$QWebMethodQStringQStringQMap<QString,QVariant>QObject*Protocol -->
-<h3 class="fn"><a name="QWebMethod-4"></a>QWebMethod::QWebMethod ( QString <i>url</i>, QString <i>messageName</i>, QMap&lt;QString, QVariant&gt; <i>params</i>, QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = soap12 )</h3>
-<p>Constructs the message using <i>url</i>, <i>messageName</i>, <i>parent</i> and <i>protocol</i> (which defaults to soap12). This constructor also takes message parameters (<i>params</i>). Does not require specifying any more information, but you still need to manually send the message using <a href="qwebmethod.html#sendMessage">sendMessage</a>() (without any arguments, or else - if you want to change ones specified here).</p>
+<!-- $$$QWebMethod$$$QWebMethodQStringQStringQMap<QString,QVariant>QObject*ProtocolHttpMethod -->
+<h3 class="fn"><a name="QWebMethod-4"></a>QWebMethod::QWebMethod ( QString <i>url</i>, QString <i>messageName</i>, QMap&lt;QString, QVariant&gt; <i>params</i>, QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = POST )</h3>
+<p>Constructs the message using <i>url</i>, <i>messageName</i>, <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST). This constructor also takes message parameters (<i>params</i>). Does not require specifying any more information, but you still need to manually send the message using <a href="qwebmethod.html#sendMessage">sendMessage</a>() (without any arguments, or else - if you want to change ones specified here).</p>
 <p>See also <a href="qwebmethod.html#init">init</a>(), <a href="qwebmethod.html#sendMessage">sendMessage</a>(), and <a href="qwebmethod.html#setProtocol">setProtocol</a>().</p>
 <!-- @@@QWebMethod -->
 <!-- $$$~QWebMethod[overload1]$$$~QWebMethod -->
@@ -174,6 +177,11 @@
 <h3 class="fn"><a name="hostUrl"></a>QUrl QWebMethod::hostUrl ()</h3>
 <p>Returns host's URL. If you want a QString, call getHost() or getHostUrl().<a href="qwebmethod.html#host">host</a>();</p>
 <!-- @@@hostUrl -->
+<!-- $$$httpMethod[overload1]$$$httpMethod -->
+<h3 class="fn"><a name="httpMethod"></a><a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> QWebMethod::httpMethod ()</h3>
+<p>Returns currently set HTTP method.</p>
+<p>See also <a href="qwebmethod.html#setHttpMethod">setHttpMethod</a>() and <a href="qwebmethod.html#protocol">protocol</a>().</p>
+<!-- @@@httpMethod -->
 <!-- $$$init[overload1]$$$init -->
 <h3 class="fn"><a name="init"></a>void QWebMethod::init ()<tt> [protected]</tt></h3>
 <p>Performs genral initialisation of the object. Sets default variable values, initializes network manager, connects reply signals. Calls virtual method, <a href="qwebmethod.html#configure">configure</a>().</p>
@@ -192,6 +200,11 @@
 <h3 class="fn"><a name="parameterNamesTypes"></a>QMap&lt;QString, QVariant&gt; QWebMethod::parameterNamesTypes () const</h3>
 <p>Returns whole parameter information (name and type).</p>
 <!-- @@@parameterNamesTypes -->
+<!-- $$$protocol[overload1]$$$protocol -->
+<h3 class="fn"><a name="protocol"></a><a href="qwebmethod.html#Protocol-enum">Protocol</a> QWebMethod::protocol ()</h3>
+<p>Returns currently set protocol.</p>
+<p>See also <a href="qwebmethod.html#setProtocol">setProtocol</a>() and <a href="qwebmethod.html#httpMethod">httpMethod</a>().</p>
+<!-- @@@protocol -->
 <!-- $$$replyFinished[overload1]$$$replyFinishedQNetworkReply* -->
 <h3 class="fn"><a name="replyFinished"></a>void QWebMethod::replyFinished ( QNetworkReply * <i>netReply</i> )<tt> [slot]</tt></h3>
 <p>Public (will probably be private in the future) slot, which processes the reply (<i>netReply</i>) from the server. Emits the <a href="qwebmethod.html#replyReady">replyReady</a>() signal.</p>
@@ -219,6 +232,7 @@
 <!-- @@@sendMessage -->
 <!-- $$$sendMessage$$$sendMessageQMap<QString,QVariant> -->
 <h3 class="fn"><a name="sendMessage-2"></a>bool QWebMethod::sendMessage ( QMap&lt;QString, QVariant&gt; <i>params</i> )</h3>
+<p>This function overloads <a href="qwebmethod.html#sendMessage">sendMessage</a>().</p>
 <p>Sends the message asynchronously using parameters specified in <i>params</i>.</p>
 <!-- @@@sendMessage -->
 <!-- $$$setHost[overload1]$$$setHostQString -->
@@ -230,6 +244,11 @@
 <h3 class="fn"><a name="setHost-2"></a>void QWebMethod::setHost ( QUrl <i>newHost</i> )</h3>
 <p>Set's message's host to <i>newHost</i>.</p>
 <!-- @@@setHost -->
+<!-- $$$setHttpMethod[overload1]$$$setHttpMethodHttpMethod -->
+<h3 class="fn"><a name="setHttpMethod"></a>void QWebMethod::setHttpMethod ( <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> )</h3>
+<p>Sets the httpMethod flag (<i>method</i>, a value of <a href="qwebmethod.html#HttpMethod-enum">QWebMethod::HttpMethod</a>). Default method is <a href="qwebmethod.html#HttpMethod-enum">QWebMethod::POST</a>.</p>
+<p>See also <a href="qwebmethod.html#httpMethod">httpMethod</a>().</p>
+<!-- @@@setHttpMethod -->
 <!-- $$$setMessageName[overload1]$$$setMessageNameQString -->
 <h3 class="fn"><a name="setMessageName"></a>void QWebMethod::setMessageName ( QString <i>newName</i> )</h3>
 <p>Set's message's name to <i>newName</i>.</p>
@@ -241,7 +260,10 @@
 <!-- @@@setParameters -->
 <!-- $$$setProtocol[overload1]$$$setProtocolProtocol -->
 <h3 class="fn"><a name="setProtocol"></a>void QWebMethod::setProtocol ( <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>prot</i> )</h3>
-<p>Sets the protocol flag (<i>prot</i>, being one of the values of <a href="qwebmethod.html#Protocol-enum">QWebMethod::Protocol</a>). This determines the protocol used later, when sending request. Defaults to SOAP1.2</p>
+<p>Sets the protocol flag (<i>prot</i>, being one of the values of <a href="qwebmethod.html#Protocol-enum">QWebMethod::Protocol</a>). This determines the protocol used later, when sending request. Defaults to SOAP1.2&#x2e;</p>
+<p>WARNING: This method also checks for disallowed combinations. If such combination is encountered, it discards the set protocol, and sets SOAP 1.2&#x2e;</p>
+<p>This behavious will probably change in the future, when <a href="qwebmethod.html">QWebMethod</a> gets error handling.</p>
+<p>See also <a href="qwebmethod.html#protocol">protocol</a>().</p>
 <!-- @@@setProtocol -->
 <!-- $$$setReturnValue[overload1]$$$setReturnValueQMap<QString,QVariant> -->
 <h3 class="fn"><a name="setReturnValue"></a>void QWebMethod::setReturnValue ( QMap&lt;QString, QVariant&gt; <i>returnVal</i> )</h3>

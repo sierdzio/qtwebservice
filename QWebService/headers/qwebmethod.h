@@ -37,11 +37,13 @@ public:
     };
     Q_DECLARE_FLAGS(HttpMethods, HttpMethod)
 
-    explicit QWebMethod(QObject *parent = 0, Protocol protocol = soap12);
-    QWebMethod(QUrl hostUrl, QString messageName, QObject *parent = 0, Protocol protocol = soap12);
-    QWebMethod(QString host, QString messageName, QObject *parent = 0, Protocol protocol = soap12);
+    explicit QWebMethod(QObject *parent = 0, Protocol protocol = soap12, HttpMethod httpMethod = POST);
+    QWebMethod(QUrl hostUrl, QString messageName, QObject *parent = 0,
+               Protocol protocol = soap12, HttpMethod httpMethod = POST);
+    QWebMethod(QString host, QString messageName, QObject *parent = 0,
+               Protocol protocol = soap12, HttpMethod httpMethod = POST);
     QWebMethod(QString host, QString messageName, QMap<QString, QVariant> params,
-                 QObject *parent = 0, Protocol protocol = soap12);
+                 QObject *parent = 0, Protocol protocol = soap12, HttpMethod httpMethod = POST);
     ~QWebMethod();
 
     void setHost(QString newHost);
@@ -51,10 +53,12 @@ public:
     void setReturnValue(QMap<QString, QVariant> returnValue);
     void setTargetNamespace(QString tNamespace);
     void setProtocol(Protocol protocol);
+    void setHttpMethod(HttpMethod method);
     bool sendMessage();
     bool sendMessage(QMap<QString, QVariant> params);
-    QVariant static sendMessage(QObject *parent, QUrl url, QString _messageName,
-                                QMap<QString, QVariant> params, Protocol protocol = soap12);
+    QVariant static sendMessage(QObject *parent, QUrl url,
+                                QString _messageName, QMap<QString, QVariant> params,
+                                Protocol protocol = soap12, HttpMethod httpMethod = POST);
 //    QVariant static sendRestMessage(QObject *parent, QUrl fullPath, QString parameters,
 //                                Protocol protocol = soap12, HttpMethod httpMethod = POST);
     QVariant replyRead();
@@ -66,6 +70,8 @@ public:
     QString targetNamespace();
     QString host();
     QUrl hostUrl();
+    Protocol protocol();
+    HttpMethod httpMethod();
 
 signals:
     void replyReady(QVariant rply);

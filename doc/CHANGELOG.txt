@@ -13,6 +13,11 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
  - began REST implementation:
    - added 'xml' and 'rest' to QWebMessage::Protocol enum,
    - added 'HttpMethod' enum, with default 'POST',
+   - added Protocol and HttpMethod getters and setters,
+   - setProtocol() acquired new section, which checks for wrongly set flags,
+   - added 'xml' and 'rest' handlers in code,
+ - updated QDoc,
+ - changed lib version to 0.3.5.
 
 17.08.2011 21:48 CEST:
  - added Protocol to static QWebMethod::sendMessage(),

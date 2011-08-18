@@ -61,56 +61,66 @@
   */
 
 /*!
-    \fn QWebMethod::QWebMethod(QObject *parent, Protocol protocol)
+    \fn QWebMethod::QWebMethod(QObject *parent, Protocol protocol, HttpMethod method)
 
-    Constructs the message usign \a parent and \a protocol (which defaults to soap12). Requires specifying other params later (setParameters()).
+    Constructs the message usign \a parent, \a protocol (which defaults to soap12),
+    and \a method (which defaults to POST). Requires specifying other params later (setParameters()).
 
     \sa init(), setParameters(), setProtocol(), sendMessage()
   */
-QWebMethod::QWebMethod(QObject *parent, Protocol protocol) :
-    QObject(parent), protocolUsed(protocol)
+QWebMethod::QWebMethod(QObject *parent, Protocol protocol, HttpMethod method) :
+    QObject(parent)
 {
     init();
+    setProtocol(protocol);
+    setHttpMethod(method);
     m_hostUrl.setHost("");
     m_messageName = "";
     parameters.clear();
 }
 
 /*!
-    \fn QWebMethod::QWebMethod(QUrl url, QString messageName, QObject *parent, Protocol protocol)
+    \fn QWebMethod::QWebMethod(QUrl url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method)
 
-    Constructs the message using \a url, \a messageName, \a parent and \a protocol (which defaults to soap12).
+    Constructs the message using \a url, \a messageName, \a parent, \a protocol (which defaults to soap12),
+    and \a method (which defaults to POST).
     Requires params to be specified later.
 
     \sa init(), setParameters(), setProtocol(), sendMessage()
   */
-QWebMethod::QWebMethod(QUrl url, QString messageName, QObject *parent, Protocol protocol) :
-    QObject(parent), m_hostUrl(url), m_messageName(messageName), protocolUsed(protocol)
+QWebMethod::QWebMethod(QUrl url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method) :
+    QObject(parent), m_hostUrl(url), m_messageName(messageName)
 {
     init();
+    setProtocol(protocol);
+    setHttpMethod(method);
     parameters.clear();
 }
 
 /*!
-    \fn QWebMethod::QWebMethod(QString url, QString messageName, QObject *parent, Protocol protocol)
+    \fn QWebMethod::QWebMethod(QString url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method)
 
-    Constructs the message using \a url, \a messageName, \a parent and \a protocol (which defaults to soap12).
+    Constructs the message using \a url, \a messageName, \a parent, \a protocol (which defaults to soap12),
+    and \a method (which defaults to POST).
     Requires params to be specified later.
 
     \sa init(), setParameters(), setProtocol(), sendMessage()
   */
-QWebMethod::QWebMethod(QString url, QString messageName, QObject *parent, Protocol protocol) :
-    QObject(parent), m_messageName(messageName), protocolUsed(protocol)
+QWebMethod::QWebMethod(QString url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method) :
+    QObject(parent), m_messageName(messageName)
 {
     init();
+    setProtocol(protocol);
+    setHttpMethod(method);
     m_hostUrl.setHost(url + m_messageName);
     parameters.clear();
 }
 
 /*!
-    \fn QWebMethod::QWebMethod(QString url, QString messageName, QMap<QString, QVariant> params, QObject *parent, Protocol protocol)
+    \fn QWebMethod::QWebMethod(QString url, QString messageName, QMap<QString, QVariant> params, QObject *parent, Protocol protocol, HttpMethod method)
 
-    Constructs the message using \a url, \a messageName, \a parent and \a protocol (which defaults to soap12).
+    Constructs the message using \a url, \a messageName, \a parent, \a protocol (which defaults to soap12),
+    and \a method (which defaults to POST).
     This constructor also takes message parameters (\a params).
     Does not require specifying any more information, but you still need to manually send the message
     using sendMessage() (without any arguments, or else - if you want to change ones specified here).
@@ -118,10 +128,13 @@ QWebMethod::QWebMethod(QString url, QString messageName, QObject *parent, Protoc
     \sa init(), sendMessage(), setProtocol()
   */
 QWebMethod::QWebMethod(QString url, QString messageName,
-                           QMap<QString, QVariant> params, QObject *parent, Protocol protocol) :
-    QObject(parent), m_messageName(messageName), parameters(params), protocolUsed(protocol)
+                       QMap<QString, QVariant> params, QObject *parent,
+                       Protocol protocol, HttpMethod method) :
+    QObject(parent), m_messageName(messageName), parameters(params)
 {
     init();
+    setProtocol(protocol);
+    setHttpMethod(method);
     m_hostUrl.setHost(url + m_messageName);
 }
 
@@ -201,14 +214,41 @@ void QWebMethod::setTargetNamespace(QString tNamespace)
     \fn QWebMethod::setProtocol(Protocol prot)
 
     Sets the protocol flag (\a prot, being one of the values of QWebMethod::Protocol).
-    This determines the protocol used later, when sending request. Defaults to SOAP1.2
+    This determines the protocol used later, when sending request. Defaults to SOAP1.2.
+
+    WARNING:
+    This method also checks for disallowed combinations. If such combination is encountered,
+    it discards the set protocol, and sets SOAP 1.2.
+
+    This behavious will probably change in the future, when QWebMethod gets error handling.
   */
 void QWebMethod::setProtocol(Protocol prot)
 {
-    if (prot == soap)
+    // Prevent incompatibile flags from being set simultaneously:
+    QList<int> allowedCombinations;
+    allowedCombinations << 0x01 << 0x02 << 0x04 << 0x06 << 0x08 << 0x10 << 0x20; // Standard values.
+    allowedCombinations << 0x21 << 0x22 << 0x24 << 0x26 << 0x28 << 0x30; // REST combinations
+
+    if (allowedCombinations.contains(prot)) {
+        if (prot & soap)
+            protocolUsed = soap12;
+        else
+            protocolUsed = prot;
+    }
+    else {
         protocolUsed = soap12;
-    else
-        protocolUsed = prot;
+    }
+}
+
+/*!
+  \fn QWebMethod::setHttpMethod(HttpMethod method)
+
+  Sets the httpMethod flag (\a method, a value of QWebMethod::HttpMethod).
+  Default method is QWebMethod::POST.
+  */
+void QWebMethod::setHttpMethod(HttpMethod method)
+{
+    httpMethodUsed = method;
 }
 
 /*!
@@ -226,25 +266,34 @@ bool QWebMethod::sendMessage()
 
     if (protocolUsed & soap)
         request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/soap+xml; charset=utf-8"));
-    else if (protocolUsed == json)
+    else if (protocolUsed & json)
         request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json; charset=utf-8"));
-    else if (protocolUsed == http)
+    else if (protocolUsed & http)
         request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("Content-Type: application/x-www-form-urlencoded"));
+    else if (protocolUsed & xml)
+        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/xml; charset=utf-8"));
 
-    if (protocolUsed == soap10)
+    if (protocolUsed & soap10)
         request.setRawHeader(QByteArray("SOAPAction"), QByteArray(m_hostUrl.toString().toAscii()));
 
     prepareRequestData();
 
-    //qDebug() << request.rawHeaderList() << " " << request.url().toString();
-    //qDebug() << data;
+    if (protocolUsed & rest) {
+        if (httpMethodUsed == POST)
+            manager->post(request, data);
+        else if (httpMethodUsed == GET)
+            manager->get(request); //, data); WARNING! Test this! Do we send enough data?
+        else if (httpMethodUsed == PUT)
+            manager->put(request, data);
+        else if (httpMethodUsed == DELETE)
+            manager->deleteResource(request); //, data); WARNING! Test this! Do we send enough data?
+    }
 
-    manager->post(request, data);
     return true;
 }
 
 /*!
-    \fn QWebMethod::sendMessage(QMap<QString, QVariant> params)
+    \overload sendMessage()
 
     Sends the message asynchronously using parameters specified in \a params.
   */
@@ -256,16 +305,20 @@ bool QWebMethod::sendMessage(QMap<QString, QVariant> params)
 }
 
 /*!
+  \overload sendMessage()
+
      STATIC method. Sends the message synchronously, using \a url, \a _messageName, \a params and \a parent.
-     Protocol can optionally be specified by \a protocol.
+     Protocol can optionally be specified by \a protocol (default is SOAP 1.2), as well as HTTP \a method
+     (default is POST).
      Returns with web service reply.
   */
-QVariant QWebMethod::sendMessage(QObject *parent, QUrl url, QString _messageName,
-                                 QMap<QString, QVariant> params, Protocol protocol)
+QVariant QWebMethod::sendMessage(QObject *parent, QUrl url,
+                                 QString _messageName, QMap<QString, QVariant> params,
+                                 Protocol protocol, HttpMethod method)
 {
-    QWebMethod qsm(url.host(), _messageName, params, parent);
+    QWebMethod qsm(url.host(), _messageName, params, parent, protocol, method);
     qsm.m_hostUrl = url;
-    qsm.protocolUsed = protocol;
+//    qsm.setProtocol(protocol);
 
     qsm.sendMessage();
     // TODO: ADD ERROR HANDLING!
@@ -375,6 +428,30 @@ QUrl QWebMethod::hostUrl()
 }
 
 /*!
+  \fn QWebMethod::protocol()
+
+  Returns currently set protocol.
+
+  \sa httpMethod()
+  */
+QWebMethod::Protocol QWebMethod::protocol()
+{
+    return protocolUsed;
+}
+
+/*!
+  \fn QWebMethod::httpMethod()
+
+  Returns currently set HTTP method.
+
+  \sa protocol()
+  */
+QWebMethod::HttpMethod QWebMethod::httpMethod()
+{
+    return httpMethodUsed;
+}
+
+/*!
     \fn QWebMethod::replyFinished(QNetworkReply *netReply)
 
     Public (will probably be private in the future) slot, which processes the reply (\a netReply) from the server.
@@ -456,7 +533,7 @@ void QWebMethod::prepareRequestData()
     QString endl = "\r\n"; // Replace with something OS-independent, or seriously rethink.
 
     if (protocolUsed & soap) {
-        if (protocolUsed == soap12) {
+        if (protocolUsed & soap12) {
             header = "<?xml version=\"1.0\" encoding=\"utf-8\"?> " + endl +
                      " <soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
                      "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"" +
@@ -465,7 +542,7 @@ void QWebMethod::prepareRequestData()
 
             footer = "</soap12:Body> " + endl + "</soap12:Envelope>";
         }
-        else if (protocolUsed == soap10) {
+        else if (protocolUsed & soap10) {
             header = "<?xml version=\"1.0\" encoding=\"utf-8\"?> " + endl +
                     " <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
                     "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"" +
@@ -485,7 +562,7 @@ void QWebMethod::prepareRequestData()
 
         body += "\t</" + m_messageName + "> " + endl;
     }
-    else if (protocolUsed == http) {
+    else if (protocolUsed & http) {
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
             // Currently, this does not handle nested lists
@@ -493,7 +570,7 @@ void QWebMethod::prepareRequestData()
         }
         body.chop(1);
     }
-    else if (protocolUsed == json) {
+    else if (protocolUsed & json) {
         body += "{" + endl;
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
@@ -501,6 +578,13 @@ void QWebMethod::prepareRequestData()
             body += "{" + endl + "\t\"" + currentKey + "\" : \"" + qv.toString() + "\"" + endl;
         }
         body += "}";
+    }
+    else if (protocolUsed & xml) {
+        foreach (const QString currentKey, parameters.keys()) {
+            QVariant qv = parameters.value(currentKey);
+            // Currently, this does not handle nested lists
+            body += "\t\t<" + currentKey + ">" + qv.toString() + "</" + currentKey + "> " + endl;
+        }
     }
 
     data.append(header + body + footer);
