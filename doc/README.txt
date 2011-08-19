@@ -16,7 +16,7 @@ This project provides a set of classes (compilable into a library, if you prefer
 1.1 Classes (* indicates possible major API changes in the future)
 
   1.1.1 QWebMethod (formerly QSoapMessage)
-  Supports HTTP, SOAP 1.0, SOAP 1.2 and JSON.
+  Supports HTTP, SOAP 1.0, SOAP 1.2 and JSON, XML and RESTful web services.
   Used to send messages to a web service, and read replys from it. Can be used both synchronously (through static sendMessage() method), or asynchronously (indicates, when reply is ready by emitting a replyReady() signal).
 
   1.1.2 QWsdl
@@ -44,7 +44,7 @@ WARNING: Remember to first compile QWebService library, and set it's path in run
 
   2.1.1 Possible options (unavailable marked with *)
     --help,
-    --soap10, --soap12, --http, --json,
+    --soap10, --soap12, --http, --json, *--xml, *--rest={POST, GET, PUT, DELETE, post, get, put, delete}
     --synchronous, --asynchronous,
     --full-mode, *--debug-mode, *(partial)--compact-mode,
     --standard-structure, --no-messages-structure, --all-in-one-dir-structure,
@@ -56,13 +56,17 @@ WARNING: Remember to first compile QWebService library, and set it's path in run
     --synchronous, --soap12, --standard-structure, --full-mode, --qmake
 
 2.2 Meaning
-All entries in single sections (with an exception of build system related switches) are exclusive - you can use only one at a time (the lates one specified is used). For example, if you use --http and --json, only JSON flag will be set.
+All entries in single sections (with an exception of build system related switches, and '--rest') are exclusive - you can use only one at a time (the lates one specified is used). For example, if you use --http and --json, only JSON flag will be set.
 
   2.2.1 Protocols
     --soap10 - classes will contact with web service using SOAP1.0 protocol,
     --soap12 - classes will contact with web service using SOAP1.2 protocol,
     --http   - classes will contact with web service using HTTP protocol,
-    --json   - classes will contact with web service using JSON protocol.
+    --json   - classes will contact with web service using JSON protocol,
+    --xml    - classes will contact with web service using XML protocol (non-SOAP),
+    --rest=  - classes will contact with RESTful web service (this can be combined with previous flags. HTTP method
+	       can be specified after equals mark, for example: --rest=POST or --rest=put. If none is given,
+	       POST is assumed. Available options: POST, GET, PUT, DELETE.
 
   2.2.2 Synchronousness
     --synchronous  - communication with server will be performed using synchronous calls,

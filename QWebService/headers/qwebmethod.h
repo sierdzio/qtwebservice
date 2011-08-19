@@ -10,10 +10,8 @@
 class QWEBSERVICESHARED_EXPORT QWebMethod : public QObject
 {
     Q_OBJECT
-    Q_ENUMS(Protocol)
     Q_FLAGS(Protocols)
     Q_ENUMS(HttpMethod)
-    Q_FLAGS(HttpMethods)
 
 public:
     enum Protocol
@@ -35,7 +33,6 @@ public:
         PUT     = 0x4,
         DELETE  = 0x8
     };
-    Q_DECLARE_FLAGS(HttpMethods, HttpMethod)
 
     explicit QWebMethod(QObject *parent = 0, Protocol protocol = soap12, HttpMethod httpMethod = POST);
     QWebMethod(QUrl hostUrl, QString messageName, QObject *parent = 0,
@@ -101,6 +98,5 @@ private:
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QWebMethod::Protocols)
-Q_DECLARE_OPERATORS_FOR_FLAGS(QWebMethod::HttpMethods)
 
 #endif // QWebMethod_H

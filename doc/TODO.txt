@@ -1,11 +1,4 @@
 Remote Features and TODO's list can be found at: http://goo.gl/L1C6X
 
 TODO'S:
- - (QWsdl) finish implementation (include all tags)
- - (QWsdl) implement more parameter types
- - write test suite
- - (converter) optimise code generation - current implementation is crude and ugly (but it works!)
- - (converter) review '--debug-mode' implementation - or delete it
- - (converter) review protocol implementation
- - (converter) (proposal) use more standard approach to command line reading
- - (QWebService & converter) (proposal) replace '\r\n' in QSoapMessage and converted code with OS-independent code
+ - (converter) add new flags to generated code.

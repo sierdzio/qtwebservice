@@ -2,10 +2,14 @@
 
 /*!
     \class QWebMethod
-    \brief Class that can be used to asnchronously and synchronously send HTTP, SOAP1.0 and SOAP1.2 messages to web services.
+    \brief Class that can be used to asnchronously and synchronously send HTTP, SOAP 1.0, SOAP 1.2, JSON, XMLand REST messages to web services.
 
     To send a message and receive reply synchronously, use the static sendMessage() method. Otherwise, you can use
     replyReady() signal to know, when a reply returns. It can be read with replyRead().
+
+    To send a REST message with (for example) JSON body, pass (QWebMethod::rest | QWebMethod::json) as protocol flag.
+    Additionally, specify HTTP method to be used (POST, GET, PUT, DELETE). When sending a REST message, \a messageName
+    is used as request URI, and \a parameters specify additioanl data to be sent in message body.
 
     If you want to save some time on configuration in your code, you can subclass QWebMethod, reimplement configure(),
     and create your own slot for parsing te reply. Configure is called by init(), which is in turn called by every
@@ -48,7 +52,8 @@
 /*!
   \enum QWebMethod::HttpMethod
 
-  Defines HTTP method to use when sending the message.
+  Defines HTTP method to use when sending the message. Using more than 1 at the same time is forbidden
+  (will not work).
 
   \value POST
          QWebMethod will use POST.
@@ -252,7 +257,7 @@ void QWebMethod::setHttpMethod(HttpMethod method)
 }
 
 /*!
-    \fn QWebMethod::sendMessage()
+    \fn bool QWebMethod::sendMessage()
 
     Sends the message asynchronously, assuming that all neccessary data was specified earlier.
     Returns true on success.
@@ -282,18 +287,22 @@ bool QWebMethod::sendMessage()
         if (httpMethodUsed == POST)
             manager->post(request, data);
         else if (httpMethodUsed == GET)
-            manager->get(request); //, data); WARNING! Test this! Do we send enough data?
+            manager->get(request);
         else if (httpMethodUsed == PUT)
             manager->put(request, data);
         else if (httpMethodUsed == DELETE)
-            manager->deleteResource(request); //, data); WARNING! Test this! Do we send enough data?
+            manager->deleteResource(request);
+    }
+    else {
+        manager->post(request, data);
     }
 
     return true;
 }
 
 /*!
-    \overload sendMessage()
+  \fn bool QWebMethod::sendMessage(QMap<QString, QVariant> params)
+  \overload sendMessage()
 
     Sends the message asynchronously using parameters specified in \a params.
   */
@@ -316,9 +325,14 @@ QVariant QWebMethod::sendMessage(QObject *parent, QUrl url,
                                  QString _messageName, QMap<QString, QVariant> params,
                                  Protocol protocol, HttpMethod method)
 {
+    /*
+       Part of QDoc that does not work:   \fn QVariant QWebMethod::sendMessage(QObject *parent, QUrl url,
+       QString _messageName, QMap<QString, QVariant> params,
+       QWebMethod::Protocol protocol, QWebMethod::HttpMethod httpMethod)
+    */
+
     QWebMethod qsm(url.host(), _messageName, params, parent, protocol, method);
     qsm.m_hostUrl = url;
-//    qsm.setProtocol(protocol);
 
     qsm.sendMessage();
     // TODO: ADD ERROR HANDLING!

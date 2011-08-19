@@ -4,25 +4,33 @@
     <namespace access="public" threadsafety="unspecified" status="commendable" name="" href="" location="" module="">
         <class access="public" threadsafety="unspecified" status="commendable" name="Flags" href="flags.html" location="flags.h" bases="" module="">
             <enum access="public" threadsafety="unspecified" status="commendable" name="Option" fullname="Flags::Option" href="flags.html#Option-enum" location="flags.h" typedef="Flags::Options">
-                <value name="fullMode" value="0x00001"/>
-                <value name="debugMode" value="0x00002"/>
-                <value name="compactMode" value="0x00004"/>
-                <value name="synchronous" value="0x00010"/>
-                <value name="asynchronous" value="0x00020"/>
-                <value name="standardStructure" value="0x00100"/>
-                <value name="noMessagesStructure" value="0x00200"/>
-                <value name="allInOneDirStructure" value="0x00400"/>
-                <value name="qmake" value="0x01000"/>
-                <value name="cmake" value="0x02000"/>
-                <value name="scons" value="0x04000"/>
-                <value name="noBuildSystem" value="0x08000"/>
-                <value name="http" value="0x10000"/>
-                <value name="soap10" value="0x20000"/>
-                <value name="soap12" value="0x40000"/>
-                <value name="soap" value="0x60000"/>
-                <value name="json" value="0x80000"/>
+                <value name="fullMode" value="0x000001"/>
+                <value name="debugMode" value="0x000002"/>
+                <value name="compactMode" value="0x000004"/>
+                <value name="synchronous" value="0x000010"/>
+                <value name="asynchronous" value="0x000020"/>
+                <value name="standardStructure" value="0x000100"/>
+                <value name="noMessagesStructure" value="0x000200"/>
+                <value name="allInOneDirStructure" value="0x000400"/>
+                <value name="qmake" value="0x001000"/>
+                <value name="cmake" value="0x002000"/>
+                <value name="scons" value="0x004000"/>
+                <value name="noBuildSystem" value="0x008000"/>
+                <value name="http" value="0x010000"/>
+                <value name="soap10" value="0x020000"/>
+                <value name="soap12" value="0x040000"/>
+                <value name="soap" value="0x060000"/>
+                <value name="json" value="0x080000"/>
+                <value name="xml" value="0x100000"/>
+                <value name="rest" value="0x200000"/>
             </enum>
             <typedef access="public" threadsafety="unspecified" status="commendable" name="Options" fullname="Flags::Options" href="flags.html#Options-typedef" location="flags.h" enum="Flags::Option"/>
+            <enum access="public" threadsafety="unspecified" status="commendable" name="HttpMethod" fullname="Flags::HttpMethod" href="flags.html#HttpMethod-enum" location="flags.h">
+                <value name="POST" value="0x1"/>
+                <value name="GET" value="0x2"/>
+                <value name="PUT" value="0x4"/>
+                <value name="DELETE" value="0x8"/>
+            </enum>
             <function access="public" threadsafety="unspecified" status="commendable" name="Flags" fullname="Flags::Flags" href="flags.html#Flags" location="flags.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="Flags(QFlags&lt;Flags::Option&gt; options, bool forced)">
                 <parameter left="QFlags&lt;Flags::Option&gt;" right="" name="options" default="Options( fullMode | synchronous | standardStructure | qmake | soap12 )"/>
                 <parameter left="bool" right="" name="forced" default="false"/>
@@ -34,6 +42,12 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="setFlags" fullname="Flags::setFlags" href="flags.html#setFlags" location="flags.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setFlags(QFlags&lt;Flags::Option&gt; options)">
                 <parameter left="QFlags&lt;Flags::Option&gt;" right="" name="options" default=""/>
             </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setHttpMethod" fullname="Flags::setHttpMethod" href="flags.html#setHttpMethod" location="flags.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setHttpMethod(HttpMethod newMethod)">
+                <parameter left="HttpMethod" right="" name="newMethod" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setHttpMethod" fullname="Flags::setHttpMethod" href="flags.html#setHttpMethod-2" location="flags.cpp" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="bool" signature="setHttpMethod(QString newMethod)">
+                <parameter left="QString" right="" name="newMethod" default=""/>
+            </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="setForced" fullname="Flags::setForced" href="flags.html#setForced" location="flags.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setForced(bool forced)">
                 <parameter left="bool" right="" name="forced" default=""/>
             </function>
@@ -44,10 +58,15 @@
                 <parameter left="QString" right="" name="newObjSuffix" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="flags" fullname="Flags::flags" href="flags.html#flags" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="Options" signature="flags() const"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="httpMethod" fullname="Flags::httpMethod" href="flags.html#httpMethod" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="HttpMethod" signature="httpMethod() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="forced" fullname="Flags::forced" href="flags.html#forced" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="forced() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="isForced" fullname="Flags::isForced" href="flags.html#isForced" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="isForced() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="messageSuffix" fullname="Flags::messageSuffix" href="flags.html#messageSuffix" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="messageSuffix() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="objectSuffix" fullname="Flags::objectSuffix" href="flags.html#objectSuffix" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="objectSuffix() const"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="httpMethodString" fullname="Flags::httpMethodString" href="flags.html#httpMethodString" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="httpMethodString() const"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="protocolString" fullname="Flags::protocolString" href="flags.html#protocolString" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="protocolString(bool includeRest) const">
+                <parameter left="bool" right="" name="includeRest" default="false"/>
+            </function>
         </class>
         <class access="public" threadsafety="unspecified" status="commendable" name="WsdlConverter" href="wsdlconverter.html" location="wsdlconverter.h" bases="" module="">
             <enum access="public" threadsafety="unspecified" status="commendable" name="ArgumentDescriptionFlag" fullname="WsdlConverter::ArgumentDescriptionFlag" href="wsdlconverter.html#ArgumentDescriptionFlag-enum" location="wsdlconverter.h" typedef="WsdlConverter::ArgumentDescription">

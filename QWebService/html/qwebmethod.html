@@ -24,7 +24,7 @@
 </div>
 <h1 class="title">QWebMethod Class Reference</h1>
 <!-- $$$QWebMethod-brief -->
-<p>Class that can be used to asnchronously and synchronously send HTTP, SOAP1.0 and SOAP1.2 messages to web services. <a href="#details">More...</a></p>
+<p>Class that can be used to asnchronously and synchronously send HTTP, SOAP 1.0, SOAP 1.2, JSON, XMLand REST messages to web services. <a href="#details">More...</a></p>
 <!-- @@@QWebMethod -->
 <pre class="highlightedCode brush: cpp">    #include &lt;QWebMethod&gt;</pre><ul>
 <li><a href="qwebmethod-members.html">List of all members, including inherited members</a></li>
@@ -33,7 +33,6 @@
 <h2>Public Types</h2>
 <table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a></b> { POST, GET, PUT, DELETE }</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> flags </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#HttpMethod-enum">HttpMethods</a></b></td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#Protocol-enum">Protocol</a></b> { http, soap10, soap12, soap, ..., rest }</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> flags </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#Protocol-enum">Protocols</a></b></td></tr>
 </table>
@@ -87,8 +86,9 @@
 <!-- $$$QWebMethod-description -->
 <div class="descr">
 <h2>Detailed Description</h2>
-<p>Class that can be used to asnchronously and synchronously send HTTP, SOAP1.0 and SOAP1.2 messages to web services.</p>
+<p>Class that can be used to asnchronously and synchronously send HTTP, SOAP 1.0, SOAP 1.2, JSON, XMLand REST messages to web services.</p>
 <p>To send a message and receive reply synchronously, use the static <a href="qwebmethod.html#sendMessage">sendMessage</a>() method. Otherwise, you can use <a href="qwebmethod.html#replyReady">replyReady</a>() signal to know, when a reply returns. It can be read with <a href="qwebmethod.html#replyRead">replyRead</a>().</p>
+<p>To send a REST message with (for example) JSON body, pass (<a href="qwebmethod.html#Protocol-enum">QWebMethod::rest</a> | <a href="qwebmethod.html#Protocol-enum">QWebMethod::json</a>) as protocol flag. Additionally, specify HTTP method to be used (POST, GET, PUT, DELETE). When sending a REST message, <i>messageName</i> is used as request URI, and <i>parameters</i> specify additioanl data to be sent in message body.</p>
 <p>If you want to save some time on configuration in your code, you can subclass QWebMethod, reimplement <a href="qwebmethod.html#configure">configure</a>(), and create your own slot for parsing te reply. Configure is called by <a href="qwebmethod.html#init">init</a>(), which is in turn called by every constructor.</p>
 <p>You can use <a href="qwebmethod.html#configure">configure</a>() to:</p>
 <ul>
@@ -104,15 +104,14 @@
 <div class="types">
 <h2>Member Type Documentation</h2>
 <!-- $$$HttpMethod$$$POST$$$GET$$$PUT$$$DELETE -->
-<h3 class="flags"><a name="HttpMethod-enum"></a>enum QWebMethod::HttpMethod<br/>flags QWebMethod::HttpMethods</h3>
-<p>Defines HTTP method to use when sending the message.</p>
+<h3 class="fn"><a name="HttpMethod-enum"></a>enum QWebMethod::HttpMethod</h3>
+<p>Defines HTTP method to use when sending the message. Using more than 1 at the same time is forbidden (will not work).</p>
 <table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
 <tr><td  class="topAlign"><tt>QWebMethod::POST</tt></td><td class=" topAlign"><tt>0x1</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use POST.</td></tr>
 <tr><td  class="topAlign"><tt>QWebMethod::GET</tt></td><td class=" topAlign"><tt>0x2</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use GET.</td></tr>
 <tr><td  class="topAlign"><tt>QWebMethod::PUT</tt></td><td class=" topAlign"><tt>0x4</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use PUT.</td></tr>
 <tr><td  class="topAlign"><tt>QWebMethod::DELETE</tt></td><td class=" topAlign"><tt>0x8</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use DELETE.</td></tr>
 </table>
-<p>The HttpMethods type is a typedef for <a href="qflags.html">QFlags</a>&lt;HttpMethod&gt;. It stores an OR combination of HttpMethod values.</p>
 <!-- @@@HttpMethod -->
 <!-- $$$Protocol$$$http$$$soap10$$$soap12$$$soap$$$json$$$xml$$$rest -->
 <h3 class="flags"><a name="Protocol-enum"></a>enum QWebMethod::Protocol<br/>flags QWebMethod::Protocols</h3>

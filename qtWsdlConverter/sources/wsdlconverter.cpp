@@ -215,24 +215,39 @@ bool WsdlConverter::parseArguments(QStringList arguments)
         if (s.startsWith("--")) {
             // Protocol flags:
             if (s == "--soap12") {
-                flags->resetFlags(Flags::soap10 | Flags::http | Flags::json);
+                flags->resetFlags(Flags::soap10 | Flags::http | Flags::json | Flags::xml);
                 flags->setFlags(Flags::soap12);
             }
             else if (s == "--soap10") {
-                flags->resetFlags(Flags::soap12 | Flags::http | Flags::json);
+                flags->resetFlags(Flags::soap12 | Flags::http | Flags::json | Flags::xml);
                 flags->setFlags(Flags::soap10);
             }
             else if (s == "--soap") {
-                flags->resetFlags(Flags::http | Flags::json);
+                flags->resetFlags(Flags::http | Flags::json | Flags::xml);
                 flags->setFlags(Flags::soap);
             }
             else if (s == "--http") {
-                flags->resetFlags(Flags::soap | Flags::json);
+                flags->resetFlags(Flags::soap | Flags::json | Flags::xml);
                 flags->setFlags(Flags::http);
             }
             else if (s == "--json") {
-                flags->resetFlags(Flags::soap | Flags::http);
+                flags->resetFlags(Flags::soap | Flags::http | Flags::xml);
                 flags->setFlags(Flags::json);
+            }
+            else if (s == "--xml") {
+                flags->resetFlags(Flags::soap | Flags::http | Flags::json);
+                flags->setFlags(Flags::xml);
+            }
+            else if (s.startsWith("--rest")) {
+                flags->setFlags(Flags::rest);
+                // Set HTTP method:
+                if (s == "--rest") {
+                    flags->setHttpMethod(Flags::POST);
+                }
+                else if (s.startsWith("--rest=")) {
+                    if (!flags->setHttpMethod(s.mid(7)))
+                        return false;
+                }
             }
             // Synchronousness:
             else if (s == "--synchronous") {

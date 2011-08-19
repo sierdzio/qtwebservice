@@ -16,7 +16,6 @@
 
      This enum type specifies code creation mode. Sections are indicated in brackets:
 
-        Mode:
      \value fullMode
             (mode) All enums and variables are copied, enabling some flexibility in use.
      \value debugMode
@@ -51,7 +50,27 @@
             (protocol) Internall wrapper for all SOAP protocols. When used in app, will default to SOAP 1.2
      \value json
             (protocol) JSON protocol will be used.
+     \value xml
+            (protocol) XML protocol (non-SOAP) will be used.
+     \value rest
+            (non-exclusive, protocol) Code for communicating with RESTful WSes will be generted. This can be combined with any other protocol flag.
  */
+
+/*!
+  \enum Flags::HttpMethod
+
+  This enum stores HTTP method chosen by user. Those options cannot be combined!
+
+  \value POST
+         HTTP POST will be used.
+  \value GET
+         HTTP GET will be used.
+  \value PUT
+         HTTP PUT will be used.
+  \value DELETE
+         HTTP DELETE will be used.
+
+  */
 
 /*!
     \fn Flags::Flags(Options options, bool forced)
@@ -117,6 +136,42 @@ void Flags::setFlags(Options options)
 }
 
 /*!
+  \fn Flags::setHttpMethod(HttpMethod newMethod)
+
+  Sets HTTP method flag to \a newMethod. Any previous setting is discarded.
+
+  */
+void Flags::setHttpMethod(HttpMethod newMethod)
+{
+    method = newMethod;
+}
+
+/*!
+  \fn Flags::setHttpMethod(QString newMethod)
+
+  Sets HTTP method flag to \a newMethod. Any previous setting is discarded.
+  Only valid values are accepted, but checks are not case sensitive.
+  Therefore, you can for example pass "delete" or "DELETE".
+
+  Returns true if succesfull.
+  */
+bool Flags::setHttpMethod(QString newMethod)
+{
+    if (newMethod.toLower() == "post")
+        method = POST;
+    else if (newMethod.toLower() == "get")
+        method = GET;
+    else if (newMethod.toLower() == "put")
+        method = PUT;
+    else if (newMethod.toLower() == "delete")
+        method = DELETE;
+    else
+        return false;
+
+    return true;
+}
+
+/*!
     \fn Flags::setForced(bool forced)
 
     Sets the \a forced value to given one.
@@ -156,7 +211,69 @@ void Flags::setObjSuffix(QString newObjSuffix)
   */
 Flags::Options Flags::flags() const
 {
-    return this->options;
+    return options;
+}
+
+/*!
+  \fn Flags::protocolString(bool includeRest) const
+
+  Returns protocol used in form of a QString. If \a includeRest is
+  true, and --rest flag was specified, it appends ",rest" to the result.
+  */
+QString Flags::protocolString(bool includeRest) const
+{
+    QString result = "";
+
+    if (options & http)
+        result = "http";
+    else if (options & soap10)
+        result = "soap10";
+    else if (options & soap12)
+        result = "soap12";
+    else if (options & json)
+        result = "json";
+    else if (options & xml)
+        result = "xml";
+
+    if (includeRest && (options & rest))
+        result += ",rest";
+
+    return result;
+}
+
+/*!
+  \fn Flags::httpMethod() const
+
+  Returns the HTTP method used.
+
+  \sa httpMethodString()
+  */
+Flags::HttpMethod Flags::httpMethod() const
+{
+    return method;
+}
+
+/*!
+  \fn Flags::httpMethodString() const
+
+  Returns the HTTP method used, in form of a QString.
+
+  \sa httpMethod()
+  */
+QString Flags::httpMethodString() const
+{
+    QString result = "";
+
+    if (method == POST)
+        result = "POST";
+    else if (method == GET)
+        result = "GET";
+    else if (method == PUT)
+        result = "PUT";
+    else if (method == DELETE)
+        result = "DELETE";
+
+    return result;
 }
 
 /*!

@@ -5,53 +5,71 @@
 
 class Flags
 {
-    Q_ENUMS(Option)
+//    Q_ENUMS(Option)
     Q_FLAGS(Options)
+    Q_ENUMS(HttpMethod)
 
 public:
     enum Option
     {
         // Mode
-        fullMode                = 0x00001,
-        debugMode               = 0x00002,
-        compactMode             = 0x00004,
+        fullMode                = 0x000001,
+        debugMode               = 0x000002,
+        compactMode             = 0x000004,
         // Synchronousness
-        synchronous             = 0x00010,
-        asynchronous            = 0x00020,
+        synchronous             = 0x000010,
+        asynchronous            = 0x000020,
         // Structure
-        standardStructure       = 0x00100,
-        noMessagesStructure     = 0x00200,
-        allInOneDirStructure    = 0x00400,
+        standardStructure       = 0x000100,
+        noMessagesStructure     = 0x000200,
+        allInOneDirStructure    = 0x000400,
         // Build system
-        qmake                   = 0x01000,
-        cmake                   = 0x02000,
-        scons                   = 0x04000,
-        noBuildSystem           = 0x08000,
+        qmake                   = 0x001000,
+        cmake                   = 0x002000,
+        scons                   = 0x004000,
+        noBuildSystem           = 0x008000,
         // Protocol
-        http                    = 0x10000,
-        soap10                  = 0x20000,
-        soap12                  = 0x40000,
-        soap                    = 0x60000,
-        json                    = 0x80000
+        http                    = 0x010000,
+        soap10                  = 0x020000,
+        soap12                  = 0x040000,
+        soap                    = 0x060000,
+        json                    = 0x080000,
+        xml                     = 0x100000,
+        rest                    = 0x200000
     };
     Q_DECLARE_FLAGS(Options, Option)
+
+    enum HttpMethod
+    {
+        POST    = 0x1,
+        GET     = 0x2,
+        PUT     = 0x4,
+        DELETE  = 0x8
+    };
 
     Flags(Options options = Options(fullMode | synchronous | standardStructure | qmake | soap12), bool force = false);
 
     void resetFlags();
     void resetFlags(Options whatToReset);
     void setFlags(Options options);
+    void setHttpMethod(HttpMethod newMethod);
+    bool setHttpMethod(QString newMethod);
     void setForced(bool forced);
     void setMsgSuffix(QString newMsgSuffix);
     void setObjSuffix(QString newObjSuffix);
     Options flags() const;
+    HttpMethod httpMethod() const;
     bool forced() const;
     bool isForced() const;
     QString messageSuffix() const;
     QString objectSuffix() const;
+    // Convenience getters:
+    QString httpMethodString() const;
+    QString protocolString(bool includeRest = false) const;
 
 private:
     Options options;
+    HttpMethod method;
     bool force;
     QString msgSuffix;
     QString objSuffix;

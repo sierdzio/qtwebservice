@@ -117,13 +117,12 @@
                 <value name="rest" value="0x20"/>
             </enum>
             <typedef access="public" threadsafety="unspecified" status="commendable" name="Protocols" fullname="QWebMethod::Protocols" href="qwebmethod.html#Protocols-typedef" location="qwebmethod.h" enum="QWebMethod::Protocol"/>
-            <enum access="public" threadsafety="unspecified" status="commendable" name="HttpMethod" fullname="QWebMethod::HttpMethod" href="qwebmethod.html#HttpMethod-enum" location="qwebmethod.h" typedef="QWebMethod::HttpMethods">
+            <enum access="public" threadsafety="unspecified" status="commendable" name="HttpMethod" fullname="QWebMethod::HttpMethod" href="qwebmethod.html#HttpMethod-enum" location="qwebmethod.h">
                 <value name="POST" value="0x1"/>
                 <value name="GET" value="0x2"/>
                 <value name="PUT" value="0x4"/>
                 <value name="DELETE" value="0x8"/>
             </enum>
-            <typedef access="public" threadsafety="unspecified" status="commendable" name="HttpMethods" fullname="QWebMethod::HttpMethods" href="qwebmethod.html#HttpMethods-typedef" location="qwebmethod.h" enum="QWebMethod::HttpMethod"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="QWebMethod" fullname="QWebMethod::QWebMethod" href="qwebmethod.html#QWebMethod" location="qwebmethod.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="QWebMethod(QObject * parent, Protocol protocol, HttpMethod method)">
                 <parameter left="QObject *" right="" name="parent" default="0"/>
                 <parameter left="Protocol" right="" name="protocol" default="soap12"/>
@@ -177,7 +176,7 @@
                 <parameter left="HttpMethod" right="" name="method" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="sendMessage" fullname="QWebMethod::sendMessage" href="qwebmethod.html#sendMessage" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="sendMessage()"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="sendMessage" fullname="QWebMethod::sendMessage" href="qwebmethod.html#sendMessage-2" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="bool" signature="sendMessage(QMap&lt;QString, QVariant&gt; params)">
+            <function access="public" threadsafety="unspecified" status="commendable" name="sendMessage" fullname="QWebMethod::sendMessage" href="qwebmethod.html#sendMessage-2" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="bool" signature="sendMessage(QMap&lt;QString, QVariant&gt; params)">
                 <parameter left="QMap&lt;QString, QVariant&gt;" right="" name="params" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="replyRead" fullname="QWebMethod::replyRead" href="qwebmethod.html#replyRead" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="QVariant" signature="replyRead()"/>

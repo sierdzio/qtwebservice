@@ -4,7 +4,6 @@
     <section ref="qwebmethod.html" title="QWebMethod Class Reference">
         <keyword ref="qwebmethod.html">QWebMethod</keyword>
         <keyword ref="qwebmethod.html#HttpMethod-enum">HttpMethod</keyword>
-        <keyword ref="qwebmethod.html#HttpMethod-enum">HttpMethods</keyword>
         <keyword ref="qwebmethod.html#HttpMethod-enum">QWebMethod::POST</keyword>
         <keyword ref="qwebmethod.html#HttpMethod-enum">QWebMethod::GET</keyword>
         <keyword ref="qwebmethod.html#HttpMethod-enum">QWebMethod::PUT</keyword>

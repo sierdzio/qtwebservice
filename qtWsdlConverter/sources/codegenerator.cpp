@@ -190,8 +190,8 @@ bool CodeGenerator::createMessageHeader(QWebMethod *msg)
     out << "class " << msgName << " : public QObject" << endl;
     out << "{" << endl;
     out << "    Q_OBJECT" << endl;
-    out << "    Q_ENUMS(Protocol)" << endl;
     out << "    Q_FLAGS(Protocols)" << endl;
+    out << "    Q_ENUMS(HttpMethod)" << endl;
     out << endl;
     out << "public:" << endl;
     out << "    enum Protocol" << endl << "    {" << endl;
@@ -199,9 +199,19 @@ bool CodeGenerator::createMessageHeader(QWebMethod *msg)
     out << "        soap10 = 0x02," << endl;
     out << "        soap12 = 0x04," << endl;
     out << "        soap   = 0x06," << endl;
-    out << "        json   = 0x08" << endl;
+    out << "        json   = 0x08," << endl;
+    out << "        xml    = 0x10," << endl;
+    out << "        rest   = 0x20" << endl;
     out << "    };" << endl;
     out << "    Q_DECLARE_FLAGS(Protocols, Protocol)" << endl;
+    out << endl;
+    out << "    enum HttpMethod" << endl;
+    out << "    {" << endl;
+    out << "        POST    = 0x1," << endl;
+    out << "        GET     = 0x2," << endl;
+    out << "        PUT     = 0x4," << endl;
+    out << "        DELETE  = 0x8" << endl;
+    out << "    };" << endl;
     out << endl;
     out << "    explicit " << msgName << "(QObject *parent = 0);" << endl;
     if (msgParameters != "")
@@ -334,16 +344,7 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
     out << "    reply.clear();" << endl;
     out << "    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));" << endl;
     { // Defaulting the protocol:
-        out << "    protocol = ";
-        if (flags->flags() & Flags::soap10)
-            out << "soap10";
-        else if (flags->flags() & Flags::soap12)
-            out << "soap12";
-        else if (flags->flags() & Flags::http)
-            out << "http";
-        else if (flags->flags() & Flags::json)
-            out << "json";
-        out << ";" << endl;
+        out << "    protocol = " << flags->protocolString() << ";" << endl;
     }
 
     out << "}" << endl;
@@ -360,16 +361,7 @@ bool CodeGenerator::createMessageSource(QWebMethod *msg)
             }
 
             // Defaulting the protocol:
-            out << "    protocol = ";
-            if (flags->flags() & Flags::soap12) // also includes 'soap'!
-                out << "soap12";
-            else if (flags->flags() & Flags::soap10)
-                out << "soap10";
-            else if (flags->flags() & Flags::http)
-                out << "http";
-            else if (flags->flags() & Flags::json)
-                out << "json";
-            out << ";" << endl;
+            out << "    protocol = " << flags->protocolString() << ";" << endl;
         }
 
         if (msg->host() != "")
@@ -980,7 +972,22 @@ bool CodeGenerator::createServiceSource()
                     out << endl;
                     out << "    return QWebMethod::sendMessage(this";
                     out << ", QUrl(\"" << m->host() << "\"), \"" << m->messageName()
-                        << "\", parameters).toString();" << endl;
+                        << "\", parameters";
+
+                    QString protocols = "";
+                    protocols = "QWebMethod::" + flags->protocolString(false);
+
+                    if (protocols != "QWebMethod::")
+                        protocols.append(", ");
+
+                    if (flags->flags() & Flags::rest) {
+                        protocols += "QWebMethod::" + flags->httpMethodString();
+                    }
+
+                    if (protocols != "")
+                        protocols.prepend(", ");
+
+                    out << protocols << ").toString();" << endl;
                 }
                 else {
                     out << "    return " << m->messageName() << "::sendMessage(this";
@@ -1010,6 +1017,13 @@ bool CodeGenerator::createServiceSource()
                     out << "    " << objName << ".setHost(\"" << m->host() << "\");" << endl;
                     out << "    " << objName << ".setTargetNamespace(\"" << m->targetNamespace() << "\");" << endl;
                     out << "    " << objName << ".setMessageName(\"" << m->messageName() << "\");" << endl;
+
+                    QString protocols = "";
+                    protocols = "QWebMethod::" + flags->protocolString(false);
+
+                    out << "    " << objName << ".setProtocol(" << protocols << ");" << endl;
+                    // Add REST handling!
+
                     out << "    " << objName << ".sendMessage(parameters);" << endl;
                 }
                 else {
