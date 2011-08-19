@@ -160,7 +160,7 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebMethod *msg)
         out << "    " << msgName << "(" << msgParameters << ", QObject *parent = 0);" << endl;
 
     out << endl;
-    out << "    void setParams(" << msgParameters << ");" << endl;
+    out << "    void setParameters(" << msgParameters << ");" << endl;
 
     if ((msgParameters != "") && !((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous)))
         out << "    bool sendMessage(" << msgParameters << ");" << endl;
@@ -190,6 +190,8 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebMethod *msg)
         out << "    // End of parameters." << endl << "    // -------------------------" << endl;
     }
     out << "};" << endl;
+    out << endl;
+    out << "#endif // " << msgName.toUpper() << "_H" << endl;
     // EOF (SOAP message)
     // ---------------------------------
 
@@ -240,7 +242,7 @@ bool MessageGenerator::createSubclassedMessageSource(QWebMethod *msg)
     out << endl;
     if (msgParameters != "") {
         out << msgName << "::" << msgName << "(" << msgParameters << ", QObject *parent) :" << endl;
-        out << "    QObject(parent)" << endl;
+        out << "    QWebMethod(parent)" << endl;
         out << "{" << endl;
 
         assignAllParameters(msg, out);
@@ -249,7 +251,7 @@ bool MessageGenerator::createSubclassedMessageSource(QWebMethod *msg)
         out << "}" << endl;
         out << endl;
     }
-    out << "void " << msgName << "::setParams(" << msgParameters << ")" << endl;
+    out << "void " << msgName << "::setParameters(" << msgParameters << ")" << endl;
     out << "{" << endl;
 
 
@@ -276,17 +278,17 @@ bool MessageGenerator::createSubclassedMessageSource(QWebMethod *msg)
             out << ", " << msgParameters;
         out << ")" << endl;
         out << "{" << endl;
-        out << "    " << msgName << " qsm(parent);" << endl;
+        out << "    " << msgName << " qsm(";
         { // Assign all parameters.
-            out << "    qsm.setParams(";
+//            out << "    qsm.setParameters(";
             QString tempS = "";
             QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
 
             foreach (QString s, tempMap.keys()) {
                 tempS += s + ", ";
             }
-            tempS.chop(2);
-            out << tempS << ");" << endl;
+//            tempS.chop(2);
+            out << tempS << "parent);" << endl;
         }
         out << endl;
         out << "    qsm.sendMessage();" << endl;
@@ -303,13 +305,13 @@ bool MessageGenerator::createSubclassedMessageSource(QWebMethod *msg)
         out << "}" << endl;
         out << endl;
     }
-    out << "void " << msgName << "::" << "configure();" << endl;
+    out << "void " << msgName << "::" << "configure()" << endl;
     out << "{" << endl;
     out << "    m_hostUrl = QUrl(\"" << msg->host() << "\");" << endl;
     out << "    protocolUsed = " << flags->protocolString(false) << ";" << endl;
     out << "    httpMethodUsed = " << flags->httpMethodString() << ";" << endl;
-    out << "    m_messageName = " << msg->messageName() << ";" << endl;
-    out << "    m_targetNamespace = " << msg->targetNamespace() << ";" << endl;
+    out << "    m_messageName = \"" << msg->messageName() << "\";" << endl;
+    out << "    m_targetNamespace = \"" << msg->targetNamespace() << "\";" << endl;
     out << "}" << endl;
 
     // EOF (SOAP message)
