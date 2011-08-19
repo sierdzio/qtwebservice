@@ -28,11 +28,13 @@ OBJECTS_DIR = ../build-qtWsdlConverter
 SOURCES += sources/main.cpp \
     sources/wsdlconverter.cpp \
     sources/flags.cpp \
-    sources/codegenerator.cpp
+    sources/codegenerator.cpp \
+    sources/messagegenerator.cpp
 
 HEADERS += headers/wsdlconverter.h \
     headers/flags.h \
-    headers/codegenerator.h
+    headers/codegenerator.h \
+    headers/messagegenerator.h
 
 OTHER_FILES += \
     examples/band_ws.asmx \

@@ -22,8 +22,6 @@ private:
     bool enterErrorState(QString errMessage = "");
     void prepare();
     bool createMessages();
-    bool createMessageHeader(QWebMethod *msg);
-    bool createMessageSource(QWebMethod *msg);
     bool createMainCpp();
     bool createService();
     bool createServiceHeader();

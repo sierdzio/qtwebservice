@@ -46,7 +46,7 @@ WARNING: Remember to first compile QWebService library, and set it's path in run
     --help,
     --soap10, --soap12, --http, --json, *--xml, *--rest={POST, GET, PUT, DELETE, post, get, put, delete}
     --synchronous, --asynchronous,
-    --full-mode, *--debug-mode, *(partial)--compact-mode,
+    --subclass, --full-mode, *--debug-mode, *(partial)--compact-mode,
     --standard-structure, --no-messages-structure, --all-in-one-dir-structure,
     --qmake, --cmake, --scons, --no-build-system,
     --objSuffix=, --msgSuffix=,
@@ -73,13 +73,19 @@ All entries in single sections (with an exception of build system related switch
     --asynchronous - communication with server will be performed using asynchronous calls.
 
   2.2.3 Modes
+    --subclass	   - converter creates messages by subclassing QWebMethod (this option requires QWebService library
+		     to be present)
     --full-mode    - created code has all relevant code found in QWebService's classes,
     --debug-mode   - as full-mode, but the code ships with additional debugging information,
-    --compact-mode - code is stripped down to bare minimum. For example, only the code connected with chosen protocol is copied into messages' classes (if you chose soap12, only this option will be copied. Other protocols will not be available).
+    --compact-mode - code is stripped down to bare minimum. For example, only the code connected with chosen protocol
+		     is copied into messages' classes (if you chose soap12, only this option will be copied.
+		     Other protocols will not be available).
 
   2.2.4 Structures
-    --standard-structure - headers are copied to <wsName>/headers, sources to <wsName>/sources, build file to <wsName>/<buildFile>,
-    --no-messages-structure - no custom message code will be created. All messages will be sent by using general QWebMethod objects,
+    --standard-structure       - headers are copied to <wsName>/headers, sources to <wsName>/sources, build file
+				 to <wsName>/<buildFile>,
+    --no-messages-structure    - no custom message code will be created. All messages will be sent by using general
+				 QWebMethod objects (this option requires QWebService library to be present),
     --all-in-one-dir-structure - as sandard-structure, but all files are copied into <wsName>.
 
   2.2.5 Build systems
