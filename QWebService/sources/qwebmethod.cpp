@@ -94,9 +94,11 @@ QWebMethod::QWebMethod(QObject *parent, Protocol protocol, HttpMethod method) :
     \sa init(), setParameters(), setProtocol(), sendMessage()
   */
 QWebMethod::QWebMethod(QUrl url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method) :
-    QObject(parent), m_hostUrl(url), m_messageName(messageName)
+    QObject(parent)
 {
     init();
+    m_hostUrl = url;
+    m_messageName = messageName;
     setProtocol(protocol);
     setHttpMethod(method);
     parameters.clear();
@@ -112,9 +114,10 @@ QWebMethod::QWebMethod(QUrl url, QString messageName, QObject *parent, Protocol 
     \sa init(), setParameters(), setProtocol(), sendMessage()
   */
 QWebMethod::QWebMethod(QString url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method) :
-    QObject(parent), m_messageName(messageName)
+    QObject(parent)
 {
     init();
+    m_messageName = messageName;
     setProtocol(protocol);
     setHttpMethod(method);
     m_hostUrl.setHost(url + m_messageName);
@@ -135,9 +138,11 @@ QWebMethod::QWebMethod(QString url, QString messageName, QObject *parent, Protoc
 QWebMethod::QWebMethod(QString url, QString messageName,
                        QMap<QString, QVariant> params, QObject *parent,
                        Protocol protocol, HttpMethod method) :
-    QObject(parent), m_messageName(messageName), parameters(params)
+    QObject(parent)
 {
     init();
+    m_messageName = messageName;
+    parameters = params;
     setProtocol(protocol);
     setHttpMethod(method);
     m_hostUrl.setHost(url + m_messageName);
@@ -463,6 +468,56 @@ QWebMethod::Protocol QWebMethod::protocol()
 QWebMethod::HttpMethod QWebMethod::httpMethod()
 {
     return httpMethodUsed;
+}
+
+/*!
+  \fn QWebMethod::protocolString(bool includeRest) const
+
+  Returns protocol used in form of a QString. If \a includeRest is
+  true, and --rest flag was specified, it appends ",rest" to the result.
+  */
+QString QWebMethod::protocolString(bool includeRest) const
+{
+    QString result = "";
+
+    if (protocolUsed & http)
+        result = "http";
+    else if (protocolUsed & soap10)
+        result = "soap10";
+    else if (protocolUsed & soap12)
+        result = "soap12";
+    else if (protocolUsed & json)
+        result = "json";
+    else if (protocolUsed & xml)
+        result = "xml";
+
+    if (includeRest && (protocolUsed & rest))
+        result += ",rest";
+
+    return result;
+}
+
+/*!
+  \fn QWebMethod::httpMethodString() const
+
+  Returns the HTTP method used, in form of a QString.
+
+  \sa httpMethod()
+  */
+QString QWebMethod::httpMethodString() const
+{
+    QString result = "";
+
+    if (httpMethodUsed == POST)
+        result = "POST";
+    else if (httpMethodUsed == GET)
+        result = "GET";
+    else if (httpMethodUsed == PUT)
+        result = "PUT";
+    else if (httpMethodUsed == DELETE)
+        result = "DELETE";
+
+    return result;
 }
 
 /*!

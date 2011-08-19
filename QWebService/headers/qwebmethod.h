@@ -68,7 +68,9 @@ public:
     QString host();
     QUrl hostUrl();
     Protocol protocol();
+    QString protocolString(bool includeRest) const;
     HttpMethod httpMethod();
+    QString httpMethodString() const;
 
 signals:
     void replyReady(QVariant rply);
@@ -82,7 +84,7 @@ protected: // Changed for 0.3.5, but precisely what should be protected and what
     void prepareRequestData();
     QString convertReplyToUtf(QString textToConvert);
 
-private:
+// private: // Changed for 0.3.5, but precisely what should be protected and what private shall be decided later.
     bool replyReceived;
     Protocol protocolUsed;
     HttpMethod httpMethodUsed;

@@ -21,6 +21,8 @@ private:
     bool createMessageSource(QWebMethod *msg);
     bool createMainCpp();
 
+    void assignAllParameters(QWebMethod *msg, QTextStream &out);
+
     QMap<QString, QWebMethod *> *messages;
     QDir workingDir;
     Flags *flags;

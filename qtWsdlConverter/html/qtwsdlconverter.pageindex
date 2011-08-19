@@ -1,240 +1,240 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <qtPageIndex>
-    <page id="{32d8b980-df26-41ff-a634-40f94cb7ad62}">
+    <page id="{b56fdb91-6cdb-4ec2-adfe-a57ab28f505a}">
         <pageWords>Flags class reference</pageWords>
         <pageTitle>Flags Class Reference</pageTitle>
         <pageUrl>flags.html</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{210daf95-efaf-492e-b8ba-3f5ed74bde16}">
+    <page id="{451cebe5-4446-4d7e-aac0-d14ef66ae823}">
         <pageWords>Option enum type Flags</pageWords>
         <pageTitle>Option Enum Reference</pageTitle>
         <pageUrl>flags.html#Option-enum</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{21f88f6e-0a80-4074-8220-673687628260}">
+    <page id="{783e2f6c-b9ba-4c68-966e-10c1430987ad}">
         <pageWords>Options typedef type Flags</pageWords>
         <pageTitle>Options Type Reference</pageTitle>
         <pageUrl>flags.html#Options</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{4b32ef04-4525-4dfa-8b47-ab7cfa64be43}">
+    <page id="{0bd850ef-52f7-481a-80ed-0159bd5bab2c}">
         <pageWords>HttpMethod enum type Flags</pageWords>
         <pageTitle>HttpMethod Enum Reference</pageTitle>
         <pageUrl>flags.html#HttpMethod-enum</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{60ac6fe0-fff5-4ae7-97ae-c45f4774b055}">
+    <page id="{90c65062-e2f0-40b3-ba24-4d57ea42791f}">
         <pageWords>Flags function Flags</pageWords>
         <pageTitle>Flags Function Reference</pageTitle>
         <pageUrl>flags.html#Flags</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{213ddef7-dec1-448c-b57e-50734ca452a3}">
+    <page id="{d964a047-994c-4c2e-937f-79bc177551cd}">
         <pageWords>resetFlags function Flags</pageWords>
         <pageTitle>resetFlags Function Reference</pageTitle>
         <pageUrl>flags.html#resetFlags</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{c6b75f9a-b308-40e7-827f-9dd5bdfbd277}">
+    <page id="{baef834b-6a29-4bd5-b469-7f95df8a2c60}">
         <pageWords>resetFlags function Flags</pageWords>
         <pageTitle>resetFlags Function Reference</pageTitle>
         <pageUrl>flags.html#resetFlags</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{1f975b1d-9218-413e-9a15-b712db2bfb56}">
+    <page id="{dad8328c-bfbe-4ff7-bd02-58fa4bfec436}">
         <pageWords>setFlags function Flags</pageWords>
         <pageTitle>setFlags Function Reference</pageTitle>
         <pageUrl>flags.html#setFlags</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{335f2351-3026-4976-8f34-0ed49a5d8d83}">
+    <page id="{120d9def-e0ff-40ec-a714-05ee70ae884d}">
         <pageWords>setHttpMethod function Flags</pageWords>
         <pageTitle>setHttpMethod Function Reference</pageTitle>
         <pageUrl>flags.html#setHttpMethod</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{45d54564-5151-4b2a-9565-8922af141c19}">
+    <page id="{af353cb2-326b-4b55-a36e-bd88d4b5a39b}">
         <pageWords>setHttpMethod function Flags</pageWords>
         <pageTitle>setHttpMethod Function Reference</pageTitle>
         <pageUrl>flags.html#setHttpMethod</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{02b6d8f8-e55d-417a-8a17-3a528277d968}">
+    <page id="{10b021f3-a02e-4865-93a0-0e3fbb20fbc0}">
         <pageWords>setForced function Flags</pageWords>
         <pageTitle>setForced Function Reference</pageTitle>
         <pageUrl>flags.html#setForced</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{65e5b50c-3a3f-4df4-b6d9-0234e2a5377c}">
+    <page id="{507e5225-eb6a-4240-8b45-d6f5f250d4da}">
         <pageWords>setMsgSuffix function Flags</pageWords>
         <pageTitle>setMsgSuffix Function Reference</pageTitle>
         <pageUrl>flags.html#setMsgSuffix</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{d9db0464-6430-4299-ad06-0310325b14c8}">
+    <page id="{c3303fd0-3b83-456c-add6-8bcc90f55491}">
         <pageWords>setObjSuffix function Flags</pageWords>
         <pageTitle>setObjSuffix Function Reference</pageTitle>
         <pageUrl>flags.html#setObjSuffix</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{9e5509e5-5037-4362-8d44-af61bd04472c}">
+    <page id="{d4b208c1-e69e-4351-b2ca-f38d75f921c1}">
         <pageWords>flags function Flags</pageWords>
         <pageTitle>flags Function Reference</pageTitle>
         <pageUrl>flags.html#flags</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{e6ba016f-4b6c-45e9-bfb4-f8afaa38b88b}">
+    <page id="{33d63284-aca9-43ca-b466-a45187a030b4}">
         <pageWords>httpMethod function Flags</pageWords>
         <pageTitle>httpMethod Function Reference</pageTitle>
         <pageUrl>flags.html#httpMethod</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{80b29a89-0856-4828-abea-9755ea2be3dc}">
+    <page id="{15561442-4a6a-41be-9d19-ed0055458272}">
         <pageWords>forced function Flags</pageWords>
         <pageTitle>forced Function Reference</pageTitle>
         <pageUrl>flags.html#forced</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{c5570de3-a6d0-4880-a725-b0b97b954087}">
+    <page id="{873d645b-41c3-4971-bc26-8d6523f27993}">
         <pageWords>isForced function Flags</pageWords>
         <pageTitle>isForced Function Reference</pageTitle>
         <pageUrl>flags.html#isForced</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{627946a8-b7de-4978-b279-6f5644bb84ce}">
+    <page id="{39b507e4-da01-489f-bb8e-488560efdddd}">
         <pageWords>messageSuffix function Flags</pageWords>
         <pageTitle>messageSuffix Function Reference</pageTitle>
         <pageUrl>flags.html#messageSuffix</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{96ecc8ec-dcae-48d1-8568-0a39b5e19d70}">
+    <page id="{16c5a08a-8bf9-4366-bd29-72ead7dedc4f}">
         <pageWords>objectSuffix function Flags</pageWords>
         <pageTitle>objectSuffix Function Reference</pageTitle>
         <pageUrl>flags.html#objectSuffix</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{51f552d5-be04-46b6-8111-d49cc0e85da1}">
+    <page id="{5e677ab8-3a3e-4b79-85ee-fd2e6429a9f1}">
         <pageWords>httpMethodString function Flags</pageWords>
         <pageTitle>httpMethodString Function Reference</pageTitle>
         <pageUrl>flags.html#httpMethodString</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{1cdd0a4c-1ec1-42a8-a7d5-7687e78fb554}">
+    <page id="{e79179c8-f991-453f-b88b-4ceed92b3f69}">
         <pageWords>protocolString function Flags</pageWords>
         <pageTitle>protocolString Function Reference</pageTitle>
         <pageUrl>flags.html#protocolString</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{00c078e6-422d-4791-936b-3943551ac724}">
+    <page id="{48a58976-fb2e-4e32-b937-2c697f2e8691}">
         <pageWords>WsdlConverter class reference</pageWords>
         <pageTitle>WsdlConverter Class Reference</pageTitle>
         <pageUrl>wsdlconverter.html</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{3142d929-5f34-4beb-b1b1-4c6be84a997d}">
+    <page id="{94dddf84-8eb9-426f-af68-ba60edc23654}">
         <pageWords>ArgumentDescriptionFlag enum type WsdlConverter</pageWords>
         <pageTitle>ArgumentDescriptionFlag Enum Reference</pageTitle>
         <pageUrl>wsdlconverter.html#ArgumentDescriptionFlag-enum</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{59dba79a-9211-46dd-ab3e-ed450ad85f59}">
+    <page id="{a3ef1a01-b00a-441b-a4ef-da5c9a53ee85}">
         <pageWords>ArgumentDescription typedef type WsdlConverter</pageWords>
         <pageTitle>ArgumentDescription Type Reference</pageTitle>
         <pageUrl>wsdlconverter.html#ArgumentDescription</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{023250c7-6b6e-4884-8bd5-af5e6635ef63}">
+    <page id="{dff2dea8-af9b-474d-9781-6118a3b037f6}">
         <pageWords>WsdlConverter function WsdlConverter</pageWords>
         <pageTitle>WsdlConverter Function Reference</pageTitle>
         <pageUrl>wsdlconverter.html#WsdlConverter</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{f4e4b00b-df33-4331-a7fc-b1a97b7e4476}">
+    <page id="{5bbc193f-fbe9-4f14-b8f5-da61d3a17040}">
         <pageWords>~WsdlConverter function WsdlConverter</pageWords>
         <pageTitle>~WsdlConverter Function Reference</pageTitle>
         <pageUrl>wsdlconverter.html#~WsdlConverter</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{2d5f24f7-145d-4061-831f-411b8276a041}">
+    <page id="{5f4a79fb-cc69-4612-8db5-bdc0d7ceae5a}">
         <pageWords>setFlags function WsdlConverter</pageWords>
         <pageTitle>setFlags Function Reference</pageTitle>
         <pageUrl>wsdlconverter.html#setFlags</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{2cb27b1d-bd33-4b5c-b246-1713578581bd}">
+    <page id="{b7cec881-5f06-494c-8594-95e3706f90f2}">
         <pageWords>isErrorState function WsdlConverter</pageWords>
         <pageTitle>isErrorState Function Reference</pageTitle>
         <pageUrl>wsdlconverter.html#isErrorState</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{74362ee7-c119-45c6-9c4d-8b1706dbc045}">
+    <page id="{e5766768-68e9-4010-bd72-e0f9986f9c37}">
         <pageWords>convert function WsdlConverter</pageWords>
         <pageTitle>convert Function Reference</pageTitle>
         <pageUrl>wsdlconverter.html#convert</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{f4092e01-a65f-42c5-92d4-3b8ec0b97a1d}">
+    <page id="{d866c059-d419-4926-93d3-62a21631e7a9}">
         <pageWords>webServiceName function WsdlConverter</pageWords>
         <pageTitle>webServiceName Function Reference</pageTitle>
         <pageUrl>wsdlconverter.html#webServiceName</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{88cfb106-e6ae-4253-a82d-6fab08d6689e}">
+    <page id="{3ed14834-0ccf-4d6d-8a82-f9f404617e5c}">
         <pageWords>errorEncountered function WsdlConverter</pageWords>
         <pageTitle>errorEncountered Function Reference</pageTitle>
         <pageUrl>wsdlconverter.html#errorEncountered</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{1b804080-0521-40a8-a6c6-0f87af6393c8}">
+    <page id="{dcc5ca85-7892-4788-a24d-9982cdb997b6}">
         <pageWords>CodeGenerator class reference</pageWords>
         <pageTitle>CodeGenerator Class Reference</pageTitle>
         <pageUrl>codegenerator.html</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{f12376cf-c048-4b89-a18d-a2c83321a1ee}">
+    <page id="{c66b5215-dd91-415d-a6ee-ecc85b1d9b4c}">
         <pageWords>CodeGenerator function CodeGenerator</pageWords>
         <pageTitle>CodeGenerator Function Reference</pageTitle>
         <pageUrl>codegenerator.html#CodeGenerator</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{3e3b9a51-20d1-4508-91c2-c1409942f62d}">
+    <page id="{443e3bdc-b96c-4698-a1b5-0a75233c30a5}">
         <pageWords>create function CodeGenerator</pageWords>
         <pageTitle>create Function Reference</pageTitle>
         <pageUrl>codegenerator.html#create</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{f7cc5665-a550-41e4-aa4f-26d38a79dd51}">
+    <page id="{96472032-e7b1-4c5f-a8fb-896e975cfdc6}">
         <pageWords>isErrorState function CodeGenerator</pageWords>
         <pageTitle>isErrorState Function Reference</pageTitle>
         <pageUrl>codegenerator.html#isErrorState</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{3b1e53e2-7046-4665-9381-db595ffaa2ef}">
+    <page id="{37c681ea-6c33-4776-8ffd-9075cd441c1e}">
         <pageWords>errorEncountered function CodeGenerator</pageWords>
         <pageTitle>errorEncountered Function Reference</pageTitle>
         <pageUrl>codegenerator.html#errorEncountered</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{5a8d3426-53df-4881-8545-a0582448ef1e}">
+    <page id="{8184574c-99b3-4207-a4f6-60fbe194c8a2}">
         <pageWords>MessageGenerator class reference</pageWords>
         <pageTitle>MessageGenerator Class Reference</pageTitle>
         <pageUrl>messagegenerator.html</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{87d57846-80ba-4d25-8c91-0a55599e5d00}">
+    <page id="{5dc619d4-9454-4980-85ff-283dff343b4e}">
         <pageWords>MessageGenerator function MessageGenerator</pageWords>
         <pageTitle>MessageGenerator Function Reference</pageTitle>
         <pageUrl>messagegenerator.html#MessageGenerator</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{5cc88480-5776-4bb7-999f-afe18ebef9eb}">
+    <page id="{4647b101-d457-4f42-8be4-ae903ec8e7d9}">
         <pageWords>errorMessage function MessageGenerator</pageWords>
         <pageTitle>errorMessage Function Reference</pageTitle>
         <pageUrl>messagegenerator.html#errorMessage</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{17e0c61d-33af-4609-8853-097852c3f2f9}">
+    <page id="{4bf8105a-f45d-44ef-93d2-cf722ef7b874}">
         <pageWords>createMessages function MessageGenerator</pageWords>
         <pageTitle>createMessages Function Reference</pageTitle>
         <pageUrl>messagegenerator.html#createMessages</pageUrl>

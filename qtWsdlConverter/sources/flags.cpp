@@ -75,7 +75,7 @@
   */
 
 /*!
-    \fn Flags::Flags(Options options, bool forced)
+    \fn Flags::Flags(Options options_, HttpMethod method_, bool forced)
 
     Constructs the Flags object. All params are optional. If you want to set non-default suffixes, use setObjSuffix() and setMsgSuffix().
 
@@ -89,13 +89,15 @@
         \o soap12
         \o qmake
     \endlist
+    \o \method_ = POST
     \o \a forced = false
     \endlist
   */
-Flags::Flags(Options options, bool forced)
+Flags::Flags(Options options_, HttpMethod method_, bool forced)
 {
-    this->options = options;
-    this->force = forced;
+    options = options_;
+    method = method_;
+    force = forced;
 
     msgSuffix = "Send";
     objSuffix = "Msg";

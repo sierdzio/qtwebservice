@@ -36,7 +36,7 @@
 <a name="public-functions"></a>
 <h2>Public Functions</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Flags">Flags</a></b> ( Options <i>options</i> = Options( fullMode | synchronous | standardStructure | qmake | soap12 ), bool <i>forced</i> = false )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Flags">Flags</a></b> ( Options <i>options_</i> = Options( fullMode | synchronous | standardStructure | qmake | soap12 ), HttpMethod <i>method_</i> = POST, bool <i>forced</i> = false )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> Options </td><td class="memItemRight bottomAlign"><b><a href="flags.html#flagsx">flags</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="flags.html#forced">forced</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> HttpMethod </td><td class="memItemRight bottomAlign"><b><a href="flags.html#httpMethod">httpMethod</a></b> () const</td></tr>
@@ -105,8 +105,8 @@
 </div>
 <div class="func">
 <h2>Member Function Documentation</h2>
-<!-- $$$Flags[overload1]$$$FlagsOptionsbool -->
-<h3 class="fn"><a name="Flags"></a>Flags::Flags ( <a href="flags.html#Option-enum">Options</a> <i>options</i> = Options( fullMode | synchronous | standardStructure | qmake | soap12 ), bool <i>forced</i> = false )</h3>
+<!-- $$$Flags[overload1]$$$FlagsOptionsHttpMethodbool -->
+<h3 class="fn"><a name="Flags"></a>Flags::Flags ( <a href="flags.html#Option-enum">Options</a> <i>options_</i> = Options( fullMode | synchronous | standardStructure | qmake | soap12 ), <a href="flags.html#HttpMethod-enum">HttpMethod</a> <i>method_</i> = POST, bool <i>forced</i> = false )</h3>
 <p>Constructs the Flags object. All params are optional. If you want to set non-default suffixes, use <a href="flags.html#setObjSuffix">setObjSuffix</a>() and <a href="flags.html#setMsgSuffix">setMsgSuffix</a>().</p>
 <p>Default values:</p>
 <ul>
@@ -118,6 +118,7 @@
 <li>qmake</li>
 </ul>
 </li>
+<li><b class="redFont"><code>\method</code></b>_ = POST</li>
 <li><i>forced</i> = false</li>
 </ul>
 <p>See also <a href="flags.html#setFlags">setFlags</a>().</p>

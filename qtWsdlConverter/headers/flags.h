@@ -48,7 +48,9 @@ public:
         DELETE  = 0x8
     };
 
-    Flags(Options options = Options(fullMode | synchronous | standardStructure | qmake | soap12), bool force = false);
+    Flags(Options options = Options(fullMode | synchronous | standardStructure | qmake | soap12),
+          HttpMethod method = POST,
+          bool force = false);
 
     void resetFlags();
     void resetFlags(Options whatToReset);

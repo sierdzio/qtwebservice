@@ -21,11 +21,13 @@
         <keyword ref="qwebmethod.html#host">host</keyword>
         <keyword ref="qwebmethod.html#hostUrl">hostUrl</keyword>
         <keyword ref="qwebmethod.html#httpMethod">httpMethod</keyword>
+        <keyword ref="qwebmethod.html#httpMethodString">httpMethodString</keyword>
         <keyword ref="qwebmethod.html#init">init</keyword>
         <keyword ref="qwebmethod.html#messageName">messageName</keyword>
         <keyword ref="qwebmethod.html#parameterNames">parameterNames</keyword>
         <keyword ref="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</keyword>
         <keyword ref="qwebmethod.html#protocol">protocol</keyword>
+        <keyword ref="qwebmethod.html#protocolString">protocolString</keyword>
         <keyword ref="qwebmethod.html#replyFinished">replyFinished</keyword>
         <keyword ref="qwebmethod.html#replyRead">replyRead</keyword>
         <keyword ref="qwebmethod.html#replyReady">replyReady</keyword>

@@ -154,11 +154,41 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebMethod *msg)
     out << "{" << endl;
     out << "    Q_OBJECT" << endl;
     out << endl;
-    /*
-       Add async and static sendMessage() methods with QString returns.
-       Optionally, also add a constructor.
-       Reimplement configure().
-    */
+    out << "public:" << endl;
+
+    if (msgParameters != "")
+        out << "    " << msgName << "(" << msgParameters << ", QObject *parent = 0);" << endl;
+
+    out << endl;
+    out << "    void setParams(" << msgParameters << ");" << endl;
+
+    if ((msgParameters != "") && !((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous)))
+        out << "    bool sendMessage(" << msgParameters << ");" << endl;
+
+    if (!((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::asynchronous)))
+    {
+        out << "    QString static sendMessage(QObject *parent";
+        if (msgParameters != "") {
+            out << "," << endl;
+            out << "                                " << msgParameters << ");" << endl;
+        }
+        else {
+            out << ");" << endl;
+        }
+    }
+    out << "protected:" << endl;
+    out << "    void configure();" << endl;
+    out << endl;
+    out << "private:" << endl;
+    { // Create parameters list in declarative form.
+        out << "    // -------------------------" << endl << "    // Parameters:" << endl;
+        QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
+
+        foreach (QString s, tempMap.keys()) {
+            out << "    " << tempMap.value(s).typeName() << " " << s  << ";" << endl;
+        }
+        out << "    // End of parameters." << endl << "    // -------------------------" << endl;
+    }
     out << "};" << endl;
     // EOF (SOAP message)
     // ---------------------------------
@@ -208,15 +238,80 @@ bool MessageGenerator::createSubclassedMessageSource(QWebMethod *msg)
         out << "../headers/";
     out << msgName << ".h\"" << endl;
     out << endl;
-    /*
-       Add async and static sendMessage() methods with QString returns.
-       Optionally, also add a constructor.
-       Reimplement configure().
-    */
-    out << "void " << msgName << "::configure()" << endl;
+    if (msgParameters != "") {
+        out << msgName << "::" << msgName << "(" << msgParameters << ", QObject *parent) :" << endl;
+        out << "    QObject(parent)" << endl;
+        out << "{" << endl;
+
+        assignAllParameters(msg, out);
+
+        out << "    init();" << endl;
+        out << "}" << endl;
+        out << endl;
+    }
+    out << "void " << msgName << "::setParams(" << msgParameters << ")" << endl;
     out << "{" << endl;
-    // Add body here
+
+
+    assignAllParameters(msg, out);
+
     out << "}" << endl;
+    out << endl;
+
+    if ((msgParameters != "") && !((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous))) {
+        out << "bool " << msgName << "::sendMessage(" << msgParameters << ")" << endl;
+        out << "{" << endl;
+
+        assignAllParameters(msg, out);
+
+        out << "    sendMessage();" << endl;
+        out << "    return true;" << endl;
+        out << "}" << endl;
+        out << endl;
+    }
+    if (!((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::asynchronous))) {
+        out << "/* STATIC */" << endl;
+        out << "QString " << msgName << "::sendMessage(QObject *parent";
+        if (msgParameters != "")
+            out << ", " << msgParameters;
+        out << ")" << endl;
+        out << "{" << endl;
+        out << "    " << msgName << " qsm(parent);" << endl;
+        { // Assign all parameters.
+            out << "    qsm.setParams(";
+            QString tempS = "";
+            QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
+
+            foreach (QString s, tempMap.keys()) {
+                tempS += s + ", ";
+            }
+            tempS.chop(2);
+            out << tempS << ");" << endl;
+        }
+        out << endl;
+        out << "    qsm.sendMessage();" << endl;
+        out << "    // TODO: ADD ERROR HANDLING!" << endl;
+        out << "    forever" << endl;
+        out << "    {" << endl;
+        out << "        if (qsm.replyReceived)" << endl;
+        out << "            return qsm.reply;" << endl;
+        out << "        else" << endl;
+        out << "        {" << endl;
+        out << "            qApp->processEvents();" << endl;
+        out << "        }" << endl;
+        out << "    }" << endl;
+        out << "}" << endl;
+        out << endl;
+    }
+    out << "void " << msgName << "::" << "configure();" << endl;
+    out << "{" << endl;
+    out << "    m_hostUrl = QUrl(\"" << msg->host() << "\");" << endl;
+    out << "    protocolUsed = " << flags->protocolString(false) << ";" << endl;
+    out << "    httpMethodUsed = " << flags->httpMethodString() << ";" << endl;
+    out << "    m_messageName = " << msg->messageName() << ";" << endl;
+    out << "    m_targetNamespace = " << msg->targetNamespace() << ";" << endl;
+    out << "}" << endl;
+
     // EOF (SOAP message)
     // ---------------------------------
 
@@ -438,11 +533,7 @@ bool MessageGenerator::createMessageSource(QWebMethod *msg)
         out << "    QObject(parent)" << endl;
         out << "{" << endl;
         { // Assign all parameters.
-            QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
-
-            foreach (QString s, tempMap.keys()) {
-                out << "    this->" << s << " = " << s << ";" << endl;
-            }
+            assignAllParameters(msg, out);
 
             // Defaulting the protocol:
             out << "    protocol = " << flags->protocolString() << ";" << endl;
@@ -470,13 +561,9 @@ bool MessageGenerator::createMessageSource(QWebMethod *msg)
     out << endl;
     out << "void " << msgName << "::setParams(" << msgParameters << ")" << endl;
     out << "{" << endl;
-    { // Assign all parameters.
-        QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
 
-        foreach (QString s, tempMap.keys()) {
-            out << "    this->" << s << " = " << s << ";" << endl;
-        }
-    }
+    assignAllParameters(msg, out);
+
     out << "}" << endl;
     out << endl;
     if (!(flags->flags() & Flags::compactMode)) {
@@ -517,12 +604,9 @@ bool MessageGenerator::createMessageSource(QWebMethod *msg)
     if ((msgParameters != "") && !((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous))) {
         out << "bool " << msgName << "::sendMessage(" << msgParameters << ")" << endl;
         out << "{" << endl;
-        { // Assign all parameters.
-            QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
-            foreach (QString s, tempMap.keys()) {
-                out << "    this->" << s << " = " << s << ";" << endl;
-            }
-        }
+
+        assignAllParameters(msg, out);
+
         out << "    sendMessage();" << endl;
         out << "    return true;" << endl;
         out << "}" << endl;
@@ -761,4 +845,18 @@ bool MessageGenerator::createMainCpp()
 
     file.close();
     return true;
+}
+
+/*!
+  \internal
+
+  Assigns all message parameters to this-><paramName>.
+  */
+void MessageGenerator::assignAllParameters(QWebMethod *msg, QTextStream &out)
+{
+    QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
+
+    foreach (QString s, tempMap.keys()) {
+        out << "    this->" << s << " = " << s << ";" << endl;
+    }
 }

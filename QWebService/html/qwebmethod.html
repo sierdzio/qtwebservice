@@ -47,10 +47,12 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#host">host</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#hostUrl">hostUrl</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> HttpMethod </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#httpMethod">httpMethod</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#httpMethodString">httpMethodString</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#messageName">messageName</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#parameterNames">parameterNames</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> Protocol </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#protocol">protocol</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#protocolString">protocolString</a></b> ( bool <i>includeRest</i> ) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariant </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#replyRead">replyRead</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#returnValueName">returnValueName</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#returnValueNameType">returnValueNameType</a></b> () const</td></tr>
@@ -181,6 +183,11 @@
 <p>Returns currently set HTTP method.</p>
 <p>See also <a href="qwebmethod.html#setHttpMethod">setHttpMethod</a>() and <a href="qwebmethod.html#protocol">protocol</a>().</p>
 <!-- @@@httpMethod -->
+<!-- $$$httpMethodString[overload1]$$$httpMethodString -->
+<h3 class="fn"><a name="httpMethodString"></a>QString QWebMethod::httpMethodString () const</h3>
+<p>Returns the HTTP method used, in form of a QString.</p>
+<p>See also <a href="qwebmethod.html#httpMethod">httpMethod</a>().</p>
+<!-- @@@httpMethodString -->
 <!-- $$$init[overload1]$$$init -->
 <h3 class="fn"><a name="init"></a>void QWebMethod::init ()<tt> [protected]</tt></h3>
 <p>Performs genral initialisation of the object. Sets default variable values, initializes network manager, connects reply signals. Calls virtual method, <a href="qwebmethod.html#configure">configure</a>().</p>
@@ -204,6 +211,10 @@
 <p>Returns currently set protocol.</p>
 <p>See also <a href="qwebmethod.html#setProtocol">setProtocol</a>() and <a href="qwebmethod.html#httpMethod">httpMethod</a>().</p>
 <!-- @@@protocol -->
+<!-- $$$protocolString[overload1]$$$protocolStringbool -->
+<h3 class="fn"><a name="protocolString"></a>QString QWebMethod::protocolString ( bool <i>includeRest</i> ) const</h3>
+<p>Returns protocol used in form of a QString. If <i>includeRest</i> is true, and --rest flag was specified, it appends &quot;,rest&quot; to the result.</p>
+<!-- @@@protocolString -->
 <!-- $$$replyFinished[overload1]$$$replyFinishedQNetworkReply* -->
 <h3 class="fn"><a name="replyFinished"></a>void QWebMethod::replyFinished ( QNetworkReply * <i>netReply</i> )<tt> [slot]</tt></h3>
 <p>Public (will probably be private in the future) slot, which processes the reply (<i>netReply</i>) from the server. Emits the <a href="qwebmethod.html#replyReady">replyReady</a>() signal.</p>
