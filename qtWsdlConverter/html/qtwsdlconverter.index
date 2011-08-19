@@ -7,6 +7,7 @@
                 <value name="fullMode" value="0x000001"/>
                 <value name="debugMode" value="0x000002"/>
                 <value name="compactMode" value="0x000004"/>
+                <value name="subclass" value="0x000008"/>
                 <value name="synchronous" value="0x000010"/>
                 <value name="asynchronous" value="0x000020"/>
                 <value name="standardStructure" value="0x000100"/>
@@ -107,6 +108,16 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="errorEncountered" fullname="CodeGenerator::errorEncountered" href="codegenerator.html#errorEncountered" location="codegenerator.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="errorEncountered(QString errMessage)">
                 <parameter left="QString" right="" name="errMessage" default=""/>
             </function>
+        </class>
+        <class access="public" threadsafety="unspecified" status="commendable" name="MessageGenerator" href="messagegenerator.html" location="messagegenerator.h" bases="" module="">
+            <function access="public" threadsafety="unspecified" status="commendable" name="MessageGenerator" fullname="MessageGenerator::MessageGenerator" href="messagegenerator.html#MessageGenerator" location="messagegenerator.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="MessageGenerator(QMap&lt;QString, QWebMethod *&gt; * msgs, QDir wrkDir, Flags * flgs, QObject * parent)">
+                <parameter left="QMap&lt;QString, QWebMethod *&gt; *" right="" name="msgs" default=""/>
+                <parameter left="QDir" right="" name="wrkDir" default=""/>
+                <parameter left="Flags *" right="" name="flgs" default=""/>
+                <parameter left="QObject *" right="" name="parent" default="0"/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="errorMessage" fullname="MessageGenerator::errorMessage" href="messagegenerator.html#errorMessage" location="messagegenerator.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="QString" signature="errorMessage()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="createMessages" fullname="MessageGenerator::createMessages" href="messagegenerator.html#createMessages" location="messagegenerator.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="createMessages()"/>
         </class>
     </namespace>
 </INDEX>

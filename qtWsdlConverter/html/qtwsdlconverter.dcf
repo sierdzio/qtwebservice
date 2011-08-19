@@ -31,6 +31,7 @@
         <keyword ref="flags.html#Option-enum">Flags::debugMode</keyword>
         <keyword ref="flags.html#Option-enum">Flags::fullMode</keyword>
         <keyword ref="flags.html#Option-enum">Flags::noMessagesStructure</keyword>
+        <keyword ref="flags.html#Option-enum">Flags::subclass</keyword>
         <keyword ref="flags.html#Option-enum">Flags::soap</keyword>
         <keyword ref="flags.html#Option-enum">Flags::rest</keyword>
         <keyword ref="flags.html#Option-enum">Flags::synchronous</keyword>
@@ -51,6 +52,12 @@
         <keyword ref="flags.html#setMsgSuffix">setMsgSuffix</keyword>
         <keyword ref="flags.html#setObjSuffix">setObjSuffix</keyword>
         <section ref="flags-members.html" title="List of all members"/>
+    </section>
+    <section ref="messagegenerator.html" title="MessageGenerator Class Reference">
+        <keyword ref="messagegenerator.html">MessageGenerator</keyword>
+        <keyword ref="messagegenerator.html#createMessages">createMessages</keyword>
+        <keyword ref="messagegenerator.html#errorMessage">errorMessage</keyword>
+        <section ref="messagegenerator-members.html" title="List of all members"/>
     </section>
     <section ref="wsdlconverter.html" title="WsdlConverter Class Reference">
         <keyword ref="wsdlconverter.html">WsdlConverter</keyword>

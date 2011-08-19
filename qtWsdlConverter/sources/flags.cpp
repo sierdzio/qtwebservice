@@ -22,6 +22,8 @@
             (mode) fullMode + debug messages.
      \value compactMode
             (mode) Only most needed methods, variables and enums are preserved. Code is as small, as possible, at the expense of loosing flexibility.
+     \value subclass
+            converter creates messages by subclassing QWebMethod (this option requires QWebService library to be present).
      \value synchronous
             (synchronousness) Web methods will wait for reply and return with data.
      \value asynchronous
@@ -29,7 +31,7 @@
      \value standardStructure
             (structure) Headers will be placed in <dir>/headers, sources in <dir>/sources, build system and .pro files in <dir>/.
      \value noMessagesStructure
-            (structure) Converter will not create messages as separate classes, but use QWebMethod.
+            (structure) Converter will not create messages as separate classes, but use QWebMethod (this option requires QWebService library to be present).
      \value allInOneDirStructure
             (structure) All generated files will be stored in one folder.
      \value qmake

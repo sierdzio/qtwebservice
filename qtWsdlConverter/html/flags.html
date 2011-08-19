@@ -30,7 +30,7 @@
 <h2>Public Types</h2>
 <table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="flags.html#HttpMethod-enum">HttpMethod</a></b> { POST, GET, PUT, DELETE }</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Option-enum">Option</a></b> { fullMode, debugMode, compactMode, synchronous, ..., rest }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Option-enum">Option</a></b> { fullMode, debugMode, compactMode, subclass, ..., rest }</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> flags </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Option-enum">Options</a></b></td></tr>
 </table>
 <a name="public-functions"></a>
@@ -75,17 +75,18 @@
 <tr><td  class="topAlign"><tt>Flags::DELETE</tt></td><td class=" topAlign"><tt>0x8</tt></td><td  class="topAlign">HTTP DELETE will be used.</td></tr>
 </table>
 <!-- @@@HttpMethod -->
-<!-- $$$Option$$$fullMode$$$debugMode$$$compactMode$$$synchronous$$$asynchronous$$$standardStructure$$$noMessagesStructure$$$allInOneDirStructure$$$qmake$$$cmake$$$scons$$$noBuildSystem$$$http$$$soap10$$$soap12$$$soap$$$json$$$xml$$$rest -->
+<!-- $$$Option$$$fullMode$$$debugMode$$$compactMode$$$subclass$$$synchronous$$$asynchronous$$$standardStructure$$$noMessagesStructure$$$allInOneDirStructure$$$qmake$$$cmake$$$scons$$$noBuildSystem$$$http$$$soap10$$$soap12$$$soap$$$json$$$xml$$$rest -->
 <h3 class="flags"><a name="Option-enum"></a>enum Flags::Option<br/>flags Flags::Options</h3>
 <p>This enum type specifies code creation mode. Sections are indicated in brackets:</p>
 <table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
 <tr><td  class="topAlign"><tt>Flags::fullMode</tt></td><td class=" topAlign"><tt>0x000001</tt></td><td  class="topAlign">(mode) All enums and variables are copied, enabling some flexibility in use.</td></tr>
 <tr><td  class="topAlign"><tt>Flags::debugMode</tt></td><td class=" topAlign"><tt>0x000002</tt></td><td  class="topAlign">(mode) fullMode + debug messages.</td></tr>
 <tr><td  class="topAlign"><tt>Flags::compactMode</tt></td><td class=" topAlign"><tt>0x000004</tt></td><td  class="topAlign">(mode) Only most needed methods, variables and enums are preserved. Code is as small, as possible, at the expense of loosing flexibility.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::subclass</tt></td><td class=" topAlign"><tt>0x000008</tt></td><td  class="topAlign">converter creates messages by subclassing QWebMethod (this option requires QWebService library to be present).</td></tr>
 <tr><td  class="topAlign"><tt>Flags::synchronous</tt></td><td class=" topAlign"><tt>0x000010</tt></td><td  class="topAlign">(synchronousness) Web methods will wait for reply and return with data.</td></tr>
 <tr><td  class="topAlign"><tt>Flags::asynchronous</tt></td><td class=" topAlign"><tt>0x000020</tt></td><td  class="topAlign">(synchronousness) Web methods will return instantly. Data availability will be announced by emitting a signal.</td></tr>
 <tr><td  class="topAlign"><tt>Flags::standardStructure</tt></td><td class=" topAlign"><tt>0x000100</tt></td><td  class="topAlign">(structure) Headers will be placed in &lt;dir&gt;/headers, sources in &lt;dir&gt;/sources, build system and .pro files in &lt;dir&gt;/.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::noMessagesStructure</tt></td><td class=" topAlign"><tt>0x000200</tt></td><td  class="topAlign">(structure) Converter will not create messages as separate classes, but use QWebMethod.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::noMessagesStructure</tt></td><td class=" topAlign"><tt>0x000200</tt></td><td  class="topAlign">(structure) Converter will not create messages as separate classes, but use QWebMethod (this option requires QWebService library to be present).</td></tr>
 <tr><td  class="topAlign"><tt>Flags::allInOneDirStructure</tt></td><td class=" topAlign"><tt>0x000400</tt></td><td  class="topAlign">(structure) All generated files will be stored in one folder.</td></tr>
 <tr><td  class="topAlign"><tt>Flags::qmake</tt></td><td class=" topAlign"><tt>0x001000</tt></td><td  class="topAlign">(build system) qmake will be used.</td></tr>
 <tr><td  class="topAlign"><tt>Flags::cmake</tt></td><td class=" topAlign"><tt>0x002000</tt></td><td  class="topAlign">(build system) cmake will be used.</td></tr>

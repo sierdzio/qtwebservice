@@ -16,6 +16,7 @@ public:
         fullMode                = 0x000001,
         debugMode               = 0x000002,
         compactMode             = 0x000004,
+        subclass                = 0x000008,
         // Synchronousness
         synchronous             = 0x000010,
         asynchronous            = 0x000020,

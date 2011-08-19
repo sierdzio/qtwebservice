@@ -14,10 +14,12 @@ public:
     bool createMessages();
 
 private:
+    bool enterErrorState(QString errMessage = "");
     bool createSubclassedMessageHeader(QWebMethod *msg);
     bool createSubclassedMessageSource(QWebMethod *msg);
     bool createMessageHeader(QWebMethod *msg);
     bool createMessageSource(QWebMethod *msg);
+    bool createMainCpp();
 
     QMap<QString, QWebMethod *> *messages;
     QDir workingDir;

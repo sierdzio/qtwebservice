@@ -2,7 +2,7 @@
 
 /*!
     \class CodeGenerator
-    \brief Creates code in the standard path (standard structure).
+    \brief Creates code for communicating with web services.
 
     Generates code, based on WSDL information and user defined flags.
 
@@ -91,35 +91,6 @@ bool CodeGenerator::create(QWsdl *w, QDir wrkDir, Flags *flgs, QString bsClsNme,
         return false;
     if (!obj.createBuildSystemFile())
         return false;
-    return true;
-}
-
-
-
-/*!
-  \internal
-
-  Creates a dummy main.cpp file. It's needed only for successful compilation of
-  freshly generated code. It is NOT NEEDED for any other reason. You can safely delete
-  it fo your project.
-  */
-bool CodeGenerator::createMainCpp()
-{
-    QFile file(workingDir.path() + "/main.cpp");
-    if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
-        return enterErrorState("Error: could not open Web Service header file for writing.");
-
-    // ---------------------------------
-    // Begin writing:
-    QTextStream out(&file);
-    out.setCodec("UTF-8");
-    out << "/*Creates a dummy main.cpp file. It's needed only for successful compilation of freshly generated code. It is NOT NEEDED for any other reason. You can safely delete it fo your project (just remember to remove it from .pro file, too). */" << endl;
-    out << "#include \"../headers/band_ws.h\"" << endl;
-    out << "int main() {return 0;}" << endl;
-    // EOF (main.cpp)
-    // ---------------------------------
-
-    file.close();
     return true;
 }
 
@@ -565,7 +536,12 @@ bool CodeGenerator::createServiceSource()
   */
 bool CodeGenerator::createMessages()
 {
-    ;
+    MessageGenerator msgGen(messages, workingDir, flags, this);
+
+    if (!msgGen.createMessages())
+        enterErrorState(msgGen.errorMessage());
+    else
+        return true;
 }
 /*!
     \internal

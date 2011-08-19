@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QWebService>
 #include "flags.h"
+#include "messagegenerator.h"
 
 class CodeGenerator : public QObject
 {
@@ -22,7 +23,6 @@ private:
     bool enterErrorState(QString errMessage = "");
     void prepare();
     bool createMessages();
-    bool createMainCpp();
     bool createService();
     bool createServiceHeader();
     bool createServiceSource();

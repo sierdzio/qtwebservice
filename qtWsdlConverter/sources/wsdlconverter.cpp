@@ -259,16 +259,20 @@ bool WsdlConverter::parseArguments(QStringList arguments)
                 flags->setFlags(Flags::asynchronous);
             }
             // Modes:
+            else if (s == "--subclass") {
+                flags->resetFlags(Flags::debugMode | Flags::compactMode | Flags::fullMode);
+                flags->setFlags(Flags::subclass);
+            }
             else if (s == "--full-mode") {
-                flags->resetFlags(Flags::debugMode | Flags::compactMode);
+                flags->resetFlags(Flags::debugMode | Flags::compactMode | Flags::subclass);
                 flags->setFlags(Flags::fullMode);
             }
             else if (s == "--debug-mode") {
-                flags->resetFlags(Flags::fullMode | Flags::compactMode);
+                flags->resetFlags(Flags::fullMode | Flags::compactMode | Flags::subclass);
                 flags->setFlags(Flags::debugMode);
             }
             else if (s == "--compact-mode") {
-                flags->resetFlags(Flags::fullMode | Flags::compactMode);
+                flags->resetFlags(Flags::fullMode | Flags::compactMode | Flags::subclass);
                 flags->setFlags(Flags::compactMode);
             }
             // Structures:

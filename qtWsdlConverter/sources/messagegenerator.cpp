@@ -1,5 +1,19 @@
-#include "messagegenerator.h"
+#include "../headers/messagegenerator.h"
 
+/*!
+    \class MessageGenerator
+    \brief Creates code for messages.
+
+    Creates messages (both headers and sources) by generating the entire code
+    or subclassing QWebMethod (depending on whether --subclass flag is set).
+  */
+
+/*!
+    \fn MessageGenerator::MessageGenerator(QMap<QString, QWebMethod *> *msgs, QDir wrkDir, Flags *flgs, QObject *parent)
+
+    Constructs QObject using \a parent, initialises MessageGenerator with messages (\a msgs),
+    working directory (\a wrkDir), and flags (\a flgs).
+  */
 MessageGenerator::MessageGenerator(QMap<QString, QWebMethod *> *msgs,
                                    QDir wrkDir, Flags *flgs, QObject *parent) :
     QObject(parent), messages(msgs), workingDir(wrkDir), flags(flgs)
@@ -8,6 +22,11 @@ MessageGenerator::MessageGenerator(QMap<QString, QWebMethod *> *msgs,
     m_errorMessage = "";
 }
 
+/*!
+  \fn MessageGenerator::errorMessage()
+
+  Returns QString containing error message (or "" if there was no error).
+  */
 QString MessageGenerator::errorMessage()
 {
     return m_errorMessage;
@@ -15,7 +34,21 @@ QString MessageGenerator::errorMessage()
 
 /*!
     \internal
+    \fn MessageGenerator::enterErrorState(QString errMessage)
+  */
+bool MessageGenerator::enterErrorState(QString errMessage)
+{
+    m_errorMessage += errMessage + " ";
+    return false;
+}
+
+/*!
     \fn MessageGenerator::createMessages()
+
+    Creates messages (both headers and sources) by generating the entire code
+    or subclassing QWebMethod (depending on whether --subclass flag is set).
+
+    Returns true if successful.
   */
 bool MessageGenerator::createMessages()
 {
@@ -37,8 +70,15 @@ bool MessageGenerator::createMessages()
 
     foreach (QString s, messages->keys()) {
         QWebMethod *m = messages->value(s);
-        if (!createMessageHeader(m))
-            return enterErrorState("Creating header for message \"" + m->messageName() + "\" failed!");
+
+        if (flags->flags() & Flags::subclass) {
+            if (!createSubclassedMessageHeader(m))
+                return enterErrorState("Creating header for message \"" + m->messageName() + "\" failed!");
+        }
+        else {
+            if (!createMessageHeader(m))
+                return enterErrorState("Creating header for message \"" + m->messageName() + "\" failed!");
+        }
     }
 
     if (!(flags->flags() & Flags::allInOneDirStructure)) {
@@ -48,8 +88,15 @@ bool MessageGenerator::createMessages()
 
     foreach (QString s, messages->keys()) {
         QWebMethod *n = messages->value(s);
-        if (!createMessageSource(n))
-            return enterErrorState("Creating source for message \"" + n->messageName() + "\" failed!");;
+
+        if (flags->flags() & Flags::subclass) {
+            if (!createSubclassedMessageSource(n))
+                return enterErrorState("Creating header for message \"" + n->messageName() + "\" failed!");
+        }
+        else {
+            if (!createMessageSource(n))
+                return enterErrorState("Creating source for message \"" + n->messageName() + "\" failed!");
+        }
     }
 
     if (!(flags->flags() & Flags::allInOneDirStructure)) {
@@ -66,7 +113,58 @@ bool MessageGenerator::createMessages()
   */
 bool MessageGenerator::createSubclassedMessageHeader(QWebMethod *msg)
 {
-    ;
+    QString msgName = msg->messageName();
+    QFile file(workingDir.path() + "/" + msgName + ".h");
+    if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
+        return enterErrorState("Error: could not open message header file for writing.");
+
+    QString msgReplyName = msg->returnValueName().first(); // Possible problem in case of multi-return.
+
+    QString msgReplyType = "";
+    QString msgParameters = "";
+    {
+        // Create msgReplyType
+        QMap<QString, QVariant> tempMap = msg->returnValueNameType();
+
+        foreach (QString s, tempMap.keys()) {
+            msgReplyType += tempMap.value(s).typeName();
+            break;
+        }
+
+        tempMap.clear();
+        tempMap = msg->parameterNamesTypes();
+
+        // Create msgParameters (comma separated list)
+        foreach (QString s, tempMap.keys()) {
+            msgParameters += QString(tempMap.value(s).typeName()) + " " + s + ", ";
+        }
+        msgParameters.chop(2);
+    }
+
+    // ---------------------------------
+    // Begin writing:
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << "#ifndef " << msgName.toUpper() << "_H" << endl; // might break on curious names
+    out << "#define " << msgName.toUpper() << "_H" << endl;
+    out << endl;
+    out << "#include <QWebService>" << endl; // Should be <QWebService/qwebmethod.h>
+    out << endl;
+    out << "class " << msgName << " : public QWebMethod" << endl;
+    out << "{" << endl;
+    out << "    Q_OBJECT" << endl;
+    out << endl;
+    /*
+       Add async and static sendMessage() methods with QString returns.
+       Optionally, also add a constructor.
+       Reimplement configure().
+    */
+    out << "};" << endl;
+    // EOF (SOAP message)
+    // ---------------------------------
+
+    file.close();
+    return true;
 }
 
 /*!
@@ -75,7 +173,55 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebMethod *msg)
   */
 bool MessageGenerator::createSubclassedMessageSource(QWebMethod *msg)
 {
-    ;
+    QString msgName = msg->messageName();
+    QFile file(workingDir.path() + "/" + msgName + ".cpp");
+    if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
+        return enterErrorState("Error: could not open message source file for writing.");
+
+    QString msgReplyName = msg->returnValueName().first(); // Possible problem in case of multi-return.
+
+    QString msgReplyType = "";
+    QString msgParameters = "";
+    {
+        QMap<QString, QVariant> tempMap = msg->returnValueNameType();
+
+        foreach (QString s, tempMap.keys()) {
+            msgReplyType += tempMap.value(s).typeName();
+            break;
+        }
+
+        tempMap.clear();
+        tempMap = msg->parameterNamesTypes();
+
+        foreach (QString s, tempMap.keys()) {
+            msgParameters += QString(tempMap.value(s).typeName()) + " " + s + ", ";
+        }
+        msgParameters.chop(2);
+    }
+
+    // ---------------------------------
+    // Begin writing:
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << "#include \"";
+    if (!(flags->flags() & Flags::allInOneDirStructure))
+        out << "../headers/";
+    out << msgName << ".h\"" << endl;
+    out << endl;
+    /*
+       Add async and static sendMessage() methods with QString returns.
+       Optionally, also add a constructor.
+       Reimplement configure().
+    */
+    out << "void " << msgName << "::configure()" << endl;
+    out << "{" << endl;
+    // Add body here
+    out << "}" << endl;
+    // EOF (SOAP message)
+    // ---------------------------------
+
+    file.close();
+    return true;
 }
 
 /*!
@@ -262,6 +408,7 @@ bool MessageGenerator::createMessageSource(QWebMethod *msg)
     // ---------------------------------
     // Begin writing:
     QTextStream out(&file);
+    out.setCodec("UTF-8");
     out << "#include \"";
     if (!(flags->flags() & Flags::allInOneDirStructure))
         out << "../headers/";
@@ -583,6 +730,33 @@ bool MessageGenerator::createMessageSource(QWebMethod *msg)
     out << "    return result;" << endl;
     out << "}" << endl;
     // EOF (SOAP message)
+    // ---------------------------------
+
+    file.close();
+    return true;
+}
+
+/*!
+  \internal
+
+  Creates a dummy main.cpp file. It's needed only for successful compilation of
+  freshly generated code. It is NOT NEEDED for any other reason. You can safely delete
+  it fo your project.
+  */
+bool MessageGenerator::createMainCpp()
+{
+    QFile file(workingDir.path() + "/main.cpp");
+    if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
+        return enterErrorState("Error: could not open Web Service header file for writing.");
+
+    // ---------------------------------
+    // Begin writing:
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << "/*Creates a dummy main.cpp file. It's needed only for successful compilation of freshly generated code. It is NOT NEEDED for any other reason. You can safely delete it fo your project (just remember to remove it from .pro file, too). */" << endl;
+    out << "#include \"../headers/band_ws.h\"" << endl;
+    out << "int main() {return 0;}" << endl;
+    // EOF (main.cpp)
     // ---------------------------------
 
     file.close();
