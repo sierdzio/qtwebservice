@@ -1,10 +1,11 @@
 #ifndef QWebMethod_H
 #define QWebMethod_H
 
-#include <QtCore>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
+#include <QtNetwork/qnetworkaccessmanager.h>
+#include <QtNetwork/qnetworkrequest.h>
+#include <QtNetwork/qnetworkreply.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qstringlist.h>
 #include "QWebService_global.h"
 
 class QWEBSERVICESHARED_EXPORT QWebMethod : public QObject
@@ -48,17 +49,17 @@ public:
     bool sendMessage(QByteArray requestData = 0);
 
     QVariant replyRead();
-    QString messageName();
+    QString messageName() const;
     QStringList parameterNames() const;
     QStringList returnValueName() const;
     QMap<QString, QVariant> parameterNamesTypes() const;
     QMap<QString, QVariant> returnValueNameType() const;
-    QString targetNamespace();
-    QString host();
-    QUrl hostUrl();
-    Protocol protocol();
+    QString targetNamespace() const;
+    QString host() const;
+    QUrl hostUrl() const;
+    Protocol protocol() const;
     QString protocolString(bool includeRest) const;
-    HttpMethod httpMethod();
+    HttpMethod httpMethod() const;
     QString httpMethodString() const;
 
 signals:

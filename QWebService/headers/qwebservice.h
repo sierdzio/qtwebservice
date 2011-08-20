@@ -1,7 +1,7 @@
 #ifndef QWEBSERVICEABSTRACT_H
 #define QWEBSERVICEABSTRACT_H
 
-#include <QUrl>
+#include <QtCore/qurl.h>
 #include "QWebService_global.h"
 #include "qwebmethod.h"
 #include "qwsdl.h"
@@ -17,7 +17,7 @@ public:
     QWebService(QString host, QObject *parent = 0);
     ~QWebService();
 
-    QStringList methodNames();
+    QStringList methodNames() const;
     QStringList methodParameters(QString methodName) const;
     QStringList methodReturnValue(QString methodName) const;
     QMap<QString, QVariant> parameterNamesTypes(QString methodName) const;
@@ -25,8 +25,8 @@ public:
 
     void setHost(QString host);
     void setHost(QUrl hostUrl);
-    QUrl hostUrl();
-    QString host();
+    QUrl hostUrl() const;
+    QString host() const;
     bool isErrorState();
 //    QString getWsdl();
 

@@ -405,9 +405,14 @@ bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
         out << "    " << msgName << "(" << msgParameters << ", QObject *parent = 0);" << endl;
     out << "    ~" << msgName << "();" << endl;
     out << endl;
-    out << "    void setParams(" << msgParameters << ");" << endl;
+    out << "    void setHost(QString newHost);" << endl;
+    out << "    void setHost(QUrl newHost);" << endl;
+    out << "    void setMessageName(QString newName);" << endl;
+    out << "    void setTargetNamespace(QString tNamespace);" << endl;
     if (!(flags->flags() & Flags::compactMode))
         out << "    void setProtocol(Protocol protocol);" << endl;
+    out << "    void setHttpMethod(HttpMethod method);" << endl;
+    out << "    void setParameters(" << msgParameters << ");" << endl << endl;
     out << "    bool sendMessage();" << endl;
     if ((msgParameters != "") && !((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous)))
         out << "    bool sendMessage(" << msgParameters << ");" << endl;
@@ -427,12 +432,18 @@ bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
     // Temporarily, all messages will return QString!
 //    out << "    " << msgReplyType << " replyRead();" << endl;
     out << "    QString replyRead();" << endl;
-    out << "    QString getMessageName();" << endl;
-    out << "    QStringList getParameterNames() const;" << endl;
-    out << "    QString getReturnValueName() const;" << endl;
-    out << "    QMap<QString, QVariant> getParameterNamesTypes() const;" << endl;
-    out << "    QString getReturnValueNameType() const;" << endl;
-    out << "    QString getTargetNamespace();" << endl;
+    out << "    QString messageName() const;" << endl;
+    out << "    QStringList parameterNames() const;" << endl;
+    out << "    QString returnValueName() const;" << endl;
+    out << "    QMap<QString, QVariant> parameterNamesTypes() const;" << endl;
+    out << "    QString returnValueNameType() const;" << endl;
+    out << "    QString targetNamespace() const;" << endl;
+    out << "    QString host() const;" << endl;
+    out << "    QUrl hostUrl() const;" << endl;
+    out << "    Protocol protocol() const;" << endl;
+    out << "    QString protocolString(bool includeRest) const;" << endl;
+    out << "    HttpMethod httpMethod() const;" << endl;
+    out << "    QString httpMethodString() const;" << endl;
     out << endl;
     out << "signals:" << endl;
     // Temporarily, all messages will return QString!
@@ -447,10 +458,11 @@ bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
     out << "    QString convertReplyToUtf(QString textToConvert);" << endl;
     out << endl;
     out << "    bool replyReceived;" << endl;
-    out << "    Protocol protocol;" << endl;
-    out << "    QUrl hostUrl;" << endl;
-    out << "    QString messageName;" << endl;
-    out << "    QString targetNamespace;" << endl;
+    out << "    Protocol protocolUsed;" << endl;
+    out << "    HttpMethod httpMethodUsed;" << endl;
+    out << "    QUrl hostUrlUsed;" << endl;
+    out << "    QString messageNameUsed;" << endl;
+    out << "    QString targetNamespaceUsed;" << endl;
     // Temporarily, all messages will return QString!
 //    out << "    " << msgReplyType << " reply;" << endl;
     out << "    QString reply;" << endl;
@@ -523,16 +535,16 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "{" << endl;
 
     if (msg->host() != "")
-        out << "    hostUrl.setHost(\"" << msg->host() << "\");" << endl;
+        out << "    hostUrlUsed.setHost(\"" << msg->host() << "\");" << endl;
     else
-        out << "    hostUrl.setHost(\"" << msg->targetNamespace() << "\");" << endl;
+        out << "    hostUrlUsed.setHost(\"" << msg->targetNamespace() << "\");" << endl;
 
-    out << "    messageName = \"" << msgName << "\";" << endl;
+    out << "    messageNameUsed = \"" << msgName << "\";" << endl;
     out << "    replyReceived = false;" << endl;
     out << "    reply.clear();" << endl;
     out << "    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));" << endl;
     { // Defaulting the protocol:
-        out << "    protocol = " << flags->protocolString() << ";" << endl;
+        out << "    protocolUsed = " << flags->protocolString() << ";" << endl;
     }
 
     out << "}" << endl;
@@ -545,16 +557,16 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
             assignAllParameters(msg, out);
 
             // Defaulting the protocol:
-            out << "    protocol = " << flags->protocolString() << ";" << endl;
+            out << "    protocolUsed = " << flags->protocolString() << ";" << endl;
         }
 
         if (msg->host() != "")
-            out << "    hostUrl.setHost(\"" << msg->host() << "\");" << endl;
+            out << "    hostUrlUsed.setHost(\"" << msg->host() << "\");" << endl;
         else
-            out << "    hostUrl.setHost(\"" << msg->targetNamespace() << "\");" << endl;
+            out << "    hostUrlUsed.setHost(\"" << msg->targetNamespace() << "\");" << endl;
 //        out << "    hostUrl.setHost(host + messageName);" << endl; // This is probably wrong, vars are not set!
 
-        out << "    messageName = \"" << msgName << "\";" << endl;
+        out << "    messageNameUsed = \"" << msgName << "\";" << endl;
         out << "    replyReceived = false;" << endl;
         out << "    reply.clear();" << endl;
         out << "    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));" << endl;
@@ -568,36 +580,74 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "    this->deleteLater();" << endl;
     out << "}" << endl;
     out << endl;
-    out << "void " << msgName << "::setParams(" << msgParameters << ")" << endl;
+    out << "void " << msgName << "::setParameters(" << msgParameters << ")" << endl;
     out << "{" << endl;
 
     assignAllParameters(msg, out);
 
     out << "}" << endl;
     out << endl;
+
+    out << "void " << msgName << "::setHost(QString newHost)" << endl;
+    out << "{" << endl;
+    out << "    hostUrlUsed.setHost(newHost);" << endl;
+    out << "}" << endl;
+    out << endl;
+    out << "void " << msgName << "::setHost(QUrl newHost)" << endl;
+    out << "{" << endl;
+    out << "    hostUrlUsed = newHost;" << endl;
+    out << "}" << endl;
+    out << endl;
+    out << "void " << msgName << "::setMessageName(QString newName)" << endl;
+    out << "{" << endl;
+    out << "    messageNameUsed = newName;" << endl;
+    out << "}" << endl;
+    out << endl;
+    out << "void " << msgName << "::setTargetNamespace(QString tNamespace)" << endl;
+    out << "{" << endl;
+    out << "    targetNamespaceUsed = tNamespace;" << endl;
+    out << "}" << endl;
+    out << endl;
     if (!(flags->flags() & Flags::compactMode)) {
         out << "void " << msgName << "::setProtocol(Protocol prot)" << endl;
         out << "{" << endl;
-        out << "    if (prot == soap)" << endl;
-        out << "        protocol = soap12;" << endl;
-        out << "    else" << endl;
-        out << "        protocol = prot;" << endl;
+        out << "    // Prevent incompatibile flags from being set simultaneously:" << endl;
+        out << "    QList<int> allowedCombinations;" << endl;
+        out << "    allowedCombinations << 0x01 << 0x02 << 0x04 << 0x06 << 0x08 << 0x10 << 0x20; // Standard values." << endl;
+        out << "    allowedCombinations << 0x21 << 0x22 << 0x24 << 0x26 << 0x28 << 0x30; // REST combinations" << endl;
+        out << "" << endl;
+        out << "    if (allowedCombinations.contains(prot)) {" << endl;
+        out << "        if (prot & soap)" << endl;
+        out << "            protocolUsed = soap12;" << endl;
+        out << "        else" << endl;
+        out << "            protocolUsed = prot;" << endl;
+        out << "    }" << endl;
+        out << "    else {" << endl;
+        out << "        protocolUsed = soap12;" << endl;
+        out << "    }" << endl;
         out << "}" << endl;
         out << endl;
     }
+    out << "void " << msgName << "::setHttpMethod(HttpMethod method)" << endl;
+    out << "{" << endl;
+    out << "    httpMethodUsed = method;" << endl;
+    out << "}" << endl;
+    out << endl;
     out << "bool " << msgName << "::sendMessage()" << endl;
     out << "{" << endl;
     out << "    QNetworkRequest request;" << endl;
-    out << "    request.setUrl(hostUrl);" << endl;
-    out << "    if (protocol & soap)" << endl;
+    out << "    request.setUrl(hostUrlUsed);" << endl;
+    out << "    if (protocolUsed & soap)" << endl;
     out << "        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(\"application/soap+xml; charset=utf-8\"));" << endl;
-    out << "    else if (protocol == json)" << endl;
+    out << "    else if (protocolUsed == json)" << endl;
     out << "        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(\"application/json; charset=utf-8\"));" << endl;
-    out << "    else if (protocol == http)" << endl;
+    out << "    else if (protocolUsed == http)" << endl;
     out << "        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(\"Content-Type: application/x-www-form-urlencoded\"));" << endl;
+    out << "    else if (protocolUsed & xml)" << endl;
+    out << "        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(\"application/xml; charset=utf-8\"));" << endl;
     out << endl;
-    out << "    if (protocol == soap10)" << endl;
-    out << "        request.setRawHeader(QByteArray(\"SOAPAction\"), QByteArray(hostUrl.toString().toAscii()));" << endl;
+    out << "    if (protocolUsed == soap10)" << endl;
+    out << "        request.setRawHeader(QByteArray(\"SOAPAction\"), QByteArray(hostUrlUsed.toString().toAscii()));" << endl;
     out << endl;
     out << "    prepareRequestData();" << endl;
     out << endl;
@@ -605,8 +655,20 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
         out << "    qDebug() << request.rawHeaderList() << \" \" << request.url().toString();" << endl;
         out << "    qDebug() << \"*************************\";" << endl;
         out << endl;
-    }
-    out << "    manager->post(request, data);" << endl;
+    }    
+    out << "    if (protocolUsed & rest) {" << endl;
+    out << "        if (httpMethodUsed == POST)" << endl;
+    out << "            manager->post(request, data);" << endl;
+    out << "        else if (httpMethodUsed == GET)" << endl;
+    out << "            manager->get(request);" << endl;
+    out << "        else if (httpMethodUsed == PUT)" << endl;
+    out << "            manager->put(request, data);" << endl;
+    out << "        else if (httpMethodUsed == DELETE)" << endl;
+    out << "            manager->deleteResource(request);" << endl;
+    out << "    }" << endl;
+    out << "    else {" << endl;
+    out << "        manager->post(request, data);" << endl;
+    out << "    }    " << endl;
     out << "    return true;" << endl;
     out << "}" << endl;
     out << endl;
@@ -632,7 +694,7 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
         out << "{" << endl;
         out << "    " << msgName << " qsm(parent);" << endl;
         { // Assign all parameters.
-            out << "    qsm.setParams(";
+            out << "    qsm.setParameters(";
             QString tempS = "";
             QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
 
@@ -665,12 +727,12 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "    return reply;" << endl;
     out << "}" << endl;
     out << endl;
-    out << "QString " << msgName << "::getMessageName()" << endl;
+    out << "QString " << msgName << "::messageName() const" << endl;
     out << "{" << endl;
-    out << "    return messageName;" << endl;
+    out << "    return messageNameUsed;" << endl;
     out << "}" << endl;
     out << endl;
-    out << "QStringList " << msgName << "::getParameterNames() const" << endl;
+    out << "QStringList " << msgName << "::parameterNames() const" << endl;
     out << "{" << endl;
     out << "    QMap<QString, QVariant> parameters;" << endl;
     { // Assign all parameters.
@@ -687,12 +749,12 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "    return (QStringList) parameters.keys();" << endl;
     out << "}" << endl;
     out << endl;
-    out << "QString " << msgName << "::getReturnValueName() const" << endl;
+    out << "QString " << msgName << "::returnValueName() const" << endl;
     out << "{" << endl;
     out << "    return \"" << msgReplyName << "\";" << endl;
     out << "}" << endl;
     out << endl;
-    out << "QMap<QString, QVariant> " << msgName << "::getParameterNamesTypes() const" << endl;
+    out << "QMap<QString, QVariant> " << msgName << "::parameterNamesTypes() const" << endl;
     out << "{" << endl;
     out << "    QMap<QString, QVariant> parameters;" << endl;
     { // Assign all parameters.
@@ -709,16 +771,75 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "    return parameters;" << endl;
     out << "}" << endl;
     out << endl;
-    out << "QString " << msgName << "::getReturnValueNameType() const" << endl;
+    out << "QString " << msgName << "::returnValueNameType() const" << endl;
     out << "{" << endl;
     out << "    return \"" << msgReplyType << "\";" << endl;
     out << "}" << endl;
     out << endl;
-    out << "QString " << msgName << "::getTargetNamespace()" << endl;
+    out << "QString " << msgName << "::targetNamespace() const" << endl;
     out << "{" << endl;
-    out << "    return targetNamespace;" << endl;
+    out << "    return targetNamespaceUsed;" << endl;
     out << "}" << endl;
     out << endl;
+
+    out << "QString " << msgName << "::host() const" << endl;
+    out << "{" << endl;
+    out << "    return hostUrlUsed.host();" << endl;
+    out << "}" << endl;
+    out << endl;
+    out << "QUrl " << msgName << "::hostUrl() const" << endl;
+    out << "{" << endl;
+    out << "    return hostUrlUsed;" << endl;
+    out << "}" << endl;
+    out << endl;
+    out << msgName << "::Protocol " << msgName << "::protocol() const" << endl;
+    out << "{" << endl;
+    out << "    return protocolUsed;" << endl;
+    out << "}" << endl;
+    out << endl;
+    out << msgName << "::HttpMethod " << msgName << "::httpMethod() const" << endl;
+    out << "{" << endl;
+    out << "    return httpMethodUsed;" << endl;
+    out << "}" << endl;
+    out << endl;
+    out << "QString " << msgName << "::protocolString(bool includeRest) const" << endl;
+    out << "{" << endl;
+    out << "    QString result = \"\";" << endl;
+    out << endl;
+    out << "    if (protocolUsed & http)" << endl;
+    out << "        result = \"http\";" << endl;
+    out << "    else if (protocolUsed & soap10)" << endl;
+    out << "        result = \"soap10\";" << endl;
+    out << "    else if (protocolUsed & soap12)" << endl;
+    out << "        result = \"soap12\";" << endl;
+    out << "    else if (protocolUsed & json)" << endl;
+    out << "        result = \"json\";" << endl;
+    out << "    else if (protocolUsed & xml)" << endl;
+    out << "        result = \"xml\";" << endl;
+    out << endl;
+    out << "    if (includeRest && (protocolUsed & rest))" << endl;
+    out << "        result += \",rest\";" << endl;
+    out << endl;
+    out << "    return result;" << endl;
+    out << "}" << endl;
+    out << endl;
+    out << "QString " << msgName << "::httpMethodString() const" << endl;
+    out << "{" << endl;
+    out << "    QString result = \"\";" << endl;
+    out << endl;
+    out << "    if (httpMethodUsed == POST)" << endl;
+    out << "        result = \"POST\";" << endl;
+    out << "    else if (httpMethodUsed == GET)" << endl;
+    out << "        result = \"GET\";" << endl;
+    out << "    else if (httpMethodUsed == PUT)" << endl;
+    out << "        result = \"PUT\";" << endl;
+    out << "    else if (httpMethodUsed == DELETE)" << endl;
+    out << "        result = \"DELETE\";" << endl;
+    out << endl;
+    out << "    return result;" << endl;
+    out << "}" << endl;
+    out << endl;
+
     out << "void " << msgName << "::replyFinished(QNetworkReply *netReply)" << endl;
     out << "{" << endl;
     out << "    networkReply = netReply;" << endl;
@@ -727,11 +848,11 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "    replyBytes = (networkReply->readAll());" << endl;
     out << "    QString replyString = convertReplyToUtf(replyBytes);" << endl;
     out << endl;
-    out << "    QString tempBegin = \"<\" + messageName + \"Result>\";" << endl;
+    out << "    QString tempBegin = \"<\" + messageNameUsed + \"Result>\";" << endl;
     out << "    int replyBeginIndex = replyString.indexOf(tempBegin, 0, Qt::CaseSensitive);" << endl;
     out << "    replyBeginIndex += tempBegin.length();" << endl;
     out << endl;
-    out << "    QString tempFinish = \"</\" + messageName + \"Result>\";" << endl;
+    out << "    QString tempFinish = \"</\" + messageNameUsed + \"Result>\";" << endl;
     out << "    int replyFinishIndex = replyString.indexOf(tempFinish, replyBeginIndex, Qt::CaseSensitive);" << endl;
     out << endl;
     out << "    if (replyBeginIndex == -1)" << endl;
@@ -751,64 +872,71 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "    data.clear();" << endl;
     out << "    QString header, body, footer;" << endl;
     out << "    QString endl = \"\\r\\n\"; // Replace with something OS-independent, or seriously rethink." << endl;
-    out << "    QMap<QString, QVariant> parameters = getParameterNamesTypes();" << endl;
-    out << "" << endl;
-    out << "if (protocol & soap)" << endl;
-    out << "{" << endl;
-    out << "    if (protocol == soap12)" << endl;
+    out << "    QMap<QString, QVariant> parameters = parameterNamesTypes();" << endl;
+    out << endl;
+    out << "    if (protocolUsed & soap)" << endl;
     out << "    {" << endl;
-    out << "        header = \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?> \" + endl +" << endl;
+    out << "        if (protocolUsed == soap12)" << endl;
+    out << "        {" << endl;
+    out << "            header = \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?> \" + endl +" << endl;
     out << "                 \"<soap12:Envelope xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" \" +" << endl;
     out << "                 \"xmlns:xsd=\\\"http://www.w3.org/2001/XMLSchema\\\" \" +" << endl;
     out << "                 \"xmlns:soap12=\\\"http://www.w3.org/2003/05/soap-envelope\\\"> \" + endl +" << endl;
     out << "                 \"<soap12:Body> \" + endl;" << endl;
     out << endl;
-    out << "        footer = \"</soap12:Body> \" + endl + \"</soap12:Envelope>\";" << endl;
-    out << "    }" << endl;
-    out << "    else if (protocol == soap10)" << endl;
-    out << "    {" << endl;
-    out << "        header = \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?> \" + endl +" << endl;
+    out << "            footer = \"</soap12:Body> \" + endl + \"</soap12:Envelope>\";" << endl;
+    out << "        }" << endl;
+    out << "        else if (protocolUsed == soap10)" << endl;
+    out << "        {" << endl;
+    out << "            header = \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?> \" + endl +" << endl;
     out << "                \"<soap:Envelope xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" \" +" << endl;
     out << "                \"xmlns:xsd=\\\"http://www.w3.org/2001/XMLSchema\\\" \" +" << endl;
     out << "                \"xmlns:soap=\\\"http://www.w3.org/2003/05/soap-envelope\\\"> \" + endl +" << endl;
     out << "                \"<soap:Body> \" + endl;" << endl;
     out << endl;
-    out << "        footer = \"</soap:Body> \" + endl + \"</soap:Envelope>\";" << endl;
-    out << "    }" << endl;
+    out << "            footer = \"</soap:Body> \" + endl + \"</soap:Envelope>\";" << endl;
+    out << "        }" << endl;
     out << endl;
-    out << "    body = \"\\t<\" + messageName + \" xmlns=\"\" + targetNamespace + \"\"> \" + endl;" << endl;
+    out << "        body = \"\\t<\" + messageNameUsed + \" xmlns=\\\"\" + targetNamespaceUsed + \"\\\"> \" + endl;" << endl;
     out << endl;
-    out << "    foreach (const QString currentKey, parameters.keys())" << endl;
-    out << "    {" << endl;
-    out << "        QVariant qv = parameters.value(currentKey);" << endl;
-    out << "        // Currently, this does not handle nested lists" << endl;
-    out << "        body += \"\\t\\t<\" + currentKey + \">\" + qv.toString() + \"</\" + currentKey + \"> \" + endl;" << endl;
-    out << "    }" << endl;
+    out << "        foreach (const QString currentKey, parameters.keys())" << endl;
+    out << "        {" << endl;
+    out << "            QVariant qv = parameters.value(currentKey);" << endl;
+    out << "            // Currently, this does not handle nested lists" << endl;
+    out << "            body += \"\\t\\t<\" + currentKey + \">\" + qv.toString() + \"</\" + currentKey + \"> \" + endl;" << endl;
+    out << "        }" << endl;
     out << endl;
-    out << "    body += \"\\t</\" + messageName + \"> \" + endl;" << endl;
-    out << "}" << endl;
-    out << "else if (protocol == http)" << endl;
-    out << "{" << endl;
-    out << "    foreach (const QString currentKey, parameters.keys())" << endl;
-    out << "    {" << endl;
-    out << "        QVariant qv = parameters.value(currentKey);" << endl;
-    out << "        // Currently, this does not handle nested lists" << endl;
-    out << "        body += currentKey + \"=\" + qv.toString() + \"&\";" << endl;
+    out << "        body += \"\\t</\" + messageNameUsed + \"> \" + endl;" << endl;
     out << "    }" << endl;
-    out << "    body.chop(1);" << endl;
-    out << "}" << endl;
-    out << "else if (protocol == json)" << endl;
-    out << "{" << endl;
-    out << "    body += \"{\" + endl;" << endl;
-    out << "    foreach (const QString currentKey, parameters.keys())" << endl;
+    out << "    else if (protocolUsed == http)" << endl;
     out << "    {" << endl;
-    out << "        QVariant qv = parameters.value(currentKey);" << endl;
-    out << "        // Currently, this does not handle nested lists" << endl;
-    out << "        body += \"{\" + endl + \"\\t\\\"\" + currentKey + \"\\\" : \\\"\" + qv.toString() + \"\\\"\" + endl;"
+    out << "        foreach (const QString currentKey, parameters.keys())" << endl;
+    out << "        {" << endl;
+    out << "            QVariant qv = parameters.value(currentKey);" << endl;
+    out << "            // Currently, this does not handle nested lists" << endl;
+    out << "            body += currentKey + \"=\" + qv.toString() + \"&\";" << endl;
+    out << "        }" << endl;
+    out << "        body.chop(1);" << endl;
+    out << "    }" << endl;
+    out << "    else if (protocolUsed == json)" << endl;
+    out << "    {" << endl;
+    out << "        body += \"{\" + endl;" << endl;
+    out << "        foreach (const QString currentKey, parameters.keys())" << endl;
+    out << "        {" << endl;
+    out << "            QVariant qv = parameters.value(currentKey);" << endl;
+    out << "            // Currently, this does not handle nested lists" << endl;
+    out << "            body += \"{\" + endl + \"\\t\\\"\" + currentKey + \"\\\" : \\\"\" + qv.toString() + \"\\\"\" + endl;"
         << endl;
+    out << "        }" << endl;
+    out << "        body += \"}\";" << endl;
     out << "    }" << endl;
-    out << "    body += \"}\";" << endl;
-    out << "}" << endl;
+    out << "    else if (protocolUsed & xml) {" << endl;
+    out << "        foreach (const QString currentKey, parameters.keys()) {" << endl;
+    out << "            QVariant qv = parameters.value(currentKey);" << endl;
+    out << "            // Currently, this does not handle nested lists" << endl;
+    out << "            body += \"\\t\\t<\" + currentKey + \">\" + qv.toString() + \"</\" + currentKey + \"> \" + endl;" << endl;
+    out << "        }" << endl;
+    out << "    }" << endl;
     out << endl;
     out << "    data.append(header + body + footer);" << endl;
     out << "}" << endl;

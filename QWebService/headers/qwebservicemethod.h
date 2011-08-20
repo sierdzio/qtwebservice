@@ -1,8 +1,8 @@
 #ifndef QWEBSERVICEMETHODABSTRACT_H
 #define QWEBSERVICEMETHODABSTRACT_H
 
-#include <QUrl>
-#include <QObject>
+#include <QtCore/qobject.h>
+#include <QtCore/qurl.h>
 #include "QWebService_global.h"
 #include "qwebmethod.h"
 

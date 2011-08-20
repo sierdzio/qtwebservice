@@ -1,5 +1,3 @@
 Remote Features and TODO's list can be found at: http://goo.gl/L1C6X
 
 TODO'S:
- - (converter) move <web service.h> and .cpp to the END of build system file (qmake, cmake, scons),
- - (converter) add new flags to generated code.

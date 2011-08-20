@@ -303,11 +303,11 @@ QVariant QWebMethod::replyRead()
   */
 
 /*!
-    \fn QWebMethod::messageName()
+    \fn QWebMethod::messageName() const
 
     Returns message's name.
   */
-QString QWebMethod::messageName()
+QString QWebMethod::messageName() const
 {
     return m_messageName;
 }
@@ -353,55 +353,55 @@ QMap<QString, QVariant> QWebMethod::returnValueNameType() const
 }
 
 /*!
-    \fn QWebMethod::targetNamespace()
+    \fn QWebMethod::targetNamespace() const
 
     Returns target namespace.
   */
-QString QWebMethod::targetNamespace()
+QString QWebMethod::targetNamespace() const
 {
     return m_targetNamespace;
 }
 
 /*!
-    \fn QWebMethod::host()
+    \fn QWebMethod::host() const
 
     Returns host's URL (in QString). If you want a QUrl, call getHostUrl(), or QUrl(QWebMethod::getHost());
   */
-QString QWebMethod::host()
+QString QWebMethod::host() const
 {
     return m_hostUrl.host();
 }
 
 /*!
-    \fn QWebMethod::hostUrl()
+    \fn QWebMethod::hostUrl() const
 
     Returns host's URL. If you want a QString, call getHost() or getHostUrl().host();
   */
-QUrl QWebMethod::hostUrl()
+QUrl QWebMethod::hostUrl() const
 {
     return m_hostUrl;
 }
 
 /*!
-  \fn QWebMethod::protocol()
+  \fn QWebMethod::protocol() const
 
   Returns currently set protocol.
 
   \sa httpMethod()
   */
-QWebMethod::Protocol QWebMethod::protocol()
+QWebMethod::Protocol QWebMethod::protocol() const
 {
     return protocolUsed;
 }
 
 /*!
-  \fn QWebMethod::httpMethod()
+  \fn QWebMethod::httpMethod() const
 
   Returns currently set HTTP method.
 
   \sa protocol()
   */
-QWebMethod::HttpMethod QWebMethod::httpMethod()
+QWebMethod::HttpMethod QWebMethod::httpMethod() const
 {
     return httpMethodUsed;
 }

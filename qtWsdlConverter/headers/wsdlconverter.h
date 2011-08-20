@@ -1,7 +1,7 @@
 #ifndef WSDLCONVERTER_H
 #define WSDLCONVERTER_H
 
-#include <QObject>
+#include <QtCore/qobject.h>
 #include <QWebService>
 #include "flags.h"
 #include "codegenerator.h"

@@ -1,5 +1,4 @@
-#include <QtCore>
-#include <QtCore/QCoreApplication>
+#include <QtCore/qcoreapplication.h>
 #include "../headers/wsdlconverter.h"
 
 /**

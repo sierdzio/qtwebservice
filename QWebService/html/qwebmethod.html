@@ -42,14 +42,14 @@
 <table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod">QWebMethod</a></b> ( QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = soap12, HttpMethod <i>method</i> = POST )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#dtor.QWebMethod">~QWebMethod</a></b> ()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#host">host</a></b> ()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#hostUrl">hostUrl</a></b> ()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> HttpMethod </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#httpMethod">httpMethod</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#host">host</a></b> () const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#hostUrl">hostUrl</a></b> () const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> HttpMethod </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#httpMethod">httpMethod</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#httpMethodString">httpMethodString</a></b> () const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#messageName">messageName</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#messageName">messageName</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#parameterNames">parameterNames</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</a></b> () const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> Protocol </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#protocol">protocol</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Protocol </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#protocol">protocol</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#protocolString">protocolString</a></b> ( bool <i>includeRest</i> ) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariant </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#replyRead">replyRead</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#returnValueName">returnValueName</a></b> () const</td></tr>
@@ -63,7 +63,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setProtocol">setProtocol</a></b> ( Protocol <i>prot</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setReturnValue">setReturnValue</a></b> ( QMap&lt;QString, QVariant&gt; <i>returnVal</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setTargetNamespace">setTargetNamespace</a></b> ( QString <i>tNamespace</i> )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#targetNamespace">targetNamespace</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#targetNamespace">targetNamespace</a></b> () const</td></tr>
 </table>
 <a name="public-slots"></a>
 <h2>Public Slots</h2>
@@ -155,16 +155,16 @@
 <p>Deletes internal pointers.</p>
 <!-- @@@~QWebMethod -->
 <!-- $$$host[overload1]$$$host -->
-<h3 class="fn"><a name="host"></a>QString QWebMethod::host ()</h3>
+<h3 class="fn"><a name="host"></a>QString QWebMethod::host () const</h3>
 <p>Returns host's URL (in QString). If you want a QUrl, call getHostUrl(), or QUrl(QWebMethod::getHost());</p>
 <p>See also <a href="qwebmethod.html#setHost">setHost</a>().</p>
 <!-- @@@host -->
 <!-- $$$hostUrl[overload1]$$$hostUrl -->
-<h3 class="fn"><a name="hostUrl"></a>QUrl QWebMethod::hostUrl ()</h3>
+<h3 class="fn"><a name="hostUrl"></a>QUrl QWebMethod::hostUrl () const</h3>
 <p>Returns host's URL. If you want a QString, call getHost() or getHostUrl().<a href="qwebmethod.html#host">host</a>();</p>
 <!-- @@@hostUrl -->
 <!-- $$$httpMethod[overload1]$$$httpMethod -->
-<h3 class="fn"><a name="httpMethod"></a><a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> QWebMethod::httpMethod ()</h3>
+<h3 class="fn"><a name="httpMethod"></a><a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> QWebMethod::httpMethod () const</h3>
 <p>Returns currently set HTTP method.</p>
 <p>See also <a href="qwebmethod.html#setHttpMethod">setHttpMethod</a>() and <a href="qwebmethod.html#protocol">protocol</a>().</p>
 <!-- @@@httpMethod -->
@@ -178,7 +178,7 @@
 <p>Performs genral initialisation of the object. Sets default variable values, initializes network manager, connects reply signals. Calls virtual method, configure().</p>
 <!-- @@@init -->
 <!-- $$$messageName[overload1]$$$messageName -->
-<h3 class="fn"><a name="messageName"></a>QString QWebMethod::messageName ()</h3>
+<h3 class="fn"><a name="messageName"></a>QString QWebMethod::messageName () const</h3>
 <p>Returns message's name.</p>
 <p>See also <a href="qwebmethod.html#setMessageName">setMessageName</a>().</p>
 <!-- @@@messageName -->
@@ -196,7 +196,7 @@
 <p>See also <a href="qwebmethod.html#sendMessage">sendMessage</a>().</p>
 <!-- @@@prepareRequestData -->
 <!-- $$$protocol[overload1]$$$protocol -->
-<h3 class="fn"><a name="protocol"></a><a href="qwebmethod.html#Protocol-enum">Protocol</a> QWebMethod::protocol ()</h3>
+<h3 class="fn"><a name="protocol"></a><a href="qwebmethod.html#Protocol-enum">Protocol</a> QWebMethod::protocol () const</h3>
 <p>Returns currently set protocol.</p>
 <p>See also <a href="qwebmethod.html#setProtocol">setProtocol</a>() and <a href="qwebmethod.html#httpMethod">httpMethod</a>().</p>
 <!-- @@@protocol -->
@@ -287,7 +287,7 @@
 <p>See also <a href="qwebmethod.html#targetNamespace">targetNamespace</a>().</p>
 <!-- @@@setTargetNamespace -->
 <!-- $$$targetNamespace[overload1]$$$targetNamespace -->
-<h3 class="fn"><a name="targetNamespace"></a>QString QWebMethod::targetNamespace ()</h3>
+<h3 class="fn"><a name="targetNamespace"></a>QString QWebMethod::targetNamespace () const</h3>
 <p>Returns target namespace.</p>
 <p>See also <a href="qwebmethod.html#setTargetNamespace">setTargetNamespace</a>().</p>
 <!-- @@@targetNamespace -->

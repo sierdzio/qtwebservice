@@ -1,9 +1,12 @@
 #ifndef QWSDL_H
 #define QWSDL_H
 
-#include <QXmlStreamReader>
-#include <QFile>
-#include <QtCore>
+#include <QtCore/QXmlStreamReader>
+#include <QtCore/qfile.h>
+#include <QtCore/qmap.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qstringlist.h>
+#include <QtCore/qdatetime.h>
 #include "qwebmethod.h"
 #include "qwebservicemethod.h"
 #include "QWebService_global.h"
@@ -18,16 +21,16 @@ public:
     ~QWsdl();
 
     void setWsdlFile(QString wsdlFile); // == resetWsdl()
-    QStringList methodNames();
+    QStringList methodNames() const;
     QMap<QString, QWebServiceMethod *> *methods();
-    QString webServiceName();
-    QString host();
-    QUrl hostUrl();
-    QString targetNamespace();
+    QString webServiceName() const;
+    QString host() const;
+    QUrl hostUrl() const;
+    QString targetNamespace() const;
     //QFile getWsdl(); Rethink that. Maybe QString? Or saving to file specified in parameter?
 
-    QString errorInfo();
-    bool isErrorState();
+    QString errorInfo() const;
+    bool isErrorState() const;
     void resetWsdl(QString newWsdl);
 
 signals:

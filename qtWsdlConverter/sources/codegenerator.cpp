@@ -143,6 +143,7 @@ bool CodeGenerator::createServiceHeader()
     out << "#ifndef " << wsName.toUpper() << "_H" << endl;
     out << "#define " << wsName.toUpper() << "_H" << endl;
     out << endl;
+    out << "#include <QtCore>" << endl;
     out << "#include <QUrl>" << endl;
     if (!(flags->flags() & Flags::noMessagesStructure)) {
         // Include all messages.

@@ -1,7 +1,10 @@
 #ifndef CODEGENERATOR_H
 #define CODEGENERATOR_H
 
-#include <QObject>
+#include <QtCore/qobject.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qmap.h>
+#include <QtCore/qdir.h>
 #include <QWebService>
 #include "flags.h"
 #include "messagegenerator.h"

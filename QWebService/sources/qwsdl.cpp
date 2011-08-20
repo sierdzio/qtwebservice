@@ -82,13 +82,13 @@ void QWsdl::setWsdlFile(QString wsdlFile) // == resetWsdl()
 }
 
 /*!
-    \fn QWsdl::methodNames()
+    \fn QWsdl::methodNames() const
 
     Returns a QStringList of names of web service's methods.
 
     \sa methods()
   */
-QStringList QWsdl::methodNames()
+QStringList QWsdl::methodNames() const
 {
     QList<QString> tempMethods = methodsMap->keys();
     QStringList result;
@@ -112,45 +112,45 @@ QMap<QString, QWebServiceMethod *> *QWsdl::methods()
 }
 
 /*!
-    \fn QWsdl::webServiceName()
+    \fn QWsdl::webServiceName() const
 
     Returns QString with the name of the web service specified in WSDL.
   */
-QString QWsdl::webServiceName()
+QString QWsdl::webServiceName() const
 {
     return m_webServiceName;
 }
 
 /*!
-    \fn QWsdl::host()
+    \fn QWsdl::host() const
 
     Returns web service's URL.
 
     \sa hostUrl()
   */
-QString QWsdl::host()
+QString QWsdl::host() const
 {
     return m_hostUrl.host();
 }
 
 /*!
-    \fn QWsdl::hostUrl()
+    \fn QWsdl::hostUrl() const
 
     Quite similar to getHostName().
 
     \sa host()
   */
-QUrl QWsdl::hostUrl()
+QUrl QWsdl::hostUrl() const
 {
     return m_hostUrl;
 }
 
 /*!
-    \fn QWsdl::targetNamespace()
+    \fn QWsdl::targetNamespace() const
 
     Returns target namespace specified in WSDL.
   */
-QString QWsdl::targetNamespace()
+QString QWsdl::targetNamespace() const
 {
     return m_targetNamespace;
 }
@@ -161,26 +161,26 @@ QString QWsdl::targetNamespace()
 //}
 
 /*!
-    \fn QWsdl::errorInfo()
+    \fn QWsdl::errorInfo() const
 
     Returns QString with error message in case an error occured. Otherwise, returns empty string.
 
     \sa isErrorState()
   */
-QString QWsdl::errorInfo()
+QString QWsdl::errorInfo() const
 {
     return errorMessage;
 }
 
 /*!
-    \fn QWsdl::isErrorState()
+    \fn QWsdl::isErrorState() const
 
     Returns true if there was an error, false otherwise. Details about an error can be read with
     getErrorInfo().
 
     \sa errorInfo()
   */
-bool QWsdl::isErrorState()
+bool QWsdl::isErrorState() const
 {
     return errorState;
 }
@@ -337,7 +337,7 @@ void QWsdl::prepareFile()
             if (replyReceived == true)
                 return;
             else
-                qApp->processEvents();
+                QCoreApplication::instance()->processEvents();
         }
     }
 }

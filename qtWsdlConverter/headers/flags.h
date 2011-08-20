@@ -1,8 +1,8 @@
 #ifndef FLAGS_H
 #define FLAGS_H
 
-#include <QObject>
-#include <QString>
+#include <QtCore/qobject.h>
+#include <QtCore/qstring.h>
 
 class Flags : public QObject
 {

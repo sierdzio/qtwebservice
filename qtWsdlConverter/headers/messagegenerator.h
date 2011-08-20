@@ -1,7 +1,11 @@
 #ifndef MESSAGEGENERATOR_H
 #define MESSAGEGENERATOR_H
 
-#include <QObject>
+#include <QtCore/qobject.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qmap.h>
+#include <QtCore/qdir.h>
+#include <QtCore/qtextstream.h>
 #include <QWebService>
 #include "flags.h"
 

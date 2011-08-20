@@ -58,11 +58,11 @@ QWebService::~QWebService()
 }
 
 /*!
-    \fn QWebService::methodNames()
+    \fn QWebService::methodNames() const
 
     Returns a list of methods' names.
   */
-QStringList QWebService::methodNames()
+QStringList QWebService::methodNames() const
 {
     return (QStringList) messages->keys(); //wsdl->getMethodNames();
 }
@@ -134,21 +134,21 @@ void QWebService::setHost(QUrl hostUrl)
 }
 
 /*!
-    \fn QWebService::hostUrl()
+    \fn QWebService::hostUrl() const
 
     Returns QUrl of the web service.
   */
-QUrl QWebService::hostUrl()
+QUrl QWebService::hostUrl() const
 {
     return m_hostUrl;
 }
 
 /*!
-    \fn QWebService::host()
+    \fn QWebService::host() const
 
     Returns QString with URL of the web service.
   */
-QString QWebService::host()
+QString QWebService::host() const
 {
     return m_hostUrl.host();
 }
