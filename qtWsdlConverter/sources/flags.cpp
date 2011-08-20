@@ -81,7 +81,7 @@
 
     Default values:
     \list
-    \o \a options :
+    \o \a options_ :
     \list
         \o fullMode
         \o synchronous
@@ -89,7 +89,7 @@
         \o soap12
         \o qmake
     \endlist
-    \o \method_ = POST
+    \o \a method_ = POST
     \o \a forced = false
     \endlist
   */

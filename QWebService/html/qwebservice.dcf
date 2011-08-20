@@ -17,7 +17,6 @@
         <keyword ref="qwebmethod.html#Protocol-enum">QWebMethod::soap10</keyword>
         <keyword ref="qwebmethod.html#Protocol-enum">QWebMethod::soap</keyword>
         <keyword ref="qwebmethod.html#Protocol-enum">QWebMethod::soap12</keyword>
-        <keyword ref="qwebmethod.html#configure">configure</keyword>
         <keyword ref="qwebmethod.html#host">host</keyword>
         <keyword ref="qwebmethod.html#hostUrl">hostUrl</keyword>
         <keyword ref="qwebmethod.html#httpMethod">httpMethod</keyword>

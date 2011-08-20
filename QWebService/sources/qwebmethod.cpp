@@ -25,7 +25,7 @@
            and return it in a type of your convenience)
     \endlist
 
-    \sa init(), configure()
+    \sa init()
   */
 
 /*!
@@ -557,8 +557,6 @@ void QWebMethod::replyFinished(QNetworkReply *netReply)
 
     Performs genral initialisation of the object. Sets default variable values, initializes
     network manager, connects reply signals. Calls virtual method, configure().
-
-    \sa configure()
   */
 void QWebMethod::init()
 {
@@ -568,27 +566,6 @@ void QWebMethod::init()
 
     reply.clear();
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
-    configure();
-}
-
-/*!
-  \fn QWebMethod::configure()
-
-  Vitrual method. Itis called by QWebMethod's constructor (or, more precisely, by init()).
-
-  You can use it to:
-  \list
-    \o set host Url using setHost() or setHostUrl()
-    \o set protocol using setProtocol()
-    \o set message name using setMesageName()
-    \o set target namespace using setTargetNamespace()
-    \o connect replyReady() signal to your custom slot (where you can parse the reply and return it in a type of your convenience)
-  \endlist
-
-  \sa init()
-  */
-void QWebMethod::configure()
-{
 }
 
 /*!

@@ -539,7 +539,7 @@ bool CodeGenerator::createMessages()
     MessageGenerator msgGen(messages, workingDir, flags, this);
 
     if (!msgGen.createMessages())
-        enterErrorState(msgGen.errorMessage());
+        return enterErrorState(msgGen.errorMessage());
     else
         return true;
 }
@@ -602,48 +602,41 @@ bool CodeGenerator::createQMakeProject()
     out << "TEMPLATE = app" << endl;
     out << endl;
     out << "SOURCES += ";
-    if (!(flags->flags() & Flags::allInOneDirStructure))
-        out << "sources/";
-    out << wsName << ".cpp \\" << endl;
     // Create main.cpp to prevent compile errors. This file is NOT NEEDED in any other sense.
-    out << "    ";
     if (!(flags->flags() & Flags::allInOneDirStructure))
         out << "sources/";
-    out << "main.cpp ";
+    out << "main.cpp \\" << endl;
     if (!(flags->flags() & Flags::noMessagesStructure)) {
         // Include all sources.
-        out << "\\" << endl;
         QStringList tempMap = wsdl->methodNames();
 
         foreach (QString s, tempMap) {
-            out << "    ";
             if (!(flags->flags() & Flags::allInOneDirStructure))
                 out << "sources/";
-            out << s << ".cpp";
-            if (tempMap.indexOf(s) != (tempMap.length() - 1))
-                out << " \\" << endl;
+            out << s << ".cpp \\" << endl;
+            out << "    ";
         }
     }
+    if (!(flags->flags() & Flags::allInOneDirStructure))
+        out << "sources/";
+    out << wsName << ".cpp" << endl;
     out << endl;
     out << endl;
     out << "HEADERS += ";
-    if (!(flags->flags() & Flags::allInOneDirStructure))
-        out << "headers/";
-    out << wsName << ".h ";
     if (!(flags->flags() & Flags::noMessagesStructure))
     { // Include all headers.
-        out << "\\" << endl;
         QStringList tempMap = wsdl->methodNames();
 
-        foreach (QString s, tempMap) {
-            out << "    ";
+        foreach (QString s, tempMap) {            
             if (!(flags->flags() & Flags::allInOneDirStructure))
                 out << "headers/";
-            out << s << ".h";
-            if (tempMap.indexOf(s) != (tempMap.length() - 1))
-                out << " \\" << endl;
+            out << s << ".h \\" << endl;
+            out << "    ";
         }
     }
+    if (!(flags->flags() & Flags::allInOneDirStructure))
+        out << "headers/";
+    out << wsName << ".h";
     // EOF (QMake .pro file)
     // ---------------------------------
 
@@ -678,10 +671,6 @@ bool CodeGenerator::createCMakeProject()
     // --------------------
     // Include sources:
     out << "set(" << wsName << "_SRCS" << endl;
-    out << "    ";
-    if (!(flags->flags() & Flags::allInOneDirStructure))
-        out << "sources/";
-    out << wsName << ".cpp" << endl;
     // Create main.cpp to prevent compile errors. This file is NOT NEEDED in any other sense.
     out << "    ";
     if (!(flags->flags() & Flags::allInOneDirStructure))
@@ -693,31 +682,34 @@ bool CodeGenerator::createCMakeProject()
         QStringList tempMap = wsdl->methodNames();
 
         foreach (QString s, tempMap) {
-            out << "    ";
             if (!(flags->flags() & Flags::allInOneDirStructure))
                 out << "sources/";
             out << s << ".cpp" << endl;
+            out << "    ";
         }
     }
+    if (!(flags->flags() & Flags::allInOneDirStructure))
+        out << "sources/";
+    out << wsName << ".cpp" << endl;
     out << ")" << endl;
     // --------------------
     // Include MOC:
     out << "set(" << wsName << "_MOC_SRCS" << endl;
-    out << "    ";
-    if (!(flags->flags() & Flags::allInOneDirStructure))
-        out << "headers/";
-    out << wsName << ".h" << endl;
     if (!(flags->flags() & Flags::noMessagesStructure))
     { // Include all MOC headers.
         QStringList tempMap = wsdl->methodNames();
 
         foreach (QString s, tempMap) {
-            out << "    ";
             if (!(flags->flags() & Flags::allInOneDirStructure))
                 out << "headers/";
             out << s << ".h" << endl;
+            out << "    ";
         }
     }
+    out << "    ";
+    if (!(flags->flags() & Flags::allInOneDirStructure))
+        out << "headers/";
+    out << wsName << ".h" << endl;
     out << ")" << endl;
     // Add compilation instructions:
     out << "qt4_wrap_cpp(" << wsName << "_MOCS ${" << wsName << "_MOC_SRCS})" << endl;
@@ -773,33 +765,32 @@ bool CodeGenerator::createSconsProject()
     // --------------------
     // Include sources:
     out << "sources = [" << endl;
-    out << "    ";
-    if (!(flags->flags() & Flags::allInOneDirStructure))
-        out << "\"sources/";
-    out << wsName << ".cpp\"," << endl;
     // Create main.cpp to prevent compile errors. This file is NOT NEEDED in any other sense.
     out << "    ";
     if (!(flags->flags() & Flags::allInOneDirStructure))
         out << "\"sources/";
-    out << "main.cpp\"";
+    out << "main.cpp\"," << endl;
 
     if (!(flags->flags() & Flags::noMessagesStructure)) {
         // Include all sources.
-        out << "," << endl;
         QStringList tempMap = wsdl->methodNames();
 
+        out << "    ";
         foreach (QString s, tempMap) {
-            out << "    ";
             if (!(flags->flags() & Flags::allInOneDirStructure))
                 out << "\"sources/";
-            out << s << ".cpp\"";
-            if (tempMap.indexOf(s) != (tempMap.length() - 1))
-                out << "," << endl;
-            else
-                out << "]" << endl;
+            out << s << ".cpp\"," << endl;
+            out << "    ";
         }
+        if (!(flags->flags() & Flags::allInOneDirStructure))
+            out << "\"sources/";
+        out << wsName << ".cpp\"" << endl;
     }
     else {
+        out << "    ";
+        if (!(flags->flags() & Flags::allInOneDirStructure))
+            out << "\"sources/";
+        out << wsName << ".cpp\"" << endl;
         out << "]" << endl;
     }
     out << "env.Program(target=\"" << wsName << "\", source=[sources])" << endl;

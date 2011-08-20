@@ -7,7 +7,7 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
  - QWebService: run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./QWebService/qwebservice.qdocconf
  - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
 
-19.08.2011 : CEST:
+20.08.2011 08:46 CEST:
  - added option for converter to subclass QWebMethod (--subclass switch), instead of writing entirely
    separate code (huge changes in converter's source),
  - added MessageGenerator class, moved message generation from CodeGenerator, and added subclass generation,

@@ -80,7 +80,6 @@ public slots:
 
 protected: // Changed for 0.3.5, but precisely what should be protected and what private shall be decided later.
     void init();
-    virtual void configure();
     void prepareRequestData();
     QString convertReplyToUtf(QString textToConvert);
 

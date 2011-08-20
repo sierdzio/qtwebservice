@@ -81,7 +81,6 @@
 <a name="protected-functions"></a>
 <h2>Protected Functions</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#configure">configure</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#init">init</a></b> ()</td></tr>
 </table>
 <a name="details"></a>
@@ -91,8 +90,8 @@
 <p>Class that can be used to asnchronously and synchronously send HTTP, SOAP 1.0, SOAP 1.2, JSON, XMLand REST messages to web services.</p>
 <p>To send a message and receive reply synchronously, use the static <a href="qwebmethod.html#sendMessage">sendMessage</a>() method. Otherwise, you can use <a href="qwebmethod.html#replyReady">replyReady</a>() signal to know, when a reply returns. It can be read with <a href="qwebmethod.html#replyRead">replyRead</a>().</p>
 <p>To send a REST message with (for example) JSON body, pass (<a href="qwebmethod.html#Protocol-enum">QWebMethod::rest</a> | <a href="qwebmethod.html#Protocol-enum">QWebMethod::json</a>) as protocol flag. Additionally, specify HTTP method to be used (POST, GET, PUT, DELETE). When sending a REST message, <i>messageName</i> is used as request URI, and <i>parameters</i> specify additioanl data to be sent in message body.</p>
-<p>If you want to save some time on configuration in your code, you can subclass QWebMethod, reimplement <a href="qwebmethod.html#configure">configure</a>(), and create your own slot for parsing te reply. Configure is called by <a href="qwebmethod.html#init">init</a>(), which is in turn called by every constructor.</p>
-<p>You can use <a href="qwebmethod.html#configure">configure</a>() to:</p>
+<p>If you want to save some time on configuration in your code, you can subclass QWebMethod, reimplement configure(), and create your own slot for parsing te reply. Configure is called by <a href="qwebmethod.html#init">init</a>(), which is in turn called by every constructor.</p>
+<p>You can use configure() to:</p>
 <ul>
 <li>set host Url</li>
 <li>set protocol</li>
@@ -101,7 +100,7 @@
 <li>connect <a href="qwebmethod.html#replyReady">replyReady</a>() signal to your custom slot (where you can parse the reply and return it in a type of your convenience)</li>
 </ul>
 </div>
-<p>See also <a href="qwebmethod.html#init">init</a>() and <a href="qwebmethod.html#configure">configure</a>().</p>
+<p>See also <a href="qwebmethod.html#init">init</a>().</p>
 <!-- @@@QWebMethod -->
 <div class="types">
 <h2>Member Type Documentation</h2>
@@ -156,19 +155,6 @@
 <h3 class="fn"><a name="dtor.QWebMethod"></a>QWebMethod::~QWebMethod ()</h3>
 <p>Deletes internal pointers.</p>
 <!-- @@@~QWebMethod -->
-<!-- $$$configure[overload1]$$$configure -->
-<h3 class="fn"><a name="configure"></a>void QWebMethod::configure ()<tt> [virtual protected]</tt></h3>
-<p>Vitrual method. Itis called by <a href="qwebmethod.html">QWebMethod</a>'s constructor (or, more precisely, by <a href="qwebmethod.html#init">init</a>()).</p>
-<p>You can use it to:</p>
-<ul>
-<li>set host Url using <a href="qwebmethod.html#setHost">setHost</a>() or setHostUrl()</li>
-<li>set protocol using <a href="qwebmethod.html#setProtocol">setProtocol</a>()</li>
-<li>set message name using setMesageName()</li>
-<li>set target namespace using <a href="qwebmethod.html#setTargetNamespace">setTargetNamespace</a>()</li>
-<li>connect <a href="qwebmethod.html#replyReady">replyReady</a>() signal to your custom slot (where you can parse the reply and return it in a type of your convenience)</li>
-</ul>
-<p>See also <a href="qwebmethod.html#init">init</a>().</p>
-<!-- @@@configure -->
 <!-- $$$host[overload1]$$$host -->
 <h3 class="fn"><a name="host"></a>QString QWebMethod::host ()</h3>
 <p>Returns host's URL (in QString). If you want a QUrl, call getHostUrl(), or QUrl(QWebMethod::getHost());</p>
@@ -190,8 +176,7 @@
 <!-- @@@httpMethodString -->
 <!-- $$$init[overload1]$$$init -->
 <h3 class="fn"><a name="init"></a>void QWebMethod::init ()<tt> [protected]</tt></h3>
-<p>Performs genral initialisation of the object. Sets default variable values, initializes network manager, connects reply signals. Calls virtual method, <a href="qwebmethod.html#configure">configure</a>().</p>
-<p>See also <a href="qwebmethod.html#configure">configure</a>().</p>
+<p>Performs genral initialisation of the object. Sets default variable values, initializes network manager, connects reply signals. Calls virtual method, configure().</p>
 <!-- @@@init -->
 <!-- $$$messageName[overload1]$$$messageName -->
 <h3 class="fn"><a name="messageName"></a>QString QWebMethod::messageName ()</h3>

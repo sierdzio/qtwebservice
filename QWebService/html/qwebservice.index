@@ -201,7 +201,6 @@
                 <parameter left="QNetworkReply *" right="" name="netReply" default=""/>
             </function>
             <function access="protected" threadsafety="unspecified" status="commendable" name="init" fullname="QWebMethod::init" href="qwebmethod.html#init" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="init()"/>
-            <function access="protected" threadsafety="unspecified" status="commendable" name="configure" fullname="QWebMethod::configure" href="qwebmethod.html#configure" location="qwebmethod.cpp" virtual="impure" meta="plain" const="false" static="false" overload="false" type="void" signature="configure()"/>
             <variable access="protected" threadsafety="unspecified" status="commendable" name="replyReceived" fullname="QWebMethod::replyReceived" href="qwebmethod.html#replyReceived-var" location="qwebmethod.h" type="bool" static="false"/>
             <variable access="protected" threadsafety="unspecified" status="commendable" name="protocolUsed" fullname="QWebMethod::protocolUsed" href="qwebmethod.html#protocolUsed-var" location="qwebmethod.h" type="Protocol" static="false"/>
             <variable access="protected" threadsafety="unspecified" status="commendable" name="httpMethodUsed" fullname="QWebMethod::httpMethodUsed" href="qwebmethod.html#httpMethodUsed-var" location="qwebmethod.h" type="HttpMethod" static="false"/>
