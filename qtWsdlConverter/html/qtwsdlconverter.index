@@ -32,10 +32,11 @@
                 <value name="PUT" value="0x4"/>
                 <value name="DELETE" value="0x8"/>
             </enum>
-            <function access="public" threadsafety="unspecified" status="commendable" name="Flags" fullname="Flags::Flags" href="flags.html#Flags" location="flags.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="Flags(QFlags&lt;Flags::Option&gt; options_, HttpMethod method_, bool forced)">
+            <function access="public" threadsafety="unspecified" status="commendable" name="Flags" fullname="Flags::Flags" href="flags.html#Flags" location="flags.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="Flags(QFlags&lt;Flags::Option&gt; options_, HttpMethod method_, bool forced, QObject * parent)">
                 <parameter left="QFlags&lt;Flags::Option&gt;" right="" name="options_" default="Options( fullMode | synchronous | standardStructure | qmake | soap12 )"/>
                 <parameter left="HttpMethod" right="" name="method_" default="POST"/>
                 <parameter left="bool" right="" name="forced" default="false"/>
+                <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="resetFlags" fullname="Flags::resetFlags" href="flags.html#resetFlags" location="flags.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="resetFlags()"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="resetFlags" fullname="Flags::resetFlags" href="flags.html#resetFlags-2" location="flags.cpp" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="void" signature="resetFlags(QFlags&lt;Flags::Option&gt; whatToReset)">
@@ -68,6 +69,9 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="httpMethodString" fullname="Flags::httpMethodString" href="flags.html#httpMethodString" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="httpMethodString() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="protocolString" fullname="Flags::protocolString" href="flags.html#protocolString" location="flags.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="protocolString(bool includeRest) const">
                 <parameter left="bool" right="" name="includeRest" default="false"/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="operator=" fullname="Flags::operator=" href="flags.html#operator=" location="flags.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="Flags &amp;" signature="operator=(const Flags &amp; flag)">
+                <parameter left="const Flags &amp;" right="" name="flag" default=""/>
             </function>
         </class>
         <class access="public" threadsafety="unspecified" status="commendable" name="WsdlConverter" href="wsdlconverter.html" location="wsdlconverter.h" bases="" module="">
@@ -111,8 +115,8 @@
             </function>
         </class>
         <class access="public" threadsafety="unspecified" status="commendable" name="MessageGenerator" href="messagegenerator.html" location="messagegenerator.h" bases="" module="">
-            <function access="public" threadsafety="unspecified" status="commendable" name="MessageGenerator" fullname="MessageGenerator::MessageGenerator" href="messagegenerator.html#MessageGenerator" location="messagegenerator.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="MessageGenerator(QMap&lt;QString, QWebMethod *&gt; * msgs, QDir wrkDir, Flags * flgs, QObject * parent)">
-                <parameter left="QMap&lt;QString, QWebMethod *&gt; *" right="" name="msgs" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="MessageGenerator" fullname="MessageGenerator::MessageGenerator" href="messagegenerator.html#MessageGenerator" location="messagegenerator.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="MessageGenerator(QMap&lt;QString, QWebServiceMethod *&gt; * msgs, QDir wrkDir, Flags * flgs, QObject * parent)">
+                <parameter left="QMap&lt;QString, QWebServiceMethod *&gt; *" right="" name="msgs" default=""/>
                 <parameter left="QDir" right="" name="wrkDir" default=""/>
                 <parameter left="Flags *" right="" name="flgs" default=""/>
                 <parameter left="QObject *" right="" name="parent" default="0"/>

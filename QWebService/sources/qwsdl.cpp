@@ -30,7 +30,7 @@ QWsdl::QWsdl(QObject *parent) :
 
     workMethodList = new QStringList();
     workMethodParameters = new QMap<int, QMap<QString, QVariant> >();
-    methodsMap = new QMap<QString, QWebMethod *>;
+    methodsMap = new QMap<QString, QWebServiceMethod *>;
 }
 
 /*!
@@ -51,7 +51,7 @@ QWsdl::QWsdl(QString wsdlFile, QObject *parent) :
 
     workMethodList = new QStringList();
     workMethodParameters = new QMap<int, QMap<QString, QVariant> >();
-    methodsMap = new QMap<QString, QWebMethod *>;
+    methodsMap = new QMap<QString, QWebServiceMethod *>;
 
     parse();
 }
@@ -100,13 +100,13 @@ QStringList QWsdl::methodNames()
 /*!
     \fn QWsdl::methods()
 
-    Returns a QMap<QString, QWebMethod *> pointer. Keys are method names (just as in
-    getMethodNames()), and values are QWebMethods themselves (which means they can be used
+    Returns a QMap<QString, QWebServiceMethod *> pointer. Keys are method names (just as in
+    getMethodNames()), and values are QWebServiceMethods themselves (which means they can be used
     not only to get information, but also to send messages, set them up etc.).
 
     \sa methodNames()
   */
-QMap<QString, QWebMethod *> *QWsdl::methods()
+QMap<QString, QWebServiceMethod *> *QWsdl::methods()
 {
     return methodsMap;
 }
@@ -248,7 +248,7 @@ void QWsdl::fileReplyFinished(QNetworkReply *rply)
     \internal
     \fn QWsdl::parse()
 
-    Central method of this class. Parses the WSDL file, creates all QWebMethods,
+    Central method of this class. Parses the WSDL file, creates all QWebServiceMethods,
     reads all necessary data, like web service's name etc.
   */
 bool QWsdl::parse()
@@ -581,7 +581,7 @@ void QWsdl::prepareMethods()
             }
 
             if (isMethodAndResponsePresent == true) {
-                methodsMap->insert(methodName, new QWebMethod(m_targetNamespace,
+                methodsMap->insert(methodName, new QWebServiceMethod(m_targetNamespace,
                                                              methodName,
                                                              workMethodParameters->value(methodMain)));
                 methodsMap->value(methodName)->setReturnValue(workMethodParameters->value(methodReturn));

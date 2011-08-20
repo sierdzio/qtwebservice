@@ -28,7 +28,7 @@
 <a name="public-functions"></a>
 <h2>Public Functions</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="messagegenerator.html#MessageGenerator">MessageGenerator</a></b> ( QMap&lt;QString, QWebMethod *&gt; * <i>msgs</i>, QDir <i>wrkDir</i>, Flags * <i>flgs</i>, QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="messagegenerator.html#MessageGenerator">MessageGenerator</a></b> ( QMap&lt;QString, QWebServiceMethod *&gt; * <i>msgs</i>, QDir <i>wrkDir</i>, Flags * <i>flgs</i>, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="messagegenerator.html#createMessages">createMessages</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="messagegenerator.html#errorMessage">errorMessage</a></b> ()</td></tr>
 </table>
@@ -37,18 +37,18 @@
 <div class="descr">
 <h2>Detailed Description</h2>
 <p>Creates code for messages.</p>
-<p>Creates messages (both headers and sources) by generating the entire code or subclassing QWebMethod (depending on whether --subclass flag is set).</p>
+<p>Creates messages (both headers and sources) by generating the entire code or subclassing QWebServiceMethod (depending on whether --subclass flag is set).</p>
 </div>
 <!-- @@@MessageGenerator -->
 <div class="func">
 <h2>Member Function Documentation</h2>
-<!-- $$$MessageGenerator[overload1]$$$MessageGeneratorQMap<QString,QWebMethod*>*QDirFlags*QObject* -->
-<h3 class="fn"><a name="MessageGenerator"></a>MessageGenerator::MessageGenerator ( QMap&lt;QString, QWebMethod *&gt; * <i>msgs</i>, QDir <i>wrkDir</i>, <a href="flags.html">Flags</a> * <i>flgs</i>, QObject * <i>parent</i> = 0 )</h3>
+<!-- $$$MessageGenerator[overload1]$$$MessageGeneratorQMap<QString,QWebServiceMethod*>*QDirFlags*QObject* -->
+<h3 class="fn"><a name="MessageGenerator"></a>MessageGenerator::MessageGenerator ( QMap&lt;QString, QWebServiceMethod *&gt; * <i>msgs</i>, QDir <i>wrkDir</i>, <a href="flags.html">Flags</a> * <i>flgs</i>, QObject * <i>parent</i> = 0 )</h3>
 <p>Constructs QObject using <i>parent</i>, initialises <a href="messagegenerator.html">MessageGenerator</a> with messages (<i>msgs</i>), working directory (<i>wrkDir</i>), and flags (<i>flgs</i>).</p>
 <!-- @@@MessageGenerator -->
 <!-- $$$createMessages[overload1]$$$createMessages -->
 <h3 class="fn"><a name="createMessages"></a>bool MessageGenerator::createMessages ()</h3>
-<p>Creates messages (both headers and sources) by generating the entire code or subclassing QWebMethod (depending on whether --subclass flag is set).</p>
+<p>Creates messages (both headers and sources) by generating the entire code or subclassing QWebServiceMethod (depending on whether --subclass flag is set).</p>
 <p>Returns true if successful.</p>
 <!-- @@@createMessages -->
 <!-- $$$errorMessage[overload1]$$$errorMessage -->

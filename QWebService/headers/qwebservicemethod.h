@@ -7,33 +7,24 @@
 #include "qwebmethod.h"
 
 // NOTE: this class is considered to be unecessary in this project, and may be deleted in the future.
-class QWEBSERVICESHARED_EXPORT QWebServiceMethod : public QObject
+class QWEBSERVICESHARED_EXPORT QWebServiceMethod : public QWebMethod
 {
     Q_OBJECT
 
 public:
     explicit QWebServiceMethod(QObject *parent = 0);
-//    QWebServiceMethodAbstract(QString hostname, QObject *parent = 0);
-    QWebServiceMethod(QWebMethod *msg, QObject *parent = 0);
-    ~QWebServiceMethod();
-    //virtual QWebServiceMethodAbstract(QWsdl wsdl, QObject *parent = 0);
-//    bool virtual sendMessage(QList<QVariant> params);
-//    bool virtual sendMessage();
-    void setHost(QString host);
-    void setHost(QUrl hostUrl);
-    QUrl getHostUrl();
-    QString getHost();
-    //QString getWsdl();
+    QWebServiceMethod(QUrl hostUrl, QString messageName, QObject *parent = 0,
+               Protocol protocol = soap12, HttpMethod httpMethod = POST);
+    QWebServiceMethod(QString host, QString messageName, QObject *parent = 0,
+               Protocol protocol = soap12, HttpMethod httpMethod = POST);
+    QWebServiceMethod(QString host, QString messageName, QMap<QString, QVariant> params,
+                 QObject *parent = 0, Protocol protocol = soap12, HttpMethod httpMethod = POST);
 
-signals:
-//    void replyRead(QVariant replyVal);
-
-public slots:
-
-protected:
-    QUrl hostUrl;
-    QString host;
-    QWebMethod *message;
+    using QWebMethod::sendMessage;
+    bool sendMessage(QMap<QString, QVariant> params);
+    QVariant static sendMessage(QObject *parent, QUrl url,
+                                QString _messageName, QMap<QString, QVariant> params,
+                                Protocol protocol = soap12, HttpMethod httpMethod = POST);
 
 };
 

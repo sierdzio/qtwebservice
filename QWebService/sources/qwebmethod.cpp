@@ -4,18 +4,36 @@
     \class QWebMethod
     \brief Class that can be used to asnchronously and synchronously send HTTP, SOAP 1.0, SOAP 1.2, JSON, XMLand REST messages to web services.
 
-    To send a message and receive reply synchronously, use the static sendMessage() method. Otherwise, you can use
-    replyReady() signal to know, when a reply returns. It can be read with replyRead().
-
     To send a REST message with (for example) JSON body, pass (QWebMethod::rest | QWebMethod::json) as protocol flag.
     Additionally, specify HTTP method to be used (POST, GET, PUT, DELETE). When sending a REST message, \a messageName
     is used as request URI, and \a parameters specify additioanl data to be sent in message body.
 
-    If you want to save some time on configuration in your code, you can subclass QWebMethod, reimplement configure(),
-    and create your own slot for parsing te reply. Configure is called by init(), which is in turn called by every
-    constructor.
+    This class provides asynchronous sendMessage() only. If synchronous operation is needed, you can:
+    \list
+        \o use static QWebServiceMethod::sendMessage()
+        \o subclass QWebMethod, and add a static sendMessage() method with a "waiting loop"
+        \o wait for replyReady() signal in a "waiting loop"
+    \endlist
 
-    You can use configure() to:
+    Here's a waiting loop snippet:
+    \code
+    QWebMethod qsm;
+    ...
+    qsm.sendMessage();
+    forever {
+        if (qsm.replyReceived) {
+            return qsm.reply;
+        } else {
+            qApp->processEvents(); // Ensures that application remains responive to events (prevents freezing).
+        }
+    }
+    \endcode
+
+    If you want to save some time on configuration in your code, you can subclass QWebMethod, implement a method, that
+    would store your settings (an example configure() method is described below). Then, create your own slot
+    for parsing the reply.
+
+    In your "settings method", named for example configure(), you may want to:
     \list
         \o set host Url
         \o set protocol
@@ -82,70 +100,6 @@ QWebMethod::QWebMethod(QObject *parent, Protocol protocol, HttpMethod method) :
     m_hostUrl.setHost("");
     m_messageName = "";
     parameters.clear();
-}
-
-/*!
-    \fn QWebMethod::QWebMethod(QUrl url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method)
-
-    Constructs the message using \a url, \a messageName, \a parent, \a protocol (which defaults to soap12),
-    and \a method (which defaults to POST).
-    Requires params to be specified later.
-
-    \sa init(), setParameters(), setProtocol(), sendMessage()
-  */
-QWebMethod::QWebMethod(QUrl url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method) :
-    QObject(parent)
-{
-    init();
-    m_hostUrl = url;
-    m_messageName = messageName;
-    setProtocol(protocol);
-    setHttpMethod(method);
-    parameters.clear();
-}
-
-/*!
-    \fn QWebMethod::QWebMethod(QString url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method)
-
-    Constructs the message using \a url, \a messageName, \a parent, \a protocol (which defaults to soap12),
-    and \a method (which defaults to POST).
-    Requires params to be specified later.
-
-    \sa init(), setParameters(), setProtocol(), sendMessage()
-  */
-QWebMethod::QWebMethod(QString url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method) :
-    QObject(parent)
-{
-    init();
-    m_messageName = messageName;
-    setProtocol(protocol);
-    setHttpMethod(method);
-    m_hostUrl.setHost(url + m_messageName);
-    parameters.clear();
-}
-
-/*!
-    \fn QWebMethod::QWebMethod(QString url, QString messageName, QMap<QString, QVariant> params, QObject *parent, Protocol protocol, HttpMethod method)
-
-    Constructs the message using \a url, \a messageName, \a parent, \a protocol (which defaults to soap12),
-    and \a method (which defaults to POST).
-    This constructor also takes message parameters (\a params).
-    Does not require specifying any more information, but you still need to manually send the message
-    using sendMessage() (without any arguments, or else - if you want to change ones specified here).
-
-    \sa init(), sendMessage(), setProtocol()
-  */
-QWebMethod::QWebMethod(QString url, QString messageName,
-                       QMap<QString, QVariant> params, QObject *parent,
-                       Protocol protocol, HttpMethod method) :
-    QObject(parent)
-{
-    init();
-    m_messageName = messageName;
-    parameters = params;
-    setProtocol(protocol);
-    setHttpMethod(method);
-    m_hostUrl.setHost(url + m_messageName);
 }
 
 /*!
@@ -262,14 +216,38 @@ void QWebMethod::setHttpMethod(HttpMethod method)
 }
 
 /*!
-    \fn bool QWebMethod::sendMessage()
+    \fn bool QWebMethod::sendMessage(QByteArray requestData)
 
     Sends the message asynchronously, assuming that all neccessary data was specified earlier.
+    Optionally, a QByteArray (\a requestData) can be specified - it will override standard
+    data encapsulation (preparation, see prepareRequestData()), and send the byte array without any changes.
+
+    If synchronous operation is needed, you can:
+    \list
+        \o use static QWebServiceMethod::sendMessage()
+        \o subclass QWebMethod, and add a static sendMessage() method with a "waiting loop"
+        \o wait for replyReady() signal in a "waiting loop"
+    \endlist
+
+    Here's a waiting loop snippet:
+    \code
+    QWebMethod qsm;
+    ...
+    qsm.sendMessage();
+    forever {
+        if (qsm.replyReceived) {
+            return qsm.reply;
+        } else {
+            qApp->processEvents(); // Ensures that application remains responive to events (prevents freezing).
+        }
+    }
+    \endcode
+
     Returns true on success.
 
-    \sa setParameters(), setProtocol(), setTargetNamespace()
+    \sa setParameters(), setProtocol(), setTargetNamespace(), prepareRequestData()
   */
-bool QWebMethod::sendMessage()
+bool QWebMethod::sendMessage(QByteArray requestData)
 {
     QNetworkRequest request;
     request.setUrl(m_hostUrl);
@@ -286,7 +264,10 @@ bool QWebMethod::sendMessage()
     if (protocolUsed & soap10)
         request.setRawHeader(QByteArray("SOAPAction"), QByteArray(m_hostUrl.toString().toAscii()));
 
-    prepareRequestData();
+    if (!requestData.isNull())
+        prepareRequestData();
+    else
+        data = requestData;
 
     if (protocolUsed & rest) {
         if (httpMethodUsed == POST)
@@ -303,51 +284,6 @@ bool QWebMethod::sendMessage()
     }
 
     return true;
-}
-
-/*!
-  \fn bool QWebMethod::sendMessage(QMap<QString, QVariant> params)
-  \overload sendMessage()
-
-    Sends the message asynchronously using parameters specified in \a params.
-  */
-bool QWebMethod::sendMessage(QMap<QString, QVariant> params)
-{
-    parameters = params;
-    sendMessage();
-    return true;
-}
-
-/*!
-  \overload sendMessage()
-
-     STATIC method. Sends the message synchronously, using \a url, \a _messageName, \a params and \a parent.
-     Protocol can optionally be specified by \a protocol (default is SOAP 1.2), as well as HTTP \a method
-     (default is POST).
-     Returns with web service reply.
-  */
-QVariant QWebMethod::sendMessage(QObject *parent, QUrl url,
-                                 QString _messageName, QMap<QString, QVariant> params,
-                                 Protocol protocol, HttpMethod method)
-{
-    /*
-       Part of QDoc that does not work:   \fn QVariant QWebMethod::sendMessage(QObject *parent, QUrl url,
-       QString _messageName, QMap<QString, QVariant> params,
-       QWebMethod::Protocol protocol, QWebMethod::HttpMethod httpMethod)
-    */
-
-    QWebMethod qsm(url.host(), _messageName, params, parent, protocol, method);
-    qsm.m_hostUrl = url;
-
-    qsm.sendMessage();
-    // TODO: ADD ERROR HANDLING!
-    forever {
-        if (qsm.replyReceived) {
-            return qsm.reply;
-        } else {
-            qApp->processEvents();
-        }
-    }
 }
 
 /*!
@@ -569,8 +505,13 @@ void QWebMethod::init()
 }
 
 /*!
-    \internal
     \fn QWebMethod::prepareRequestData()
+
+    Protected function, invoked by sendMessage(). Modifies QByteArray data, so that it is consistent with
+    protocol and HTTP method specification. It uses QMap<QString, QVariant> parameters to fill data object's body.
+    Can be overriden by creating custom QByteArray and passing it to sendMessage().
+
+    \sa sendMessage()
   */
 void QWebMethod::prepareRequestData()
 {

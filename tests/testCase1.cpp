@@ -34,7 +34,7 @@ void testCase1::soapMessageTest()
     QMap<QString, QVariant> tmpR;
     tmpR.insert("GetQuoteResponse", QVariant("s:string"));
 
-    message = new QWebMethod("http://www.webservicex.net/stockquote.asmx", "GetQuote", tmpP, this);
+    message = new QWebServiceMethod("http://www.webservicex.net/stockquote.asmx", "GetQuote", tmpP, this);
 
     connect(message, SIGNAL(replyReady(QVariant)), this, SLOT(messageResponse(QVariant)));
 

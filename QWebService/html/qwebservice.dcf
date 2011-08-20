@@ -25,6 +25,7 @@
         <keyword ref="qwebmethod.html#messageName">messageName</keyword>
         <keyword ref="qwebmethod.html#parameterNames">parameterNames</keyword>
         <keyword ref="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</keyword>
+        <keyword ref="qwebmethod.html#prepareRequestData">prepareRequestData</keyword>
         <keyword ref="qwebmethod.html#protocol">protocol</keyword>
         <keyword ref="qwebmethod.html#protocolString">protocolString</keyword>
         <keyword ref="qwebmethod.html#replyFinished">replyFinished</keyword>
@@ -58,9 +59,7 @@
     </section>
     <section ref="qwebservicemethod.html" title="QWebServiceMethod Class Reference">
         <keyword ref="qwebservicemethod.html">QWebServiceMethod</keyword>
-        <keyword ref="qwebservicemethod.html#getHost">getHost</keyword>
-        <keyword ref="qwebservicemethod.html#getHostUrl">getHostUrl</keyword>
-        <keyword ref="qwebservicemethod.html#setHost">setHost</keyword>
+        <keyword ref="qwebservicemethod.html#sendMessage">sendMessage</keyword>
         <section ref="qwebservicemethod-members.html" title="List of all members"/>
     </section>
     <section ref="qwebservicereader.html" title="QWebServiceReader Class Reference">

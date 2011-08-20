@@ -75,7 +75,7 @@
   */
 
 /*!
-    \fn Flags::Flags(Options options_, HttpMethod method_, bool forced)
+    \fn Flags::Flags(Options options_, HttpMethod method_, bool forced, QObject *parent)
 
     Constructs the Flags object. All params are optional. If you want to set non-default suffixes, use setObjSuffix() and setMsgSuffix().
 
@@ -91,9 +91,11 @@
     \endlist
     \o \a method_ = POST
     \o \a forced = false
+    \o \a parent = 0
     \endlist
   */
-Flags::Flags(Options options_, HttpMethod method_, bool forced)
+Flags::Flags(Options options_, HttpMethod method_, bool forced, QObject *parent) :
+    QObject(parent)
 {
     options = options_;
     method = method_;
@@ -326,4 +328,23 @@ QString Flags::messageSuffix() const
 QString Flags::objectSuffix() const
 {
     return objSuffix;
+}
+
+/*!
+  \fn Flags::operator =(const Flags &flag)
+
+  Assign operator for Flags object. Copies r-value \a flag into r-value object, and returns the object.
+  */
+Flags &Flags::operator =(const Flags &flag)
+{
+    if (this == &flag)
+        return *this;
+
+    this->options = flag.options;
+    this->method = flag.method;
+    this->force = flag.force;
+    this->msgSuffix = flag.msgSuffix;
+    this->objSuffix = flag.objSuffix;
+
+    return *this;
 }

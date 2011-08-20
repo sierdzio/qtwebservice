@@ -51,6 +51,7 @@
         <keyword ref="flags.html#setHttpMethod">setHttpMethod</keyword>
         <keyword ref="flags.html#setMsgSuffix">setMsgSuffix</keyword>
         <keyword ref="flags.html#setObjSuffix">setObjSuffix</keyword>
+        <keyword ref="flags.html#operator-eq">operator=</keyword>
         <section ref="flags-members.html" title="List of all members"/>
     </section>
     <section ref="messagegenerator.html" title="MessageGenerator Class Reference">

@@ -17,7 +17,7 @@ This project provides a set of classes (compilable into a library, if you prefer
 
   1.1.1 QWebMethod (formerly QSoapMessage)
   Supports HTTP, SOAP 1.0, SOAP 1.2 and JSON, XML and RESTful web services.
-  Used to send messages to a web service, and read replys from it. Can be used both synchronously (through static sendMessage() method), or asynchronously (indicates, when reply is ready by emitting a replyReady() signal).
+  Used to send messages to a web service, and read replys from it. Can be used asynchronously (indicates, when reply is ready by emitting a replyReady() signal). If you need synchronous operation,either use QWebServiceMethod, or subclass QWbMethod.
 
   1.1.2 QWsdl
   Useful for reading web service description contained in WSDL file. In the constructor, or using setWsdlFile(), or resetWsdl(), you can specify an URL to a web service's description, or - if you have one - a path to a local WSDL file. Some example files can be found in 'examples' forlder in project's source.
@@ -31,8 +31,8 @@ This project provides a set of classes (compilable into a library, if you prefer
   1.1.5 QwebServiceServer (or QWebServiceWriter) (*)
   Currently does not exist. A proposed class, derived from QWebService, aimed at providing web service server functionality.
 
-  1.1.6 QWebServiceMethod (formerly QWebServiceMethodAbstract)
-  Unused class, will probably be deleted from this project.
+  1.1.6 QWebServiceMethod
+  Subclass of QWebMethod, contains many generic methods for sending messages. Can be used both synchronously (through static sendMessage() method), or asynchronously (indicates, when reply is ready by emitting a replyReady() signal).
 
 ------------------
 2. qtWsdlConverter

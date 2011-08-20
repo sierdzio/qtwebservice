@@ -1,11 +1,12 @@
 #ifndef FLAGS_H
 #define FLAGS_H
 
-#include <QWebService>
+#include <QObject>
+#include <QString>
 
-class Flags
+class Flags : public QObject
 {
-//    Q_ENUMS(Option)
+    Q_OBJECT
     Q_FLAGS(Options)
     Q_ENUMS(HttpMethod)
 
@@ -50,7 +51,8 @@ public:
 
     Flags(Options options = Options(fullMode | synchronous | standardStructure | qmake | soap12),
           HttpMethod method = POST,
-          bool force = false);
+          bool force = false,
+          QObject *parent = 0);
 
     void resetFlags();
     void resetFlags(Options whatToReset);
@@ -69,6 +71,8 @@ public:
     // Convenience getters:
     QString httpMethodString() const;
     QString protocolString(bool includeRest = false) const;
+
+    Flags & operator=(const Flags &flag);
 
 private:
     Options options;

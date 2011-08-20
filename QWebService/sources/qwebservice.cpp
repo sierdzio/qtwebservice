@@ -179,7 +179,7 @@ bool QWebService::isErrorState()
 void QWebService::init()
 {
     errorState = false;
-    messages = new QMap<QString, QWebMethod *>();
+    messages = new QMap<QString, QWebServiceMethod *>();
 
     if (isErrorState())
         return;

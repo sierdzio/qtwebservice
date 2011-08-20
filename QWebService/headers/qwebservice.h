@@ -36,7 +36,7 @@ protected:
     bool errorState;
     QUrl m_hostUrl;
     QWsdl *wsdl;
-    QMap<QString, QWebMethod *> *messages; // This is general, but should work for custom classes.
+    QMap<QString, QWebServiceMethod *> *messages; // This is general, but should work for custom classes.
 };
 
 #endif // QWEBSERVICEABSTRACT_H

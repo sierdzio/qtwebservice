@@ -36,7 +36,7 @@
 <a name="public-functions"></a>
 <h2>Public Functions</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Flags">Flags</a></b> ( Options <i>options_</i> = Options( fullMode | synchronous | standardStructure | qmake | soap12 ), HttpMethod <i>method_</i> = POST, bool <i>forced</i> = false )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Flags">Flags</a></b> ( Options <i>options_</i> = Options( fullMode | synchronous | standardStructure | qmake | soap12 ), HttpMethod <i>method_</i> = POST, bool <i>forced</i> = false, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> Options </td><td class="memItemRight bottomAlign"><b><a href="flags.html#flagsx">flags</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="flags.html#forced">forced</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> HttpMethod </td><td class="memItemRight bottomAlign"><b><a href="flags.html#httpMethod">httpMethod</a></b> () const</td></tr>
@@ -53,6 +53,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setHttpMethod-2">setHttpMethod</a></b> ( QString <i>newMethod</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setMsgSuffix">setMsgSuffix</a></b> ( QString <i>newMsgSuffix</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setObjSuffix">setObjSuffix</a></b> ( QString <i>newObjSuffix</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> Flags &amp; </td><td class="memItemRight bottomAlign"><b><a href="flags.html#operator-eq">operator=</a></b> ( const Flags &amp; <i>flag</i> )</td></tr>
 </table>
 <a name="details"></a>
 <!-- $$$Flags-description -->
@@ -105,8 +106,8 @@
 </div>
 <div class="func">
 <h2>Member Function Documentation</h2>
-<!-- $$$Flags[overload1]$$$FlagsOptionsHttpMethodbool -->
-<h3 class="fn"><a name="Flags"></a>Flags::Flags ( <a href="flags.html#Option-enum">Options</a> <i>options_</i> = Options( fullMode | synchronous | standardStructure | qmake | soap12 ), <a href="flags.html#HttpMethod-enum">HttpMethod</a> <i>method_</i> = POST, bool <i>forced</i> = false )</h3>
+<!-- $$$Flags[overload1]$$$FlagsOptionsHttpMethodboolQObject* -->
+<h3 class="fn"><a name="Flags"></a>Flags::Flags ( <a href="flags.html#Option-enum">Options</a> <i>options_</i> = Options( fullMode | synchronous | standardStructure | qmake | soap12 ), <a href="flags.html#HttpMethod-enum">HttpMethod</a> <i>method_</i> = POST, bool <i>forced</i> = false, QObject * <i>parent</i> = 0 )</h3>
 <p>Constructs the Flags object. All params are optional. If you want to set non-default suffixes, use <a href="flags.html#setObjSuffix">setObjSuffix</a>() and <a href="flags.html#setMsgSuffix">setMsgSuffix</a>().</p>
 <p>Default values:</p>
 <ul>
@@ -120,6 +121,7 @@
 </li>
 <li><i>method_</i> = POST</li>
 <li><i>forced</i> = false</li>
+<li><i>parent</i> = 0</li>
 </ul>
 <p>See also <a href="flags.html#setFlags">setFlags</a>().</p>
 <!-- @@@Flags -->
@@ -199,6 +201,10 @@
 <h3 class="fn"><a name="setObjSuffix"></a>void Flags::setObjSuffix ( QString <i>newObjSuffix</i> )</h3>
 <p>Sets the object suffix using <i>newObjSuffix</i>.</p>
 <!-- @@@setObjSuffix -->
+<!-- $$$operator=[overload1]$$$operator=constFlags& -->
+<h3 class="fn"><a name="operator-eq"></a>Flags &amp; Flags::operator= ( const Flags &amp; <i>flag</i> )</h3>
+<p>Assign operator for Flags object. Copies r-value <i>flag</i> into r-value object, and returns the object.</p>
+<!-- @@@operator= -->
 </div>
 </body>
 </html>

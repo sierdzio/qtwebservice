@@ -125,7 +125,7 @@ bool CodeGenerator::createService()
 bool CodeGenerator::createServiceHeader()
 {
     QString wsName = "";
-    QMap<QString, QWebMethod *> *tempMap = wsdl->methods();
+    QMap<QString, QWebServiceMethod *> *tempMap = wsdl->methods();
 
     if (baseClassName != "")
         wsName = baseClassName;
@@ -154,7 +154,7 @@ bool CodeGenerator::createServiceHeader()
     }
     else
     {
-//        out << "#include <QWebService/qwebmethod.h>" << endl;
+//        out << "#include <QWebService/QWebServiceMethod.h>" << endl;
         out << "#include <QWebService>" << endl;
     }
     out << endl;
@@ -170,7 +170,7 @@ bool CodeGenerator::createServiceHeader()
     { // Declare all messages (as wrappers for message classes).
         foreach (QString s, tempMap->keys()) {
             QString tmpReturn = "", tmpP = "";
-            QWebMethod *m = tempMap->value(s);
+            QWebServiceMethod *m = tempMap->value(s);
 
             foreach (QString ret, m->returnValueNameType().keys()) {
                 tmpReturn = m->returnValueNameType().value(ret).typeName();
@@ -209,7 +209,7 @@ bool CodeGenerator::createServiceHeader()
             */
             {
                 QString tmpReturn = "";
-                QWebMethod *m = tempMap->value(s);
+                QWebServiceMethod *m = tempMap->value(s);
                 foreach (QString ret, m->returnValueNameType().keys()) {
                     tmpReturn = m->returnValueNameType().value(ret).typeName();
                     break; // This does not support multiple return values!
@@ -247,7 +247,7 @@ bool CodeGenerator::createServiceHeader()
 
         foreach (QString s, tempMap->keys()) {
             QString tmpReturn = "";
-            QWebMethod *m = tempMap->value(s);
+            QWebServiceMethod *m = tempMap->value(s);
 
             foreach (QString ret, m->returnValueNameType().keys()) {
                 tmpReturn = m->returnValueNameType().value(ret).typeName();
@@ -261,7 +261,7 @@ bool CodeGenerator::createServiceHeader()
             if (!(flags->flags() & Flags::noMessagesStructure))
                 out << "    " << s << " ";
             else // sierdzioL I don't particurarly like this implementation, will rethink it later.
-                out << "    QWebMethod ";
+                out << "    QWebServiceMethod ";
 
             out << s.toLower() << flags->objectSuffix() << ";" << endl;
         }
@@ -283,7 +283,7 @@ bool CodeGenerator::createServiceHeader()
 bool CodeGenerator::createServiceSource()
 {
     QString wsName = "";
-    QMap<QString, QWebMethod *> *tempMap = wsdl->methods();
+    QMap<QString, QWebServiceMethod *> *tempMap = wsdl->methods();
     if (baseClassName != "")
         wsName = baseClassName;
     else
@@ -340,7 +340,7 @@ bool CodeGenerator::createServiceSource()
         out << "    QStringList result;" << endl;
 
         foreach (QString s, tempMap->keys()) {
-            QWebMethod *m = tempMap->value(s);
+            QWebServiceMethod *m = tempMap->value(s);
             out << "    result.append(\"" << m->messageName() << "\");" << endl;
         }
         out << "    return result;" << endl;
@@ -350,7 +350,7 @@ bool CodeGenerator::createServiceSource()
     { // Define all messages (as wrappers for message classes).
         foreach (QString s, tempMap->keys()) {
             QString tmpReturn = "", tmpP = "", tmpPN = "";
-            QWebMethod *m = tempMap->value(s);
+            QWebServiceMethod *m = tempMap->value(s);
 
             foreach (QString ret, m->returnValueNameType().keys()) {
                 tmpReturn = m->returnValueNameType().value(ret).typeName();
@@ -385,18 +385,18 @@ bool CodeGenerator::createServiceSource()
                     }
 
                     out << endl;
-                    out << "    return QWebMethod::sendMessage(this";
+                    out << "    return QWebServiceMethod::sendMessage(this";
                     out << ", QUrl(\"" << m->host() << "\"), \"" << m->messageName()
                         << "\", parameters";
 
                     QString protocols = "";
-                    protocols = "QWebMethod::" + flags->protocolString(false);
+                    protocols = "QWebServiceMethod::" + flags->protocolString(false);
 
-                    if (protocols != "QWebMethod::")
+                    if (protocols != "QWebServiceMethod::")
                         protocols.append(", ");
 
                     if (flags->flags() & Flags::rest) {
-                        protocols += "QWebMethod::" + flags->httpMethodString();
+                        protocols += "QWebServiceMethod::" + flags->httpMethodString();
                     }
 
                     if (protocols != "")
@@ -434,7 +434,7 @@ bool CodeGenerator::createServiceSource()
                     out << "    " << objName << ".setMessageName(\"" << m->messageName() << "\");" << endl;
 
                     QString protocols = "";
-                    protocols = "QWebMethod::" + flags->protocolString(false);
+                    protocols = "QWebServiceMethod::" + flags->protocolString(false);
 
                     out << "    " << objName << ".setProtocol(" << protocols << ");" << endl;
                     // Add REST handling!
@@ -465,7 +465,7 @@ bool CodeGenerator::createServiceSource()
             */
             {
                 QString tmpReturn = "";
-                QWebMethod *m = tempMap->value(s);
+                QWebServiceMethod *m = tempMap->value(s);
 
                 foreach (QString ret, m->returnValueNameType().keys()) {
                     tmpReturn = m->returnValueNameType().value(ret).typeName();
@@ -494,7 +494,7 @@ bool CodeGenerator::createServiceSource()
             */
 
             QString tmpReturn = "";
-            QWebMethod *m = tempMap->value(s);
+            QWebServiceMethod *m = tempMap->value(s);
 
             foreach (QString ret, m->returnValueNameType().keys()) {
                 tmpReturn = m->returnValueNameType().value(ret).typeName();

@@ -5,16 +5,16 @@
     \brief Creates code for messages.
 
     Creates messages (both headers and sources) by generating the entire code
-    or subclassing QWebMethod (depending on whether --subclass flag is set).
+    or subclassing QWebServiceMethod (depending on whether --subclass flag is set).
   */
 
 /*!
-    \fn MessageGenerator::MessageGenerator(QMap<QString, QWebMethod *> *msgs, QDir wrkDir, Flags *flgs, QObject *parent)
+    \fn MessageGenerator::MessageGenerator(QMap<QString, QWebServiceMethod *> *msgs, QDir wrkDir, Flags *flgs, QObject *parent)
 
     Constructs QObject using \a parent, initialises MessageGenerator with messages (\a msgs),
     working directory (\a wrkDir), and flags (\a flgs).
   */
-MessageGenerator::MessageGenerator(QMap<QString, QWebMethod *> *msgs,
+MessageGenerator::MessageGenerator(QMap<QString, QWebServiceMethod *> *msgs,
                                    QDir wrkDir, Flags *flgs, QObject *parent) :
     QObject(parent), messages(msgs), workingDir(wrkDir), flags(flgs)
 {
@@ -46,7 +46,7 @@ bool MessageGenerator::enterErrorState(QString errMessage)
     \fn MessageGenerator::createMessages()
 
     Creates messages (both headers and sources) by generating the entire code
-    or subclassing QWebMethod (depending on whether --subclass flag is set).
+    or subclassing QWebServiceMethod (depending on whether --subclass flag is set).
 
     Returns true if successful.
   */
@@ -69,7 +69,7 @@ bool MessageGenerator::createMessages()
         workingDir.cd("headers");
 
     foreach (QString s, messages->keys()) {
-        QWebMethod *m = messages->value(s);
+        QWebServiceMethod *m = messages->value(s);
 
         if (flags->flags() & Flags::subclass) {
             if (!createSubclassedMessageHeader(m))
@@ -87,7 +87,7 @@ bool MessageGenerator::createMessages()
     }
 
     foreach (QString s, messages->keys()) {
-        QWebMethod *n = messages->value(s);
+        QWebServiceMethod *n = messages->value(s);
 
         if (flags->flags() & Flags::subclass) {
             if (!createSubclassedMessageSource(n))
@@ -109,9 +109,9 @@ bool MessageGenerator::createMessages()
 
 /*!
     \internal
-    \fn MessageGenerator::createSubclassedMessageHeader(QWebMethod *msg)
+    \fn MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
   */
-bool MessageGenerator::createSubclassedMessageHeader(QWebMethod *msg)
+bool MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
 {
     QString msgName = msg->messageName();
     QFile file(workingDir.path() + "/" + msgName + ".h");
@@ -148,9 +148,9 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebMethod *msg)
     out << "#ifndef " << msgName.toUpper() << "_H" << endl; // might break on curious names
     out << "#define " << msgName.toUpper() << "_H" << endl;
     out << endl;
-    out << "#include <QWebService>" << endl; // Should be <QWebService/qwebmethod.h>
+    out << "#include <QWebService>" << endl; // Should be <QWebService/QWebServiceMethod.h>
     out << endl;
-    out << "class " << msgName << " : public QWebMethod" << endl;
+    out << "class " << msgName << " : public QWebServiceMethod" << endl;
     out << "{" << endl;
     out << "    Q_OBJECT" << endl;
     out << endl;
@@ -164,7 +164,7 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebMethod *msg)
     out << "    void setParameters(" << msgParameters << ");" << endl;
     out << endl;
 
-    out << "    using QWebMethod::sendMessage;" << endl;
+    out << "    using QWebServiceMethod::sendMessage;" << endl;
     if ((msgParameters != "") && !((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous)))
         out << "    bool sendMessage(" << msgParameters << ");" << endl;
 
@@ -202,9 +202,9 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebMethod *msg)
 
 /*!
     \internal
-    \fn MessageGenerator::createSubclassedMessageSource(QWebMethod *msg)
+    \fn MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
   */
-bool MessageGenerator::createSubclassedMessageSource(QWebMethod *msg)
+bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
 {
     QString msgName = msg->messageName();
     QFile file(workingDir.path() + "/" + msgName + ".cpp");
@@ -243,14 +243,14 @@ bool MessageGenerator::createSubclassedMessageSource(QWebMethod *msg)
     out << endl;
 
     out << msgName << "::" << msgName << "(QObject *parent) : " << endl;
-    out << "    QWebMethod(parent)" << endl;
+    out << "    QWebServiceMethod(parent)" << endl;
     out << "{" << endl;
     out << "    configure();" << endl;
     out << "}" << endl;
     out << endl;
     if (msgParameters != "") {
         out << msgName << "::" << msgName << "(" << msgParameters << ", QObject *parent) :" << endl;
-        out << "    QWebMethod(parent)" << endl;
+        out << "    QWebServiceMethod(parent)" << endl;
         out << "{" << endl;
 
         assignAllParameters(msg, out);
@@ -330,9 +330,9 @@ bool MessageGenerator::createSubclassedMessageSource(QWebMethod *msg)
 
 /*!
     \internal
-    \fn MessageGenerator::createMessageHeader(QWebMethod *msg)
+    \fn MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
   */
-bool MessageGenerator::createMessageHeader(QWebMethod *msg)
+bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
 {
     QString msgName = msg->messageName();
     QFile file(workingDir.path() + "/" + msgName + ".h");
@@ -479,9 +479,9 @@ bool MessageGenerator::createMessageHeader(QWebMethod *msg)
 
 /*!
     \internal
-    \fn MessageGenerator::createMessageSource(QWebMethod *msg)
+    \fn MessageGenerator::createMessageSource(QWebServiceMethod *msg)
   */
-bool MessageGenerator::createMessageSource(QWebMethod *msg)
+bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
 {
     QString msgName = msg->messageName();
     QFile file(workingDir.path() + "/" + msgName + ".cpp");
@@ -861,7 +861,7 @@ bool MessageGenerator::createMainCpp()
 
   Assigns all message parameters to this-><paramName>.
   */
-void MessageGenerator::assignAllParameters(QWebMethod *msg, QTextStream &out)
+void MessageGenerator::assignAllParameters(QWebServiceMethod *msg, QTextStream &out)
 {
     QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
 

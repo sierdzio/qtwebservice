@@ -35,12 +35,6 @@ public:
     };
 
     explicit QWebMethod(QObject *parent = 0, Protocol protocol = soap12, HttpMethod httpMethod = POST);
-    QWebMethod(QUrl hostUrl, QString messageName, QObject *parent = 0,
-               Protocol protocol = soap12, HttpMethod httpMethod = POST);
-    QWebMethod(QString host, QString messageName, QObject *parent = 0,
-               Protocol protocol = soap12, HttpMethod httpMethod = POST);
-    QWebMethod(QString host, QString messageName, QMap<QString, QVariant> params,
-                 QObject *parent = 0, Protocol protocol = soap12, HttpMethod httpMethod = POST);
     ~QWebMethod();
 
     void setHost(QString newHost);
@@ -51,13 +45,8 @@ public:
     void setTargetNamespace(QString tNamespace);
     void setProtocol(Protocol protocol);
     void setHttpMethod(HttpMethod method);
-    bool sendMessage();
-    bool sendMessage(QMap<QString, QVariant> params);
-    QVariant static sendMessage(QObject *parent, QUrl url,
-                                QString _messageName, QMap<QString, QVariant> params,
-                                Protocol protocol = soap12, HttpMethod httpMethod = POST);
-//    QVariant static sendRestMessage(QObject *parent, QUrl fullPath, QString parameters,
-//                                Protocol protocol = soap12, HttpMethod httpMethod = POST);
+    bool sendMessage(QByteArray requestData = 0);
+
     QVariant replyRead();
     QString messageName();
     QStringList parameterNames() const;
@@ -83,7 +72,6 @@ protected: // Changed for 0.3.5, but precisely what should be protected and what
     void prepareRequestData();
     QString convertReplyToUtf(QString textToConvert);
 
-// private: // Changed for 0.3.5, but precisely what should be protected and what private shall be decided later.
     bool replyReceived;
     Protocol protocolUsed;
     HttpMethod httpMethodUsed;

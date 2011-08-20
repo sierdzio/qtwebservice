@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QtCore>
 #include "qwebmethod.h"
+#include "qwebservicemethod.h"
 #include "QWebService_global.h"
 
 class QWEBSERVICESHARED_EXPORT QWsdl : public QObject
@@ -18,7 +19,7 @@ public:
 
     void setWsdlFile(QString wsdlFile); // == resetWsdl()
     QStringList methodNames();
-    QMap<QString, QWebMethod *> *methods();
+    QMap<QString, QWebServiceMethod *> *methods();
     QString webServiceName();
     QString host();
     QUrl hostUrl();
@@ -60,7 +61,7 @@ private:
 
     QStringList *workMethodList;
     QMap<int, QMap<QString, QVariant> > *workMethodParameters; // Param if one, QList if many.
-    QMap<QString, QWebMethod *> *methodsMap;
+    QMap<QString, QWebServiceMethod *> *methodsMap;
 };
 
 #endif // QWSDL_H

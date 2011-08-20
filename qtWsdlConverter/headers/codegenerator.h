@@ -31,7 +31,7 @@ private:
     bool createCMakeProject();
     bool createSconsProject();
 
-    QMap<QString, QWebMethod *> *messages;
+    QMap<QString, QWebServiceMethod *> *messages;
     QDir workingDir;
     QWsdl *wsdl;
     Flags *flags;

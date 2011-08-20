@@ -7,6 +7,16 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
  - QWebService: run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./QWebService/qwebservice.qdocconf
  - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
 
+20.08.2011 : CEST:
+ - made QWebMethod more abstract and subclass-firendly. The generic functionality (sending messages,
+   complicated constructors) was moved to previously unused QWebServiceMethod class,
+ - changed default sendMessage() to sendMessage(QByteArray = 0). When nothing is passed, it works as before (sends
+   message using QMap parameters and options and httpMethod). When given a non-null QByteArray, it uses that array
+   as message body (message header and httpMethod remain unaffected),
+ - updated the whole project to reflect recen changes (changed QWebMethod to QWebServiceMethod where it was used, updated QDoc
+   and README),
+ - fixed (converter) Flags class not inheriting from QObject. Added operator=() to Flags.
+
 20.08.2011 08:46 CEST:
  - added option for converter to subclass QWebMethod (--subclass switch), instead of writing entirely
    separate code (huge changes in converter's source),

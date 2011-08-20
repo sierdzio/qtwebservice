@@ -2,28 +2,29 @@
 #define MESSAGEGENERATOR_H
 
 #include <QObject>
+#include <QWebService>
 #include "flags.h"
 
 class MessageGenerator : public QObject
 {
     Q_OBJECT
 public:
-    explicit MessageGenerator(QMap<QString, QWebMethod *> *messages,
+    explicit MessageGenerator(QMap<QString, QWebServiceMethod *> *messages,
                               QDir workingDir, Flags *flgs, QObject *parent = 0);
     QString errorMessage();
     bool createMessages();
 
 private:
     bool enterErrorState(QString errMessage = "");
-    bool createSubclassedMessageHeader(QWebMethod *msg);
-    bool createSubclassedMessageSource(QWebMethod *msg);
-    bool createMessageHeader(QWebMethod *msg);
-    bool createMessageSource(QWebMethod *msg);
+    bool createSubclassedMessageHeader(QWebServiceMethod *msg);
+    bool createSubclassedMessageSource(QWebServiceMethod *msg);
+    bool createMessageHeader(QWebServiceMethod *msg);
+    bool createMessageSource(QWebServiceMethod *msg);
     bool createMainCpp();
 
-    void assignAllParameters(QWebMethod *msg, QTextStream &out);
+    void assignAllParameters(QWebServiceMethod *msg, QTextStream &out);
 
-    QMap<QString, QWebMethod *> *messages;
+    QMap<QString, QWebServiceMethod *> *messages;
     QDir workingDir;
     Flags *flags;
     bool errorState;
