@@ -12,10 +12,11 @@ private slots:
     void standardConversion();
 };
 
-QTEST_MAIN(TestConverter)
-#include "tst_qtwsdlconverter.moc"
-
 void TestConverter::standardConversion()
 {
     ;
 }
+
+QTEST_MAIN(TestConverter)
+#include "tst_qtwsdlconverter.moc"
+

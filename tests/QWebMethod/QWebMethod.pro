@@ -1,10 +1,3 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2011-05-17T10:04:00
-# Tomasz 'sierdzio' Siekierda
-# sierdzio@gmail.com
-#-------------------------------------------------
-
 QT = core network qtestlib
 CONFIG += qtestlib
 
@@ -16,4 +9,4 @@ else:unix: LIBS += -L$$PWD/../../lib/ -lQWebService
 INCLUDEPATH += $$PWD/../../QWebService/headers
 DEPENDPATH += $$PWD/../../QWebService/headers
 
-SOURCES += tst_qwsdl.cpp
+SOURCES += tst_qwebmethod.cpp

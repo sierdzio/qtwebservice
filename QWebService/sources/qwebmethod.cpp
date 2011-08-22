@@ -111,7 +111,7 @@ QWebMethod::~QWebMethod()
 {
     delete manager;
     delete networkReply;
-    this->deleteLater();
+//    this->deleteLater();
 }
 
 /*!

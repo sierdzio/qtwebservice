@@ -6,6 +6,10 @@
 #include <QtNetwork/qnetworkreply.h>
 #include <QtCore/qstring.h>
 #include <QtCore/qstringlist.h>
+#include <QtCore/qurl.h>
+#include <QtCore/qvariant.h>
+#include <QtCore/qmap.h>
+#include <QtCore/qbytearray.h>
 #include "QWebService_global.h"
 
 class QWEBSERVICESHARED_EXPORT QWebMethod : public QObject
@@ -35,7 +39,7 @@ public:
         DELETE  = 0x8
     };
 
-    explicit QWebMethod(QObject *parent = 0, Protocol protocol = soap12, HttpMethod httpMethod = POST);
+    QWebMethod(QObject *parent = 0, Protocol protocol = soap12, HttpMethod httpMethod = POST);
     ~QWebMethod();
 
     void setHost(QString newHost);

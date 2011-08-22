@@ -2,8 +2,8 @@
   This test checks QWebMethod in operation (requires Internet connection or a working local web service)
   */
 
-#include <QtCore>
 #include <QtTest/QtTest>
+//#include <QtCore>
 #include <qwebmethod.h>
 
 class TestQWebMethod : public QObject
@@ -11,19 +11,16 @@ class TestQWebMethod : public QObject
     Q_OBJECT
 
 private slots:
-    void cleanRun();
+    void initialTest();
 };
 
-void TestQWebMethod::cleanRun()
+void TestQWebMethod::initialTest()
 {
-    QMap<QString, QVariant> tmpP;
-    tmpP.insert("symbol", QVariant("NOK"));
+    QWebMethod *message = new QWebMethod(0, QWebMethod::soap12, QWebMethod::POST);
 
-//    QWebMethod message("http://www.webservicex.net/stockquote.asmx", "GetQuote", tmpP, this);
-    QWebMethod message;
-    message.setTargetNamespace("http://www.webserviceX.NET/");
+    QCOMPARE(message->isErrorState(), bool(false));
 
-    QCOMPARE(message.isErrorState(), bool(false));
+    delete message;
 }
 
 QTEST_MAIN(TestQWebMethod)
