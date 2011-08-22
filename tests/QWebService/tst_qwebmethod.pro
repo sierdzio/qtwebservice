@@ -5,33 +5,15 @@
 # sierdzio@gmail.com
 #-------------------------------------------------
 
-QT += core gui network
+QT = core network qtestlib
+CONFIG += qtestlib
 
-TARGET = testWsdl
-
-TEMPLATE = app
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../lib/ -lQWebService
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../lib/ -lQWebServiced
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../lib/ -lQWebService
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../lib/ -lQWebServiced
 else:symbian: LIBS += -lQWebService
-else:unix: LIBS += -L$$PWD/../lib/ -lQWebService
+else:unix: LIBS += -L$$PWD/../../lib/ -lQWebService
 
-INCLUDEPATH += $$PWD/../QWebService/headers
-DEPENDPATH += $$PWD/../QWebService/headers
+INCLUDEPATH += $$PWD/../../QWebService/headers
+DEPENDPATH += $$PWD/../../QWebService/headers
 
-OBJECTS_DIR = ../build-testWsdl
-
-SOURCES += \
-    main.cpp \
-    testCase1.cpp \
-    testcase2_wsdl.cpp \
-    testcase3_webservice.cpp
-
-HEADERS += \
-    testCase1.h \
-    testcase2_wsdl.h \
-    testcase3_webservice.h
-
-
-
-
+SOURCES += tst_qwebmethod.cpp

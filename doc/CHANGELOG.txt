@@ -8,6 +8,8 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
  - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
 
 22.08.2011 : CEST:
+ - changed tests directory structure,
+ - made the tests initially compilable (there are still some problems at runtime),
  - added error handling to QWebMethod,
  - updated error handling in QWsdl,
  - updated error handling in QWebMethod.

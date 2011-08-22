@@ -1,19 +1,35 @@
-#include "testCase1.h"
-
 /**
   This test checks QWebMethod in operation (requires Internet connection or a working local web service)
   */
-testCase1::testCase1(QWidget *parent) :
-    QPushButton(parent)
+
+#include <QtCore>
+#include <QtTest/QtTest>
+#include <qwebmethod.h>
+
+class TestQWebMethod : public QObject
 {
-    soapMessageTest();
+    Q_OBJECT
+
+private slots:
+    void cleanRun();
+};
+
+void TestQWebMethod::cleanRun()
+{
+    QMap<QString, QVariant> tmpP;
+    tmpP.insert("symbol", QVariant("NOK"));
+
+//    QWebMethod message("http://www.webservicex.net/stockquote.asmx", "GetQuote", tmpP, this);
+    QWebMethod message;
+    message.setTargetNamespace("http://www.webserviceX.NET/");
+
+    QCOMPARE(message.isErrorState(), bool(false));
 }
 
-testCase1::~testCase1()
-{
-    delete message;
-}
+QTEST_MAIN(TestQWebMethod)
+#include "tst_qwebmethod.moc"
 
+/*
 void testCase1::messageResponse(QVariant msg)
 {
     QString rply = msg.toString();
@@ -22,15 +38,11 @@ void testCase1::messageResponse(QVariant msg)
 
 void testCase1::soapMessageTest()
 {
-    /**
-      Message parameters are specified here.
-      */
+    // Message parameters are specified here.
     QMap<QString, QVariant> tmpP;
     tmpP.insert("symbol", QVariant("NOK"));
 
-    /**
-      This is the reply holder.
-      */
+    // This is the reply holder.
     QMap<QString, QVariant> tmpR;
     tmpR.insert("GetQuoteResponse", QVariant("s:string"));
 
@@ -41,3 +53,4 @@ void testCase1::soapMessageTest()
     message->setTargetNamespace("http://www.webserviceX.NET/");
     message->sendMessage();
 }
+*/

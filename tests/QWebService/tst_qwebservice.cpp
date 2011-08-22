@@ -1,30 +1,34 @@
-#include "testcase3_webservice.h"
+#include <QtTest/QtTest>
+#include <qwebservice.h>
 
 /**
-  This test case combines previosu two - it checks both QWebMethod and QWsdl functionality,
-  in a broad spectrum of uses.
+  This test case checks both QWebService functionality.
   */
-testCase3_webservice::testCase3_webservice(QPushButton *parent) :
-    QPushButton(parent)
+
+class TestQWebService : public QObject
 {
-    /**
-      Check based on a local WSDL file, placed in 'examples' folder.
-      You can specify your own, or even a web service URL.
-      */
-    runWebServiceTest("../examples/band_ws.asmx");
+    Q_OBJECT
+
+private slots:
+    void initialTest();
+};
+
+void TestQWebService::initialTest()
+{
+    QWebService newService;
+
+    QCOMPARE(newService.isErrorState(), bool(false));
 }
 
-testCase3_webservice::~testCase3_webservice()
-{
-    delete reader;
-    //delete wsdl;
-}
+QTEST_MAIN(TestQWebService)
+#include "tst_qwebservice.moc"
 
+/*
 void testCase3_webservice::runWebServiceTest(QString filePathOrUrl)
 {
-    /**
-      Prints out methods with their parameters and return types and names.
-      */
+
+//      Prints out methods with their parameters and return types and names.
+
     qDebug() << "Running testCase3";
     reader = new QWebServiceReader(filePathOrUrl, this);
     qDebug() << "Getting methods";
@@ -65,3 +69,4 @@ void testCase3_webservice::runWebServiceTest(QString filePathOrUrl)
         qDebug() << "QWebServiceAbstract entered the error state and could not continue.";
     }
 }
+*/
