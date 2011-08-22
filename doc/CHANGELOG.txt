@@ -7,7 +7,7 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
  - QWebService: run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./QWebService/qwebservice.qdocconf
  - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
 
-.08.2011 : CEST:
+22.08.2011 : CEST:
  - added error handling to QWebMethod,
  - updated error handling in QWsdl,
  - updated error handling in QWebMethod.
