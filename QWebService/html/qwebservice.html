@@ -15,6 +15,7 @@
 <h3><a name="toc">Contents</a></h3>
 <ul>
 <li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
 </div>
@@ -33,6 +34,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#QWebService-2">QWebService</a></b> ( QWsdl * <i>_wsdl</i>, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#QWebService-3">QWebService</a></b> ( QString <i>_hostname</i>, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#dtor.QWebService">~QWebService</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#errorInfo">errorInfo</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#host">host</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#hostUrl">hostUrl</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#isErrorState">isErrorState</a></b> ()</td></tr>
@@ -43,6 +45,11 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#returnValueNameType">returnValueNameType</a></b> ( QString <i>methodName</i> ) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#setHost">setHost</a></b> ( QString <i>hostname</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#setHost-2">setHost</a></b> ( QUrl <i>hostUrl</i> )</td></tr>
+</table>
+<a name="signals"></a>
+<h2>Signals</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#errorEncountered">errorEncountered</a></b> ( QString <i>errMessage</i> )</td></tr>
 </table>
 <a name="details"></a>
 <!-- $$$QWebService-description -->
@@ -70,6 +77,15 @@
 <h3 class="fn"><a name="dtor.QWebService"></a>QWebService::~QWebService ()</h3>
 <p>Deletes wsdl pointer.</p>
 <!-- @@@~QWebService -->
+<!-- $$$errorEncountered[overload1]$$$errorEncounteredQString -->
+<h3 class="fn"><a name="errorEncountered"></a>void QWebService::errorEncountered ( QString <i>errMessage</i> )<tt> [signal]</tt></h3>
+<p>Singal emitted when WsdlConverter encounters an error. Carries <i>errMessage</i> for convenience.</p>
+<!-- @@@errorEncountered -->
+<!-- $$$errorInfo[overload1]$$$errorInfo -->
+<h3 class="fn"><a name="errorInfo"></a>QString QWebService::errorInfo () const</h3>
+<p>Returns QString with error message in case an error occured. Otherwise, returns empty string.</p>
+<p>See also <a href="qwebservice.html#isErrorState">isErrorState</a>().</p>
+<!-- @@@errorInfo -->
 <!-- $$$host[overload1]$$$host -->
 <h3 class="fn"><a name="host"></a>QString QWebService::host () const</h3>
 <p>Returns QString with URL of the web service.</p>

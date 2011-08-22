@@ -34,11 +34,13 @@ public:
     void resetWsdl(QString newWsdl);
 
 signals:
+    void errorEncountered(QString errMessage);
 
 public slots:
     void fileReplyFinished(QNetworkReply *rply);
 
 private:
+    void init();
     bool parse();
     void prepareFile();
     void prepareMethods();
@@ -51,6 +53,7 @@ private:
     void readService();
     void readDocumentation();
     QString convertReplyToUtf(QString textToConvert);
+    bool enterErrorState(QString errMessage = "");
 
     bool errorState;
     bool replyReceived;

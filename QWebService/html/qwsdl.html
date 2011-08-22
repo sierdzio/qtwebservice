@@ -16,6 +16,7 @@
 <ul>
 <li class="level1"><a href="#public-functions">Public Functions</a></li>
 <li class="level1"><a href="#public-slots">Public Slots</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
 </div>
@@ -48,6 +49,11 @@
 <table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#fileReplyFinished">fileReplyFinished</a></b> ( QNetworkReply * <i>rply</i> )</td></tr>
 </table>
+<a name="signals"></a>
+<h2>Signals</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#errorEncountered">errorEncountered</a></b> ( QString <i>errMessage</i> )</td></tr>
+</table>
 <a name="details"></a>
 <!-- $$$QWsdl-description -->
 <div class="descr">
@@ -72,6 +78,10 @@
 <h3 class="fn"><a name="dtor.QWsdl"></a>QWsdl::~QWsdl ()</h3>
 <p>Destructor - cleans some internal variables.</p>
 <!-- @@@~QWsdl -->
+<!-- $$$errorEncountered[overload1]$$$errorEncounteredQString -->
+<h3 class="fn"><a name="errorEncountered"></a>void QWsdl::errorEncountered ( QString <i>errMessage</i> )<tt> [signal]</tt></h3>
+<p>Singal emitted when WsdlConverter encounters an error. Carries <i>errMessage</i> for convenience.</p>
+<!-- @@@errorEncountered -->
 <!-- $$$errorInfo[overload1]$$$errorInfo -->
 <h3 class="fn"><a name="errorInfo"></a>QString QWsdl::errorInfo () const</h3>
 <p>Returns QString with error message in case an error occured. Otherwise, returns empty string.</p>

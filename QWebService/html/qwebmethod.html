@@ -42,10 +42,12 @@
 <table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod">QWebMethod</a></b> ( QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = soap12, HttpMethod <i>method</i> = POST )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#dtor.QWebMethod">~QWebMethod</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#errorInfo">errorInfo</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#host">host</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#hostUrl">hostUrl</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> HttpMethod </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#httpMethod">httpMethod</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#httpMethodString">httpMethodString</a></b> () const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#isErrorState">isErrorState</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#messageName">messageName</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#parameterNames">parameterNames</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</a></b> () const</td></tr>
@@ -73,6 +75,7 @@
 <a name="signals"></a>
 <h2>Signals</h2>
 <table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#errorEncountered">errorEncountered</a></b> ( QString <i>errMessage</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#replyReady">replyReady</a></b> ( QVariant <i>rply</i> )</td></tr>
 </table>
 <a name="protected-functions"></a>
@@ -154,6 +157,15 @@
 <h3 class="fn"><a name="dtor.QWebMethod"></a>QWebMethod::~QWebMethod ()</h3>
 <p>Deletes internal pointers.</p>
 <!-- @@@~QWebMethod -->
+<!-- $$$errorEncountered[overload1]$$$errorEncounteredQString -->
+<h3 class="fn"><a name="errorEncountered"></a>void QWebMethod::errorEncountered ( QString <i>errMessage</i> )<tt> [signal]</tt></h3>
+<p>Singal emitted when WsdlConverter encounters an error. Carries <i>errMessage</i> for convenience.</p>
+<!-- @@@errorEncountered -->
+<!-- $$$errorInfo[overload1]$$$errorInfo -->
+<h3 class="fn"><a name="errorInfo"></a>QString QWebMethod::errorInfo () const</h3>
+<p>Returns QString with error message in case an error occured. Otherwise, returns empty string.</p>
+<p>See also <a href="qwebmethod.html#isErrorState">isErrorState</a>().</p>
+<!-- @@@errorInfo -->
 <!-- $$$host[overload1]$$$host -->
 <h3 class="fn"><a name="host"></a>QString QWebMethod::host () const</h3>
 <p>Returns host's URL (in QString). If you want a QUrl, call getHostUrl(), or QUrl(QWebMethod::getHost());</p>
@@ -177,6 +189,11 @@
 <h3 class="fn"><a name="init"></a>void QWebMethod::init ()<tt> [protected]</tt></h3>
 <p>Performs genral initialisation of the object. Sets default variable values, initializes network manager, connects reply signals. Calls virtual method, configure().</p>
 <!-- @@@init -->
+<!-- $$$isErrorState[overload1]$$$isErrorState -->
+<h3 class="fn"><a name="isErrorState"></a>bool QWebMethod::isErrorState () const</h3>
+<p>Returns true if there was an error, false otherwise. Details about an error can be read with getErrorInfo().</p>
+<p>See also <a href="qwebmethod.html#errorInfo">errorInfo</a>().</p>
+<!-- @@@isErrorState -->
 <!-- $$$messageName[overload1]$$$messageName -->
 <h3 class="fn"><a name="messageName"></a>QString QWebMethod::messageName () const</h3>
 <p>Returns message's name.</p>

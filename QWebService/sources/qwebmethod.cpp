@@ -115,6 +115,12 @@ QWebMethod::~QWebMethod()
 }
 
 /*!
+    \fn QWebMethod::errorEncountered(QString errMessage)
+
+    Singal emitted when WsdlConverter encounters an error. Carries \a errMessage for convenience.
+  */
+
+/*!
   \fn QWebMethod::setHost(QString newHost)
 
   Set's message's host to \a newHost.
@@ -200,7 +206,8 @@ void QWebMethod::setProtocol(Protocol prot)
             protocolUsed = prot;
     }
     else {
-        protocolUsed = soap12;
+        enterErrorState("Wrong protocol is set. You have combined exclusive flags.");
+//        protocolUsed = soap12;
     }
 }
 
@@ -457,6 +464,31 @@ QString QWebMethod::httpMethodString() const
 }
 
 /*!
+    \fn QWebMethod::errorInfo() const
+
+    Returns QString with error message in case an error occured. Otherwise, returns empty string.
+
+    \sa isErrorState()
+  */
+QString QWebMethod::errorInfo() const
+{
+    return errorMessage;
+}
+
+/*!
+    \fn QWebMethod::isErrorState() const
+
+    Returns true if there was an error, false otherwise. Details about an error can be read with
+    getErrorInfo().
+
+    \sa errorInfo()
+  */
+bool QWebMethod::isErrorState() const
+{
+    return errorState;
+}
+
+/*!
     \fn QWebMethod::replyFinished(QNetworkReply *netReply)
 
     Public (will probably be private in the future) slot, which processes the reply (\a netReply) from the server.
@@ -497,6 +529,8 @@ void QWebMethod::replyFinished(QNetworkReply *netReply)
 void QWebMethod::init()
 {
     replyReceived = false;
+    errorState = false;
+    errorMessage = "";
 
     manager = new QNetworkAccessManager(this);
 
@@ -591,4 +625,19 @@ QString QWebMethod::convertReplyToUtf(QString textToConvert)
     result.replace("&gt;", ">");
 
     return result;
+}
+
+/*!
+    \internal
+    \fn QWebMethod::enterErrorState(QString errMessage)
+
+    Enters into error state with message \a errMessage.
+  */
+bool QWebMethod::enterErrorState(QString errMessage)
+{
+    errorState = true;
+    errorMessage += errMessage + " ";
+    qDebug() << errMessage;
+    emit errorEncountered(errMessage);
+    return false;
 }

@@ -61,9 +61,12 @@ public:
     QString protocolString(bool includeRest) const;
     HttpMethod httpMethod() const;
     QString httpMethodString() const;
+    QString errorInfo() const;
+    bool isErrorState() const;
 
 signals:
     void replyReady(QVariant rply);
+    void errorEncountered(QString errMessage);
 
 public slots:
     void replyFinished(QNetworkReply *reply);
@@ -72,7 +75,10 @@ protected: // Changed for 0.3.5, but precisely what should be protected and what
     void init();
     void prepareRequestData();
     QString convertReplyToUtf(QString textToConvert);
+    bool enterErrorState(QString errMessage = "");
 
+    bool errorState;
+    QString errorMessage;
     bool replyReceived;
     Protocol protocolUsed;
     HttpMethod httpMethodUsed;

@@ -58,6 +58,12 @@ QWebService::~QWebService()
 }
 
 /*!
+    \fn QWebService::errorEncountered(QString errMessage)
+
+    Singal emitted when WsdlConverter encounters an error. Carries \a errMessage for convenience.
+  */
+
+/*!
     \fn QWebService::methodNames() const
 
     Returns a list of methods' names.
@@ -165,6 +171,18 @@ bool QWebService::isErrorState()
     return errorState;
 }
 
+/*!
+    \fn QWebService::errorInfo() const
+
+    Returns QString with error message in case an error occured. Otherwise, returns empty string.
+
+    \sa isErrorState()
+  */
+QString QWebService::errorInfo() const
+{
+    return errorMessage;
+}
+
 //QString QWebService::getWsdl()
 //{
 
@@ -179,10 +197,26 @@ bool QWebService::isErrorState()
 void QWebService::init()
 {
     errorState = false;
+    errorMessage = "";
     messages = new QMap<QString, QWebServiceMethod *>();
 
     if (isErrorState())
         return;
 
     messages = wsdl->methods();
+}
+
+/*!
+    \internal
+    \fn QWebService::enterErrorState(QString errMessage)
+
+    Enters into error state with message \a errMessage.
+  */
+bool QWebService::enterErrorState(QString errMessage)
+{
+    errorState = true;
+    errorMessage += errMessage + " ";
+    qDebug() << errMessage;
+    emit errorEncountered(errMessage);
+    return false;
 }

@@ -28,12 +28,18 @@ public:
     QUrl hostUrl() const;
     QString host() const;
     bool isErrorState();
+    QString errorInfo() const;
 //    QString getWsdl();
+
+signals:
+    void errorEncountered(QString errMessage);
 
 protected:
     void init();
+    bool enterErrorState(QString errMessage = "");
 
     bool errorState;
+    QString errorMessage;
     QUrl m_hostUrl;
     QWsdl *wsdl;
     QMap<QString, QWebServiceMethod *> *messages; // This is general, but should work for custom classes.

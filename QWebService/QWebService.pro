@@ -17,7 +17,7 @@ CONFIG += dll
 
 DEFINES += QWEBSERVICE_LIBRARY
 
-VERSION = 0.4.0
+VERSION = 0.4.1
 
 DESTDIR = ../lib
 OBJECTS_DIR = ../build-QWebService

@@ -21,16 +21,7 @@
 QWsdl::QWsdl(QObject *parent) :
     QObject(parent)
 {
-    replyReceived = false;
-    errorState = false;
-    errorMessage = "";
-    m_webServiceName = "";
-    m_hostUrl.setHost("");
-    m_targetNamespace = "";
-
-    workMethodList = new QStringList();
-    workMethodParameters = new QMap<int, QMap<QString, QVariant> >();
-    methodsMap = new QMap<QString, QWebServiceMethod *>;
+    init();
 }
 
 /*!
@@ -42,17 +33,7 @@ QWsdl::QWsdl(QObject *parent) :
 QWsdl::QWsdl(QString wsdlFile, QObject *parent) :
     QObject(parent), wsdlFilePath(wsdlFile)
 {
-    replyReceived = false;
-    errorState = false;
-    errorMessage = "";
-    m_webServiceName = "";
-    m_hostUrl.setHost("");
-    m_targetNamespace = "";
-
-    workMethodList = new QStringList();
-    workMethodParameters = new QMap<int, QMap<QString, QVariant> >();
-    methodsMap = new QMap<QString, QWebServiceMethod *>;
-
+    init();
     parse();
 }
 
@@ -67,6 +48,12 @@ QWsdl::~QWsdl()
     delete workMethodList;
     delete workMethodParameters;
 }
+
+/*!
+    \fn QWsdl::errorEncountered(QString errMessage)
+
+    Singal emitted when WsdlConverter encounters an error. Carries \a errMessage for convenience.
+  */
 
 /*!
     \fn QWsdl::setWsdlFile(QString wsdlFile)
@@ -199,9 +186,13 @@ void QWsdl::resetWsdl(QString newWsdlPath)
 
     methodsMap->clear();
     workMethodList->clear();
+    workMethodParameters->clear();
     replyReceived = false;
     errorState = false;
     errorMessage = "";
+    m_webServiceName = "";
+    m_hostUrl.setHost("");
+    m_targetNamespace = "";
     xmlReader.clear();
 
     parse();
@@ -242,6 +233,41 @@ void QWsdl::fileReplyFinished(QNetworkReply *rply)
     file.close();
     replyReceived = true;
 //    emit replyReady(reply);
+}
+
+/*!
+  \internal
+  \fn QWsdl::init()
+
+  Initialises the object.
+  */
+void QWsdl::init()
+{
+    replyReceived = false;
+    errorState = false;
+    errorMessage = "";
+    m_webServiceName = "";
+    m_hostUrl.setHost("");
+    m_targetNamespace = "";
+
+    workMethodList = new QStringList();
+    workMethodParameters = new QMap<int, QMap<QString, QVariant> >();
+    methodsMap = new QMap<QString, QWebServiceMethod *>;
+}
+
+/*!
+    \internal
+    \fn QWsdl::enterErrorState(QString errMessage)
+
+    Enters into error state with message \a errMessage.
+  */
+bool QWsdl::enterErrorState(QString errMessage)
+{
+    errorState = true;
+    errorMessage += errMessage + " ";
+    qDebug() << errMessage;
+    emit errorEncountered(errMessage);
+    return false;
 }
 
 /*!
