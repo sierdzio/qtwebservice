@@ -79,7 +79,7 @@ QWebServiceMethod::QWebServiceMethod(QString url, QString messageName,
     parameters = params;
     setProtocol(protocol);
     setHttpMethod(method);
-    m_hostUrl.setHost(url + m_messageName);
+    m_hostUrl.setHost(url);// + m_messageName);
 }
 
 

@@ -1,5 +1,5 @@
-#ifndef QWEBSERVICEREADERABSTRACT_H
-#define QWEBSERVICEREADERABSTRACT_H
+#ifndef QWEBSERVICEREADER_H
+#define QWEBSERVICEREADER_H
 
 #include "QWebService_global.h"
 #include "qwebservice.h"
@@ -22,4 +22,4 @@ protected:
 
 };
 
-#endif // QWEBSERVICEREADERABSTRACT_H
+#endif // QWEBSERVICEREADER_H

@@ -1,5 +1,5 @@
-#ifndef QWEBSERVICEMETHODABSTRACT_H
-#define QWEBSERVICEMETHODABSTRACT_H
+#ifndef QWEBSERVICEMETHOD_H
+#define QWEBSERVICEMETHOD_H
 
 #include <QtCore/qobject.h>
 #include <QtCore/qurl.h>
@@ -28,4 +28,4 @@ public:
 
 };
 
-#endif // QWEBSERVICEMETHODABSTRACT_H
+#endif // QWEBSERVICEMETHOD_H

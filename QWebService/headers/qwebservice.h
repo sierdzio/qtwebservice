@@ -1,5 +1,5 @@
-#ifndef QWEBSERVICEABSTRACT_H
-#define QWEBSERVICEABSTRACT_H
+#ifndef QWEBSERVICE_H
+#define QWEBSERVICE_H
 
 #include <QtCore/qurl.h>
 #include "QWebService_global.h"
@@ -45,4 +45,4 @@ protected:
     QMap<QString, QWebServiceMethod *> *messages; // This is general, but should work for custom classes.
 };
 
-#endif // QWEBSERVICEABSTRACT_H
+#endif // QWEBSERVICE_H

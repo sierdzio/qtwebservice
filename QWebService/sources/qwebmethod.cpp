@@ -489,6 +489,16 @@ bool QWebMethod::isErrorState() const
 }
 
 /*!
+  \fn QWebMethod::isReplyReady() const
+
+  Returns true if reply was received.
+  */
+bool QWebMethod::isReplyReady() const
+{
+    return replyReceived;
+}
+
+/*!
     \fn QWebMethod::replyFinished(QNetworkReply *netReply)
 
     Public (will probably be private in the future) slot, which processes the reply (\a netReply) from the server.

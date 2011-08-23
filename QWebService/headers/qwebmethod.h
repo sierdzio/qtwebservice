@@ -1,5 +1,5 @@
-#ifndef QWebMethod_H
-#define QWebMethod_H
+#ifndef QWEBMETHOD_H
+#define QWEBMETHOD_H
 
 #include <QtNetwork/qnetworkaccessmanager.h>
 #include <QtNetwork/qnetworkrequest.h>
@@ -67,6 +67,7 @@ public:
     QString httpMethodString() const;
     QString errorInfo() const;
     bool isErrorState() const;
+    bool isReplyReady() const;
 
 signals:
     void replyReady(QVariant rply);
@@ -99,4 +100,4 @@ protected: // Changed for 0.3.5, but precisely what should be protected and what
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QWebMethod::Protocols)
 
-#endif // QWebMethod_H
+#endif // QWEBMETHOD_H
