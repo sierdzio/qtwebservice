@@ -6,7 +6,8 @@
 #include <QtCore/qmap.h>
 #include <QtCore/qdir.h>
 #include <QtCore/qtextstream.h>
-#include <QWebService>
+//#include <QWebService>
+#include <qwebservicemethod.h>
 #include "flags.h"
 
 class MessageGenerator : public QObject

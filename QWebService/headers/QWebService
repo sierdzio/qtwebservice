@@ -3,9 +3,9 @@
 
 #include "QWebService_global.h"
 #include "qwebmethod.h"
+#include "qwebservicemethod.h"
 #include "qwsdl.h"
 #include "qwebservice.h"
 #include "qwebservicereader.h"
-#include "qwebservicemethod.h"
 
 #endif // QWEBSERVICE_H

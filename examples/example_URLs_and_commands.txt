@@ -13,5 +13,3 @@ Commands:
 ./qtWsdlConverter examples/stockquote.asmx myGreatNewQWebService
 
 *********************
-TODO:
- - add real parameters as variables in converter!

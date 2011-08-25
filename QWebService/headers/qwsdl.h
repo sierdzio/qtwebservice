@@ -7,9 +7,8 @@
 #include <QtCore/qstring.h>
 #include <QtCore/qstringlist.h>
 #include <QtCore/qdatetime.h>
-#include "qwebmethod.h"
-#include "qwebservicemethod.h"
 #include "QWebService_global.h"
+#include "qwebservicemethod.h"
 
 class QWEBSERVICESHARED_EXPORT QWsdl : public QObject
 {

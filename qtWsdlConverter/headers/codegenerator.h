@@ -5,7 +5,9 @@
 #include <QtCore/qstring.h>
 #include <QtCore/qmap.h>
 #include <QtCore/qdir.h>
-#include <QWebService>
+//#include <QWebService>
+#include <qwebservicemethod.h>
+#include <qwsdl.h>
 #include "flags.h"
 #include "messagegenerator.h"
 

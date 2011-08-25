@@ -13,49 +13,61 @@ class TestQWebServiceMethod : public QObject
 
 private slots:
     void asynchronousTest();
-//    void synchronousTest();
+    void synchronousTest();
 };
 
 void TestQWebServiceMethod::asynchronousTest()
 {
     // Message parameters are specified here.
-    QMap<QString, QVariant> tmpP;
-    tmpP.insert("symbol", QVariant("NOK"));
+//    QMap<QString, QVariant> tmpP;
+//    tmpP.insert("symbol", QVariant("NOK"));
 
-    QWebServiceMethod *message = new QWebServiceMethod("http://www.webservicex.net/stockquote.asmx", "GetQuote",
-                                                        tmpP, this, QWebMethod::soap12, QWebMethod::POST);
+    QWebServiceMethod *message = new
+            QWebServiceMethod("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx",
+                              "getProviderList",
+                              this, QWebMethod::soap12, QWebMethod::POST);
 
 //    connect(message, SIGNAL(replyReady(QVariant)), this, SLOT(messageResponse(QVariant)));
 
-    message->setTargetNamespace("http://www.webserviceX.NET/");
-//    message->sendMessage();
+    message->setTargetNamespace("http://www.daenet.de/webservices/CurrencyServer");
+    message->sendMessage();
 
     QCOMPARE(message->isErrorState(), bool(false));
 
-//    QTest::qWait(10000);
-//    bool result = false;
-//    if (message->isReplyReady()) {
-//            result = true;
-//        }
+    bool result = false;
+    for (int i = 0; (i < 50) && (!message->isReplyReady()); i++)
+        QTest::qWait(250);
 
-//    QCOMPARE(result, bool(true));
+    if (message->isReplyReady()) {
+            result = true;
+            qDebug() << message->replyRead().toString();
+        }
 
+    QCOMPARE(result, bool(true));
     delete message;
 }
-/*
+
 void TestQWebServiceMethod::synchronousTest()
 {
     // Message parameters are specified here.
     QMap<QString, QVariant> tmpP;
-    tmpP.insert("symbol", QVariant("NOK"));
+//    tmpP.insert("symbol", QVariant("NOK"));
 
-    QString result = "";
-    result = QWebServiceMethod::sendMessage(this, QUrl("http://www.webservicex.net/stockquote.asmx"),
-                                            "GetQuote", tmpP, QWebMethod::soap12).toString();
+    bool result = false;
+    QString reply = "pass";
+    reply = QWebServiceMethod::sendMessage(this,
+                                           QUrl("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx"),
+                                           "getProviderList", "http://www.daenet.de/webservices/CurrencyServer",
+                                           tmpP, QWebMethod::soap12).toString();
 
-    QEXPECT_FAIL("", "Expected non-empty string", Continue);
-    QCOMPARE(result, QString(""));
+    if ((reply != "") && (reply != "pass"))
+    {
+        qDebug() << reply;
+        result = true;
+    }
+
+    QCOMPARE(result, bool(true));
 }
-*/
+
 QTEST_MAIN(TestQWebServiceMethod)
 #include "tst_qwebservicemethod.moc"

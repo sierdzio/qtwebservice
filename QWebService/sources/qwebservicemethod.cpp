@@ -27,15 +27,14 @@ QWebServiceMethod::QWebServiceMethod(QObject *parent) :
 
     \sa init(), setParameters(), setProtocol(), sendMessage()
   */
-QWebServiceMethod::QWebServiceMethod(QUrl url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method) :
-    QWebMethod(parent)
+QWebServiceMethod::QWebServiceMethod(QUrl url, QString messageName, QObject *parent,
+                                     Protocol protocol, HttpMethod method) :
+    QWebMethod(parent, protocol, method)
 {
-    init();
     m_hostUrl = url;
     m_messageName = messageName;
     setProtocol(protocol);
     setHttpMethod(method);
-    parameters.clear();
 }
 
 /*!
@@ -47,21 +46,20 @@ QWebServiceMethod::QWebServiceMethod(QUrl url, QString messageName, QObject *par
 
     \sa init(), setParameters(), setProtocol(), sendMessage()
   */
-QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method) :
-    QWebMethod(parent)
+QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QObject *parent,
+                                     Protocol protocol, HttpMethod method) :
+    QWebMethod(parent, protocol, method)
 {
-    init();
     m_messageName = messageName;
     setProtocol(protocol);
     setHttpMethod(method);
-    m_hostUrl.setHost(url + m_messageName);
-    parameters.clear();
+    m_hostUrl.setUrl(url);
 }
 
 /*!
     \fn QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QMap<QString, QVariant> params, QObject *parent, Protocol protocol, HttpMethod method)
 
-    Constructs the message using \a url, \a messageName, \a parent, \a protocol (which defaults to soap12),
+    Constructs the message using \a url, \a messageName, \a tNamespace, \a parent, \a protocol (which defaults to soap12),
     and \a method (which defaults to POST).
     This constructor also takes message parameters (\a params).
     Does not require specifying any more information, but you still need to manually send the message
@@ -69,17 +67,17 @@ QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QObject *
 
     \sa init(), sendMessage(), setProtocol()
   */
-QWebServiceMethod::QWebServiceMethod(QString url, QString messageName,
+QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QString tNamespace,
                        QMap<QString, QVariant> params, QObject *parent,
                        Protocol protocol, HttpMethod method) :
-    QWebMethod(parent)
+    QWebMethod(parent, protocol, method)
 {
-    init();
     m_messageName = messageName;
+    m_targetNamespace = tNamespace;
     parameters = params;
     setProtocol(protocol);
     setHttpMethod(method);
-    m_hostUrl.setHost(url);// + m_messageName);
+    m_hostUrl.setUrl(url);
 }
 
 
@@ -101,13 +99,15 @@ bool QWebServiceMethod::sendMessage(QMap<QString, QVariant> params)
 /*!
   \overload sendMessage()
 
-     STATIC method. Sends the message synchronously, using \a url, \a _messageName, \a params and \a parent.
+     STATIC method. Sends the message synchronously, using \a url, \a msgName, \a tNamespace, \a params
+     and \a parent.
      Protocol can optionally be specified by \a protocol (default is SOAP 1.2), as well as HTTP \a method
      (default is POST).
      Returns with web service reply.
   */
 QVariant QWebServiceMethod::sendMessage(QObject *parent, QUrl url,
-                                 QString _messageName, QMap<QString, QVariant> params,
+                                 QString msgName, QString tNamespace,
+                                 QMap<QString, QVariant> params,
                                  Protocol protocol, HttpMethod method)
 {
     /*
@@ -116,8 +116,9 @@ QVariant QWebServiceMethod::sendMessage(QObject *parent, QUrl url,
        QWebServiceMethod::Protocol protocol, QWebServiceMethod::HttpMethod httpMethod)
     */
 
-    QWebServiceMethod qsm(url.host(), _messageName, params, parent, protocol, method);
+    QWebServiceMethod qsm(url.host(), msgName, tNamespace, params, parent, protocol, method);
     qsm.m_hostUrl = url;
+//    qsm.m_targetNamespace = tNamespace;
 
     qsm.sendMessage();
     // TODO: ADD ERROR HANDLING!
@@ -125,6 +126,7 @@ QVariant QWebServiceMethod::sendMessage(QObject *parent, QUrl url,
         if (qsm.replyReceived) {
             return qsm.reply;
         } else {
+//            qApp->sendPostedEvents();
             qApp->processEvents();
         }
     }

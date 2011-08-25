@@ -2,7 +2,12 @@
 #define WSDLCONVERTER_H
 
 #include <QtCore/qobject.h>
-#include <QWebService>
+#include <QtCore/qstring.h>
+#include <QtCore/qmap.h>
+#include <QtCore/qstringlist.h>
+#include <QtCore/qvariant.h>
+//#include <QWebService>
+#include <qwsdl.h>
 #include "flags.h"
 #include "codegenerator.h"
 

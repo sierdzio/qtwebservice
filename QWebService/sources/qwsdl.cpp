@@ -609,9 +609,9 @@ void QWsdl::prepareMethods()
             if (isMethodAndResponsePresent == true) {
                 methodsMap->insert(methodName, new QWebServiceMethod(m_targetNamespace,
                                                              methodName,
+                                                             m_targetNamespace,
                                                              workMethodParameters->value(methodMain)));
                 methodsMap->value(methodName)->setReturnValue(workMethodParameters->value(methodReturn));
-                methodsMap->value(methodName)->setTargetNamespace(m_targetNamespace);
             }
         }
     }

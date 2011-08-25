@@ -50,7 +50,7 @@ public:
     void setTargetNamespace(QString tNamespace);
     void setProtocol(Protocol protocol);
     void setHttpMethod(HttpMethod method);
-    bool sendMessage(QByteArray requestData = 0);
+    bool sendMessage(QByteArray requestData = QByteArray());
 
     QVariant replyRead();
     QString messageName() const;
@@ -73,7 +73,7 @@ signals:
     void replyReady(QVariant rply);
     void errorEncountered(QString errMessage);
 
-public slots:
+protected slots:
     void replyFinished(QNetworkReply *reply);
 
 protected: // Changed for 0.3.5, but precisely what should be protected and what private shall be decided later.
@@ -94,7 +94,6 @@ protected: // Changed for 0.3.5, but precisely what should be protected and what
     QMap<QString, QVariant> parameters;
     QMap<QString, QVariant> returnValue;
     QNetworkAccessManager *manager;
-    QNetworkReply *networkReply;
     QByteArray data;
 };
 

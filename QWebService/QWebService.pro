@@ -23,19 +23,21 @@ DESTDIR = ../lib
 OBJECTS_DIR = ../build-QWebService
 
 SOURCES += \
+    sources/qwebmethod.cpp \
+    sources/qwebservicemethod.cpp \
     sources/qwsdl.cpp \
     sources/qwebservice.cpp \
-    sources/qwebservicemethod.cpp \
     sources/qwebservicereader.cpp \
-    sources/qwebmethod.cpp
+
 
 HEADERS += headers/QWebService_global.h \
-    headers/qwsdl.h \
     headers/QWebService \
-    headers/qwebservice.h \
+    headers/qwebmethod.h \
     headers/qwebservicemethod.h \
-    headers/qwebservicereader.h \
-    headers/qwebmethod.h
+    headers/qwsdl.h \
+    headers/qwebservice.h \
+    headers/qwebservicereader.h
+
 
 symbian {
     #Symbian specific definitions

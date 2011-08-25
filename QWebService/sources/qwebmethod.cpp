@@ -110,7 +110,6 @@ QWebMethod::QWebMethod(QObject *parent, Protocol protocol, HttpMethod method) :
 QWebMethod::~QWebMethod()
 {
     delete manager;
-    delete networkReply;
 //    this->deleteLater();
 }
 
@@ -257,6 +256,7 @@ void QWebMethod::setHttpMethod(HttpMethod method)
 bool QWebMethod::sendMessage(QByteArray requestData)
 {
     QNetworkRequest request;
+//    m_hostUrl.setPath(m_messageName);
     request.setUrl(m_hostUrl);
 
     if (protocolUsed & soap)
@@ -271,10 +271,15 @@ bool QWebMethod::sendMessage(QByteArray requestData)
     if (protocolUsed & soap10)
         request.setRawHeader(QByteArray("SOAPAction"), QByteArray(m_hostUrl.toString().toAscii()));
 
-    if (!requestData.isNull())
+    if (requestData.isNull() || requestData.isEmpty())
         prepareRequestData();
     else
         data = requestData;
+
+    // OPTIONAL - FOR TESTING:
+//    qDebug() << request.url().toString();
+//    qDebug() << QString(data);
+    // ENDOF: OPTIONAL - FOR TESTING
 
     if (protocolUsed & rest) {
         if (httpMethodUsed == POST)
@@ -506,10 +511,9 @@ bool QWebMethod::isReplyReady() const
   */
 void QWebMethod::replyFinished(QNetworkReply *netReply)
 {
-    networkReply = netReply;
     QByteArray replyBytes;
 
-    replyBytes = (networkReply->readAll());
+    replyBytes = (netReply->readAll());
     QString replyString = convertReplyToUtf(replyBytes);
 
     QString tempBegin = "<" + m_messageName + "Result>";
@@ -566,8 +570,8 @@ void QWebMethod::prepareRequestData()
     if (protocolUsed & soap) {
         if (protocolUsed & soap12) {
             header = "<?xml version=\"1.0\" encoding=\"utf-8\"?> " + endl +
-                     " <soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
-                     "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"" +
+                     " <soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
+                     "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" " +
                      "xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\"> " + endl +
                      " <soap12:Body> " + endl;
 
@@ -575,8 +579,8 @@ void QWebMethod::prepareRequestData()
         }
         else if (protocolUsed & soap10) {
             header = "<?xml version=\"1.0\" encoding=\"utf-8\"?> " + endl +
-                    " <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
-                    "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"" +
+                    " <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
+                    "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" " +
                     "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"> " + endl +
                     " <soap:Body> " + endl;
 
