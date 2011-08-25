@@ -156,7 +156,7 @@ QUrl QWebService::hostUrl() const
   */
 QString QWebService::host() const
 {
-    return m_hostUrl.host();
+    return m_hostUrl.path();
 }
 
 /*!

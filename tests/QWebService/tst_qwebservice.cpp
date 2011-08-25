@@ -1,5 +1,5 @@
 #include <QtTest/QtTest>
-#include <qwebservice.h>
+#include <qwebservicereader.h>
 
 /**
   This test case checks both QWebService functionality.
@@ -11,62 +11,116 @@ class TestQWebService : public QObject
 
 private slots:
     void initialTest();
+    void gettersTest();
+    void settersTest();
 };
 
+/*
+  Performs basic checks of constructor and basic methods.
+  */
 void TestQWebService::initialTest()
 {
-    QWebService newService;
+    // TODO: test all constructors!
+    QWebServiceReader *reader;
+    reader = new QWebServiceReader("../../examples/band_ws.asmx", this);
+    QCOMPARE(reader->isErrorState(), bool(false));
 
-    QCOMPARE(newService.isErrorState(), bool(false));
+    delete reader;
+}
+
+void TestQWebService::gettersTest()
+{
+    QWebServiceReader reader("../../examples/band_ws.asmx", this);
+
+    QCOMPARE(reader.host(), QString(""));
+    QCOMPARE(reader.hostUrl(), QUrl(""));
+    QCOMPARE(reader.isErrorState(), bool(false));
+    QCOMPARE(reader.errorInfo(), QString(""));
+    QCOMPARE(reader.methodNames().size(), int(13));
+
+    QStringList tempList = reader.methodNames();
+
+    foreach (QString s, tempList) {
+        QMap<QString, QVariant> tempParams = reader.parameterNamesTypes(s);
+        QMap<QString, QVariant> tempReturns = reader.returnValueNameType(s);
+
+        if (s == "getBandName") {
+            QCOMPARE(tempParams.size(), int(1));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getBandDescription") {
+            QCOMPARE(tempParams.size(), int(1));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getBandsList") {
+            QCOMPARE(tempParams.size(), int(0));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getBandsListForGenreAndDate") {
+            QCOMPARE(tempParams.size(), int(2));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getBandsListForGenre") {
+            QCOMPARE(tempParams.size(), int(1));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getGenreList") {
+            QCOMPARE(tempParams.size(), int(0));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getBandPricePerShow") {
+            QCOMPARE(tempParams.size(), int(1));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getBandsForADate") {
+            QCOMPARE(tempParams.size(), int(1));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getNextEmptySlot") {
+            QCOMPARE(tempParams.size(), int(2));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "bookABand") {
+            QCOMPARE(tempParams.size(), int(11));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "cancelBookingById") {
+            QCOMPARE(tempParams.size(), int(1));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "cancelBookingById") {
+            QCOMPARE(tempParams.size(), int(3));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getBandSchedule") {
+            QCOMPARE(tempParams.size(), int(1));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+    }
 }
 
 QTEST_MAIN(TestQWebService)
 #include "tst_qwebservice.moc"
 
-/*
-void testCase3_webservice::runWebServiceTest(QString filePathOrUrl)
+void TestQWebService::settersTest()
 {
+    QWebServiceReader *reader;
+    reader = new QWebServiceReader("../../examples/band_ws.asmx", this);
+    QCOMPARE(reader->isErrorState(), bool(false));
 
-//      Prints out methods with their parameters and return types and names.
+    reader->setHost("../../examples/LondonGoldFix.asmx.xml");
+    QCOMPARE(reader->isErrorState(), bool(false));
+    QCOMPARE(reader->host(), QString("../../examples/LondonGoldFix.asmx.xml"));
+    QCOMPARE(reader->hostUrl(), QUrl("../../examples/LondonGoldFix.asmx.xml"));
+    QCOMPARE(reader->errorInfo(), QString(""));
+    QCOMPARE(reader->methodNames().size(), int(1));
 
-    qDebug() << "Running testCase3";
-    reader = new QWebServiceReader(filePathOrUrl, this);
-    qDebug() << "Getting methods";
-    QStringList tempList = reader->methodNames();
-    qDebug() << "Listing methods";
-    if (!reader->isErrorState())
-    {
-        int i = 1;
-        foreach (QString s, tempList)
-        {
-            QMap<QString, QVariant> tempParams = reader->parameterNamesTypes(s);
-            QString params = "";
-            foreach (QString p, tempParams.keys())
-            {
-                if (params != "")
-                    params += ", ";
-                params += p + ":" + tempParams.value(p).typeName();
-            }
+    reader->setHost("../../examples/stockquote.asmx");
+    QCOMPARE(reader->isErrorState(), bool(false));
+    QCOMPARE(reader->host(), QString("../../examples/stockquote.asmx"));
+    QCOMPARE(reader->hostUrl(), QUrl("../../examples/stockquote.asmx"));
+    QCOMPARE(reader->errorInfo(), QString(""));
+    QCOMPARE(reader->methodNames().size(), int(1));;
 
-            QMap<QString, QVariant> tempReturns = reader->returnValueNameType(s);
-            QString returns = "";
-            foreach (QString r, tempReturns.keys())
-            {
-                if (returns != "")
-                    returns += ", ";
-                returns += r + ":" + tempReturns.value(r).typeName();
-            }
-
-            qDebug() << i << ": " << s;
-            qDebug() << "\tParams: " << params;
-            qDebug() << "\tReturn: " << returns;
-            i++;
-        }
-        qDebug() << "Done";
-    }
-    else
-    {
-        qDebug() << "QWebServiceAbstract entered the error state and could not continue.";
-    }
+    delete reader;
 }
-*/

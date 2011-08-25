@@ -117,7 +117,7 @@ QString QWsdl::webServiceName() const
   */
 QString QWsdl::host() const
 {
-    return m_hostUrl.host();
+    return m_hostUrl.path();
 }
 
 /*!
@@ -622,7 +622,7 @@ void QWsdl::prepareMethods()
   */
 void QWsdl::readMessages()
 {
-    qDebug() << "WSDL :messages tag not supported yet.";
+//    qDebug() << "WSDL :messages tag not supported yet.";
     xmlReader.readNext();
 }
 
@@ -631,7 +631,7 @@ void QWsdl::readMessages()
   */
 void QWsdl::readPorts()
 {
-    qDebug() << "WSDL :portType tag not supported yet.";
+//    qDebug() << "WSDL :portType tag not supported yet.";
     xmlReader.readNext();
 }
 
@@ -640,7 +640,7 @@ void QWsdl::readPorts()
   */
 void QWsdl::readBindings()
 {
-    qDebug() << "WSDL :binding tag not supported yet.";
+//    qDebug() << "WSDL :binding tag not supported yet.";
     xmlReader.readNext();
 }
 
@@ -662,7 +662,7 @@ void QWsdl::readService()
   */
 void QWsdl::readDocumentation()
 {
-    qDebug() << "WSDL :documentation tag not supported yet.";
+//    qDebug() << "WSDL :documentation tag not supported yet.";
     xmlReader.readNext();
 }
 

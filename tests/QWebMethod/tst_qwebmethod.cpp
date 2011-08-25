@@ -11,10 +11,10 @@ class TestQWebMethod : public QObject
     Q_OBJECT
 
 private slots:
-    void initialTests();
+    void initialTest();
 };
 
-void TestQWebMethod::initialTests()
+void TestQWebMethod::initialTest()
 {
     QWebMethod *message = new QWebMethod(0, QWebMethod::soap12, QWebMethod::POST);
 
