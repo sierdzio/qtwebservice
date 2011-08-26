@@ -2,7 +2,7 @@
 #include <qwebservicereader.h>
 
 /**
-  This test case checks both QWebService functionality.
+  This test case checks both QWebService (and QWebServiceReader) functionality.
   */
 
 class TestQWebService : public QObject
@@ -20,14 +20,27 @@ private slots:
   */
 void TestQWebService::initialTest()
 {
-    // TODO: test all constructors!
-    QWebServiceReader *reader;
-    reader = new QWebServiceReader("../../examples/band_ws.asmx", this);
-    QCOMPARE(reader->isErrorState(), bool(false));
+    QWebServiceReader *reader1;
+    reader1 = new QWebServiceReader(this);
+    QCOMPARE(reader1->isErrorState(), bool(false));
 
-    delete reader;
+    QWebServiceReader *reader2;
+    reader2 = new QWebServiceReader("../../examples/band_ws.asmx", this);
+    QCOMPARE(reader2->isErrorState(), bool(false));
+
+    QWebServiceReader *reader3;
+    QWsdl *wsdl = new QWsdl("../../examples/band_ws.asmx", this);
+    reader3 = new QWebServiceReader(wsdl, this);
+    QCOMPARE(reader3->isErrorState(), bool(false));
+
+    delete reader1;
+    delete reader2;
+    delete reader3;
 }
 
+/*
+  Performs basic checks of getters.
+  */
 void TestQWebService::gettersTest()
 {
     QWebServiceReader reader("../../examples/band_ws.asmx", this);
@@ -99,9 +112,9 @@ void TestQWebService::gettersTest()
     }
 }
 
-QTEST_MAIN(TestQWebService)
-#include "tst_qwebservice.moc"
-
+/*
+  Performs basic checks of setters.
+  */
 void TestQWebService::settersTest()
 {
     QWebServiceReader *reader;
@@ -124,3 +137,6 @@ void TestQWebService::settersTest()
 
     delete reader;
 }
+
+QTEST_MAIN(TestQWebService)
+#include "tst_qwebservice.moc"

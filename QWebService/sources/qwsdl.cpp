@@ -69,6 +69,32 @@ void QWsdl::setWsdlFile(QString wsdlFile) // == resetWsdl()
 }
 
 /*!
+    \fn QWsdl::resetWsdl(QString newWsdlPath)
+
+    Can be used to set or reset a WSDL file (or URL), using \a newWsdlPath. Cleans and reinitialises
+    the object, parses the file.
+
+    \sa setWsdlFile()
+  */
+void QWsdl::resetWsdl(QString newWsdlPath)
+{
+    wsdlFilePath = newWsdlPath;
+
+    methodsMap->clear();
+    workMethodList->clear();
+    workMethodParameters->clear();
+    replyReceived = false;
+    errorState = false;
+    errorMessage = "";
+    m_webServiceName = "";
+    m_hostUrl.setUrl(wsdlFilePath); // CAUTION!
+    m_targetNamespace = "";
+    xmlReader.clear();
+
+    parse();
+}
+
+/*!
     \fn QWsdl::methodNames() const
 
     Returns a QStringList of names of web service's methods.
@@ -173,32 +199,6 @@ bool QWsdl::isErrorState() const
 }
 
 /*!
-    \fn QWsdl::resetWsdl(QString newWsdlPath)
-
-    Can be used to set or reset a WSDL file (or URL), using \a newWsdlPath. Cleans and reinitialises
-    the object, parses the file.
-
-    \sa setWsdlFile()
-  */
-void QWsdl::resetWsdl(QString newWsdlPath)
-{    
-    wsdlFilePath = newWsdlPath;
-
-    methodsMap->clear();
-    workMethodList->clear();
-    workMethodParameters->clear();
-    replyReceived = false;
-    errorState = false;
-    errorMessage = "";
-    m_webServiceName = "";
-    m_hostUrl.setHost("");
-    m_targetNamespace = "";
-    xmlReader.clear();
-
-    parse();
-}
-
-/*!
     \fn QWsdl::fileReplyFinished(QNetworkReply *rply)
 
     Asynchronous public return slot. Reads WSDL reply (\a rply) from server (used in case
@@ -247,7 +247,7 @@ void QWsdl::init()
     errorState = false;
     errorMessage = "";
     m_webServiceName = "";
-    m_hostUrl.setHost("");
+    m_hostUrl.setUrl("");
     m_targetNamespace = "";
 
     workMethodList = new QStringList();
@@ -607,7 +607,7 @@ void QWsdl::prepareMethods()
             }
 
             if (isMethodAndResponsePresent == true) {
-                methodsMap->insert(methodName, new QWebServiceMethod(m_targetNamespace,
+                methodsMap->insert(methodName, new QWebServiceMethod(m_hostUrl.path(),
                                                              methodName,
                                                              m_targetNamespace,
                                                              workMethodParameters->value(methodMain)));

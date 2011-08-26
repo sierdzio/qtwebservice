@@ -14,16 +14,133 @@ class TestQWsdl : public QObject
 
 private slots:
     void initialTest();
+    void gettersTest();
+    void settersTest();
 };
 
+/*
+  Performs basic checks of constructor and basic methods.
+  */
 void TestQWsdl::initialTest()
 {
-    QWsdl wsdl("../../examples/band_ws.asmx", this);
-    QCOMPARE(wsdl.isErrorState(), bool(false));
+    QWsdl *wsdl1 = new QWsdl(this);
+    QCOMPARE(wsdl1->isErrorState(), bool(false));
+    delete wsdl1;
 
-    QStringList tempList = wsdl.methodNames();
+    QWsdl wsdl2("../../examples/band_ws.asmx", this);
+    QCOMPARE(wsdl2.isErrorState(), bool(false));
+
+    QStringList tempList = wsdl2.methodNames();
     QCOMPARE(tempList.size(), int(13));
 }
+
+/*
+  Performs basic checks of getters.
+  */
+void TestQWsdl::gettersTest()
+{
+    QWsdl wsdl("../../examples/band_ws.asmx", this);
+
+    QCOMPARE(wsdl.host(), QString(""));
+    QCOMPARE(wsdl.hostUrl(), QUrl(""));
+    QCOMPARE(wsdl.webServiceName(), QString("band_ws"));
+    QCOMPARE(wsdl.targetNamespace(), QString("http://tempuri.org/"));
+    QCOMPARE(wsdl.isErrorState(), bool(false));
+    QCOMPARE(wsdl.errorInfo(), QString(""));
+    QCOMPARE(wsdl.methodNames().size(), int(13));
+
+    QStringList tempList = wsdl.methodNames();
+    QMap<QString, QWebServiceMethod *> *methods = wsdl.methods();
+
+    foreach (QString s, tempList) {
+        QMap<QString, QVariant> tempParams = methods->value(s)->parameterNamesTypes();
+        QMap<QString, QVariant> tempReturns = methods->value(s)->returnValueNameType();
+
+        if (s == "getBandName") {
+            QCOMPARE(tempParams.size(), int(1));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getBandDescription") {
+            QCOMPARE(tempParams.size(), int(1));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getBandsList") {
+            QCOMPARE(tempParams.size(), int(0));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getBandsListForGenreAndDate") {
+            QCOMPARE(tempParams.size(), int(2));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getBandsListForGenre") {
+            QCOMPARE(tempParams.size(), int(1));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getGenreList") {
+            QCOMPARE(tempParams.size(), int(0));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getBandPricePerShow") {
+            QCOMPARE(tempParams.size(), int(1));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getBandsForADate") {
+            QCOMPARE(tempParams.size(), int(1));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getNextEmptySlot") {
+            QCOMPARE(tempParams.size(), int(2));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "bookABand") {
+            QCOMPARE(tempParams.size(), int(11));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "cancelBookingById") {
+            QCOMPARE(tempParams.size(), int(1));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "cancelBookingById") {
+            QCOMPARE(tempParams.size(), int(3));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+        else if (s == "getBandSchedule") {
+            QCOMPARE(tempParams.size(), int(1));
+            QCOMPARE(tempReturns.size(), int(1));
+        }
+    }
+}
+
+/*
+  Performs basic checks of setters.
+  */
+void TestQWsdl::settersTest()
+{
+    QWsdl *wsdl;
+    wsdl = new QWsdl("../../examples/band_ws.asmx", this);
+    QCOMPARE(wsdl->isErrorState(), bool(false));
+
+    wsdl->resetWsdl("../../examples/LondonGoldFix.asmx.xml");
+    QCOMPARE(wsdl->isErrorState(), bool(false));
+    QCOMPARE(wsdl->host(), QString("../../examples/LondonGoldFix.asmx.xml"));
+    QCOMPARE(wsdl->hostUrl(), QUrl("../../examples/LondonGoldFix.asmx.xml"));
+    QCOMPARE(wsdl->webServiceName(), QString("LondonGoldAndSilverFix"));
+    QCOMPARE(wsdl->targetNamespace(), QString("http://www.webservicex.net"));
+    QCOMPARE(wsdl->errorInfo(), QString(""));
+    QCOMPARE(wsdl->methodNames().size(), int(1));
+
+    wsdl->setWsdlFile("../../examples/stockquote.asmx");
+    QCOMPARE(wsdl->isErrorState(), bool(false));
+    QCOMPARE(wsdl->host(), QString("../../examples/stockquote.asmx"));
+    QCOMPARE(wsdl->hostUrl(), QUrl("../../examples/stockquote.asmx"));
+    QCOMPARE(wsdl->webServiceName(), QString("StockQuote"));
+    QCOMPARE(wsdl->targetNamespace(), QString("http://www.webserviceX.NET/"));
+    QCOMPARE(wsdl->errorInfo(), QString(""));
+    QCOMPARE(wsdl->methodNames().size(), int(1));;
+
+    delete wsdl;
+}
+
 
 QTEST_MAIN(TestQWsdl)
 #include "tst_qwsdl.moc"

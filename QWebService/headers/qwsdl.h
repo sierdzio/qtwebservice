@@ -20,6 +20,8 @@ public:
     ~QWsdl();
 
     void setWsdlFile(QString wsdlFile); // == resetWsdl()
+    void resetWsdl(QString newWsdl);
+
     QStringList methodNames() const;
     QMap<QString, QWebServiceMethod *> *methods();
     QString webServiceName() const;
@@ -27,10 +29,9 @@ public:
     QUrl hostUrl() const;
     QString targetNamespace() const;
     //QFile getWsdl(); Rethink that. Maybe QString? Or saving to file specified in parameter?
-
     QString errorInfo() const;
     bool isErrorState() const;
-    void resetWsdl(QString newWsdl);
+
 
 signals:
     void errorEncountered(QString errMessage);

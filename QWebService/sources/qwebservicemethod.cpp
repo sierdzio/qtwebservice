@@ -2,9 +2,14 @@
 
 /*!
     \class QWebServiceMethod
-    \brief Unused class, was meant to be a high-level wrapper for QWebServiceMethod.
+    \brief Extends QWebMethod with some generic constructors and synchronous message sending.
 
-    This class will probably be dropped, or at least seriously refactored in the future.
+
+    Subclass of QWebMethod, contains many generic methods for sending messages. Can be used both synchronously
+    (through static sendMessage() method), or asynchronously (indicates, when reply is ready by emitting
+    a replyReady() signal).
+
+    More description in the future :)
   */
 
 /*!
@@ -57,7 +62,7 @@ QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QObject *
 }
 
 /*!
-    \fn QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QMap<QString, QVariant> params, QObject *parent, Protocol protocol, HttpMethod method)
+    \fn QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QString tNamespace, QMap<QString, QVariant> params, QObject *parent, Protocol protocol, HttpMethod method)
 
     Constructs the message using \a url, \a messageName, \a tNamespace, \a parent, \a protocol (which defaults to soap12),
     and \a method (which defaults to POST).
@@ -118,7 +123,6 @@ QVariant QWebServiceMethod::sendMessage(QObject *parent, QUrl url,
 
     QWebServiceMethod qsm(url.host(), msgName, tNamespace, params, parent, protocol, method);
     qsm.m_hostUrl = url;
-//    qsm.m_targetNamespace = tNamespace;
 
     qsm.sendMessage();
     // TODO: ADD ERROR HANDLING!
@@ -126,7 +130,6 @@ QVariant QWebServiceMethod::sendMessage(QObject *parent, QUrl url,
         if (qsm.replyReceived) {
             return qsm.reply;
         } else {
-//            qApp->sendPostedEvents();
             qApp->processEvents();
         }
     }

@@ -7,6 +7,13 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
  - QWebService: run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./QWebService/qwebservice.qdocconf
  - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
 
+26.08.2011 09:13 CEST:
+ - added all constructors' tests to TestQWebService::initialTest(),
+ - added all constructors' tests to TestQWsdl::initialTest(),
+ - added gettersTest() and settersTest() to TestQWsdl,
+ - added gettersTest() and settersTest() to TestQWebMethod,
+ - updated QDoc.
+
 25.08.2011 18:37 CEST:
  - added QWebService test "initialTest", which checks QWebServiceReader using band_ws.asmx WSDL file located
    in examles/ dir,

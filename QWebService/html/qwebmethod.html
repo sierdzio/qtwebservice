@@ -16,9 +16,9 @@
 <ul>
 <li class="level1"><a href="#public-types">Public Types</a></li>
 <li class="level1"><a href="#public-functions">Public Functions</a></li>
-<li class="level1"><a href="#public-slots">Public Slots</a></li>
 <li class="level1"><a href="#signals">Signals</a></li>
 <li class="level1"><a href="#protected-functions">Protected Functions</a></li>
+<li class="level1"><a href="#protected-slots">Protected Slots</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
 </div>
@@ -48,6 +48,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> HttpMethod </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#httpMethod">httpMethod</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#httpMethodString">httpMethodString</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#isErrorState">isErrorState</a></b> () const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#isReplyReady">isReplyReady</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#messageName">messageName</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#parameterNames">parameterNames</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</a></b> () const</td></tr>
@@ -56,7 +57,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QVariant </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#replyRead">replyRead</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#returnValueName">returnValueName</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#returnValueNameType">returnValueNameType</a></b> () const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#sendMessage">sendMessage</a></b> ( QByteArray <i>requestData</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#sendMessage">sendMessage</a></b> ( QByteArray <i>requestData</i> = QByteArray() )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setHost">setHost</a></b> ( QString <i>newHost</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setHost-2">setHost</a></b> ( QUrl <i>newHost</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setHttpMethod">setHttpMethod</a></b> ( HttpMethod <i>method</i> )</td></tr>
@@ -66,11 +67,6 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setReturnValue">setReturnValue</a></b> ( QMap&lt;QString, QVariant&gt; <i>returnVal</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setTargetNamespace">setTargetNamespace</a></b> ( QString <i>tNamespace</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#targetNamespace">targetNamespace</a></b> () const</td></tr>
-</table>
-<a name="public-slots"></a>
-<h2>Public Slots</h2>
-<table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#replyFinished">replyFinished</a></b> ( QNetworkReply * <i>netReply</i> )</td></tr>
 </table>
 <a name="signals"></a>
 <h2>Signals</h2>
@@ -83,6 +79,11 @@
 <table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#init">init</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#prepareRequestData">prepareRequestData</a></b> ()</td></tr>
+</table>
+<a name="protected-slots"></a>
+<h2>Protected Slots</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#replyFinished">replyFinished</a></b> ( QNetworkReply * <i>netReply</i> )</td></tr>
 </table>
 <a name="details"></a>
 <!-- $$$QWebMethod-description -->
@@ -194,6 +195,10 @@
 <p>Returns true if there was an error, false otherwise. Details about an error can be read with getErrorInfo().</p>
 <p>See also <a href="qwebmethod.html#errorInfo">errorInfo</a>().</p>
 <!-- @@@isErrorState -->
+<!-- $$$isReplyReady[overload1]$$$isReplyReady -->
+<h3 class="fn"><a name="isReplyReady"></a>bool QWebMethod::isReplyReady () const</h3>
+<p>Returns true if reply was received.</p>
+<!-- @@@isReplyReady -->
 <!-- $$$messageName[overload1]$$$messageName -->
 <h3 class="fn"><a name="messageName"></a>QString QWebMethod::messageName () const</h3>
 <p>Returns message's name.</p>
@@ -222,7 +227,7 @@
 <p>Returns protocol used in form of a QString. If <i>includeRest</i> is true, and --rest flag was specified, it appends &quot;,rest&quot; to the result.</p>
 <!-- @@@protocolString -->
 <!-- $$$replyFinished[overload1]$$$replyFinishedQNetworkReply* -->
-<h3 class="fn"><a name="replyFinished"></a>void QWebMethod::replyFinished ( QNetworkReply * <i>netReply</i> )<tt> [slot]</tt></h3>
+<h3 class="fn"><a name="replyFinished"></a>void QWebMethod::replyFinished ( QNetworkReply * <i>netReply</i> )<tt> [protected slot]</tt></h3>
 <p>Public (will probably be private in the future) slot, which processes the reply (<i>netReply</i>) from the server. Emits the <a href="qwebmethod.html#replyReady">replyReady</a>() signal.</p>
 <!-- @@@replyFinished -->
 <!-- $$$replyRead[overload1]$$$replyRead -->
@@ -242,7 +247,7 @@
 <p>Returns whole return value information (name and type).</p>
 <!-- @@@returnValueNameType -->
 <!-- $$$sendMessage[overload1]$$$sendMessageQByteArray -->
-<h3 class="fn"><a name="sendMessage"></a>bool QWebMethod::sendMessage ( QByteArray <i>requestData</i> = 0 )</h3>
+<h3 class="fn"><a name="sendMessage"></a>bool QWebMethod::sendMessage ( QByteArray <i>requestData</i> = QByteArray() )</h3>
 <p>Sends the message asynchronously, assuming that all neccessary data was specified earlier. Optionally, a QByteArray (<i>requestData</i>) can be specified - it will override standard data encapsulation (preparation, see <a href="qwebmethod.html#prepareRequestData">prepareRequestData</a>()), and send the byte array without any changes.</p>
 <p>If synchronous operation is needed, you can:</p>
 <ul>

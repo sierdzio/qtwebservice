@@ -25,6 +25,7 @@
         <keyword ref="qwebmethod.html#httpMethodString">httpMethodString</keyword>
         <keyword ref="qwebmethod.html#init">init</keyword>
         <keyword ref="qwebmethod.html#isErrorState">isErrorState</keyword>
+        <keyword ref="qwebmethod.html#isReplyReady">isReplyReady</keyword>
         <keyword ref="qwebmethod.html#messageName">messageName</keyword>
         <keyword ref="qwebmethod.html#parameterNames">parameterNames</keyword>
         <keyword ref="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</keyword>
