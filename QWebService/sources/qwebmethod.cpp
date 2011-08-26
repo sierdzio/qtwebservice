@@ -150,6 +150,16 @@ void QWebMethod::setMessageName(QString newName)
 }
 
 /*!
+  \fn QWebMethod::setMethodName(QString newName)
+
+  Set's message's name to \a newName.
+  */
+void QWebMethod::setMethodName(QString newName)
+{
+    m_messageName = newName;
+}
+
+/*!
     \fn QWebMethod::setParameters(QMap<QString, QVariant> params)
 
     Sets method's parameters (\a params). This also includes their names.

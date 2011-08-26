@@ -156,6 +156,9 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="setMessageName" fullname="QWebMethod::setMessageName" href="qwebmethod.html#setMessageName" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setMessageName(QString newName)">
                 <parameter left="QString" right="" name="newName" default=""/>
             </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setMethodName" fullname="QWebMethod::setMethodName" href="qwebmethod.html#setMethodName" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setMethodName(QString newName)">
+                <parameter left="QString" right="" name="newName" default=""/>
+            </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="setParameters" fullname="QWebMethod::setParameters" href="qwebmethod.html#setParameters" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setParameters(QMap&lt;QString, QVariant&gt; params)">
                 <parameter left="QMap&lt;QString, QVariant&gt;" right="" name="params" default=""/>
             </function>
@@ -185,7 +188,7 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="hostUrl" fullname="QWebMethod::hostUrl" href="qwebmethod.html#hostUrl" location="qwebmethod.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="QUrl" signature="hostUrl() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="protocol" fullname="QWebMethod::protocol" href="qwebmethod.html#protocol" location="qwebmethod.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="Protocol" signature="protocol() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="protocolString" fullname="QWebMethod::protocolString" href="qwebmethod.html#protocolString" location="qwebmethod.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="protocolString(bool includeRest) const">
-                <parameter left="bool" right="" name="includeRest" default=""/>
+                <parameter left="bool" right="" name="includeRest" default="false"/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="httpMethod" fullname="QWebMethod::httpMethod" href="qwebmethod.html#httpMethod" location="qwebmethod.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="HttpMethod" signature="httpMethod() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="httpMethodString" fullname="QWebMethod::httpMethodString" href="qwebmethod.html#httpMethodString" location="qwebmethod.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="httpMethodString() const"/>

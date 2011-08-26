@@ -19,7 +19,7 @@ private slots:
 void TestQWebServiceMethod::asynchronousTest()
 {
     // Message parameters are specified here.
-//    QMap<QString, QVariant> tmpP;
+    QMap<QString, QVariant> tmpP;
 //    tmpP.insert("symbol", QVariant("NOK"));
 
     QWebServiceMethod *message = new
@@ -30,7 +30,7 @@ void TestQWebServiceMethod::asynchronousTest()
 //    connect(message, SIGNAL(replyReady(QVariant)), this, SLOT(messageResponse(QVariant)));
 
     message->setTargetNamespace("http://www.daenet.de/webservices/CurrencyServer");
-    message->sendMessage();
+    message->sendMessage(tmpP);
 
     QCOMPARE(message->isErrorState(), bool(false));
 
@@ -39,9 +39,9 @@ void TestQWebServiceMethod::asynchronousTest()
         QTest::qWait(250);
 
     if (message->isReplyReady()) {
-            result = true;
-            qDebug() << message->replyRead().toString();
-        }
+        result = true;
+//        qDebug() << message->replyRead().toString();
+    }
 
     QCOMPARE(result, bool(true));
     delete message;

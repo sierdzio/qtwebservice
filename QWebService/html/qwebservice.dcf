@@ -41,6 +41,7 @@
         <keyword ref="qwebmethod.html#setHost">setHost</keyword>
         <keyword ref="qwebmethod.html#setHttpMethod">setHttpMethod</keyword>
         <keyword ref="qwebmethod.html#setMessageName">setMessageName</keyword>
+        <keyword ref="qwebmethod.html#setMethodName">setMethodName</keyword>
         <keyword ref="qwebmethod.html#setParameters">setParameters</keyword>
         <keyword ref="qwebmethod.html#setProtocol">setProtocol</keyword>
         <keyword ref="qwebmethod.html#setReturnValue">setReturnValue</keyword>

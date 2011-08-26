@@ -15,6 +15,9 @@ private slots:
     void gettersTest();
     void settersTest();
     void asynchronousSendingTest();
+
+private:
+    void defaultGettersTest(QWebMethod *msg);
 };
 
 /*
@@ -34,6 +37,82 @@ void TestQWebMethod::initialTest()
 void TestQWebMethod::gettersTest()
 {
     QWebMethod *message = new QWebMethod(0, QWebMethod::soap12, QWebMethod::POST);
+    defaultGettersTest(message);
+    delete message;
+}
+
+/*
+  Performs basic checks of setters.
+  */
+void TestQWebMethod::settersTest()
+{
+    QWebMethod *message = new QWebMethod(0, QWebMethod::soap12, QWebMethod::POST);
+    defaultGettersTest(message);
+
+    QUrl tempUrl("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx");
+    message->setHost(tempUrl);
+    QCOMPARE(message->hostUrl(), tempUrl);
+
+    QString tempName = "getProviderList";
+    message->setMessageName(tempName);
+    QCOMPARE(message->messageName(), tempName);
+
+    QString tempTargetNmspc = "http://www.daenet.de/webservices/CurrencyServer";
+    message->setTargetNamespace(tempTargetNmspc);
+    QCOMPARE(message->targetNamespace(), tempTargetNmspc);
+
+    message->setProtocol(QWebMethod::json);
+    QCOMPARE(message->protocol(), QWebMethod::json);
+    QCOMPARE(message->protocolString(), QString("json"));
+    QCOMPARE(message->protocolString(true), QString("json"));
+
+    message->setHttpMethod(QWebMethod::DELETE);
+    QCOMPARE(message->httpMethod(), QWebMethod::DELETE);
+    QCOMPARE(message->httpMethodString(), QString("DELETE"));
+
+    QMap<QString, QVariant> tmpP;
+    tmpP.insert("symbol", QVariant("NOK"));
+    message->setParameters(tmpP);
+    QCOMPARE(message->parameterNames().size(), int(1));
+    QCOMPARE(message->parameterNames().first(), QString("symbol"));
+    QCOMPARE(message->parameterNamesTypes().value("symbol"), QVariant("NOK"));
+
+    message->setReturnValue(tmpP);
+    QCOMPARE(message->returnValueName().size(), int(1));
+    QCOMPARE(message->returnValueName().first(), QString("symbol"));
+    QCOMPARE(message->returnValueNameType().value("symbol"), QVariant("NOK"));
+
+    delete message;
+}
+
+/*
+  Checks QWebMethod operation when using the default sendMessage(QByteArray)
+  */
+void TestQWebMethod::asynchronousSendingTest()
+{
+    QWebMethod *message = new QWebMethod(0, QWebMethod::soap12, QWebMethod::POST);
+    message->setHost("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx");
+    message->setMessageName("getProviderList");
+    message->setTargetNamespace("http://www.daenet.de/webservices/CurrencyServer");
+    message->sendMessage();
+    QCOMPARE(message->isErrorState(), bool(false));
+
+    bool result = false;
+    for (int i = 0; (i < 50) && (!message->isReplyReady()); i++)
+        QTest::qWait(250);
+
+    if (message->isReplyReady()) {
+        result = true;
+//        qDebug() << message->replyRead().toString();
+    }
+
+    QCOMPARE(result, bool(true));
+
+    delete message;
+}
+
+void TestQWebMethod::defaultGettersTest(QWebMethod *message)
+{
     QCOMPARE(message->isErrorState(), bool(false));
     QCOMPARE(message->isReplyReady(), bool(false));
     QCOMPARE(message->errorInfo(), QString(""));
@@ -46,42 +125,10 @@ void TestQWebMethod::gettersTest()
     QCOMPARE(message->host(), QString(""));
     QCOMPARE(message->targetNamespace(), QString(""));
     QCOMPARE(message->messageName(), QString(""));
-
-    /*
-    QStringList parameterNames() const;
-    QStringList returnValueName() const;
-    QMap<QString, QVariant> parameterNamesTypes() const;
-    QMap<QString, QVariant> returnValueNameType() const;
-    */
-    delete message;
-}
-
-/*
-  Performs basic checks of setters.
-  */
-void TestQWebMethod::settersTest()
-{
-    /*
-    void setHost(QString newHost);
-    void setHost(QUrl newHost);
-    void setMessageName(QString newName);
-    void setParameters(QMap<QString, QVariant> params);
-    void setReturnValue(QMap<QString, QVariant> returnValue);
-    void setTargetNamespace(QString tNamespace);
-    void setProtocol(Protocol protocol);
-    void setHttpMethod(HttpMethod method);
-    */
-}
-
-/*
-  Checks QWebMethod operation when using the default sendMessage(QByteArray)
-  */
-void TestQWebMethod::asynchronousSendingTest()
-{
-    /*
-    bool sendMessage(QByteArray requestData = QByteArray());
-    QVariant replyRead();
-    */
+    QCOMPARE(message->returnValueNameType().size(), int(0));
+    QCOMPARE(message->returnValueName().size(), int(0));
+    QCOMPARE(message->parameterNamesTypes().size(), int(0));
+    QCOMPARE(message->parameterNames().size(), int(0));
 }
 
 QTEST_MAIN(TestQWebMethod)

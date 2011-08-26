@@ -45,6 +45,7 @@ public:
     void setHost(QString newHost);
     void setHost(QUrl newHost);
     void setMessageName(QString newName);
+    void setMethodName(QString newName);
     void setParameters(QMap<QString, QVariant> params);
     void setReturnValue(QMap<QString, QVariant> returnValue);
     void setTargetNamespace(QString tNamespace);
@@ -62,7 +63,7 @@ public:
     QString host() const;
     QUrl hostUrl() const;
     Protocol protocol() const;
-    QString protocolString(bool includeRest) const;
+    QString protocolString(bool includeRest = false) const;
     HttpMethod httpMethod() const;
     QString httpMethodString() const;
     QString errorInfo() const;

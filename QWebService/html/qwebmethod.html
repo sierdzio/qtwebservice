@@ -53,7 +53,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#parameterNames">parameterNames</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> Protocol </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#protocol">protocol</a></b> () const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#protocolString">protocolString</a></b> ( bool <i>includeRest</i> ) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#protocolString">protocolString</a></b> ( bool <i>includeRest</i> = false ) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QVariant </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#replyRead">replyRead</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#returnValueName">returnValueName</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#returnValueNameType">returnValueNameType</a></b> () const</td></tr>
@@ -62,6 +62,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setHost-2">setHost</a></b> ( QUrl <i>newHost</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setHttpMethod">setHttpMethod</a></b> ( HttpMethod <i>method</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setMessageName">setMessageName</a></b> ( QString <i>newName</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setMethodName">setMethodName</a></b> ( QString <i>newName</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setParameters">setParameters</a></b> ( QMap&lt;QString, QVariant&gt; <i>params</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setProtocol">setProtocol</a></b> ( Protocol <i>prot</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setReturnValue">setReturnValue</a></b> ( QMap&lt;QString, QVariant&gt; <i>returnVal</i> )</td></tr>
@@ -223,7 +224,7 @@
 <p>See also <a href="qwebmethod.html#setProtocol">setProtocol</a>() and <a href="qwebmethod.html#httpMethod">httpMethod</a>().</p>
 <!-- @@@protocol -->
 <!-- $$$protocolString[overload1]$$$protocolStringbool -->
-<h3 class="fn"><a name="protocolString"></a>QString QWebMethod::protocolString ( bool <i>includeRest</i> ) const</h3>
+<h3 class="fn"><a name="protocolString"></a>QString QWebMethod::protocolString ( bool <i>includeRest</i> = false ) const</h3>
 <p>Returns protocol used in form of a QString. If <i>includeRest</i> is true, and --rest flag was specified, it appends &quot;,rest&quot; to the result.</p>
 <!-- @@@protocolString -->
 <!-- $$$replyFinished[overload1]$$$replyFinishedQNetworkReply* -->
@@ -288,6 +289,10 @@
 <p>Set's message's name to <i>newName</i>.</p>
 <p>See also <a href="qwebmethod.html#messageName">messageName</a>().</p>
 <!-- @@@setMessageName -->
+<!-- $$$setMethodName[overload1]$$$setMethodNameQString -->
+<h3 class="fn"><a name="setMethodName"></a>void QWebMethod::setMethodName ( QString <i>newName</i> )</h3>
+<p>Set's message's name to <i>newName</i>.</p>
+<!-- @@@setMethodName -->
 <!-- $$$setParameters[overload1]$$$setParametersQMap<QString,QVariant> -->
 <h3 class="fn"><a name="setParameters"></a>void QWebMethod::setParameters ( QMap&lt;QString, QVariant&gt; <i>params</i> )</h3>
 <p>Sets method's parameters (<i>params</i>). This also includes their names.</p>
