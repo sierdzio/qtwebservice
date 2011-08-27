@@ -232,6 +232,31 @@ void QWebMethod::setHttpMethod(HttpMethod method)
 }
 
 /*!
+  \fn QWebMethod::setHttpMethod(QString newMethod)
+
+  Sets the httpMethod flag (\a newMethod, using QString representation of HTTP method
+  (post, get, put, or delete)). Setting is NOT case sensitive.
+  Default method is POST.
+
+  Returns true if successful.
+  */
+bool QWebMethod::setHttpMethod(QString newMethod)
+{
+    if (newMethod.toLower() == "post")
+        httpMethodUsed = POST;
+    else if (newMethod.toLower() == "get")
+        httpMethodUsed = GET;
+    else if (newMethod.toLower() == "put")
+        httpMethodUsed = PUT;
+    else if (newMethod.toLower() == "delete")
+        httpMethodUsed = DELETE;
+    else
+        return false;
+
+    return true;
+}
+
+/*!
     \fn bool QWebMethod::sendMessage(QByteArray requestData)
 
     Sends the message asynchronously, assuming that all neccessary data was specified earlier.

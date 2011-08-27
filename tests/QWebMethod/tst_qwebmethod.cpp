@@ -70,6 +70,18 @@ void TestQWebMethod::settersTest()
     QCOMPARE(message->httpMethod(), QWebMethod::DELETE);
     QCOMPARE(message->httpMethodString(), QString("DELETE"));
 
+    message->setHttpMethod("get");
+    QCOMPARE(message->httpMethod(), QWebMethod::GET);
+    QCOMPARE(message->httpMethodString(), QString("GET"));
+
+    message->setHttpMethod("pUT");
+    QCOMPARE(message->httpMethod(), QWebMethod::PUT);
+    QCOMPARE(message->httpMethodString(), QString("PUT"));
+
+    message->setHttpMethod("POST");
+    QCOMPARE(message->httpMethod(), QWebMethod::POST);
+    QCOMPARE(message->httpMethodString(), QString("POST"));
+
     QMap<QString, QVariant> tmpP;
     tmpP.insert("symbol", QVariant("NOK"));
     message->setParameters(tmpP);
@@ -103,7 +115,6 @@ void TestQWebMethod::asynchronousSendingTest()
 
     if (message->isReplyReady()) {
         result = true;
-//        qDebug() << message->replyRead().toString();
     }
 
     QCOMPARE(result, bool(true));

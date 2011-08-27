@@ -33,6 +33,8 @@ public:
 
     void setFlags(Flags flgs);
     bool isErrorState();
+    QString errorInfo();
+    void resetError();
     void convert();
     QString webServiceName();
 

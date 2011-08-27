@@ -7,6 +7,19 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
  - QWebService: run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./QWebService/qwebservice.qdocconf
  - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
 
+27.08.2011 11:12 CEST:
+ - added TestConverter::initialTest(), testing code generation with default settings (based on band_ws example),
+ - added TestConverter::noForceTest(), which tests conversion without --forced checked,
+ - added TestConverter::forceTest() to test conversion with --force checked,
+ - added TestConverter::buildSystemTest() to test operation of all build system flags,
+ - added TestConverter::noMessagesTest() to test --no-messages-structure,
+ - added TestConverter::noMessagesAsynchronousTest() to test --no-messages-structure combined
+   with --asynchronous,
+ - added cleaning to TestConverter,
+ - added QWebMethod::setHttpMethod(QString) convenience method,
+ - added error checking in converter (before attempting to convert),
+ - updated TestQWebMethod to check QWebMethod::setHttpMethod(QString) operation.
+
 26.08.2011 10:20 CEST:
  - added default value to QWebMethod::protocolString(),
  - added more checks to TestQWebMethod::settersTest(), moved default getters test to a private method (invoked twice in the test),

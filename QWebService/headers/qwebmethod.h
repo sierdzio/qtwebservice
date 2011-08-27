@@ -51,6 +51,7 @@ public:
     void setTargetNamespace(QString tNamespace);
     void setProtocol(Protocol protocol);
     void setHttpMethod(HttpMethod method);
+    bool setHttpMethod(QString newMethod);
     bool sendMessage(QByteArray requestData = QByteArray());
 
     QVariant replyRead();

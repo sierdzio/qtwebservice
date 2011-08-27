@@ -85,6 +85,8 @@ void WsdlConverter::setFlags(Flags flags)
     \fn WsdlConverter::isErrorState()
 
     Returns true if object is in error state.
+
+    \sa errorInfo()
   */
 bool WsdlConverter::isErrorState()
 {
@@ -107,12 +109,40 @@ bool WsdlConverter::enterErrorState(QString errMessage)
 }
 
 /*!
+    \fn WsdlConverter::errorInfo()
+
+    Returns error message or empty string, when no error was encountered.
+
+    \sa isErrorState()
+  */
+QString WsdlConverter::errorInfo()
+{
+    return errorMessage;
+}
+
+/*!
+  \fn WsdlConverter::resetError()
+
+  Resets the WsdlConverter object, removing the error state.
+  */
+void WsdlConverter::resetError()
+{
+    errorState = false;
+    errorMessage = "";
+}
+
+/*!
     \fn WsdlConverter::convert()
 
     Performs the WSDL => Qt/C++ code conversion.
   */
 void WsdlConverter::convert()
 {
+    if (errorState) {
+        enterErrorState("Converter is in error state and cannot continue.");
+        return;
+    }
+
     displayIntro();
     QString mainPath = qApp->applicationDirPath() + "/" + webServiceName();
     QDir mainDir;
@@ -127,7 +157,6 @@ void WsdlConverter::convert()
     if (mainDir.exists() && (flags->isForced() == false)) {
         // Might be good to add an interactive menu here (to ask for a new dir name)
         enterErrorState("Error - directory already exists!");
-
         return;
     }
     else {
@@ -202,7 +231,11 @@ bool WsdlConverter::removeDir(QString path)
   */
 bool WsdlConverter::parseArguments(QStringList arguments)
 {
-    if (arguments.length() <= 1 || arguments.contains("--help")) {
+    if ((arguments.length() == 0) || (arguments.contains("--help"))) {
+        displayHelp();
+        return false;
+    }
+    else if (arguments.length() == 1 && arguments.at(0) == qApp->applicationName()) {
         displayHelp();
         return false;
     }

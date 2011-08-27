@@ -141,7 +141,6 @@ void TestQWsdl::settersTest()
     delete wsdl;
 }
 
-
 QTEST_MAIN(TestQWsdl)
 #include "tst_qwsdl.moc"
 

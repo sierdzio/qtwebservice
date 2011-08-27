@@ -39,7 +39,9 @@
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#WsdlConverter">WsdlConverter</a></b> ( QStringList <i>appArguments</i>, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#dtor.WsdlConverter">~WsdlConverter</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#convert">convert</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#errorInfo">errorInfo</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#isErrorState">isErrorState</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#resetError">resetError</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#setFlags">setFlags</a></b> ( Flags <i>flags</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#webServiceName">webServiceName</a></b> ()</td></tr>
 </table>
@@ -91,10 +93,20 @@
 <h3 class="fn"><a name="errorEncountered"></a>void WsdlConverter::errorEncountered ( QString <i>errMessage</i> )<tt> [signal]</tt></h3>
 <p>Singal emitted when <a href="wsdlconverter.html">WsdlConverter</a> encounters an error. Carries <i>errMessage</i> for convenience.</p>
 <!-- @@@errorEncountered -->
+<!-- $$$errorInfo[overload1]$$$errorInfo -->
+<h3 class="fn"><a name="errorInfo"></a>QString WsdlConverter::errorInfo ()</h3>
+<p>Returns error message or empty string, when no error was encountered.</p>
+<p>See also <a href="wsdlconverter.html#isErrorState">isErrorState</a>().</p>
+<!-- @@@errorInfo -->
 <!-- $$$isErrorState[overload1]$$$isErrorState -->
 <h3 class="fn"><a name="isErrorState"></a>bool WsdlConverter::isErrorState ()</h3>
 <p>Returns true if object is in error state.</p>
+<p>See also <a href="wsdlconverter.html#errorInfo">errorInfo</a>().</p>
 <!-- @@@isErrorState -->
+<!-- $$$resetError[overload1]$$$resetError -->
+<h3 class="fn"><a name="resetError"></a>void WsdlConverter::resetError ()</h3>
+<p>Resets the <a href="wsdlconverter.html">WsdlConverter</a> object, removing the error state.</p>
+<!-- @@@resetError -->
 <!-- $$$setFlags[overload1]$$$setFlagsFlags -->
 <h3 class="fn"><a name="setFlags"></a>void WsdlConverter::setFlags ( <a href="flags.html">Flags</a> <i>flags</i> )</h3>
 <p>Sets the flags using <i>flags</i> object.</p>

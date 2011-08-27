@@ -40,7 +40,6 @@ void TestQWebServiceMethod::asynchronousTest()
 
     if (message->isReplyReady()) {
         result = true;
-//        qDebug() << message->replyRead().toString();
     }
 
     QCOMPARE(result, bool(true));
