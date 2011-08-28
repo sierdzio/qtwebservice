@@ -47,8 +47,7 @@ bool CodeGenerator::isErrorState()
 bool CodeGenerator::enterErrorState(QString errMessage)
 {
     errorState = true;
-    errorMessage += errMessage + " ";
-    qDebug() << errorMessage;
+    errorMessage += errMessage + "\n";
     emit errorEncountered(errMessage);
     return false;
 }
@@ -552,8 +551,8 @@ bool CodeGenerator::createBuildSystemFile()
 {
     bool result = false;
 
-    if (flags->flags() & Flags::noMessagesStructure)
-        qDebug() << "Remember to include QWebService library in your build system file!";
+//    if (flags->flags() & Flags::noMessagesStructure)
+//        qDebug() << "Remember to include QWebService library in your build system file!";
 
     if (flags->flags() & Flags::noBuildSystem)
         return true;
@@ -800,6 +799,6 @@ bool CodeGenerator::createSconsProject()
 
     file.close();
 
-    qDebug() << "See the created SConstruct file for warnings on QTDIR and QT4 path.";
+//    qDebug() << "See the created SConstruct file for warnings on QTDIR and QT4 path.";
     return true;
 }

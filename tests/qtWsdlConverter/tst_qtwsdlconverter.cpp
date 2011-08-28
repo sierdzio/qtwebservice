@@ -12,6 +12,7 @@ class TestConverter : public QObject
 
 private slots:
     void init();
+
     void initialTest();
     void noForceTest();
     void forceTest();
@@ -19,6 +20,8 @@ private slots:
     void noMessagesTest();
     void noMessagesAsynchronousTest();
     void allInOneDirTest();
+    void errorsTest();
+
     void cleanupTestCase();
 
 private:
@@ -34,11 +37,6 @@ void TestConverter::init()
 void TestConverter::initialTest()
 {
     QStringList arguments;
-//    arguments.append("--force");
-//    arguments.append("--asynchronous");
-//    arguments.append("--scons");
-//    arguments.append("--cmake");
-//    arguments.append("--json");
     arguments.append("../../examples/band_ws.asmx");
 
     WsdlConverter *converter = new WsdlConverter(arguments, this);
@@ -241,6 +239,29 @@ void TestConverter::allInOneDirTest()
     }
 
     delete wsdl;
+    delete converter;
+}
+
+void TestConverter::errorsTest()
+{
+    QStringList arguments;
+    WsdlConverter *converter = new WsdlConverter(arguments, this);
+    QCOMPARE(converter->isErrorState(), bool(true));
+
+    converter->convert();
+    QCOMPARE(converter->isErrorState(), bool(true));
+
+    delete converter;
+
+    arguments.append("--json");
+    arguments.append("--xml");
+    arguments.append("../../examples/band_ws.asmx");
+    converter = new WsdlConverter(arguments, this);
+    QCOMPARE(converter->isErrorState(), bool(false));
+
+    converter->convert();
+    QCOMPARE(converter->isErrorState(), bool(false));
+
     delete converter;
 }
 

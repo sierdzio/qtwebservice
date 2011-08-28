@@ -38,8 +38,21 @@ WsdlConverter::WsdlConverter(QStringList appArguments, QObject *parent) :
 {
     flags = new Flags();
     argList = new QMap<int, QVariant>();
+    wsdl = new QWsdl(this); // Dummy wsdl to prevent segfaulting when parsing arguments fails.
     errorState = false;
     errorMessage = "";
+
+    QString applicationName = qApp->applicationFilePath().mid(qApp->applicationDirPath().length() + 1);
+    if ((appArguments.length() == 0)
+            || (appArguments.contains("--help"))
+            || (appArguments.length() == 1
+                && (appArguments.at(0) == qApp->applicationFilePath()
+                    || appArguments.at(0) == ("./" + applicationName)
+                    || appArguments.at(0) == applicationName)
+                )) {
+        displayHelp();
+        return;
+    }
 
     if (!parseArguments(appArguments)) {
         enterErrorState("Encountered an error when parsing arguments.");
@@ -48,7 +61,7 @@ WsdlConverter::WsdlConverter(QStringList appArguments, QObject *parent) :
 
     baseClassName = argList->value(ClassName).toString();
     outputDir = argList->value(Dir).toString();
-    wsdl = new QWsdl(argList->value(Path).toString(), this);
+    wsdl->setWsdlFile(argList->value(Path).toString());
     if (wsdl->isErrorState())
         enterErrorState("WSDL error!");
 }
@@ -102,8 +115,7 @@ bool WsdlConverter::isErrorState()
 bool WsdlConverter::enterErrorState(QString errMessage)
 {
     errorState = true;
-    errorMessage += errMessage + " ";
-    qDebug() << errMessage;
+    errorMessage += errMessage + "\n";
     emit errorEncountered(errMessage);
     return false;
 }
@@ -231,16 +243,9 @@ bool WsdlConverter::removeDir(QString path)
   */
 bool WsdlConverter::parseArguments(QStringList arguments)
 {
-    if ((arguments.length() == 0) || (arguments.contains("--help"))) {
-        displayHelp();
-        return false;
-    }
-    else if (arguments.length() == 1 && arguments.at(0) == qApp->applicationName()) {
-        displayHelp();
-        return false;
-    }
-
-    bool wasFile = false, wasOutDir = false, wasClassName = false;
+    bool wasFile = false;
+    bool wasOutDir = false;
+    bool wasClassName = false;
     QString appFilePath = qApp->applicationFilePath();
 
     foreach (QString s, arguments) {
@@ -377,8 +382,8 @@ bool WsdlConverter::parseArguments(QStringList arguments)
         }
     }
 
-    if (!argList->contains(Path)) {
-        qDebug() << "No WSDL file specified, conversion can no continue. For help, type wsdlConvert --help.";
+    if (wasFile == false) {
+        enterErrorState("No WSDL file specified, conversion can no continue. For help, type wsdlConvert --help.");
         return false;
     }
 
@@ -394,19 +399,18 @@ bool WsdlConverter::parseArguments(QStringList arguments)
 */
 void WsdlConverter::displayHelp()
 {
-    qDebug() << "wsdlConvert - help.";
-    qDebug() << "";
-    qDebug() << "qtwsdlconvert [options] <WSDL file or URL> [output directory] [base output class name, defaults to web service name]";
-    qDebug() << "Possible options: --soap10, --soap12, --http, --synchronous, --asynchronous, --help.";
-    qDebug() << "New ones: --full-mode, --debug-mode, --compact-mode,";
-    qDebug() << "--standard-structure, --no-messages-structure, --all-in-one-dir-structure,";
-    qDebug() << "--qmake, --cmake, --scons, --no-build-system, --force, --json";
-    qDebug() << "Default switches are: --synchronous, --soap12, --standard-structure, --full-mode, --qmake.";
-    qDebug() << "";
-    qDebug() << "qtWsdlConverter Copyright (C) 2011  Tomasz 'sierdzio' Siekierda";
-    qDebug() << "This program comes with ABSOLUTELY NO WARRANTY.";
-    qDebug() << "This is free software, and you are welcome to redistribute it";
-    qDebug() << "under certain conditions, listed in LICENCE.txt.";
+    QString helpMessage = "wsdlConvert - help.\n\n"
+    "qtwsdlconvert [options] <WSDL file or URL> [output directory] [base output class name, defaults to web service name]\n"
+    "Possible options: --soap10, --soap12, --http, --synchronous, --asynchronous, --help.\n"
+    "New ones: --full-mode, --debug-mode, --compact-mode,\n"
+    "--standard-structure, --no-messages-structure, --all-in-one-dir-structure,\n"
+    "--qmake, --cmake, --scons, --no-build-system, --force, --json\n"
+    "Default switches are: --synchronous, --soap12, --standard-structure, --full-mode, --qmake.\n\n"
+    "qtWsdlConverter Copyright (C) 2011  Tomasz 'sierdzio' Siekierda\n"
+    "This program comes with ABSOLUTELY NO WARRANTY.\n"
+    "This is free software, and you are welcome to redistribute it\n"
+    "under certain conditions, listed in LICENCE.txt.";
+    enterErrorState(helpMessage);
 }
 
 /*!
@@ -418,23 +422,9 @@ void WsdlConverter::displayHelp()
 */
 void WsdlConverter::displayIntro()
 {
-    qDebug() << "Creating code for web service:" << webServiceName();
-    if (argList->value(Dir).toString() == "")
-        qDebug() << "Output dir not specified. Defaulting to web service name.";
-/*
-    QString tempFlags = "Using flags: ";
-    if (flags->synchronousness == Flags::synchronous)
-        tempFlags += "synchronous, ";
-    else
-        tempFlags += "asynchronous, ";
-    if (flags->protocol == QWebMethod::http)
-        tempFlags += "http, ";
-    else if (flags->protocol == QWebMethod::soap10)
-        tempFlags += "soap10, ";
-    else
-        tempFlags += "soap12";
-    qDebug() << tempFlags;
-*/
+//    qDebug() << "Creating code for web service:" << webServiceName();
+//    if (argList->value(Dir).toString() == "")
+//        qDebug() << "Output dir not specified. Defaulting to web service name (" << webServiceName() << ").";
 }
 
 /*!
@@ -448,6 +438,6 @@ void WsdlConverter::displayOutro()
 {
     if (isErrorState())
         qDebug() << "Conversion encountered an error.";
-    else
-        qDebug() << "Conversion successful.";
+//    else
+//        qDebug() << "Conversion successful.";
 }

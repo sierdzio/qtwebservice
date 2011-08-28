@@ -85,14 +85,16 @@ All entries in single sections (with an exception of build system related switch
     --standard-structure       - headers are copied to <wsName>/headers, sources to <wsName>/sources, build file
 				 to <wsName>/<buildFile>,
     --no-messages-structure    - no custom message code will be created. All messages will be sent by using general
-				 QWebMethod objects (this option requires QWebService library to be present),
+				 QWebMethod objects (this option requires QWebService library to be present, in PATH
+				 or specified manually),
     --all-in-one-dir-structure - as sandard-structure, but all files are copied into <wsName>.
 
   2.2.5 Build systems
   All build systems can be built simultaneously (that is, you can use --qmake, --scons, --cmake all at once). When --no-build-system is chosen, it overrides all previous settings - turns them off.
     --qmake - a .pro file will be created for the project,
     --cmake - files needed by cmake will be created for the project,
-    --scons - files needed by scons will be created for the project,
+    --scons - files needed by scons will be created for the project (you have to manually inspect this file, as QTDIR
+	      and QT4 paths need to be adjusted to your own system),
     --no-build-system - no build-system-related files will be created.
 
   2.2.6 Suffixes

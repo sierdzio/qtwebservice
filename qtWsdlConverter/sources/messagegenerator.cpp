@@ -38,7 +38,7 @@ QString MessageGenerator::errorMessage()
   */
 bool MessageGenerator::enterErrorState(QString errMessage)
 {
-    m_errorMessage += errMessage + " ";
+    m_errorMessage += errMessage + "\n";
     return false;
 }
 
