@@ -45,6 +45,7 @@ WsdlConverter::WsdlConverter(QStringList appArguments, QObject *parent) :
     QString applicationName = qApp->applicationFilePath().mid(qApp->applicationDirPath().length() + 1);
     if ((appArguments.length() == 0)
             || (appArguments.contains("--help"))
+            || (appArguments.contains("-h"))
             || (appArguments.length() == 1
                 && (appArguments.at(0) == qApp->applicationFilePath()
                     || appArguments.at(0) == ("./" + applicationName)
@@ -168,7 +169,7 @@ void WsdlConverter::convert()
 
     if (mainDir.exists() && (flags->isForced() == false)) {
         // Might be good to add an interactive menu here (to ask for a new dir name)
-        enterErrorState("Error - directory already exists!");
+        enterErrorState("Error - directory already exists! Use -f or --force to force deleting existing directories.");
         return;
     }
     else {
@@ -246,13 +247,19 @@ bool WsdlConverter::parseArguments(QStringList arguments)
     bool wasFile = false;
     bool wasOutDir = false;
     bool wasClassName = false;
+    bool endOfOptions = false;
     QString appFilePath = qApp->applicationFilePath();
 
     foreach (QString s, arguments) {
         // Handles '--' arguments
-        if (s.startsWith("--")) {
+        if (s.startsWith("--") && (endOfOptions == false)) {
+            // End of options:
+            if (s == "--") {
+                endOfOptions = true;
+                continue;
+            }
             // Protocol flags:
-            if (s == "--soap12") {
+            else if (s == "--soap12") {
                 flags->resetFlags(Flags::soap10 | Flags::http | Flags::json | Flags::xml);
                 flags->setFlags(Flags::soap12);
             }
@@ -301,28 +308,28 @@ bool WsdlConverter::parseArguments(QStringList arguments)
                 flags->resetFlags(Flags::debugMode | Flags::compactMode | Flags::fullMode);
                 flags->setFlags(Flags::subclass);
             }
-            else if (s == "--full-mode") {
+            else if ((s == "--full-mode") || (s == "--full")) {
                 flags->resetFlags(Flags::debugMode | Flags::compactMode | Flags::subclass);
                 flags->setFlags(Flags::fullMode);
             }
-            else if (s == "--debug-mode") {
+            else if ((s == "--debug-mode") || (s == "--debug")) {
                 flags->resetFlags(Flags::fullMode | Flags::compactMode | Flags::subclass);
                 flags->setFlags(Flags::debugMode);
             }
-            else if (s == "--compact-mode") {
+            else if ((s == "--compact-mode") || (s == "--compact")) {
                 flags->resetFlags(Flags::fullMode | Flags::compactMode | Flags::subclass);
                 flags->setFlags(Flags::compactMode);
             }
             // Structures:
-            else if (s == "--standard-structure") {
+            else if ((s == "--standard-structure") || (s == "--standard")) {
                 flags->resetFlags(Flags::noMessagesStructure | Flags::allInOneDirStructure);
                 flags->setFlags(Flags::standardStructure);
             }
-            else if (s == "--no-messages-structure") {
+            else if ((s == "--no-messages-structure") || (s == "--no-messages")) {
                 flags->resetFlags(Flags::standardStructure | Flags::allInOneDirStructure);
                 flags->setFlags(Flags::noMessagesStructure);
             }
-            else if (s == "--all-in-one-dir-structure") {
+            else if ((s == "--all-in-one-dir-structure") || (s == "--all-in-one-dir")) {
                 flags->resetFlags(Flags::standardStructure | Flags::noMessagesStructure);
                 flags->setFlags(Flags::allInOneDirStructure);
             }
@@ -355,6 +362,32 @@ bool WsdlConverter::parseArguments(QStringList arguments)
                 qWarning() << "WARNING: unrecognised command: " << s << ". Converter will continue.";
             }
         }
+        // Handles '-' arguments
+        else if (s.startsWith("-") && (endOfOptions == false)) {
+            for (int i = 1; i < s.size(); i++) {
+                QChar chr = s.at(i);
+
+                if (chr == ('a')) {
+                    flags->resetFlags(Flags::synchronous);
+                    flags->setFlags(Flags::asynchronous);
+                }
+                else if (chr == ('s')) {
+                    flags->resetFlags(Flags::debugMode | Flags::compactMode | Flags::fullMode);
+                    flags->setFlags(Flags::subclass);
+                }
+                else if (chr == ('n')) {
+                    flags->resetFlags(Flags::qmake | Flags::cmake | Flags::scons);
+                    flags->setFlags(Flags::noBuildSystem);
+                }
+                else if (chr == ('f')) {
+                    flags->setForced(true);
+                }
+                else {
+                    qWarning() << "WARNING: unrecognised command: " << s << ". Converter will continue.";
+                }
+            }
+        }
+        // Handles file names, class name etc.
         else if ((s != "") && (s != appFilePath)) {
             // Handles wsdl file, base class name, output dir.
             if (!wasFile) {

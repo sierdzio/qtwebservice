@@ -42,15 +42,15 @@ WARNING: Remember to first compile QWebService library, and set it's path in run
 2.1 Syntax
   qtwsdlconvert [options] <WSDL file or URL> [output directory, defaults to web service name] [base output class name, defaults to web service name]
 
-  2.1.1 Possible options (unavailable marked with *)
-    --help,
+  2.1.1 Possible options (Short options in brackets. They can be combined. Unavailable marked with *)
+    --help (-h),
     --soap10, --soap12, --http, --json, *--xml, *--rest={POST, GET, PUT, DELETE, post, get, put, delete}
-    --synchronous, --asynchronous,
-    --subclass, --full-mode, *--debug-mode, *(partial)--compact-mode,
-    --standard-structure, --no-messages-structure, --all-in-one-dir-structure,
-    --qmake, --cmake, --scons, --no-build-system,
+    --synchronous, --asynchronous (-a),
+    --subclass (-s), --full-mode, *--debug-mode, *(partial)--compact-mode, ('mode' can be omitted)
+    --standard-structure, --no-messages-structure, --all-in-one-dir-structure, ('structure' can be omitted)
+    --qmake, --cmake, --scons, --no-build-system (-n),
     --objSuffix=, --msgSuffix=,
-    --force.
+    --force (-f).
 
   2.1.2 Default switches
     --synchronous, --soap12, --standard-structure, --full-mode, --qmake

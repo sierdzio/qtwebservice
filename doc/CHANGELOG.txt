@@ -10,6 +10,12 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
 Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/band_ws.asmx
 
+31.08.2011 13:14 CEST:
+ - added shorter synonyms to long flags in converter (for example: --compact is equivalent to --compact-mode),
+ - added some one-letter flags to converter,
+ - added '--' flag termination,
+ - updated README.
+
 31.08.2011 09:11 CEST:
  - added unrecognised flag warning,
  - added TestConverter::noBuildSystemTest(),
