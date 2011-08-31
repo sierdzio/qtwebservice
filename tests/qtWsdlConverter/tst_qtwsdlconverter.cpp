@@ -21,6 +21,7 @@ private slots:
     void noMessagesAsynchronousTest();
     void allInOneDirTest();
     void errorsTest();
+    void noBuildSystemTest();
 
     void cleanupTestCase();
 
@@ -262,6 +263,36 @@ void TestConverter::errorsTest()
     converter->convert();
     QCOMPARE(converter->isErrorState(), bool(false));
 
+    delete converter;
+}
+
+void TestConverter::noBuildSystemTest()
+{
+    QStringList arguments;
+    arguments.append("--no-build-system");
+    arguments.append("../../examples/band_ws.asmx");
+
+    WsdlConverter *converter = new WsdlConverter(arguments, this);
+    QCOMPARE(converter->isErrorState(), bool(false));
+    QCOMPARE(converter->webServiceName(), QString("band_ws"));
+
+    converter->convert();
+    QCOMPARE(QFile::exists("band_ws/band_ws.pro"), bool(false));
+    QCOMPARE(QFile::exists("band_ws/CMakeLists.txt"), bool(false));
+    QCOMPARE(QFile::exists("band_ws/SConstruct"), bool(false));
+
+    QCOMPARE(QFile::exists("band_ws/headers/band_ws.h"), bool(true));
+    QCOMPARE(QFile::exists("band_ws/sources/band_ws.cpp"), bool(true));
+
+    QWsdl *wsdl = new QWsdl("../../examples/band_ws.asmx", this);
+    QStringList methods = wsdl->methodNames();
+
+    foreach (QString s, methods) {
+        QCOMPARE(QFile::exists("band_ws/headers/" + s + ".h"), bool(true));
+        QCOMPARE(QFile::exists("band_ws/sources/" + s + ".cpp"), bool(true));
+    }
+
+    delete wsdl;
     delete converter;
 }
 

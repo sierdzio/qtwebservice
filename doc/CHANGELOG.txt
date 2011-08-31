@@ -10,6 +10,10 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
 Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/band_ws.asmx
 
+31.08.2011 07:30 CEST:
+ - added unrecognised flag warning,
+ - added TestConverter::noBuildSystemTest(),
+
 28.08.2011 10:35 CEST:
  - added some flag-specific info to README,
  - added TestConverter::errorsTest(),

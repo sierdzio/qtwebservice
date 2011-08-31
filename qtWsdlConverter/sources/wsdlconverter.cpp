@@ -351,6 +351,9 @@ bool WsdlConverter::parseArguments(QStringList arguments)
             else if (s == "--force") {
                 flags->setForced(true);
             }
+            else {
+                qWarning() << "WARNING: unrecognised command: " << s << ". Converter will continue.";
+            }
         }
         else if ((s != "") && (s != appFilePath)) {
             // Handles wsdl file, base class name, output dir.
