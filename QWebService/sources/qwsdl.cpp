@@ -543,21 +543,44 @@ void QWsdl::readTypeSchemaElement()
             }
 
             QVariant element;
-            elementType = elementType.split(':').at(1);
+            elementType = elementType.split(':').at(1); // The int(1) looks very bad.
             // NEEDS MANY MORE VALUE TYPES! VERY SHAKY IMPLEMENTATION!
-            if (elementType == "int")
-                element.setValue(0);
-            else if (elementType == "boolean")
+            // Prob'ly better to use schemas.
+            if (elementType == "int") {
+                element.setValue(int());
+            }
+            else if (elementType == "float") {
+                element.setValue(float());
+            }
+            else if (elementType == "double") {
+                element.setValue(double());
+            }
+            else if (elementType == "boolean") {
                 element.setValue(true);
-            else if (elementType == "dateTime")
+            }
+            else if (elementType == "dateTime") {
                 element.setValue(QDateTime());
-            else if (elementType == "string")
+            }
+            else if (elementType == "string") {
                 element.setValue(QString(""));
-            else if (elementType == "ArrayOfString")
-                element.setValue(QStringList());
-            else
+            }
+            else if (elementType == "char") {
+                element.setValue(QChar());
+            }
+            else if (elementType.startsWith("ArrayOf")) {
+                elementType = elementType.mid(7);
+
+                if (elementType == "String") {
+                    element.setValue(QStringList());
+                }
+                else {//if (elementType == "DateTime") {
+                    element.setValue(QList<QVariant>());
+                }
+            }
+            else {
                 element.setValue(QString("temp"));
-            // NEEDS MANY MORE VALUE TYPES! VERY SHAKY IMPLEMENTATION!
+            }
+            // VERY SHAKY IMPLEMENTATION!
 
             params.insert(elementName, element);
             xmlReader.readNext();
