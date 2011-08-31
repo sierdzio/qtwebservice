@@ -43,6 +43,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#setWsdlFile">setWsdlFile</a></b> ( QString <i>wsdlFile</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#targetNamespace">targetNamespace</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#webServiceName">webServiceName</a></b> () const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#wsdlFile">wsdlFile</a></b> () const</td></tr>
 </table>
 <a name="public-slots"></a>
 <h2>Public Slots</h2>
@@ -94,12 +95,12 @@
 <!-- @@@fileReplyFinished -->
 <!-- $$$host[overload1]$$$host -->
 <h3 class="fn"><a name="host"></a>QString QWsdl::host () const</h3>
-<p>Returns web service's URL.</p>
+<p>Returns web service's URL. If there is no valid URL in WSDL file, path to this file is returned.</p>
 <p>See also <a href="qwsdl.html#hostUrl">hostUrl</a>().</p>
 <!-- @@@host -->
 <!-- $$$hostUrl[overload1]$$$hostUrl -->
 <h3 class="fn"><a name="hostUrl"></a>QUrl QWsdl::hostUrl () const</h3>
-<p>Quite similar to getHostName().</p>
+<p>Returns web service's URL. If there is no valid URL in WSDL file, path to this file is returned.</p>
 <p>See also <a href="qwsdl.html#host">host</a>().</p>
 <!-- @@@hostUrl -->
 <!-- $$$isErrorState[overload1]$$$isErrorState -->
@@ -125,7 +126,7 @@
 <!-- $$$setWsdlFile[overload1]$$$setWsdlFileQString -->
 <h3 class="fn"><a name="setWsdlFile"></a>void QWsdl::setWsdlFile ( QString <i>wsdlFile</i> )</h3>
 <p>Wrapper for <a href="qwsdl.html#resetWsdl">resetWsdl</a>(). Used to set the WSDL file or URL using <i>wsdlFile</i>. Compulsory after simple constructor, but not needed if you have already specified the file in the constructor or <a href="qwsdl.html#resetWsdl">resetWsdl</a>().</p>
-<p>See also <a href="qwsdl.html#resetWsdl">resetWsdl</a>().</p>
+<p>See also <a href="qwsdl.html#wsdlFile">wsdlFile</a>() and <a href="qwsdl.html#resetWsdl">resetWsdl</a>().</p>
 <!-- @@@setWsdlFile -->
 <!-- $$$targetNamespace[overload1]$$$targetNamespace -->
 <h3 class="fn"><a name="targetNamespace"></a>QString QWsdl::targetNamespace () const</h3>
@@ -135,6 +136,11 @@
 <h3 class="fn"><a name="webServiceName"></a>QString QWsdl::webServiceName () const</h3>
 <p>Returns QString with the name of the web service specified in WSDL.</p>
 <!-- @@@webServiceName -->
+<!-- $$$wsdlFile[overload1]$$$wsdlFile -->
+<h3 class="fn"><a name="wsdlFile"></a>QString QWsdl::wsdlFile () const</h3>
+<p>Returns path to WSDL file.</p>
+<p>See also <a href="qwsdl.html#setWsdlFile">setWsdlFile</a>().</p>
+<!-- @@@wsdlFile -->
 </div>
 </body>
 </html>

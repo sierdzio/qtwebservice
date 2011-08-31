@@ -27,6 +27,7 @@ public:
     QString webServiceName() const;
     QString host() const;
     QUrl hostUrl() const;
+    QString wsdlFile() const;
     QString targetNamespace() const;
     //QFile getWsdl(); Rethink that. Maybe QString? Or saving to file specified in parameter?
     QString errorInfo() const;

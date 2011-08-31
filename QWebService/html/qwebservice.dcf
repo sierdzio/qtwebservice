@@ -88,6 +88,7 @@
         <keyword ref="qwsdl.html#setWsdlFile">setWsdlFile</keyword>
         <keyword ref="qwsdl.html#targetNamespace">targetNamespace</keyword>
         <keyword ref="qwsdl.html#webServiceName">webServiceName</keyword>
+        <keyword ref="qwsdl.html#wsdlFile">wsdlFile</keyword>
         <section ref="qwsdl-members.html" title="List of all members"/>
     </section>
 </section>

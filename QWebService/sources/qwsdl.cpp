@@ -21,6 +21,7 @@
 QWsdl::QWsdl(QObject *parent) :
     QObject(parent)
 {
+    wsdlFilePath = "";
     init();
 }
 
@@ -87,7 +88,7 @@ void QWsdl::resetWsdl(QString newWsdlPath)
     errorState = false;
     errorMessage = "";
     m_webServiceName = "";
-    m_hostUrl.setUrl(wsdlFilePath); // CAUTION!
+    m_hostUrl.setUrl("");
     m_targetNamespace = "";
     xmlReader.clear();
 
@@ -137,25 +138,41 @@ QString QWsdl::webServiceName() const
 /*!
     \fn QWsdl::host() const
 
-    Returns web service's URL.
+    Returns web service's URL. If there is no valid URL in WSDL file, path to this file is returned.
 
     \sa hostUrl()
   */
 QString QWsdl::host() const
 {
-    return m_hostUrl.path();
+    if (!m_hostUrl.isEmpty())
+        return m_hostUrl.path();
+    else
+        return wsdlFilePath;
 }
 
 /*!
     \fn QWsdl::hostUrl() const
 
-    Quite similar to getHostName().
+    Returns web service's URL. If there is no valid URL in WSDL file, path to this file is returned.
 
     \sa host()
   */
 QUrl QWsdl::hostUrl() const
 {
-    return m_hostUrl;
+    if (!m_hostUrl.isEmpty())
+        return m_hostUrl;
+    else
+        return QUrl(wsdlFilePath);
+}
+
+/*!
+    \fn QWsdl::wsdlFile() const
+
+    Returns path to WSDL file.
+  */
+QString QWsdl::wsdlFile() const
+{
+    return wsdlFilePath;
 }
 
 /*!
@@ -214,7 +231,7 @@ void QWsdl::fileReplyFinished(QNetworkReply *rply)
     replyBytes = (networkReply->readAll());
     QString replyString = convertReplyToUtf(replyBytes);
 
-    wsdlFilePath = "tempWsdl.asmx~";    
+//    wsdlFilePath = "tempWsdl.asmx~"; // Removed to distinct m_hostUrl from wsdlFilePath
     QFile file("tempWsdl.asmx~");
 
     if (file.exists())
@@ -316,8 +333,6 @@ bool QWsdl::parse()
 
             if (tempN == "definitions") {
                 m_targetNamespace = xmlReader.attributes().value("targetNamespace").toString();
-//                host = targetNamespace;
-//                hostUrl = host;
                 readDefinitions();
             }
             else {
@@ -348,7 +363,8 @@ bool QWsdl::parse()
   */
 void QWsdl::prepareFile()
 {
-    QUrl filePath(wsdlFilePath);
+    QUrl filePath;
+    filePath.setUrl(wsdlFilePath);
 
     if (!QFile::exists(wsdlFilePath) && filePath.isValid()) {
         m_hostUrl = filePath;
@@ -418,7 +434,6 @@ void QWsdl::readDefinitions()
             xmlReader.readNext();
         }
         else if (tempName == "binding") {
-
             if (!tagUsed.value("binding"))
                 readBindings();
             tagUsed.insert("binding", true);
@@ -607,7 +622,13 @@ void QWsdl::prepareMethods()
             }
 
             if (isMethodAndResponsePresent == true) {
-                methodsMap->insert(methodName, new QWebServiceMethod(m_hostUrl.path(),
+                QString methodPath;
+                if (m_hostUrl.isEmpty())
+                    methodPath = wsdlFilePath;
+                else
+                    methodPath = m_hostUrl.path();
+
+                methodsMap->insert(methodName, new QWebServiceMethod(methodPath,
                                                              methodName,
                                                              m_targetNamespace,
                                                              workMethodParameters->value(methodMain)));
@@ -649,12 +670,31 @@ void QWsdl::readBindings()
   */
 void QWsdl::readService()
 {
+    // TODO: add different addresses for different message types.
 //    qDebug() << "WSDL :service tag not supported yet.";
-//    xmlReader.readNext(); xmlReader.readNext();
-    if (m_webServiceName == "")
-        m_webServiceName = xmlReader.attributes().value("name").toString();
-//    qDebug() << "Web service's name is now set.";
-    xmlReader.readNext();
+    QString tempName;
+
+    while (!xmlReader.atEnd()) {
+        tempName = xmlReader.name().toString();
+
+        if ((xmlReader.isEndElement()) && (tempName == "service")) {
+            xmlReader.readNext();
+            return;
+        }
+
+        if ((tempName == "service")
+                && xmlReader.attributes().hasAttribute("name")
+                && (m_webServiceName == "")) {
+            m_webServiceName = xmlReader.attributes().value("name").toString();
+        }
+
+        if ((tempName == "address")
+                && xmlReader.attributes().hasAttribute("location")) {
+            m_hostUrl.setUrl(xmlReader.attributes().value("location").toString());
+        }
+
+        xmlReader.readNext();
+    }
 }
 
 /*!
