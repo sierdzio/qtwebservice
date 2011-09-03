@@ -23,7 +23,8 @@ private slots:
 
 private:
     Ui::QdnMain *ui;
-    QWebMethod *webMethod;
+    QWebMethod *webMethodProfile;
+    QWebMethod *webMethodPosts;
 };
 
 #endif // QDNMAIN_H

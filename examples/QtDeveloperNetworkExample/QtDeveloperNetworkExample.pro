@@ -18,14 +18,14 @@ INCLUDEPATH += $$PWD/../../QWebService/headers
 DEPENDPATH += $$PWD/../../QWebService/headers
 
 SOURCES += main.cpp\
-        qdnmain.cpp \
-    qdnlogin.cpp
+        qdnmain.cpp
 
-HEADERS  += qdnmain.h \
-    qdnlogin.h
+HEADERS  += qdnmain.h
 
-FORMS    += qdnmain.ui \
-    qdnlogin.ui
+FORMS    += qdnmain.ui
+
+
+
 
 
 

@@ -347,14 +347,14 @@ bool QWebMethod::setHttpMethod(QString newMethod)
   */
 bool QWebMethod::sendMessage(QByteArray requestData)
 {
-    // Auth workaround.
+    // Auth workaround. Temporal. HIGHLY EXPERIMENTAL.
     if (m_username != "") {
         authReply = false;
         disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
         connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
 
-        QNetworkRequest rqst(QUrl::fromUserInput("http://developer.qt.nokia.com/"));
-        qDebug() << rqst.url().toString();
+        QNetworkRequest rqst(QUrl::fromUserInput("http://" + m_hostUrl.host() + "/"));
+//        qDebug() << rqst.url().toString();
         rqst.setHeader(QNetworkRequest::ContentTypeHeader,"application/x-www-form-urlencoded");
 
         QUrl url;
@@ -366,13 +366,13 @@ bool QWebMethod::sendMessage(QByteArray requestData)
 
         QByteArray paramBytes = url.toString().mid(1).toLatin1();
         paramBytes.replace("/", "%2F");
-        qDebug() << url.toString().mid(1).toLatin1();;
+//        qDebug() << url.toString().mid(1).toLatin1();;
 
         manager->post(rqst, paramBytes);
 
         forever {
             if (authReply) {
-                qDebug() << "Continuing";
+//                qDebug() << "Continuing";
                 break;
             }
             else {
@@ -390,8 +390,8 @@ bool QWebMethod::sendMessage(QByteArray requestData)
 
     if (protocolUsed & soap)
         request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/soap+xml; charset=utf-8"));
-//    else if (protocolUsed & json)
-//        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json; charset=utf-8"));
+    else if (protocolUsed & json)
+        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json; charset=utf-8"));
     else if (protocolUsed & http)
         request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("Content-Type: application/x-www-form-urlencoded"));
     else if (protocolUsed & xml)
@@ -433,7 +433,7 @@ void QWebMethod::authReplyFinished(QNetworkReply *reply)
     QByteArray array = reply->readAll();
         if (array.isEmpty())
         {
-            qDebug() << "Login correct";
+//            qDebug() << "Login correct";
         }
 }
 
