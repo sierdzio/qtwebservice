@@ -4,6 +4,7 @@
 #include <QtNetwork/qnetworkaccessmanager.h>
 #include <QtNetwork/qnetworkrequest.h>
 #include <QtNetwork/qnetworkreply.h>
+#include <QtNetwork/qauthenticator.h>
 #include <QtCore/qstring.h>
 #include <QtCore/qstringlist.h>
 #include <QtCore/qurl.h>
@@ -44,6 +45,9 @@ public:
 
     void setHost(QString newHost);
     void setHost(QUrl newHost);
+    void setUsername(QString newUsername);
+    void setPassword(QString newPassword);
+    void setCredentials(QString newUsername, QString newPassword);
     void setMessageName(QString newName);
     void setMethodName(QString newName);
     void setParameters(QMap<QString, QVariant> params);
@@ -63,6 +67,7 @@ public:
     QString targetNamespace() const;
     QString host() const;
     QUrl hostUrl() const;
+    QString username() const;
     Protocol protocol() const;
     QString protocolString(bool includeRest = false) const;
     HttpMethod httpMethod() const;
@@ -77,6 +82,8 @@ signals:
 
 protected slots:
     void replyFinished(QNetworkReply *reply);
+    void authReplyFinished(QNetworkReply *reply);
+    void authenticate(QNetworkReply *reply, QAuthenticator *authenticator);
 
 protected: // Changed for 0.3.5, but precisely what should be protected and what private shall be decided later.
     void init();
@@ -85,6 +92,8 @@ protected: // Changed for 0.3.5, but precisely what should be protected and what
     bool enterErrorState(QString errMessage = "");
 
     bool errorState;
+    bool authReply;
+    bool authenticationError;
     QString errorMessage;
     bool replyReceived;
     Protocol protocolUsed;
@@ -92,6 +101,8 @@ protected: // Changed for 0.3.5, but precisely what should be protected and what
     QUrl m_hostUrl;
     QString m_messageName;
     QString m_targetNamespace;
+    QString m_username;
+    QString m_password;
     QVariant reply;
     QMap<QString, QVariant> parameters;
     QMap<QString, QVariant> returnValue;

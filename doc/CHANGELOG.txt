@@ -10,6 +10,16 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
 Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/band_ws.asmx
 
+03.09.2011 20:32 CEST:
+ - modified gitignore to block all Qt Creator pro files,
+ - added authentication to QWebMethod (username/ password + setters and getters. Also, a slot that
+   attempts to authenticate automatically),
+ - added more QDoc descriptions to QWebMethod,
+ - rearranged 'examples' directory to cater for example applications, that are to be written,
+ - added QtDevNetExample,
+ - this commit BARELY WORKS, it has some nasty hard-coded things put in purely to make QtDevNetExample work.
+   For hacking and usage v0.4.1 should be used. I will update the code soon.
+
 31.08.2011 17:02 CEST:
  - added float/ double and general ArrayOf recognition to QWsdl,
  - marked as 0.4.1.

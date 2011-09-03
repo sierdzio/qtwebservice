@@ -2,6 +2,6 @@
 # Tells git to ignore build-related files.
 build*/
 lib/
-*.pro.user
+*.pro.user*
 *.kate-swp
 *~
