@@ -61,7 +61,7 @@ void TestQWebServiceMethod::synchronousTest()
 
     if ((reply != "") && (reply != "pass"))
     {
-        qDebug() << reply;
+//        qDebug() << reply;
         result = true;
     }
 

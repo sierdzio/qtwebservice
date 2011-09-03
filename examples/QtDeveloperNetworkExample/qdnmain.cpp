@@ -7,7 +7,6 @@ QdnMain::QdnMain(QWidget *parent) :
 {
     ui->setupUi(this);
     centralWidget()->setLayout(ui->layoutMain);
-//    setLayout(ui->layoutMain);
     ui->tabProfile->setLayout(ui->layoutProfile);
     ui->tabPosts->setLayout(ui->layoutPosts);
 
@@ -30,10 +29,12 @@ void QdnMain::on_actionQuit_triggered()
 
 void QdnMain::on_buttonLogin_clicked()
 {
-    webMethodProfile->setCredentials(ui->lineEditLogin->text(), ui->lineEditPassword->text());
+//    webMethodProfile->setCredentials(ui->lineEditLogin->text(), ui->lineEditPassword->text());
+    webMethodProfile->authenticate(ui->lineEditLogin->text(), ui->lineEditPassword->text());
     webMethodProfile->sendMessage();
 
-    webMethodPosts->setCredentials(ui->lineEditLogin->text(), ui->lineEditPassword->text());
+//    webMethodPosts->setCredentials(ui->lineEditLogin->text(), ui->lineEditPassword->text());
+    webMethodPosts->authenticate(ui->lineEditLogin->text(), ui->lineEditPassword->text());
     webMethodPosts->sendMessage();
 
     forever {

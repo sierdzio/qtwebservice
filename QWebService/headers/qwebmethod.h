@@ -57,6 +57,7 @@ public:
     void setHttpMethod(HttpMethod method);
     bool setHttpMethod(QString newMethod);
     bool sendMessage(QByteArray requestData = QByteArray());
+    void authenticate(QString newUsername = QString(), QString newPassword = QString());
 
     QVariant replyRead();
     QString messageName() const;
@@ -83,7 +84,7 @@ signals:
 protected slots:
     void replyFinished(QNetworkReply *reply);
     void authReplyFinished(QNetworkReply *reply);
-    void authenticate(QNetworkReply *reply, QAuthenticator *authenticator);
+    void authenticationSlot(QNetworkReply *reply, QAuthenticator *authenticator);
 
 protected: // Changed for 0.3.5, but precisely what should be protected and what private shall be decided later.
     void init();

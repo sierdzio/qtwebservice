@@ -17,6 +17,9 @@
         <keyword ref="qwebmethod.html#Protocol-enum">QWebMethod::soap10</keyword>
         <keyword ref="qwebmethod.html#Protocol-enum">QWebMethod::soap</keyword>
         <keyword ref="qwebmethod.html#Protocol-enum">QWebMethod::soap12</keyword>
+        <keyword ref="qwebmethod.html#authReplyFinished">authReplyFinished</keyword>
+        <keyword ref="qwebmethod.html#authenticate">authenticate</keyword>
+        <keyword ref="qwebmethod.html#authenticationSlot">authenticationSlot</keyword>
         <keyword ref="qwebmethod.html#errorEncountered">errorEncountered</keyword>
         <keyword ref="qwebmethod.html#errorInfo">errorInfo</keyword>
         <keyword ref="qwebmethod.html#host">host</keyword>
@@ -38,15 +41,19 @@
         <keyword ref="qwebmethod.html#returnValueName">returnValueName</keyword>
         <keyword ref="qwebmethod.html#returnValueNameType">returnValueNameType</keyword>
         <keyword ref="qwebmethod.html#sendMessage">sendMessage</keyword>
+        <keyword ref="qwebmethod.html#setCredentials">setCredentials</keyword>
         <keyword ref="qwebmethod.html#setHost">setHost</keyword>
         <keyword ref="qwebmethod.html#setHttpMethod">setHttpMethod</keyword>
         <keyword ref="qwebmethod.html#setMessageName">setMessageName</keyword>
         <keyword ref="qwebmethod.html#setMethodName">setMethodName</keyword>
         <keyword ref="qwebmethod.html#setParameters">setParameters</keyword>
+        <keyword ref="qwebmethod.html#setPassword">setPassword</keyword>
         <keyword ref="qwebmethod.html#setProtocol">setProtocol</keyword>
         <keyword ref="qwebmethod.html#setReturnValue">setReturnValue</keyword>
         <keyword ref="qwebmethod.html#setTargetNamespace">setTargetNamespace</keyword>
+        <keyword ref="qwebmethod.html#setUsername">setUsername</keyword>
         <keyword ref="qwebmethod.html#targetNamespace">targetNamespace</keyword>
+        <keyword ref="qwebmethod.html#username">username</keyword>
         <section ref="qwebmethod-members.html" title="List of all members"/>
     </section>
     <section ref="qwebservice.html" title="QWebService Class Reference">

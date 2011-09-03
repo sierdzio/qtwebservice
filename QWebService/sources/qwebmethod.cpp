@@ -10,6 +10,9 @@
     to QWsdl. Additionally, qtWsdlConverter console application can automatically generate custom classes
     for any WSDL file.
 
+    If you need to authenticate on the server, use authenticate() method. You can specify username and password
+    right there, or before, using setCredentials(), setUsername() and/ or setPassword().
+
     Typically, to send a message, you will need to set the URL, message name, target namespace (when using SOAP),
     parameters list (when invoking a medhod that has parameters), and then use the parameterless sendMessage()
     method. Here is a snippet for that:
@@ -163,8 +166,9 @@ void QWebMethod::setHost(QUrl newHost)
   \fn QWebMethod::setUsername(QString newUsername)
 
   Used for authentication. Sets username using \a newUsername.
+  To authenticate, call authenticate().
 
-  \sa setPassword(), setCredentials()
+  \sa setPassword(), setCredentials(), authenticate()
   */
 void QWebMethod::setUsername(QString newUsername)
 {
@@ -175,8 +179,9 @@ void QWebMethod::setUsername(QString newUsername)
   \fn QWebMethod::setPassword(QString newPassword)
 
   Used for authentication. Sets password using \a newPassword.
+  To authenticate, call authenticate().
 
-  \sa setUsername(), setCredentials()
+  \sa setUsername(), setCredentials(), authenticate()
   */
 void QWebMethod::setPassword(QString newPassword)
 {
@@ -187,8 +192,9 @@ void QWebMethod::setPassword(QString newPassword)
   \fn QWebMethod::setCredentials(QString newUsername, QString newPassword)
 
   Used for authentication. Sets username (\a newUsername) and password (\a newPassword).
+  To authenticate, call authenticate().
 
-  \sa setUsername(), setPassword()
+  \sa setUsername(), setPassword(), authenticate()
   */
 void QWebMethod::setCredentials(QString newUsername, QString newPassword)
 {
@@ -347,44 +353,6 @@ bool QWebMethod::setHttpMethod(QString newMethod)
   */
 bool QWebMethod::sendMessage(QByteArray requestData)
 {
-    // Auth workaround. Temporal. HIGHLY EXPERIMENTAL.
-    if (m_username != "") {
-        authReply = false;
-        disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
-        connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
-
-        QNetworkRequest rqst(QUrl::fromUserInput("http://" + m_hostUrl.host() + "/"));
-//        qDebug() << rqst.url().toString();
-        rqst.setHeader(QNetworkRequest::ContentTypeHeader,"application/x-www-form-urlencoded");
-
-        QUrl url;
-        url.addEncodedQueryItem("ACT", QUrl::toPercentEncoding("11"));
-        url.addEncodedQueryItem("RET", QUrl::toPercentEncoding("/"));
-        url.addEncodedQueryItem("site_id", QUrl::toPercentEncoding("1"));
-        url.addEncodedQueryItem("username", QUrl::toPercentEncoding(m_username));
-        url.addEncodedQueryItem("password", QUrl::toPercentEncoding(m_password));
-
-        QByteArray paramBytes = url.toString().mid(1).toLatin1();
-        paramBytes.replace("/", "%2F");
-//        qDebug() << url.toString().mid(1).toLatin1();;
-
-        manager->post(rqst, paramBytes);
-
-        forever {
-            if (authReply) {
-//                qDebug() << "Continuing";
-                break;
-            }
-            else {
-                qApp->processEvents();
-            }
-        }
-
-        disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
-        connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
-    }
-    // EOAuth workaround.
-
     QNetworkRequest request;
     request.setUrl(m_hostUrl);
 
@@ -427,14 +395,58 @@ bool QWebMethod::sendMessage(QByteArray requestData)
     return true;
 }
 
-void QWebMethod::authReplyFinished(QNetworkReply *reply)
+/*!
+    \fn QWebMethod::authenticate(QString newUsername, QString newPassword)
+
+    Performs authentication using \a newUsername and \a newPassword, if specified. If not, and
+    they were given using setCredentials(), setUsername() or setPassword(), it uses the existing values.
+
+    If no data is specified, it does nothing.
+
+    \sa setCredentials(), setUsername(), setPassword()
+  */
+void QWebMethod::authenticate(QString newUsername, QString newPassword)
 {
-    authReply = true;
-    QByteArray array = reply->readAll();
-        if (array.isEmpty())
-        {
-//            qDebug() << "Login correct";
+    if (!newUsername.isNull())
+        m_username = newUsername;
+    if (!newPassword.isNull())
+        m_password = newPassword;
+
+//    if (m_username != "") {
+        authReply = false;
+        disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
+        connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
+
+        QNetworkRequest rqst(QUrl::fromUserInput("http://" + m_hostUrl.host() + "/"));
+//        qDebug() << rqst.url().toString();
+        rqst.setHeader(QNetworkRequest::ContentTypeHeader,"application/x-www-form-urlencoded");
+
+        QUrl url;
+        url.addEncodedQueryItem("ACT", QUrl::toPercentEncoding("11"));
+        url.addEncodedQueryItem("RET", QUrl::toPercentEncoding("/"));
+        url.addEncodedQueryItem("site_id", QUrl::toPercentEncoding("1"));
+        url.addEncodedQueryItem("username", QUrl::toPercentEncoding(m_username));
+        url.addEncodedQueryItem("password", QUrl::toPercentEncoding(m_password));
+
+        QByteArray paramBytes = url.toString().mid(1).toLatin1();
+        paramBytes.replace("/", "%2F");
+//        qDebug() << url.toString().mid(1).toLatin1();;
+
+        manager->post(rqst, paramBytes);
+
+        forever {
+            if (authReply) {
+//                qDebug() << "Continuing";
+                break;
+            }
+            else {
+                qApp->processEvents();
+            }
         }
+
+        disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
+        connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
+//    }
 }
 
 /*!
@@ -666,33 +678,58 @@ void QWebMethod::replyFinished(QNetworkReply *netReply)
     QString replyString = convertReplyToUtf(replyBytes);
 
     // This section is SOAP-only and should be fixed for other protocols!
-//    QString tempBegin = "<" + m_messageName + "Result>";
-//    int replyBeginIndex = replyString.indexOf(tempBegin, 0, Qt::CaseSensitive);
-//    replyBeginIndex += tempBegin.length();
+    if (protocolUsed & soap) {
+        QString tempBegin = "<" + m_messageName + "Result>";
+        int replyBeginIndex = replyString.indexOf(tempBegin, 0, Qt::CaseSensitive);
+        replyBeginIndex += tempBegin.length();
 
-//    QString tempFinish = "</" + m_messageName + "Result>";
-//    int replyFinishIndex = replyString.indexOf(tempFinish, replyBeginIndex, Qt::CaseSensitive);
+        QString tempFinish = "</" + m_messageName + "Result>";
+        int replyFinishIndex = replyString.indexOf(tempFinish, replyBeginIndex, Qt::CaseSensitive);
 
-//    if (replyBeginIndex == -1)
-//        replyBytes = 0;
-//    if (replyFinishIndex == -1)
-//        replyFinishIndex = replyString.length();
+        if (replyBeginIndex == -1)
+            replyBytes = 0;
+        if (replyFinishIndex == -1)
+            replyFinishIndex = replyString.length();
+
+        reply = (QVariant) replyString.mid(replyBeginIndex, replyFinishIndex - replyBeginIndex);
+    }
     // EO section.
-
-//    reply = (QVariant) replyString.mid(replyBeginIndex, replyFinishIndex - replyBeginIndex);
-    reply = replyString;
+    else
+        reply = replyString;
 
     replyReceived = true;
     emit replyReady(reply);
 }
 
 /*!
-  \fn QWebMethod::authenticate(QNetworkReply *reply, QAuthenticator *authenticator)
+    \fn QWebMethod::authReplyFinished(QNetworkReply *reply)
+
+  TEMP Auth METHOD. HIGHLY EXPERIMENTAL.
+  Checks for body of \a reply.
+  */
+void QWebMethod::authReplyFinished(QNetworkReply *reply)
+{
+    authReply = true;
+    QByteArray array = reply->readAll();
+        if (!array.isEmpty())
+        {
+            enterErrorState("Login incorrect.");
+        }
+        //    else        qDebug() << "Login correct";
+}
+
+/*!
+  \fn QWebMethod::authenticationSlot(QNetworkReply *reply, QAuthenticator *authenticator)
 
   Internal method used to authenticate the communication. Use setCredentials() or setUsername()
   and setPassword() to specify the data.
+
+  This is a fallback method of QNAM. Typically, authenticate() should be used.
+
+  Fills the \a authenticator object. Does not use \a reply.
+
   */
-void QWebMethod::authenticate(QNetworkReply *reply, QAuthenticator *authenticator)
+void QWebMethod::authenticationSlot(QNetworkReply *reply, QAuthenticator *authenticator)
 {
     if (authenticationError)
     {
@@ -726,7 +763,7 @@ void QWebMethod::init()
     reply.clear();
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
     connect(manager, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)),
-            this, SLOT(authenticate(QNetworkReply*,QAuthenticator*)));
+            this, SLOT(authenticationSlot(QNetworkReply*,QAuthenticator*)));
 }
 
 /*!
