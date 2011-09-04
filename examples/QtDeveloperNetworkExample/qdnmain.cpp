@@ -13,11 +13,11 @@ QdnMain::QdnMain(QWidget *parent) :
 
     webMethodProfile = new QWebMethod(this, QWebMethod::json, QWebMethod::GET);
     webMethodProfile->setHost(QUrl::fromUserInput("http://developer.qt.nokia.com/qtapi/1/member/profile"));
-    connect(webMethodProfile, SIGNAL(replyReady(QVariant)), this, SLOT(profileReply()));
+    connect(webMethodProfile, SIGNAL(replyReady(QByteArray)), this, SLOT(profileReply()));
 
     webMethodPosts = new QWebMethod(QUrl::fromUserInput("http://developer.qt.nokia.com/qtapi/1/forums/posts/unread"),
                                     this, QWebMethod::json, QWebMethod::GET);
-//    connect(webMethodPosts, SIGNAL(replyReady(QVariant)), this, SLOT(postsReply()));
+    connect(webMethodPosts, SIGNAL(replyReady(QByteArray)), this, SLOT(postsReply()));
 }
 
 QdnMain::~QdnMain()
@@ -35,14 +35,14 @@ void QdnMain::on_buttonLogin_clicked()
     webMethodProfile->authenticate(ui->lineEditLogin->text(), ui->lineEditPassword->text());
     webMethodProfile->sendMessage();
 
-//    QUrl url;
-//    url.addEncodedQueryItem("ACT", QUrl::toPercentEncoding("11"));
-//    url.addEncodedQueryItem("RET", QUrl::toPercentEncoding("/"));
-//    url.addEncodedQueryItem("site_id", QUrl::toPercentEncoding("1"));
-//    url.addEncodedQueryItem("username", QUrl::toPercentEncoding(ui->lineEditLogin->text()));
-//    url.addEncodedQueryItem("password", QUrl::toPercentEncoding(ui->lineEditPassword->text()));
-//    webMethodPosts->authenticate(url);
-//    webMethodPosts->sendMessage();
+    QUrl url;
+    url.addEncodedQueryItem("ACT", QUrl::toPercentEncoding("11"));
+    url.addEncodedQueryItem("RET", QUrl::toPercentEncoding("/"));
+    url.addEncodedQueryItem("site_id", QUrl::toPercentEncoding("1"));
+    url.addEncodedQueryItem("username", QUrl::toPercentEncoding(ui->lineEditLogin->text()));
+    url.addEncodedQueryItem("password", QUrl::toPercentEncoding(ui->lineEditPassword->text()));
+    webMethodPosts->authenticate(url);
+    webMethodPosts->sendMessage();
 }
 
 void QdnMain::profileReply()

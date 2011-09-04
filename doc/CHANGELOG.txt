@@ -10,6 +10,10 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
 Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/band_ws.asmx
 
+04.09.2011 20:04 CEST:
+ - updated QtDNExample to use recent QWebMethod changes,
+ - marked v0.4.2.
+
 04.09.2011 15:29 CEST:
  - optimised authentiation process,
  - made authentication process even less synchronous,
