@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui webkit
 
 TARGET = QtDeveloperNetworkExample
 TEMPLATE = app

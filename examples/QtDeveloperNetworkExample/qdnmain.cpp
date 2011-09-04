@@ -9,12 +9,15 @@ QdnMain::QdnMain(QWidget *parent) :
     centralWidget()->setLayout(ui->layoutMain);
     ui->tabProfile->setLayout(ui->layoutProfile);
     ui->tabPosts->setLayout(ui->layoutPosts);
+    ui->lineEditPassword->setEchoMode(QLineEdit::Password);
 
     webMethodProfile = new QWebMethod(this, QWebMethod::json, QWebMethod::GET);
     webMethodProfile->setHost(QUrl::fromUserInput("http://developer.qt.nokia.com/qtapi/1/member/profile"));
+    connect(webMethodProfile, SIGNAL(replyReady(QVariant)), this, SLOT(profileReply()));
 
-    webMethodPosts = new QWebMethod(this, QWebMethod::json, QWebMethod::GET);
-    webMethodPosts->setHost(QUrl::fromUserInput("http://developer.qt.nokia.com/qtapi/1/forums/posts/unread"));
+    webMethodPosts = new QWebMethod(QUrl::fromUserInput("http://developer.qt.nokia.com/qtapi/1/forums/posts/unread"),
+                                    this, QWebMethod::json, QWebMethod::GET);
+//    connect(webMethodPosts, SIGNAL(replyReady(QVariant)), this, SLOT(postsReply()));
 }
 
 QdnMain::~QdnMain()
@@ -29,41 +32,59 @@ void QdnMain::on_actionQuit_triggered()
 
 void QdnMain::on_buttonLogin_clicked()
 {
-//    webMethodProfile->setCredentials(ui->lineEditLogin->text(), ui->lineEditPassword->text());
     webMethodProfile->authenticate(ui->lineEditLogin->text(), ui->lineEditPassword->text());
     webMethodProfile->sendMessage();
 
-//    webMethodPosts->setCredentials(ui->lineEditLogin->text(), ui->lineEditPassword->text());
-    webMethodPosts->authenticate(ui->lineEditLogin->text(), ui->lineEditPassword->text());
-    webMethodPosts->sendMessage();
+//    QUrl url;
+//    url.addEncodedQueryItem("ACT", QUrl::toPercentEncoding("11"));
+//    url.addEncodedQueryItem("RET", QUrl::toPercentEncoding("/"));
+//    url.addEncodedQueryItem("site_id", QUrl::toPercentEncoding("1"));
+//    url.addEncodedQueryItem("username", QUrl::toPercentEncoding(ui->lineEditLogin->text()));
+//    url.addEncodedQueryItem("password", QUrl::toPercentEncoding(ui->lineEditPassword->text()));
+//    webMethodPosts->authenticate(url);
+//    webMethodPosts->sendMessage();
+}
 
-    forever {
-        if (webMethodProfile->isErrorState()) {
-            ui->labelUsernameResult->setText(webMethodProfile->replyRead().toString());
-            return;
-        }
+void QdnMain::profileReply()
+{
+    QString reply = webMethodProfile->replyRead().toString();
+    ui->labelUsernameResult->setText(reply);
 
-        if (webMethodProfile->isReplyReady()) {
-            ui->labelUsernameResult->setText(webMethodProfile->replyRead().toString());
-            break;
-        }
-        else {
-            qApp->processEvents();
-        }
+    { // Points
+        int pointsIndex = reply.indexOf("\"points\":") + 10;
+        QString points = reply.mid(pointsIndex, 8);
+        points.chop(points.length() - points.indexOf("\","));
+        ui->labelPointsResult->setText(points);
     }
-
-    forever {
-        if (webMethodPosts->isErrorState()) {
-            ui->labelPostsResult->setText(webMethodPosts->replyRead().toString());
-            return;
-        }
-
-        if (webMethodPosts->isReplyReady()) {
-            ui->labelPostsResult->setText(webMethodPosts->replyRead().toString());
-            break;
-        }
-        else {
-            qApp->processEvents();
-        }
+    { // Title
+        int titleIndex = reply.indexOf("\"title\":") + 9;
+        QString title = reply.mid(titleIndex, 30);
+        title.chop(title.length() - title.indexOf("\","));
+        ui->labelTitleResult->setText(title);
     }
+    { // Level
+        int levelIndex = reply.indexOf("\"level\":") + 8;
+        QString level = reply.mid(levelIndex, 30);
+        level.chop(level.length() - level.indexOf(","));
+        ui->labelLevelResult->setText(level);
+    }
+    { // ID
+        int idIndex = reply.indexOf("\"member_id\":") + 12;
+        QString id = reply.mid(idIndex, 30);
+        id.chop(id.length() - id.indexOf(","));
+        ui->labelUserIdResult->setText(id);
+    }
+    { // Gravatar
+        int gravatarIndex = reply.indexOf("\"gravatar_hash\":") + 17;
+        QString gravatar = reply.mid(gravatarIndex, 50);
+        gravatar.chop(gravatar.length() - gravatar.indexOf("\"}"));
+        QString result = "http://www.gravatar.com/avatar/" + gravatar + "?s=512";
+        ui->webViewGravatar->setUrl(QUrl::fromUserInput(result));
+    }
+}
+
+void QdnMain::postsReply()
+{
+    QString reply = webMethodPosts->replyRead().toString();
+    ui->labelPostsResult->setText(reply);
 }

@@ -147,6 +147,12 @@
                 <parameter left="Protocol" right="" name="protocol" default="soap12"/>
                 <parameter left="HttpMethod" right="" name="method" default="POST"/>
             </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="QWebMethod" fullname="QWebMethod::QWebMethod" href="qwebmethod.html#QWebMethod-2" location="qwebmethod.cpp" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="2" type="" signature="QWebMethod(QUrl url, QObject * parent, Protocol protocol, HttpMethod method)">
+                <parameter left="QUrl" right="" name="url" default=""/>
+                <parameter left="QObject *" right="" name="parent" default="0"/>
+                <parameter left="Protocol" right="" name="protocol" default="soap12"/>
+                <parameter left="HttpMethod" right="" name="method" default="POST"/>
+            </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="~QWebMethod" fullname="QWebMethod::~QWebMethod" href="qwebmethod.html#dtor.QWebMethod" location="qwebmethod.cpp" virtual="non" meta="destructor" const="false" static="false" overload="false" type="" signature="~QWebMethod()"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="setHost" fullname="QWebMethod::setHost" href="qwebmethod.html#setHost" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setHost(QString newHost)">
                 <parameter left="QString" right="" name="newHost" default=""/>
@@ -191,9 +197,12 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="sendMessage" fullname="QWebMethod::sendMessage" href="qwebmethod.html#sendMessage" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="sendMessage(QByteArray requestData)">
                 <parameter left="QByteArray" right="" name="requestData" default="QByteArray()"/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="authenticate" fullname="QWebMethod::authenticate" href="qwebmethod.html#authenticate" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="authenticate(QString newUsername, QString newPassword)">
+            <function access="public" threadsafety="unspecified" status="commendable" name="authenticate" fullname="QWebMethod::authenticate" href="qwebmethod.html#authenticate" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="authenticate(QString newUsername, QString newPassword)">
                 <parameter left="QString" right="" name="newUsername" default="QString()"/>
                 <parameter left="QString" right="" name="newPassword" default="QString()"/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="authenticate" fullname="QWebMethod::authenticate" href="qwebmethod.html#authenticate-2" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="bool" signature="authenticate(QUrl customAuthString)">
+                <parameter left="QUrl" right="" name="customAuthString" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="replyRead" fullname="QWebMethod::replyRead" href="qwebmethod.html#replyRead" location="qwebmethod.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="QVariant" signature="replyRead()"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="messageName" fullname="QWebMethod::messageName" href="qwebmethod.html#messageName" location="qwebmethod.cpp" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="messageName() const"/>

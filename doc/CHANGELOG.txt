@@ -10,12 +10,14 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
 Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/band_ws.asmx
 
-.09.2011 : CEST:
+04.09.2011 12:28 CEST:
  - moved authentication into public method - authenticate(). Cleaned the QWebMethod a bit. Algorithm still needs some tweaks,
    especially making auth less synchronous, but it looks much better than before,
  - updated docs,
  - updated reply parsing (a bit),
- - 
+ - simplified QtDevNetEx, made it use nicieties of QWebMethod and also made it parse the reply (well, partially),
+ - added new constructor to QWebMethod (like a standard one + QUrl. Saves one line of code for quick, parameterless methods),
+ - added possibility to provide custom authentication data to QWebMethod::authenticate().
 
 03.09.2011 21:33 CEST:
  - updated QWebMethod authentication to be more general,

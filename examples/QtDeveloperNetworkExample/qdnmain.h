@@ -2,6 +2,7 @@
 #define QDNMAIN_H
 
 #include <QMainWindow>
+#include <QtWebKit/QWebView>
 #include <qwebmethod.h>
 
 namespace Ui {
@@ -18,8 +19,9 @@ public:
 
 private slots:
     void on_actionQuit_triggered();
-
     void on_buttonLogin_clicked();
+    void profileReply();
+    void postsReply();
 
 private:
     Ui::QdnMain *ui;

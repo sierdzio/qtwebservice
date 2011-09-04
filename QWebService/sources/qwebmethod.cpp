@@ -126,6 +126,26 @@ QWebMethod::QWebMethod(QObject *parent, Protocol protocol, HttpMethod method) :
 }
 
 /*!
+    \fn QWebMethod::QWebMethod(QUrl url, QObject *parent, Protocol protocol, HttpMethod method)
+
+    Constructs the message usign \a parent, \a protocol (which defaults to soap12),
+    and \a method (which defaults to POST), and \a url. Especially convenient for
+    parameterless methods (like quick GET messages).
+
+    \sa init(), setParameters(), setProtocol(), sendMessage()
+  */
+QWebMethod::QWebMethod(QUrl url, QObject *parent, Protocol protocol, HttpMethod method) :
+    QObject(parent)
+{
+    init();
+    setProtocol(protocol);
+    setHttpMethod(method);
+    m_hostUrl = url;
+    m_messageName = "";
+    parameters.clear();
+}
+
+/*!
     \fn QWebMethod::~QWebMethod()
 
     Deletes internal pointers.
@@ -401,24 +421,23 @@ bool QWebMethod::sendMessage(QByteArray requestData)
     Performs authentication using \a newUsername and \a newPassword, if specified. If not, and
     they were given using setCredentials(), setUsername() or setPassword(), it uses the existing values.
 
-    If no data is specified, it does nothing.
+    If no data is specified, it does nothing. Returns true on success.
 
     \sa setCredentials(), setUsername(), setPassword()
   */
-void QWebMethod::authenticate(QString newUsername, QString newPassword)
+bool QWebMethod::authenticate(QString newUsername, QString newPassword)
 {
     if (!newUsername.isNull())
         m_username = newUsername;
     if (!newPassword.isNull())
         m_password = newPassword;
 
-//    if (m_username != "") {
+    if (m_username != "") {
         authReply = false;
         disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
         connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
 
         QNetworkRequest rqst(QUrl::fromUserInput("http://" + m_hostUrl.host() + "/"));
-//        qDebug() << rqst.url().toString();
         rqst.setHeader(QNetworkRequest::ContentTypeHeader,"application/x-www-form-urlencoded");
 
         QUrl url;
@@ -430,13 +449,11 @@ void QWebMethod::authenticate(QString newUsername, QString newPassword)
 
         QByteArray paramBytes = url.toString().mid(1).toLatin1();
         paramBytes.replace("/", "%2F");
-//        qDebug() << url.toString().mid(1).toLatin1();;
 
         manager->post(rqst, paramBytes);
 
         forever {
             if (authReply) {
-//                qDebug() << "Continuing";
                 break;
             }
             else {
@@ -446,7 +463,49 @@ void QWebMethod::authenticate(QString newUsername, QString newPassword)
 
         disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
         connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
-//    }
+        return true;
+    }
+}
+
+/*!
+    \fn QWebMethod::authenticate(QUrl customAuthString)
+
+    Performs authentication using \a customAuthString. Credentials specified by setCredentials(),
+    setUsername() or setPassword() are NOT used.
+
+    If no data is specified, it does nothing (and returns false). Returns true on success.
+
+    \sa setCredentials(), setUsername(), setPassword()
+  */
+bool QWebMethod::authenticate(QUrl customAuthString)
+{
+    if (customAuthString.isEmpty())
+        return false;
+
+    authReply = false;
+    disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
+
+    QNetworkRequest rqst(QUrl::fromUserInput("http://" + m_hostUrl.host() + "/"));
+    rqst.setHeader(QNetworkRequest::ContentTypeHeader,"application/x-www-form-urlencoded");
+
+    QByteArray paramBytes = customAuthString.toString().mid(1).toLatin1();
+    paramBytes.replace("/", "%2F");
+
+    manager->post(rqst, paramBytes);
+
+    forever {
+        if (authReply) {
+            break;
+        }
+        else {
+            qApp->processEvents();
+        }
+    }
+
+    disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
+    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
+    return true;
 }
 
 /*!

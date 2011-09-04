@@ -5,3 +5,53 @@ else:unix: LIBS += -L$$PWD/../../lib/ -lQWebService
 
 INCLUDEPATH += $$PWD/../../QWebService/headers
 DEPENDPATH += $$PWD/../../QWebService/headers 
+
+QtDN Profile:
+{"current_rank":
+{"points":"298",
+"points_last_7_days":"40",
+"level":2,
+"title":"Ant Farmer",
+"image":"http:\/\/developer.qt.nokia.com\/images\/qtdn\/level_images\/level2.png"},
+
+"next_rank":
+{"points_remaining":243,
+"level":3,
+"title":"Hobby Entomologist",
+"image":"http:\/\/developer.qt.nokia.com\/images\/qtdn\/level_images\/level3.png"},
+"badges":[],
+"member_id":12548,
+"gravatar_hash":"e1eb64c6fbad857512a62c027f102162"}
+
+QtDN Posts:
+{"forum_posts":[]}
+
+OR:
+
+{
+    "forum_posts": [
+        {
+            "title": "An unread post",
+            "url": "http://developer.qt.nokia.com/forums/viewthread/100/",
+            "poster": "http://developer.qt.nokia.com/member/50",
+            "type": "new_topic"
+        },
+ 
+        {
+            "title": "An important unread post",
+            "url": "http://developer.qt.nokia.com/forums/viewthread/112/",
+            "poster": "http://developer.qt.nokia.com/member/55",
+            "type": "new_topic"
+        },
+ 
+        {
+            "title": "A funny unread post",
+            "url": "http://developer.qt.nokia.com/forums/viewthread/125/",
+            "poster": "http://developer.qt.nokia.com/member/45",
+            "type": "new_reply"
+        }
+    ]
+}
+
+Gravatar retrieval:
+http://www.gravatar.com/avatar/e1eb64c6fbad857512a62c027f102162?s=200

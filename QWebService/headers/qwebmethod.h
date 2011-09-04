@@ -41,6 +41,7 @@ public:
     };
 
     QWebMethod(QObject *parent = 0, Protocol protocol = soap12, HttpMethod httpMethod = POST);
+    QWebMethod(QUrl url, QObject *parent = 0, Protocol protocol = soap12, HttpMethod httpMethod = POST);
     ~QWebMethod();
 
     void setHost(QString newHost);
@@ -57,7 +58,8 @@ public:
     void setHttpMethod(HttpMethod method);
     bool setHttpMethod(QString newMethod);
     bool sendMessage(QByteArray requestData = QByteArray());
-    void authenticate(QString newUsername = QString(), QString newPassword = QString());
+    bool authenticate(QString newUsername = QString(), QString newPassword = QString());
+    bool authenticate(QUrl customAuthString);
 
     QVariant replyRead();
     QString messageName() const;

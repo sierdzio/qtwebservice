@@ -319,8 +319,7 @@ bool QWsdl::parse()
     QFile file(wsdlFilePath);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         errorMessage = "Error: cannot read WSDL file: " + wsdlFilePath + ". Reason: " + file.errorString();
-        qDebug() << errorMessage;
-        errorState = true;
+        enterErrorState(errorMessage);
         return false;
     }
 

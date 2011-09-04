@@ -41,8 +41,10 @@
 <h2>Public Functions</h2>
 <table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod">QWebMethod</a></b> ( QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = soap12, HttpMethod <i>method</i> = POST )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-2">QWebMethod</a></b> ( QUrl <i>url</i>, QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = soap12, HttpMethod <i>method</i> = POST )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#dtor.QWebMethod">~QWebMethod</a></b> ()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#authenticate">authenticate</a></b> ( QString <i>newUsername</i> = QString(), QString <i>newPassword</i> = QString() )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#authenticate">authenticate</a></b> ( QString <i>newUsername</i> = QString(), QString <i>newPassword</i> = QString() )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#authenticate-2">authenticate</a></b> ( QUrl <i>customAuthString</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#errorInfo">errorInfo</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#host">host</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#hostUrl">hostUrl</a></b> () const</td></tr>
@@ -173,6 +175,11 @@
 <p>Constructs the message usign <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST). Requires specifying other params later (<a href="qwebmethod.html#setParameters">setParameters</a>()).</p>
 <p>See also <a href="qwebmethod.html#init">init</a>(), <a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#sendMessage">sendMessage</a>().</p>
 <!-- @@@QWebMethod -->
+<!-- $$$QWebMethod$$$QWebMethodQUrlQObject*ProtocolHttpMethod -->
+<h3 class="fn"><a name="QWebMethod-2"></a>QWebMethod::QWebMethod ( QUrl <i>url</i>, QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = POST )</h3>
+<p>Constructs the message usign <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST), and <i>url</i>. Especially convenient for parameterless methods (like quick GET messages).</p>
+<p>See also <a href="qwebmethod.html#init">init</a>(), <a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#sendMessage">sendMessage</a>().</p>
+<!-- @@@QWebMethod -->
 <!-- $$$~QWebMethod[overload1]$$$~QWebMethod -->
 <h3 class="fn"><a name="dtor.QWebMethod"></a>QWebMethod::~QWebMethod ()</h3>
 <p>Deletes internal pointers.</p>
@@ -182,9 +189,15 @@
 <p>TEMP Auth METHOD. HIGHLY EXPERIMENTAL. Checks for body of <i>reply</i>.</p>
 <!-- @@@authReplyFinished -->
 <!-- $$$authenticate[overload1]$$$authenticateQStringQString -->
-<h3 class="fn"><a name="authenticate"></a>void QWebMethod::authenticate ( QString <i>newUsername</i> = QString(), QString <i>newPassword</i> = QString() )</h3>
+<h3 class="fn"><a name="authenticate"></a>bool QWebMethod::authenticate ( QString <i>newUsername</i> = QString(), QString <i>newPassword</i> = QString() )</h3>
 <p>Performs authentication using <i>newUsername</i> and <i>newPassword</i>, if specified. If not, and they were given using <a href="qwebmethod.html#setCredentials">setCredentials</a>(), <a href="qwebmethod.html#setUsername">setUsername</a>() or <a href="qwebmethod.html#setPassword">setPassword</a>(), it uses the existing values.</p>
-<p>If no data is specified, it does nothing.</p>
+<p>If no data is specified, it does nothing. Returns true on success.</p>
+<p>See also <a href="qwebmethod.html#setCredentials">setCredentials</a>(), <a href="qwebmethod.html#setUsername">setUsername</a>(), and <a href="qwebmethod.html#setPassword">setPassword</a>().</p>
+<!-- @@@authenticate -->
+<!-- $$$authenticate$$$authenticateQUrl -->
+<h3 class="fn"><a name="authenticate-2"></a>bool QWebMethod::authenticate ( QUrl <i>customAuthString</i> )</h3>
+<p>Performs authentication using <i>customAuthString</i>. Credentials specified by <a href="qwebmethod.html#setCredentials">setCredentials</a>(), <a href="qwebmethod.html#setUsername">setUsername</a>() or <a href="qwebmethod.html#setPassword">setPassword</a>() are NOT used.</p>
+<p>If no data is specified, it does nothing (and returns false). Returns true on success.</p>
 <p>See also <a href="qwebmethod.html#setCredentials">setCredentials</a>(), <a href="qwebmethod.html#setUsername">setUsername</a>(), and <a href="qwebmethod.html#setPassword">setPassword</a>().</p>
 <!-- @@@authenticate -->
 <!-- $$$authenticationSlot[overload1]$$$authenticationSlotQNetworkReply*QAuthenticator* -->
