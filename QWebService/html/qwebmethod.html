@@ -57,7 +57,9 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> Protocol </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#protocol">protocol</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#protocolString">protocolString</a></b> ( bool <i>includeRest</i> = false ) const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> QVariant </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#replyRead">replyRead</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#replyRead">replyRead</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QVariant </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#replyReadParsed">replyReadParsed</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#replyReadRaw">replyReadRaw</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#returnValueName">returnValueName</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#returnValueNameType">returnValueNameType</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#sendMessage">sendMessage</a></b> ( QByteArray <i>requestData</i> = QByteArray() )</td></tr>
@@ -81,7 +83,7 @@
 <h2>Signals</h2>
 <table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#errorEncountered">errorEncountered</a></b> ( QString <i>errMessage</i> )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#replyReady">replyReady</a></b> ( QVariant <i>rply</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#replyReady">replyReady</a></b> ( QByteArray <i>rply</i> )</td></tr>
 </table>
 <a name="protected-functions"></a>
 <h2>Protected Functions</h2>
@@ -186,7 +188,7 @@
 <!-- @@@~QWebMethod -->
 <!-- $$$authReplyFinished[overload1]$$$authReplyFinishedQNetworkReply* -->
 <h3 class="fn"><a name="authReplyFinished"></a>void QWebMethod::authReplyFinished ( QNetworkReply * <i>reply</i> )<tt> [protected slot]</tt></h3>
-<p>TEMP Auth METHOD. HIGHLY EXPERIMENTAL. Checks for body of <i>reply</i>.</p>
+<p>TEMP Auth METHOD. HIGHLY EXPERIMENTAL. Checks for body of <i>reply</i> to determine correctness of authentication.</p>
 <!-- @@@authReplyFinished -->
 <!-- $$$authenticate[overload1]$$$authenticateQStringQString -->
 <h3 class="fn"><a name="authenticate"></a>bool QWebMethod::authenticate ( QString <i>newUsername</i> = QString(), QString <i>newPassword</i> = QString() )</h3>
@@ -279,11 +281,21 @@
 <p>Public (will probably be private in the future) slot, which processes the reply (<i>netReply</i>) from the server. Emits the <a href="qwebmethod.html#replyReady">replyReady</a>() signal.</p>
 <!-- @@@replyFinished -->
 <!-- $$$replyRead[overload1]$$$replyRead -->
-<h3 class="fn"><a name="replyRead"></a>QVariant QWebMethod::replyRead ()</h3>
+<h3 class="fn"><a name="replyRead"></a>QString QWebMethod::replyRead ()</h3>
 <p>After making asynchronous call, and getting the <a href="qwebmethod.html#replyReady">replyReady</a>() signal, this method can be used to read the reply.</p>
 <!-- @@@replyRead -->
-<!-- $$$replyReady[overload1]$$$replyReadyQVariant -->
-<h3 class="fn"><a name="replyReady"></a>void QWebMethod::replyReady ( QVariant <i>rply</i> )<tt> [signal]</tt></h3>
+<!-- $$$replyReadParsed[overload1]$$$replyReadParsed -->
+<h3 class="fn"><a name="replyReadParsed"></a>QVariant QWebMethod::replyReadParsed ()</h3>
+<p>After making asynchronous call, and getting the <a href="qwebmethod.html#replyReady">replyReady</a>() signal, this method can be used to read the reply.</p>
+<p>Returns parsed data.</p>
+<!-- @@@replyReadParsed -->
+<!-- $$$replyReadRaw[overload1]$$$replyReadRaw -->
+<h3 class="fn"><a name="replyReadRaw"></a>QByteArray QWebMethod::replyReadRaw ()</h3>
+<p>After making asynchronous call, and getting the <a href="qwebmethod.html#replyReady">replyReady</a>() signal, this method can be used to read the reply.</p>
+<p>Returns the raw data acquired from server.</p>
+<!-- @@@replyReadRaw -->
+<!-- $$$replyReady[overload1]$$$replyReadyQByteArray -->
+<h3 class="fn"><a name="replyReady"></a>void QWebMethod::replyReady ( QByteArray <i>rply</i> )<tt> [signal]</tt></h3>
 <p>Signal invoked when the reply (<i>rply</i>) from web service's server is ready for reading.</p>
 <!-- @@@replyReady -->
 <!-- $$$returnValueName[overload1]$$$returnValueName -->

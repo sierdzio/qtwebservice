@@ -95,13 +95,6 @@
          </property>
          <layout class="QVBoxLayout" name="layoutProfile">
           <item>
-           <widget class="QLabel" name="labelUsername">
-            <property name="text">
-             <string>Reply:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <layout class="QFormLayout" name="formLayout_2">
             <property name="fieldGrowthPolicy">
              <enum>QFormLayout::ExpandingFieldsGrow</enum>

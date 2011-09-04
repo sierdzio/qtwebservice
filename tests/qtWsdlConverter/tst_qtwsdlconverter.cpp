@@ -38,7 +38,7 @@ void TestConverter::init()
 void TestConverter::initialTest()
 {
     QStringList arguments;
-    arguments.append("../../examples/band_ws.asmx");
+    arguments.append("../../examples/wsdl/band_ws.asmx");
 
     WsdlConverter *converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
@@ -49,7 +49,7 @@ void TestConverter::initialTest()
     QCOMPARE(QFile::exists("band_ws/headers/band_ws.h"), bool(true));
     QCOMPARE(QFile::exists("band_ws/sources/band_ws.cpp"), bool(true));
 
-    QWsdl *wsdl = new QWsdl("../../examples/band_ws.asmx", this);
+    QWsdl *wsdl = new QWsdl("../../examples/wsdl/band_ws.asmx", this);
     QStringList methods = wsdl->methodNames();
 
     foreach (QString s, methods) {
@@ -64,7 +64,7 @@ void TestConverter::initialTest()
 void TestConverter::noForceTest()
 {
     QStringList arguments;
-    arguments.append("../../examples/band_ws.asmx");
+    arguments.append("../../examples/wsdl/band_ws.asmx");
 
     WsdlConverter *converter1 = new WsdlConverter(arguments, this);
     QCOMPARE(converter1->isErrorState(), bool(false));
@@ -100,7 +100,7 @@ void TestConverter::forceTest()
 {
     QStringList arguments;
     arguments.append("--force");
-    arguments.append("../../examples/band_ws.asmx");
+    arguments.append("../../examples/wsdl/band_ws.asmx");
 
     WsdlConverter *converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
@@ -118,7 +118,7 @@ void TestConverter::forceTest()
     QCOMPARE(QFile::exists("band_ws/headers/band_ws.h"), bool(true));
     QCOMPARE(QFile::exists("band_ws/sources/band_ws.cpp"), bool(true));
 
-    QWsdl *wsdl = new QWsdl("../../examples/band_ws.asmx", this);
+    QWsdl *wsdl = new QWsdl("../../examples/wsdl/band_ws.asmx", this);
     QStringList methods = wsdl->methodNames();
 
     foreach (QString s, methods) {
@@ -136,7 +136,7 @@ void TestConverter::buildSystemTest()
     arguments.append("--scons");
     arguments.append("--cmake");
     arguments.append("--json");
-    arguments.append("../../examples/band_ws.asmx");
+    arguments.append("../../examples/wsdl/band_ws.asmx");
 
     WsdlConverter *converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
@@ -149,7 +149,7 @@ void TestConverter::buildSystemTest()
     QCOMPARE(QFile::exists("band_ws/headers/band_ws.h"), bool(true));
     QCOMPARE(QFile::exists("band_ws/sources/band_ws.cpp"), bool(true));
 
-    QWsdl *wsdl = new QWsdl("../../examples/band_ws.asmx", this);
+    QWsdl *wsdl = new QWsdl("../../examples/wsdl/band_ws.asmx", this);
     QStringList methods = wsdl->methodNames();
 
     foreach (QString s, methods) {
@@ -165,7 +165,7 @@ void TestConverter::noMessagesTest()
 {
     QStringList arguments;
     arguments.append("--no-messages-structure");
-    arguments.append("../../examples/band_ws.asmx");
+    arguments.append("../../examples/wsdl/band_ws.asmx");
 
     WsdlConverter *converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
@@ -176,7 +176,7 @@ void TestConverter::noMessagesTest()
     QCOMPARE(QFile::exists("band_ws/headers/band_ws.h"), bool(true));
     QCOMPARE(QFile::exists("band_ws/sources/band_ws.cpp"), bool(true));
 
-    QWsdl *wsdl = new QWsdl("../../examples/band_ws.asmx", this);
+    QWsdl *wsdl = new QWsdl("../../examples/wsdl/band_ws.asmx", this);
     QStringList methods = wsdl->methodNames();
 
     foreach (QString s, methods) {
@@ -193,7 +193,7 @@ void TestConverter::noMessagesAsynchronousTest()
     QStringList arguments;
     arguments.append("--no-messages-structure");
     arguments.append("--asynchronous");
-    arguments.append("../../examples/band_ws.asmx");
+    arguments.append("../../examples/wsdl/band_ws.asmx");
 
     WsdlConverter *converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
@@ -204,7 +204,7 @@ void TestConverter::noMessagesAsynchronousTest()
     QCOMPARE(QFile::exists("band_ws/headers/band_ws.h"), bool(true));
     QCOMPARE(QFile::exists("band_ws/sources/band_ws.cpp"), bool(true));
 
-    QWsdl *wsdl = new QWsdl("../../examples/band_ws.asmx", this);
+    QWsdl *wsdl = new QWsdl("../../examples/wsdl/band_ws.asmx", this);
     QStringList methods = wsdl->methodNames();
 
     foreach (QString s, methods) {
@@ -220,7 +220,7 @@ void TestConverter::allInOneDirTest()
 {
     QStringList arguments;
     arguments.append("--all-in-one-dir-structure");
-    arguments.append("../../examples/band_ws.asmx");
+    arguments.append("../../examples/wsdl/band_ws.asmx");
 
     WsdlConverter *converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
@@ -231,7 +231,7 @@ void TestConverter::allInOneDirTest()
     QCOMPARE(QFile::exists("band_ws/band_ws.h"), bool(true));
     QCOMPARE(QFile::exists("band_ws/band_ws.cpp"), bool(true));
 
-    QWsdl *wsdl = new QWsdl("../../examples/band_ws.asmx", this);
+    QWsdl *wsdl = new QWsdl("../../examples/wsdl/band_ws.asmx", this);
     QStringList methods = wsdl->methodNames();
 
     foreach (QString s, methods) {
@@ -256,7 +256,7 @@ void TestConverter::errorsTest()
 
     arguments.append("--json");
     arguments.append("--xml");
-    arguments.append("../../examples/band_ws.asmx");
+    arguments.append("../../examples/wsdl/band_ws.asmx");
     converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
 
@@ -270,7 +270,7 @@ void TestConverter::noBuildSystemTest()
 {
     QStringList arguments;
     arguments.append("--no-build-system");
-    arguments.append("../../examples/band_ws.asmx");
+    arguments.append("../../examples/wsdl/band_ws.asmx");
 
     WsdlConverter *converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
@@ -284,7 +284,7 @@ void TestConverter::noBuildSystemTest()
     QCOMPARE(QFile::exists("band_ws/headers/band_ws.h"), bool(true));
     QCOMPARE(QFile::exists("band_ws/sources/band_ws.cpp"), bool(true));
 
-    QWsdl *wsdl = new QWsdl("../../examples/band_ws.asmx", this);
+    QWsdl *wsdl = new QWsdl("../../examples/wsdl/band_ws.asmx", this);
     QStringList methods = wsdl->methodNames();
 
     foreach (QString s, methods) {

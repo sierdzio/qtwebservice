@@ -373,17 +373,42 @@ bool QWebMethod::setHttpMethod(QString newMethod)
   */
 bool QWebMethod::sendMessage(QByteArray requestData)
 {
+    if ((m_username != "") && (authReply == false)) {
+        forever {
+            if (authReply) {
+                disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
+                connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
+                break;
+            }
+            else {
+                qApp->processEvents();
+            }
+        }
+    }
+    else if ((m_username != "") && (authReply == true)) {
+        disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
+        connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
+    }
+
     QNetworkRequest request;
     request.setUrl(m_hostUrl);
 
-    if (protocolUsed & soap)
-        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/soap+xml; charset=utf-8"));
-    else if (protocolUsed & json)
-        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json; charset=utf-8"));
-    else if (protocolUsed & http)
-        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("Content-Type: application/x-www-form-urlencoded"));
-    else if (protocolUsed & xml)
-        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/xml; charset=utf-8"));
+    if (protocolUsed & soap) {
+        request.setHeader(QNetworkRequest::ContentTypeHeader,
+                          QVariant("application/soap+xml; charset=utf-8"));
+    }
+    else if (protocolUsed & json) {
+        request.setHeader(QNetworkRequest::ContentTypeHeader,
+                          QVariant("application/json; charset=utf-8"));
+    }
+    else if (protocolUsed & http) {
+        request.setHeader(QNetworkRequest::ContentTypeHeader,
+                          QVariant("Content-Type: application/x-www-form-urlencoded"));
+    }
+    else if (protocolUsed & xml) {
+        request.setHeader(QNetworkRequest::ContentTypeHeader,
+                          QVariant("application/xml; charset=utf-8"));
+    }
 
     if (protocolUsed & soap10)
         request.setRawHeader(QByteArray("SOAPAction"), QByteArray(m_hostUrl.toString().toAscii()));
@@ -433,13 +458,6 @@ bool QWebMethod::authenticate(QString newUsername, QString newPassword)
         m_password = newPassword;
 
     if (m_username != "") {
-        authReply = false;
-        disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
-        connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
-
-        QNetworkRequest rqst(QUrl::fromUserInput("http://" + m_hostUrl.host() + "/"));
-        rqst.setHeader(QNetworkRequest::ContentTypeHeader,"application/x-www-form-urlencoded");
-
         QUrl url;
         url.addEncodedQueryItem("ACT", QUrl::toPercentEncoding("11"));
         url.addEncodedQueryItem("RET", QUrl::toPercentEncoding("/"));
@@ -447,24 +465,9 @@ bool QWebMethod::authenticate(QString newUsername, QString newPassword)
         url.addEncodedQueryItem("username", QUrl::toPercentEncoding(m_username));
         url.addEncodedQueryItem("password", QUrl::toPercentEncoding(m_password));
 
-        QByteArray paramBytes = url.toString().mid(1).toLatin1();
-        paramBytes.replace("/", "%2F");
-
-        manager->post(rqst, paramBytes);
-
-        forever {
-            if (authReply) {
-                break;
-            }
-            else {
-                qApp->processEvents();
-            }
-        }
-
-        disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
-        connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
-        return true;
+        return authenticate(url);
     }
+    return false;
 }
 
 /*!
@@ -494,17 +497,8 @@ bool QWebMethod::authenticate(QUrl customAuthString)
 
     manager->post(rqst, paramBytes);
 
-    forever {
-        if (authReply) {
-            break;
-        }
-        else {
-            qApp->processEvents();
-        }
-    }
-
-    disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
-    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
+//    disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
+//    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
     return true;
 }
 
@@ -513,13 +507,63 @@ bool QWebMethod::authenticate(QUrl customAuthString)
 
     After making asynchronous call, and getting the replyReady() signal, this method can be used to read the reply.
   */
-QVariant QWebMethod::replyRead()
+QString QWebMethod::replyRead()
+{
+    QString replyString(reply);
+    replyString = convertReplyToUtf(replyString);
+    return replyString;
+}
+
+/*!
+    \fn QWebMethod::replyReadParsed()
+
+    After making asynchronous call, and getting the replyReady() signal, this method can be used to read the reply.
+
+    Returns parsed data.
+  */
+QVariant QWebMethod::replyReadParsed()
+{
+    QVariant result;
+    QByteArray replyBytes = reply;
+    QString replyString = convertReplyToUtf(QString(replyBytes));
+
+    // This section is SOAP-only and should be fixed for other protocols! It's not done properly, anyway.
+    // Should return type specified in replyValue.
+    if (protocolUsed & soap) {
+        QString tempBegin = "<" + m_messageName + "Result>";
+        int replyBeginIndex = replyString.indexOf(tempBegin, 0, Qt::CaseSensitive);
+        replyBeginIndex += tempBegin.length();
+
+        QString tempFinish = "</" + m_messageName + "Result>";
+        int replyFinishIndex = replyString.indexOf(tempFinish, replyBeginIndex, Qt::CaseSensitive);
+
+        if (replyBeginIndex == -1)
+            replyBytes = 0;
+        if (replyFinishIndex == -1)
+            replyFinishIndex = replyString.length();
+
+        result = (QVariant) replyString.mid(replyBeginIndex, replyFinishIndex - replyBeginIndex);
+    }
+    // EO section.
+    else
+        result = replyString;
+    return replyBytes;
+}
+
+/*!
+    \fn QWebMethod::replyReadRaw()
+
+    After making asynchronous call, and getting the replyReady() signal, this method can be used to read the reply.
+
+    Returns the raw data acquired from server.
+  */
+QByteArray QWebMethod::replyReadRaw()
 {
     return reply;
 }
 
 /*!
-    \fn QWebMethod::replyReady(QVariant rply)
+    \fn QWebMethod::replyReady(QByteArray rply)
 
     Signal invoked when the reply (\a rply) from web service's server is ready for reading.
   */
@@ -731,31 +775,7 @@ bool QWebMethod::isReplyReady() const
   */
 void QWebMethod::replyFinished(QNetworkReply *netReply)
 {
-    QByteArray replyBytes;
-
-    replyBytes = (netReply->readAll());
-    QString replyString = convertReplyToUtf(replyBytes);
-
-    // This section is SOAP-only and should be fixed for other protocols!
-    if (protocolUsed & soap) {
-        QString tempBegin = "<" + m_messageName + "Result>";
-        int replyBeginIndex = replyString.indexOf(tempBegin, 0, Qt::CaseSensitive);
-        replyBeginIndex += tempBegin.length();
-
-        QString tempFinish = "</" + m_messageName + "Result>";
-        int replyFinishIndex = replyString.indexOf(tempFinish, replyBeginIndex, Qt::CaseSensitive);
-
-        if (replyBeginIndex == -1)
-            replyBytes = 0;
-        if (replyFinishIndex == -1)
-            replyFinishIndex = replyString.length();
-
-        reply = (QVariant) replyString.mid(replyBeginIndex, replyFinishIndex - replyBeginIndex);
-    }
-    // EO section.
-    else
-        reply = replyString;
-
+    reply = netReply->readAll();
     replyReceived = true;
     emit replyReady(reply);
 }
@@ -764,7 +784,7 @@ void QWebMethod::replyFinished(QNetworkReply *netReply)
     \fn QWebMethod::authReplyFinished(QNetworkReply *reply)
 
   TEMP Auth METHOD. HIGHLY EXPERIMENTAL.
-  Checks for body of \a reply.
+  Checks for body of \a reply to determine correctness of authentication.
   */
 void QWebMethod::authReplyFinished(QNetworkReply *reply)
 {
@@ -813,6 +833,7 @@ void QWebMethod::init()
     m_password = "";
 
     replyReceived = false;
+    authReply = false;
     errorState = false;
     authenticationError = false;
     errorMessage = "";

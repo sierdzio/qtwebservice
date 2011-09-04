@@ -10,6 +10,14 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
 Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/band_ws.asmx
 
+04.09.2011 15:29 CEST:
+ - optimised authentiation process,
+ - made authentication process even less synchronous,
+ - changed QWebMethod::replyRead() to return QString,
+ - added QWebMethod::replyReadRaw(), returning QByteArray,
+ - added QWebMethod::replyReadParsed(), returning QVariant,
+ - changed QWebServiceMethod::sendMessage() to return QByteArray.
+
 04.09.2011 12:28 CEST:
  - moved authentication into public method - authenticate(). Cleaned the QWebMethod a bit. Algorithm still needs some tweaks,
    especially making auth less synchronous, but it looks much better than before,

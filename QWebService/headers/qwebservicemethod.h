@@ -22,7 +22,7 @@ public:
 
     using QWebMethod::sendMessage;
     bool sendMessage(QMap<QString, QVariant> params);
-    QVariant static sendMessage(QObject *parent, QUrl url,
+    QByteArray static sendMessage(QObject *parent, QUrl url,
                                 QString messageName, QString targetNamespace,
                                 QMap<QString, QVariant> params,
                                 Protocol protocol = soap12, HttpMethod httpMethod = POST);

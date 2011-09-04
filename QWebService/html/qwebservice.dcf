@@ -37,6 +37,8 @@
         <keyword ref="qwebmethod.html#protocolString">protocolString</keyword>
         <keyword ref="qwebmethod.html#replyFinished">replyFinished</keyword>
         <keyword ref="qwebmethod.html#replyRead">replyRead</keyword>
+        <keyword ref="qwebmethod.html#replyReadParsed">replyReadParsed</keyword>
+        <keyword ref="qwebmethod.html#replyReadRaw">replyReadRaw</keyword>
         <keyword ref="qwebmethod.html#replyReady">replyReady</keyword>
         <keyword ref="qwebmethod.html#returnValueName">returnValueName</keyword>
         <keyword ref="qwebmethod.html#returnValueNameType">returnValueNameType</keyword>

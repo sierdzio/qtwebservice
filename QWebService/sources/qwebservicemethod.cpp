@@ -110,7 +110,7 @@ bool QWebServiceMethod::sendMessage(QMap<QString, QVariant> params)
      (default is POST).
      Returns with web service reply.
   */
-QVariant QWebServiceMethod::sendMessage(QObject *parent, QUrl url,
+QByteArray QWebServiceMethod::sendMessage(QObject *parent, QUrl url,
                                  QString msgName, QString tNamespace,
                                  QMap<QString, QVariant> params,
                                  Protocol protocol, HttpMethod method)
@@ -121,8 +121,7 @@ QVariant QWebServiceMethod::sendMessage(QObject *parent, QUrl url,
        QWebServiceMethod::Protocol protocol, QWebServiceMethod::HttpMethod httpMethod)
     */
 
-    QWebServiceMethod qsm(url.host(), msgName, tNamespace, params, parent, protocol, method);
-    qsm.m_hostUrl = url;
+    QWebServiceMethod qsm(url.toString(), msgName, tNamespace, params, parent, protocol, method);
 
     qsm.sendMessage();
     // TODO: ADD ERROR HANDLING!

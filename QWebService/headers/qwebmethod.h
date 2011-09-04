@@ -61,7 +61,10 @@ public:
     bool authenticate(QString newUsername = QString(), QString newPassword = QString());
     bool authenticate(QUrl customAuthString);
 
-    QVariant replyRead();
+//    QVariant replyRead();
+    QVariant replyReadParsed();
+    QByteArray replyReadRaw();
+    QString replyRead();
     QString messageName() const;
     QStringList parameterNames() const;
     QStringList returnValueName() const;
@@ -80,7 +83,7 @@ public:
     bool isReplyReady() const;
 
 signals:
-    void replyReady(QVariant rply);
+    void replyReady(QByteArray rply);
     void errorEncountered(QString errMessage);
 
 protected slots:
@@ -106,7 +109,7 @@ protected: // Changed for 0.3.5, but precisely what should be protected and what
     QString m_targetNamespace;
     QString m_username;
     QString m_password;
-    QVariant reply;
+    QByteArray reply;
     QMap<QString, QVariant> parameters;
     QMap<QString, QVariant> returnValue;
     QNetworkAccessManager *manager;

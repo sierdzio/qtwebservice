@@ -47,7 +47,7 @@ void QdnMain::on_buttonLogin_clicked()
 
 void QdnMain::profileReply()
 {
-    QString reply = webMethodProfile->replyRead().toString();
+    QString reply = webMethodProfile->replyRead();
     ui->labelUsernameResult->setText(reply);
 
     { // Points
@@ -85,6 +85,6 @@ void QdnMain::profileReply()
 
 void QdnMain::postsReply()
 {
-    QString reply = webMethodPosts->replyRead().toString();
+    QString reply = webMethodPosts->replyRead();
     ui->labelPostsResult->setText(reply);
 }

@@ -54,10 +54,10 @@ void TestQWebServiceMethod::synchronousTest()
 
     bool result = false;
     QString reply = "pass";
-    reply = QWebServiceMethod::sendMessage(this,
+    reply =  QWebServiceMethod::sendMessage(this,
                                            QUrl("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx"),
                                            "getProviderList", "http://www.daenet.de/webservices/CurrencyServer",
-                                           tmpP, QWebMethod::soap12).toString();
+                                           tmpP, QWebMethod::soap12);
 
     if ((reply != "") && (reply != "pass"))
     {
