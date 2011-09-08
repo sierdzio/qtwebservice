@@ -197,7 +197,7 @@ QString QWebService::errorInfo() const
 void QWebService::init()
 {
     errorState = false;
-    errorMessage = "";
+    errorMessage = QString::fromLatin1("");
     messages = new QMap<QString, QWebServiceMethod *>();
 
     if (isErrorState())
@@ -215,8 +215,8 @@ void QWebService::init()
 bool QWebService::enterErrorState(QString errMessage)
 {
     errorState = true;
-    errorMessage += errMessage + " ";
-    qDebug() << errMessage;
+    errorMessage += QString(errMessage + " ");
+//    qDebug() << errMessage;
     emit errorEncountered(errMessage);
     return false;
 }

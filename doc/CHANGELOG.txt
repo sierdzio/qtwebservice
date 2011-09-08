@@ -10,6 +10,13 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
 Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/band_ws.asmx
 
+08.09.2011 18:45 CEST:
+ - added QStringBuilder compatibility,
+ - fixed some error state omissions in QWsdl (enterErrorState() was not being used where applicable),
+ - fixed QtDN example not having QtNetwork dependency,
+ - fixed fileReply not being deleted (memory leak, yeah),
+ - removed WebView from QtDN Example.
+
 04.09.2011 20:04 CEST:
  - updated QtDNExample to use recent QWebMethod changes,
  - marked v0.4.2.

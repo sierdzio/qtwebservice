@@ -2,7 +2,6 @@
 #define QDNMAIN_H
 
 #include <QMainWindow>
-#include <QtWebKit/QWebView>
 #include <qwebmethod.h>
 
 namespace Ui {

@@ -6,7 +6,8 @@
 #include <QtCore/qmap.h>
 #include <QtCore/qstringlist.h>
 #include <QtCore/qvariant.h>
-//#include <QWebService>
+#include <QtCore/qcoreapplication.h>
+#include <QtDebug>
 #include <qwsdl.h>
 #include "flags.h"
 #include "codegenerator.h"

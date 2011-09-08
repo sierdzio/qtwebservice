@@ -155,24 +155,17 @@
               </property>
              </widget>
             </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="labelGravatar">
+              <property name="text">
+               <string>Gravatar:</string>
+              </property>
+             </widget>
+            </item>
             <item row="1" column="1">
-             <widget class="QWebView" name="webViewGravatar">
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>50</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>600</width>
-                <height>600</height>
-               </size>
-              </property>
-              <property name="url">
-               <url>
-                <string>about:blank</string>
-               </url>
+             <widget class="QLabel" name="labelGravatarResult">
+              <property name="text">
+               <string/>
               </property>
              </widget>
             </item>
@@ -252,13 +245,6 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>QWebView</class>
-   <extends>QWidget</extends>
-   <header>QtWebKit/QWebView</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

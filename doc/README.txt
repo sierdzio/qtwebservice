@@ -8,6 +8,7 @@ Email: sierdzio@gmail.com
 Distributed under GNU LGPL 2.1.
 Remote Features and TODO's list can be found at: http://goo.gl/L1C6X
 Short introductory video can be found at: http://www.youtube.com/watch?v=Y4cqrBBi-JA
+Short video about QtDevNetExample: http://www.youtube.com/watch?v=00tZ04XPj98
 
 ------------------
 1. QWebService

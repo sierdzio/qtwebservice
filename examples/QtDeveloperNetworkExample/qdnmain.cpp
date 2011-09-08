@@ -79,7 +79,8 @@ void QdnMain::profileReply()
         QString gravatar = reply.mid(gravatarIndex, 50);
         gravatar.chop(gravatar.length() - gravatar.indexOf("\"}"));
         QString result = "http://www.gravatar.com/avatar/" + gravatar + "?s=512";
-        ui->webViewGravatar->setUrl(QUrl::fromUserInput(result));
+        ui->labelGravatarResult->setText(result);
+//        ui->webViewGravatar->setUrl(QUrl::fromUserInput(result));
     }
 }
 
