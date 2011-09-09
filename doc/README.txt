@@ -18,7 +18,7 @@ This project provides a set of classes (compilable into a library, if you prefer
 
   1.1.1 QWebMethod (formerly QSoapMessage)
   Supports HTTP, SOAP 1.0, SOAP 1.2 and JSON, XML and RESTful web services.
-  Used to send messages to a web service, and read replys from it. Can be used asynchronously (indicates, when reply is ready by emitting a replyReady() signal). If you need synchronous operation,either use QWebServiceMethod, or subclass QWbMethod.
+  Used to send messages to a web service, and read replys from it. Can be used asynchronously (indicates, when reply is ready by emitting a replyReady() signal). If you need synchronous operation,either use QWebServiceMethod, or subclass QWbMethod. Initial authentication support is also present.
 
   1.1.2 QWsdl
   Useful for reading web service description contained in WSDL file. In the constructor, or using setWsdlFile(), or resetWsdl(), you can specify an URL to a web service's description, or - if you have one - a path to a local WSDL file. Some example files can be found in 'examples' forlder in project's source.
@@ -45,7 +45,7 @@ WARNING: Remember to first compile QWebService library, and set it's path in run
 
   2.1.1 Possible options (Short options in brackets. They can be combined. Unavailable marked with *)
     --help (-h),
-    --soap10, --soap12, --http, --json, *--xml, *--rest={POST, GET, PUT, DELETE, post, get, put, delete}
+    --soap10, --soap12, --http, --json, --xml, --rest={POST, GET, PUT, DELETE, post, get, put, delete}
     --synchronous, --asynchronous (-a),
     --subclass (-s), --full-mode, *--debug-mode, *(partial)--compact-mode, ('mode' can be omitted)
     --standard-structure, --no-messages-structure, --all-in-one-dir-structure, ('structure' can be omitted)
