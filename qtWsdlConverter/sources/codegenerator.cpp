@@ -341,7 +341,7 @@ bool CodeGenerator::createServiceSource()
 
         foreach (QString s, tempMap->keys()) {
             QWebServiceMethod *m = tempMap->value(s);
-            out << "    result.append(\"" << m->messageName() << "\");" << endl;
+            out << "    result.append(\"" << m->metodName() << "\");" << endl;
         }
         out << "    return result;" << endl;
     }
@@ -386,7 +386,7 @@ bool CodeGenerator::createServiceSource()
 
                     out << endl;
                     out << "    return QWebServiceMethod::sendMessage(this";
-                    out << ", QUrl(\"" << m->host() << "\"), \"" << m->messageName()
+                    out << ", QUrl(\"" << m->host() << "\"), \"" << m->metodName()
                         << "\", parameters";
 
                     QString protocols = "";
@@ -405,7 +405,7 @@ bool CodeGenerator::createServiceSource()
                     out << protocols << ").toString();" << endl;
                 }
                 else {
-                    out << "    return " << m->messageName() << "::sendMessage(this";
+                    out << "    return " << m->metodName() << "::sendMessage(this";
 
                     if (tmpPN != "")
                         out << ", " << tmpPN << ");" << endl;
@@ -431,7 +431,7 @@ bool CodeGenerator::createServiceSource()
                     out << endl;
                     out << "    " << objName << ".setHost(\"" << m->host() << "\");" << endl;
                     out << "    " << objName << ".setTargetNamespace(\"" << m->targetNamespace() << "\");" << endl;
-                    out << "    " << objName << ".setMessageName(\"" << m->messageName() << "\");" << endl;
+                    out << "    " << objName << ".setMessageName(\"" << m->metodName() << "\");" << endl;
 
                     QString protocols = "";
                     protocols = "QWebServiceMethod::" + flags->protocolString(false);

@@ -37,7 +37,7 @@ QWebServiceMethod::QWebServiceMethod(QUrl url, QString messageName, QObject *par
     QWebMethod(parent, protocol, method)
 {
     m_hostUrl = url;
-    m_messageName = messageName;
+    m_methodName = messageName;
     setProtocol(protocol);
     setHttpMethod(method);
 }
@@ -55,7 +55,7 @@ QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QObject *
                                      Protocol protocol, HttpMethod method) :
     QWebMethod(parent, protocol, method)
 {
-    m_messageName = messageName;
+    m_methodName = messageName;
     setProtocol(protocol);
     setHttpMethod(method);
     m_hostUrl.setUrl(url);
@@ -77,7 +77,7 @@ QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QString t
                        Protocol protocol, HttpMethod method) :
     QWebMethod(parent, protocol, method)
 {
-    m_messageName = messageName;
+    m_methodName = messageName;
     m_targetNamespace = tNamespace;
     parameters = params;
     setProtocol(protocol);

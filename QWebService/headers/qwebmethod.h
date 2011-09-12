@@ -57,7 +57,7 @@ public:
     void setProtocol(Protocol protocol);
     void setHttpMethod(HttpMethod method);
     bool setHttpMethod(QString newMethod);
-    bool sendMessage(QByteArray requestData = QByteArray());
+    bool sendMessage(QByteArray requestData = QByteArray()); // should this be changed to invokeMethod()?
     bool authenticate(QString newUsername = QString(), QString newPassword = QString());
     bool authenticate(QUrl customAuthString);
 
@@ -65,7 +65,7 @@ public:
     QVariant replyReadParsed();
     QByteArray replyReadRaw();
     QString replyRead();
-    QString messageName() const;
+    QString metodName() const;
     QStringList parameterNames() const;
     QStringList returnValueName() const;
     QMap<QString, QVariant> parameterNamesTypes() const;
@@ -105,7 +105,7 @@ protected: // Changed for 0.3.5, but precisely what should be protected and what
     Protocol protocolUsed;
     HttpMethod httpMethodUsed;
     QUrl m_hostUrl;
-    QString m_messageName;
+    QString m_methodName;
     QString m_targetNamespace;
     QString m_username;
     QString m_password;

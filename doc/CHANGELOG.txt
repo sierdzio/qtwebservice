@@ -10,6 +10,13 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
 Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/band_ws.asmx
 
+12.09.2011 11:48 CEST:
+ - added possibility to add methods custom to QWebService (not by using WSDL),
+ - changed QString-based constructor of QWebService to accept not only WSDL files,
+ - changed 'message' being used in code to describe methods into 'method'. It was a remnant of
+   QSoapMessage, and could lead to confusion,
+ - cleared some old comments.
+
 08.09.2011 18:45 CEST:
  - added QStringBuilder compatibility,
  - fixed some error state omissions in QWsdl (enterErrorState() was not being used where applicable),

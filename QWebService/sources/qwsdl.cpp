@@ -290,15 +290,8 @@ bool QWsdl::enterErrorState(QString errMessage)
 bool QWsdl::parse()
 {
     /*
-      WARNING!
-      Namespace abbreviations are currently hardcoded!
-      This needs to be changed before release.
-      Real namespaces can be extracted from 'wsdl:definitions' tag attributes.
-
       Algorithm extracts method names from "types" tags, which is most probably wrong,
       as it should be cross-checked with other tags ("message", etc.)
-
-      Most probably, use of QtXmlPatterns would solve a lot of that.
     */
 
     if (errorState) {

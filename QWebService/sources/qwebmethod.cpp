@@ -121,7 +121,7 @@ QWebMethod::QWebMethod(QObject *parent, Protocol protocol, HttpMethod method) :
     setProtocol(protocol);
     setHttpMethod(method);
     m_hostUrl.setHost(QString::fromLatin1(""));
-    m_messageName = QString::fromLatin1("");
+    m_methodName = QString::fromLatin1("");
     parameters.clear();
 }
 
@@ -141,7 +141,7 @@ QWebMethod::QWebMethod(QUrl url, QObject *parent, Protocol protocol, HttpMethod 
     setProtocol(protocol);
     setHttpMethod(method);
     m_hostUrl = url;
-    m_messageName = QString::fromLatin1("");
+    m_methodName = QString::fromLatin1("");
     parameters.clear();
 }
 
@@ -229,7 +229,7 @@ void QWebMethod::setCredentials(QString newUsername, QString newPassword)
   */
 void QWebMethod::setMessageName(QString newName)
 {
-    m_messageName = newName;
+    m_methodName = newName;
 }
 
 /*!
@@ -239,7 +239,7 @@ void QWebMethod::setMessageName(QString newName)
   */
 void QWebMethod::setMethodName(QString newName)
 {
-    m_messageName = newName;
+    m_methodName = newName;
 }
 
 /*!
@@ -530,11 +530,11 @@ QVariant QWebMethod::replyReadParsed()
     // This section is SOAP-only and should be fixed for other protocols! It's not done properly, anyway.
     // Should return type specified in replyValue.
     if (protocolUsed & soap) {
-        QString tempBegin = QString("<" + m_messageName + "Result>");
+        QString tempBegin = QString("<" + m_methodName + "Result>");
         int replyBeginIndex = replyString.indexOf(tempBegin, 0, Qt::CaseSensitive);
         replyBeginIndex += tempBegin.length();
 
-        QString tempFinish = QString("</" + m_messageName + "Result>");
+        QString tempFinish = QString("</" + m_methodName + "Result>");
         int replyFinishIndex = replyString.indexOf(tempFinish, replyBeginIndex, Qt::CaseSensitive);
 
         if (replyBeginIndex == -1)
@@ -573,9 +573,9 @@ QByteArray QWebMethod::replyReadRaw()
 
     Returns message's name.
   */
-QString QWebMethod::messageName() const
+QString QWebMethod::metodName() const
 {
-    return m_messageName;
+    return m_methodName;
 }
 
 /*!
@@ -884,7 +884,7 @@ void QWebMethod::prepareRequestData()
             footer = QString("</soap:Body> " + endl + "</soap:Envelope>");
         }
 
-        body = QString("\t<" + m_messageName + " xmlns=\"" + m_targetNamespace + "\"> " + endl);
+        body = QString("\t<" + m_methodName + " xmlns=\"" + m_targetNamespace + "\"> " + endl);
 
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
@@ -892,7 +892,7 @@ void QWebMethod::prepareRequestData()
             body += QString("\t\t<" + currentKey + ">" + qv.toString() + "</" + currentKey + "> " + endl);
         }
 
-        body += QString("\t</" + m_messageName + "> " + endl);
+        body += QString("\t</" + m_methodName + "> " + endl);
     }
     else if (protocolUsed & http) {
         foreach (const QString currentKey, parameters.keys()) {

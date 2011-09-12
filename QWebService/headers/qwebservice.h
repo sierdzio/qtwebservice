@@ -23,8 +23,12 @@ public:
     QMap<QString, QVariant> parameterNamesTypes(QString methodName) const;
     QMap<QString, QVariant> returnValueNameType(QString methodName) const;
 
+    void addMethod(QWebServiceMethod *newMethod);
+    void addMethod(QString methodName, QWebServiceMethod *newMethod);
     void setHost(QString host);
     void setHost(QUrl hostUrl);
+    void setWsdl(QWsdl *newWsdl);
+    void resetWsdl(QWsdl *newWsdl);
     QUrl hostUrl() const;
     QString host() const;
     bool isErrorState();
@@ -42,7 +46,7 @@ protected:
     QString errorMessage;
     QUrl m_hostUrl;
     QWsdl *wsdl;
-    QMap<QString, QWebServiceMethod *> *messages; // This is general, but should work for custom classes.
+    QMap<QString, QWebServiceMethod *> *methods; // This is general, but should work for custom classes.
 };
 
 #endif // QWEBSERVICE_H
