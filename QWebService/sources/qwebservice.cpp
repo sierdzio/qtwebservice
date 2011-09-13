@@ -21,8 +21,8 @@ QWebService::QWebService(QObject *parent)
     : QObject(parent)
 {
     wsdl = new QWsdl(this);
-    errorState = false;
-    isErrorState();
+    methods = new QMap<QString, QWebServiceMethod *>();
+    init();
 }
 
 /*!
@@ -38,6 +38,7 @@ QWebService::QWebService(QWsdl *_wsdl, QObject *parent)
     : QObject(parent)
 {
     wsdl = _wsdl;
+    methods = new QMap<QString, QWebServiceMethod *>();
     init();
     methods = wsdl->methods();
 }
@@ -57,6 +58,7 @@ QWebService::QWebService(QString _hostname, QObject *parent)
 {
     m_hostUrl.setUrl(_hostname);
     wsdl = new QWsdl(_hostname, this);
+    methods = new QMap<QString, QWebServiceMethod *>();
     init();
 
     if (!wsdl->isErrorState())
@@ -137,6 +139,8 @@ QMap<QString, QVariant> QWebService::returnValueNameType(QString methodName) con
   Adds the specified web method (\a newMethod) to the web service.
   Method name should be set in the object, it is used internally and
   for referencing.
+
+  \sa removeMethod()
   */
 void QWebService::addMethod(QWebServiceMethod *newMethod)
 {
@@ -145,13 +149,32 @@ void QWebService::addMethod(QWebServiceMethod *newMethod)
 
 /*!
   \fn QWebService::addMethod(QString methodName, QWebServiceMethod *newMethod)
+  \overload addMethod()
 
   Adds the specified web method (\a newMethod) to the web service.
-  Method name (\methodName) is used for reference.
+  Method name (\methodName) is used for reference (it does not set name
+  inside the QWebServiceMethod object).
+
+  \sa removeMethod()
   */
 void QWebService::addMethod(QString methodName, QWebServiceMethod *newMethod)
 {
+//    newMethod->setMessageName(methodName);
     methods->insert(methodName, newMethod);
+}
+
+/*!
+  \fn QWebService::removeMethod(QString methodName)
+
+  Removes the method specified by \a methodName.
+  It also deletes the underlying object, so be careful!
+
+  \sa addMethod()
+  */
+void QWebService::removeMethod(QString methodName)
+{
+    delete methods->value(methodName);
+    methods->remove(methodName);
 }
 
 /*!
@@ -162,19 +185,20 @@ void QWebService::addMethod(QString methodName, QWebServiceMethod *newMethod)
 void QWebService::setHost(QString hostname)
 {
     m_hostUrl.setUrl(hostname);
-    wsdl->resetWsdl(hostname);
+    resetWsdl(new QWsdl(hostname, this));
     init();
 }
 
 /*!
     \fn QWebService::setHost(QUrl hostUrl)
+    \overload setHost()
 
     Sets new \a hostUrl URL, resets the WSDL, and reinitialises.
   */
 void QWebService::setHost(QUrl hostUrl)
 {
-    this->m_hostUrl = hostUrl;
-    wsdl->resetWsdl(hostUrl.host());
+    m_hostUrl = hostUrl;
+    resetWsdl(new QWsdl(hostUrl.host(), this));
     init();
 }
 
@@ -188,6 +212,7 @@ void QWebService::setHost(QUrl hostUrl)
   */
 void QWebService::setWsdl(QWsdl *newWsdl)
 {
+//    delete wsdl;
     wsdl = newWsdl;
     foreach (QString s, wsdl->methods()->keys()) {
         methods->insert(s, wsdl->methods()->value(s));
@@ -204,8 +229,18 @@ void QWebService::setWsdl(QWsdl *newWsdl)
   */
 void QWebService::resetWsdl(QWsdl *newWsdl)
 {
-    wsdl = newWsdl;
-    methods = wsdl->methods();
+//    delete wsdl;
+
+    if (newWsdl == 0) {
+        methods->clear();
+        wsdl = new QWsdl(this);
+    }
+    else {
+        wsdl = newWsdl;
+        methods->clear();
+//        delete methods;
+        methods = wsdl->methods();
+    }
 }
 
 /*!
@@ -267,7 +302,6 @@ void QWebService::init()
 {
     errorState = false;
     errorMessage = QString::fromLatin1("");
-    methods = new QMap<QString, QWebServiceMethod *>();
 
     if (isErrorState())
         return;

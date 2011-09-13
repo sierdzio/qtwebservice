@@ -11,7 +11,7 @@ class QWEBSERVICESHARED_EXPORT QWebServiceMethod : public QWebMethod
     Q_OBJECT
 
 public:
-    explicit QWebServiceMethod(QObject *parent = 0);
+    explicit QWebServiceMethod(QObject *parent = 0, Protocol protocol = soap12, HttpMethod httpMethod = POST);
     QWebServiceMethod(QUrl hostUrl, QString metodName, QObject *parent = 0,
                       Protocol protocol = soap12, HttpMethod httpMethod = POST);
     QWebServiceMethod(QString host, QString metodName, QObject *parent = 0,

@@ -13,6 +13,7 @@ private slots:
     void initialTest();
     void gettersTest();
     void settersTest();
+    void methodManagementTest();
 };
 
 /*
@@ -133,7 +134,34 @@ void TestQWebService::settersTest()
     QCOMPARE(reader->host(), QString("../../examples/wsdl/stockquote.asmx"));
     QCOMPARE(reader->hostUrl(), QUrl("../../examples/wsdl/stockquote.asmx"));
     QCOMPARE(reader->errorInfo(), QString(""));
+    qDebug() << reader->methodNames();
     QCOMPARE(reader->methodNames().size(), int(1));;
+
+    delete reader;
+}
+
+/*
+  Tests adding and removing web methods - boths by QWsdl and custom ones.
+  */
+void TestQWebService::methodManagementTest()
+{
+    QWebServiceReader *reader;
+    reader = new QWebServiceReader(this);
+    QCOMPARE(reader->isErrorState(), bool(false));
+
+    reader->setWsdl(new QWsdl("../../examples/wsdl/band_ws.asmx", reader));
+    QCOMPARE(reader->isErrorState(), bool(false));
+    QCOMPARE(reader->methodNames().size(), int(13));
+    reader->resetWsdl();
+    QCOMPARE(reader->isErrorState(), bool(false));
+    QCOMPARE(reader->methodNames().size(), int(0));
+
+    reader->addMethod("testMethod1", new QWebServiceMethod(reader));
+    QCOMPARE(reader->isErrorState(), bool(false));
+    QCOMPARE(reader->methodNames().size(), int(1));
+    reader->removeMethod("testMethod1");
+    QCOMPARE(reader->isErrorState(), bool(false));
+    QCOMPARE(reader->methodNames().size(), int(0));
 
     delete reader;
 }

@@ -13,15 +13,15 @@
   */
 
 /*!
-    \fn QWebServiceMethod::QWebServiceMethod(QObject *parent)
+    \fn QWebServiceMethod::QWebServiceMethod(QObject *parent, Protocol protocol, HttpMethod httpMethod)
 
-    Pretty much the default constructor, passes \a parent to QObject.
+    A constructor that takes in \a protocol information, \a httpMethod to use, and \a parent
+    to satisfy QObject requirements. All other data has to be set using setter methods.
   */
-QWebServiceMethod::QWebServiceMethod(QObject *parent) :
-    QWebMethod(parent)
+QWebServiceMethod::QWebServiceMethod(QObject *parent, Protocol protocol, HttpMethod httpMethod) :
+    QWebMethod(parent, protocol, httpMethod)
 {
 }
-
 
 /*!
     \fn QWebServiceMethod::QWebServiceMethod(QUrl url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method)

@@ -25,10 +25,11 @@ public:
 
     void addMethod(QWebServiceMethod *newMethod);
     void addMethod(QString methodName, QWebServiceMethod *newMethod);
+    void removeMethod(QString methodName);
     void setHost(QString host);
     void setHost(QUrl hostUrl);
     void setWsdl(QWsdl *newWsdl);
-    void resetWsdl(QWsdl *newWsdl);
+    void resetWsdl(QWsdl *newWsdl = 0);
     QUrl hostUrl() const;
     QString host() const;
     bool isErrorState();

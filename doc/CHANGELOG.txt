@@ -10,6 +10,16 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
 Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/band_ws.asmx
 
+13.09.2011 : CEST:
+ - added QWebService::removeMethod(), which deletes a web method specified by it's name,
+ - added some QDoc descriptions to QWebService,
+ - added new constructor to QWebServiceMethod, a copy of simplest one from QWebMethod. Removed the old default one,
+ - added TestQWebService::methodManagementTest(),
+ - cleaned txt_qwebservicemethod, added tests that do not require Internet connection,
+ - fixed potential leaks in QWebService's setHost, setWsdl and resetWsdl methods (init() was also changed,
+   as well as constructors),
+ - marked v0.4.3.
+
 12.09.2011 11:48 CEST:
  - added possibility to add methods custom to QWebService (not by using WSDL),
  - changed QString-based constructor of QWebService to accept not only WSDL files,
