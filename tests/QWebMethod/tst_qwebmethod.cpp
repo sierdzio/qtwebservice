@@ -55,7 +55,7 @@ void TestQWebMethod::settersTest()
 
     QString tempName = "getProviderList";
     message->setMessageName(tempName);
-    QCOMPARE(message->metodName(), tempName);
+    QCOMPARE(message->methodName(), tempName);
 
     QString tempTargetNmspc = "http://www.daenet.de/webservices/CurrencyServer";
     message->setTargetNamespace(tempTargetNmspc);
@@ -135,7 +135,7 @@ void TestQWebMethod::defaultGettersTest(QWebMethod *message)
     QCOMPARE(message->hostUrl(), QUrl(""));
     QCOMPARE(message->host(), QString(""));
     QCOMPARE(message->targetNamespace(), QString(""));
-    QCOMPARE(message->metodName(), QString(""));
+    QCOMPARE(message->methodName(), QString(""));
     QCOMPARE(message->returnValueNameType().size(), int(0));
     QCOMPARE(message->returnValueName().size(), int(0));
     QCOMPARE(message->parameterNamesTypes().size(), int(0));

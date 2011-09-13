@@ -144,7 +144,7 @@ QMap<QString, QVariant> QWebService::returnValueNameType(QString methodName) con
   */
 void QWebService::addMethod(QWebServiceMethod *newMethod)
 {
-    methods->insert(newMethod->metodName(), newMethod);
+    methods->insert(newMethod->methodName(), newMethod);
 }
 
 /*!
@@ -152,7 +152,7 @@ void QWebService::addMethod(QWebServiceMethod *newMethod)
   \overload addMethod()
 
   Adds the specified web method (\a newMethod) to the web service.
-  Method name (\methodName) is used for reference (it does not set name
+  Method name (\a methodName) is used for reference (it does not set name
   inside the QWebServiceMethod object).
 
   \sa removeMethod()
@@ -203,7 +203,7 @@ void QWebService::setHost(QUrl hostUrl)
 }
 
 /*!
-  \fn QWebService::setWsdl(QWsdl newWsdl)
+  \fn QWebService::setWsdl(QWsdl *newWsdl)
 
   Sets the WSDL (\a newWsdl) file to use. This does not override already present methods.
   If you want to override them, use resetWsdl().
@@ -220,7 +220,7 @@ void QWebService::setWsdl(QWsdl *newWsdl)
 }
 
 /*!
-  \fn QWebService::resetWsdl(QWsdl newWsdl)
+  \fn QWebService::resetWsdl(QWsdl *newWsdl)
 
   Sets the WSDL (\a newWsdl) file to use. This does override already present methods. If you just want
   to add WSDL methods to existing ones, use setWsdl()

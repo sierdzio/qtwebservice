@@ -12,18 +12,18 @@ class QWEBSERVICESHARED_EXPORT QWebServiceMethod : public QWebMethod
 
 public:
     explicit QWebServiceMethod(QObject *parent = 0, Protocol protocol = soap12, HttpMethod httpMethod = POST);
-    QWebServiceMethod(QUrl hostUrl, QString metodName, QObject *parent = 0,
+    QWebServiceMethod(QUrl hostUrl, QString methodName, QObject *parent = 0,
                       Protocol protocol = soap12, HttpMethod httpMethod = POST);
-    QWebServiceMethod(QString host, QString metodName, QObject *parent = 0,
+    QWebServiceMethod(QString host, QString methodName, QObject *parent = 0,
                       Protocol protocol = soap12, HttpMethod httpMethod = POST);
-    QWebServiceMethod(QString host, QString metodName,  QString targetNamespace,
+    QWebServiceMethod(QString host, QString methodName,  QString targetNamespace,
                       QMap<QString, QVariant> params, QObject *parent = 0,
                       Protocol protocol = soap12, HttpMethod httpMethod = POST);
 
     using QWebMethod::sendMessage;
     bool sendMessage(QMap<QString, QVariant> params);
     QByteArray static sendMessage(QObject *parent, QUrl url,
-                                QString metodName, QString targetNamespace,
+                                QString methodName, QString targetNamespace,
                                 QMap<QString, QVariant> params,
                                 Protocol protocol = soap12, HttpMethod httpMethod = POST);
 

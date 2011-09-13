@@ -569,11 +569,11 @@ QByteArray QWebMethod::replyReadRaw()
   */
 
 /*!
-    \fn QWebMethod::messageName() const
+    \fn QWebMethod::methodName() const
 
     Returns message's name.
   */
-QString QWebMethod::metodName() const
+QString QWebMethod::methodName() const
 {
     return m_methodName;
 }

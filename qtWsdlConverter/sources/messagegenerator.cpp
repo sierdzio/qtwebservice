@@ -73,11 +73,11 @@ bool MessageGenerator::createMessages()
 
         if (flags->flags() & Flags::subclass) {
             if (!createSubclassedMessageHeader(m))
-                return enterErrorState("Creating header for message \"" + m->metodName() + "\" failed!");
+                return enterErrorState("Creating header for message \"" + m->methodName() + "\" failed!");
         }
         else {
             if (!createMessageHeader(m))
-                return enterErrorState("Creating header for message \"" + m->metodName() + "\" failed!");
+                return enterErrorState("Creating header for message \"" + m->methodName() + "\" failed!");
         }
     }
 
@@ -91,11 +91,11 @@ bool MessageGenerator::createMessages()
 
         if (flags->flags() & Flags::subclass) {
             if (!createSubclassedMessageSource(n))
-                return enterErrorState("Creating header for message \"" + n->metodName() + "\" failed!");
+                return enterErrorState("Creating header for message \"" + n->methodName() + "\" failed!");
         }
         else {
             if (!createMessageSource(n))
-                return enterErrorState("Creating source for message \"" + n->metodName() + "\" failed!");
+                return enterErrorState("Creating source for message \"" + n->methodName() + "\" failed!");
         }
     }
 
@@ -113,7 +113,7 @@ bool MessageGenerator::createMessages()
   */
 bool MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
 {
-    QString msgName = msg->metodName();
+    QString msgName = msg->methodName();
     QFile file(workingDir.path() + "/" + msgName + ".h");
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
         return enterErrorState("Error: could not open message header file for writing.");
@@ -206,7 +206,7 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
   */
 bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
 {
-    QString msgName = msg->metodName();
+    QString msgName = msg->methodName();
     QFile file(workingDir.path() + "/" + msgName + ".cpp");
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
         return enterErrorState("Error: could not open message source file for writing.");
@@ -318,7 +318,7 @@ bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
     out << "    m_hostUrl = QUrl(\"" << msg->host() << "\");" << endl;
     out << "    protocolUsed = " << flags->protocolString(false) << ";" << endl;
     out << "    httpMethodUsed = " << flags->httpMethodString() << ";" << endl;
-    out << "    m_messageName = \"" << msg->metodName() << "\";" << endl;
+    out << "    m_messageName = \"" << msg->methodName() << "\";" << endl;
     out << "    m_targetNamespace = \"" << msg->targetNamespace() << "\";" << endl;
     out << "}" << endl;
     // EOF (SOAP message)
@@ -334,7 +334,7 @@ bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
   */
 bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
 {
-    QString msgName = msg->metodName();
+    QString msgName = msg->methodName();
     QFile file(workingDir.path() + "/" + msgName + ".h");
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
         return enterErrorState("Error: could not open message header file for writing.");
@@ -495,7 +495,7 @@ bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
   */
 bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
 {
-    QString msgName = msg->metodName();
+    QString msgName = msg->methodName();
     QFile file(workingDir.path() + "/" + msgName + ".cpp");
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
         return enterErrorState("Error: could not open message source file for writing.");

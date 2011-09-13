@@ -10,7 +10,7 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
 Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/band_ws.asmx
 
-13.09.2011 : CEST:
+13.09.2011 12:33 CEST:
  - added QWebService::removeMethod(), which deletes a web method specified by it's name,
  - added some QDoc descriptions to QWebService,
  - added new constructor to QWebServiceMethod, a copy of simplest one from QWebMethod. Removed the old default one,

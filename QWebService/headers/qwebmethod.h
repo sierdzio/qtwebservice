@@ -65,7 +65,7 @@ public:
     QVariant replyReadParsed();
     QByteArray replyReadRaw();
     QString replyRead();
-    QString metodName() const;
+    QString methodName() const;
     QStringList parameterNames() const;
     QStringList returnValueName() const;
     QMap<QString, QVariant> parameterNamesTypes() const;

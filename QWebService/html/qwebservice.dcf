@@ -29,7 +29,7 @@
         <keyword ref="qwebmethod.html#init">init</keyword>
         <keyword ref="qwebmethod.html#isErrorState">isErrorState</keyword>
         <keyword ref="qwebmethod.html#isReplyReady">isReplyReady</keyword>
-        <keyword ref="qwebmethod.html#messageName">messageName</keyword>
+        <keyword ref="qwebmethod.html#methodName">methodName</keyword>
         <keyword ref="qwebmethod.html#parameterNames">parameterNames</keyword>
         <keyword ref="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</keyword>
         <keyword ref="qwebmethod.html#prepareRequestData">prepareRequestData</keyword>
@@ -60,6 +60,7 @@
     </section>
     <section ref="qwebservice.html" title="QWebService Class Reference">
         <keyword ref="qwebservice.html">QWebService</keyword>
+        <keyword ref="qwebservice.html#addMethod">addMethod</keyword>
         <keyword ref="qwebservice.html#errorEncountered">errorEncountered</keyword>
         <keyword ref="qwebservice.html#errorInfo">errorInfo</keyword>
         <keyword ref="qwebservice.html#host">host</keyword>
@@ -69,8 +70,11 @@
         <keyword ref="qwebservice.html#methodParameters">methodParameters</keyword>
         <keyword ref="qwebservice.html#methodReturnValue">methodReturnValue</keyword>
         <keyword ref="qwebservice.html#parameterNamesTypes">parameterNamesTypes</keyword>
+        <keyword ref="qwebservice.html#removeMethod">removeMethod</keyword>
+        <keyword ref="qwebservice.html#resetWsdl">resetWsdl</keyword>
         <keyword ref="qwebservice.html#returnValueNameType">returnValueNameType</keyword>
         <keyword ref="qwebservice.html#setHost">setHost</keyword>
+        <keyword ref="qwebservice.html#setWsdl">setWsdl</keyword>
         <section ref="qwebservice-members.html" title="List of all members"/>
     </section>
     <section ref="qwebservicemethod.html" title="QWebServiceMethod Class Reference">
