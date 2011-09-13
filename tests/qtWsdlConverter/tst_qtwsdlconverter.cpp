@@ -164,8 +164,8 @@ void tst_qtwsdlconverter::buildSystemTest()
 void tst_qtwsdlconverter::noMessagesTest()
 {
     QStringList arguments;
-    arguments.append(QString("--no-messages-structure");
-    arguments.append(QString("../../examples/wsdl/band_ws.asmx");
+    arguments.append(QString("--no-messages-structure"));
+    arguments.append(QString("../../examples/wsdl/band_ws.asmx"));
 
     WsdlConverter *converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
@@ -331,6 +331,6 @@ bool tst_qtwsdlconverter::removeDir(QString path)
     return(err);
 }
 
-QTEST_MAIN(TestConverter)
+QTEST_MAIN(tst_qtwsdlconverter)
 #include "tst_qtwsdlconverter.moc"
 
