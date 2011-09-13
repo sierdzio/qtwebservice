@@ -49,15 +49,15 @@ void TestQWebMethod::settersTest()
     QWebMethod *message = new QWebMethod(0, QWebMethod::soap12, QWebMethod::POST);
     defaultGettersTest(message);
 
-    QUrl tempUrl("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx");
+    QUrl tempUrl(QString("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx"));
     message->setHost(tempUrl);
     QCOMPARE(message->hostUrl(), tempUrl);
 
-    QString tempName = "getProviderList";
+    QString tempName("getProviderList");
     message->setMessageName(tempName);
     QCOMPARE(message->methodName(), tempName);
 
-    QString tempTargetNmspc = "http://www.daenet.de/webservices/CurrencyServer";
+    QString tempTargetNmspc("http://www.daenet.de/webservices/CurrencyServer");
     message->setTargetNamespace(tempTargetNmspc);
     QCOMPARE(message->targetNamespace(), tempTargetNmspc);
 

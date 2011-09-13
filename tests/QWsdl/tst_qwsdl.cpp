@@ -27,7 +27,7 @@ void TestQWsdl::initialTest()
     QCOMPARE(wsdl1->isErrorState(), bool(false));
     delete wsdl1;
 
-    QWsdl wsdl2("../../examples/wsdl/band_ws.asmx", this);
+    QWsdl wsdl2(QString("../../examples/wsdl/band_ws.asmx"), this);
     QCOMPARE(wsdl2.isErrorState(), bool(false));
 
     QStringList tempList = wsdl2.methodNames();
@@ -39,7 +39,7 @@ void TestQWsdl::initialTest()
   */
 void TestQWsdl::gettersTest()
 {
-    QWsdl wsdl("../../examples/wsdl/band_ws.asmx", this);
+    QWsdl wsdl(QString("../../examples/wsdl/band_ws.asmx"), this);
 
     QCOMPARE(wsdl.host(), QString("/band_ws.asmx"));
     QCOMPARE(wsdl.hostUrl(), QUrl("http://localhost:1304/band_ws.asmx"));
@@ -57,55 +57,55 @@ void TestQWsdl::gettersTest()
         QMap<QString, QVariant> tempParams = methods->value(s)->parameterNamesTypes();
         QMap<QString, QVariant> tempReturns = methods->value(s)->returnValueNameType();
 
-        if (s == "getBandName") {
+        if (s == QString("getBandName")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getBandDescription") {
+        else if (s == QString("getBandDescription")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getBandsList") {
+        else if (s == QString("getBandsList")) {
             QCOMPARE(tempParams.size(), int(0));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getBandsListForGenreAndDate") {
+        else if (s == QString("getBandsListForGenreAndDate")) {
             QCOMPARE(tempParams.size(), int(2));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getBandsListForGenre") {
+        else if (s == QString("getBandsListForGenre")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getGenreList") {
+        else if (s == QString("getGenreList")) {
             QCOMPARE(tempParams.size(), int(0));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getBandPricePerShow") {
+        else if (s == QString("getBandPricePerShow")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getBandsForADate") {
+        else if (s == QString("getBandsForADate")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getNextEmptySlot") {
+        else if (s == QString("getNextEmptySlot")) {
             QCOMPARE(tempParams.size(), int(2));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "bookABand") {
+        else if (s == QString("bookABand")) {
             QCOMPARE(tempParams.size(), int(11));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "cancelBookingById") {
+        else if (s == QString("cancelBookingById")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "cancelBookingById") {
+        else if (s == QString("cancelBookingById")) {
             QCOMPARE(tempParams.size(), int(3));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getBandSchedule") {
+        else if (s == QString("getBandSchedule")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
         }
@@ -118,10 +118,10 @@ void TestQWsdl::gettersTest()
 void TestQWsdl::settersTest()
 {
     QWsdl *wsdl;
-    wsdl = new QWsdl("../../examples/wsdl/band_ws.asmx", this);
+    wsdl = new QWsdl(QString("../../examples/wsdl/band_ws.asmx"), this);
     QCOMPARE(wsdl->isErrorState(), bool(false));
 
-    wsdl->resetWsdl("../../examples/wsdl/LondonGoldFix.asmx.xml");
+    wsdl->resetWsdl(QString("../../examples/wsdl/LondonGoldFix.asmx.xml"));
     QCOMPARE(wsdl->isErrorState(), bool(false));
     QCOMPARE(wsdl->host(), QString("/LondonGoldFix.asmx"));
     QCOMPARE(wsdl->hostUrl(), QUrl("http://www.webservicex.net/LondonGoldFix.asmx"));
@@ -131,7 +131,7 @@ void TestQWsdl::settersTest()
     QCOMPARE(wsdl->errorInfo(), QString(""));
     QCOMPARE(wsdl->methodNames().size(), int(1));
 
-    wsdl->setWsdlFile("../../examples/wsdl/stockquote.asmx");
+    wsdl->setWsdlFile(QString("../../examples/wsdl/stockquote.asmx"));
     QCOMPARE(wsdl->isErrorState(), bool(false));
     QCOMPARE(wsdl->host(), QString("/stockquote.asmx"));
     QCOMPARE(wsdl->hostUrl(), QUrl("http://www.webservicex.net/stockquote.asmx"));

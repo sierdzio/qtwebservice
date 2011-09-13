@@ -12,10 +12,10 @@ QdnMain::QdnMain(QWidget *parent) :
     ui->lineEditPassword->setEchoMode(QLineEdit::Password);
 
     webMethodProfile = new QWebMethod(this, QWebMethod::json, QWebMethod::GET);
-    webMethodProfile->setHost(QUrl::fromUserInput("http://developer.qt.nokia.com/qtapi/1/member/profile"));
+    webMethodProfile->setHost(QUrl::fromUserInput(QString::fromLatin1("http://developer.qt.nokia.com/qtapi/1/member/profile")));
     connect(webMethodProfile, SIGNAL(replyReady(QByteArray)), this, SLOT(profileReply()));
 
-    webMethodPosts = new QWebMethod(QUrl::fromUserInput("http://developer.qt.nokia.com/qtapi/1/forums/posts/unread"),
+    webMethodPosts = new QWebMethod(QUrl::fromUserInput(QString::fromLatin1("http://developer.qt.nokia.com/qtapi/1/forums/posts/unread")),
                                     this, QWebMethod::json, QWebMethod::GET);
     connect(webMethodPosts, SIGNAL(replyReady(QByteArray)), this, SLOT(postsReply()));
 }

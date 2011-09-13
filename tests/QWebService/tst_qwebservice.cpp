@@ -26,11 +26,11 @@ void TestQWebService::initialTest()
     QCOMPARE(reader1->isErrorState(), bool(false));
 
     QWebServiceReader *reader2;
-    reader2 = new QWebServiceReader("../../examples/wsdl/band_ws.asmx", this);
+    reader2 = new QWebServiceReader(QString("../../examples/wsdl/band_ws.asmx"), this);
     QCOMPARE(reader2->isErrorState(), bool(false));
 
     QWebServiceReader *reader3;
-    QWsdl *wsdl = new QWsdl("../../examples/wsdl/band_ws.asmx", this);
+    QWsdl *wsdl = new QWsdl(QString("../../examples/wsdl/band_ws.asmx"), this);
     reader3 = new QWebServiceReader(wsdl, this);
     QCOMPARE(reader3->isErrorState(), bool(false));
 
@@ -44,7 +44,7 @@ void TestQWebService::initialTest()
   */
 void TestQWebService::gettersTest()
 {
-    QWebServiceReader reader("../../examples/wsdl/band_ws.asmx", this);
+    QWebServiceReader reader(QString("../../examples/wsdl/band_ws.asmx"), this);
 
     QCOMPARE(reader.host(), QString(""));
     QCOMPARE(reader.hostUrl(), QUrl(""));
@@ -58,55 +58,55 @@ void TestQWebService::gettersTest()
         QMap<QString, QVariant> tempParams = reader.parameterNamesTypes(s);
         QMap<QString, QVariant> tempReturns = reader.returnValueNameType(s);
 
-        if (s == "getBandName") {
+        if (s == QString("getBandName")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getBandDescription") {
+        else if (s == QString("getBandDescription")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getBandsList") {
+        else if (s == QString("getBandsList")) {
             QCOMPARE(tempParams.size(), int(0));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getBandsListForGenreAndDate") {
+        else if (s == QString("getBandsListForGenreAndDate")) {
             QCOMPARE(tempParams.size(), int(2));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getBandsListForGenre") {
+        else if (s == QString("getBandsListForGenre")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getGenreList") {
+        else if (s == QString("getGenreList")) {
             QCOMPARE(tempParams.size(), int(0));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getBandPricePerShow") {
+        else if (s == QString("getBandPricePerShow")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getBandsForADate") {
+        else if (s == QString("getBandsForADate")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getNextEmptySlot") {
+        else if (s == QString("getNextEmptySlot")) {
             QCOMPARE(tempParams.size(), int(2));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "bookABand") {
+        else if (s == QString("bookABand")) {
             QCOMPARE(tempParams.size(), int(11));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "cancelBookingById") {
+        else if (s == QString("cancelBookingById")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "cancelBookingById") {
+        else if (s == QString("cancelBookingById")) {
             QCOMPARE(tempParams.size(), int(3));
             QCOMPARE(tempReturns.size(), int(1));
         }
-        else if (s == "getBandSchedule") {
+        else if (s == QString("getBandSchedule")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
         }
@@ -119,22 +119,21 @@ void TestQWebService::gettersTest()
 void TestQWebService::settersTest()
 {
     QWebServiceReader *reader;
-    reader = new QWebServiceReader("../../examples/wsdl/band_ws.asmx", this);
+    reader = new QWebServiceReader(QString("../../examples/wsdl/band_ws.asmx"), this);
     QCOMPARE(reader->isErrorState(), bool(false));
 
-    reader->setHost("../../examples/wsdl/LondonGoldFix.asmx.xml");
+    reader->setHost(QString("../../examples/wsdl/LondonGoldFix.asmx.xml"));
     QCOMPARE(reader->isErrorState(), bool(false));
     QCOMPARE(reader->host(), QString("../../examples/wsdl/LondonGoldFix.asmx.xml"));
     QCOMPARE(reader->hostUrl(), QUrl("../../examples/wsdl/LondonGoldFix.asmx.xml"));
     QCOMPARE(reader->errorInfo(), QString(""));
     QCOMPARE(reader->methodNames().size(), int(1));
 
-    reader->setHost("../../examples/wsdl/stockquote.asmx");
+    reader->setHost(QString("../../examples/wsdl/stockquote.asmx"));
     QCOMPARE(reader->isErrorState(), bool(false));
     QCOMPARE(reader->host(), QString("../../examples/wsdl/stockquote.asmx"));
     QCOMPARE(reader->hostUrl(), QUrl("../../examples/wsdl/stockquote.asmx"));
     QCOMPARE(reader->errorInfo(), QString(""));
-    qDebug() << reader->methodNames();
     QCOMPARE(reader->methodNames().size(), int(1));;
 
     delete reader;

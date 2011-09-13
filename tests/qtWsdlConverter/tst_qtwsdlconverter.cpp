@@ -6,7 +6,7 @@
 #include <qwsdl.h>
 #include "../../qtWsdlConverter/headers/wsdlconverter.h"
 
-class TestConverter : public QObject
+class tst_qtwsdlconverter : public QObject
 {
     Q_OBJECT
 
@@ -29,42 +29,42 @@ private:
     bool removeDir(QString path);
 };
 
-void TestConverter::init()
+void tst_qtwsdlconverter::init()
 {
     // Remove files created during conversion:
-    removeDir("band_ws");
+    removeDir(QString("band_ws"));
 }
 
-void TestConverter::initialTest()
+void tst_qtwsdlconverter::initialTest()
 {
     QStringList arguments;
-    arguments.append("../../examples/wsdl/band_ws.asmx");
+    arguments.append(QString("../../examples/wsdl/band_ws.asmx"));
 
     WsdlConverter *converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
     QCOMPARE(converter->webServiceName(), QString("band_ws"));
 
     converter->convert();
-    QCOMPARE(QFile::exists("band_ws/band_ws.pro"), bool(true));
-    QCOMPARE(QFile::exists("band_ws/headers/band_ws.h"), bool(true));
-    QCOMPARE(QFile::exists("band_ws/sources/band_ws.cpp"), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/band_ws.pro")), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/headers/band_ws.h")), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/sources/band_ws.cpp")), bool(true));
 
-    QWsdl *wsdl = new QWsdl("../../examples/wsdl/band_ws.asmx", this);
+    QWsdl *wsdl = new QWsdl(QString("../../examples/wsdl/band_ws.asmx"), this);
     QStringList methods = wsdl->methodNames();
 
     foreach (QString s, methods) {
-        QCOMPARE(QFile::exists("band_ws/headers/" + s + ".h"), bool(true));
-        QCOMPARE(QFile::exists("band_ws/sources/" + s + ".cpp"), bool(true));
+        QCOMPARE(QFile::exists(QString("band_ws/headers/" + s + ".h")), bool(true));
+        QCOMPARE(QFile::exists(QString("band_ws/sources/" + s + ".cpp")), bool(true));
     }
 
     delete wsdl;
     delete converter;
 }
 
-void TestConverter::noForceTest()
+void tst_qtwsdlconverter::noForceTest()
 {
     QStringList arguments;
-    arguments.append("../../examples/wsdl/band_ws.asmx");
+    arguments.append(QString("../../examples/wsdl/band_ws.asmx"));
 
     WsdlConverter *converter1 = new WsdlConverter(arguments, this);
     QCOMPARE(converter1->isErrorState(), bool(false));
@@ -81,7 +81,7 @@ void TestConverter::noForceTest()
     QCOMPARE(converter1->isErrorState(), bool(false));
 
     // Remove dir, retry converting using the same object:
-    removeDir("band_ws");
+    removeDir(QString("band_ws"));
     converter2->convert();
     QCOMPARE(converter2->isErrorState(), bool(true));
     QCOMPARE(converter1->isErrorState(), bool(false));
@@ -96,11 +96,11 @@ void TestConverter::noForceTest()
     delete converter2;
 }
 
-void TestConverter::forceTest()
+void tst_qtwsdlconverter::forceTest()
 {
     QStringList arguments;
-    arguments.append("--force");
-    arguments.append("../../examples/wsdl/band_ws.asmx");
+    arguments.append(QString("--force"));
+    arguments.append(QString("../../examples/wsdl/band_ws.asmx"));
 
     WsdlConverter *converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
@@ -114,136 +114,136 @@ void TestConverter::forceTest()
 
     QCOMPARE(converter->isErrorState(), bool(false));
     QCOMPARE(converter2->isErrorState(), bool(false));
-    QCOMPARE(QFile::exists("band_ws/band_ws.pro"), bool(true));
-    QCOMPARE(QFile::exists("band_ws/headers/band_ws.h"), bool(true));
-    QCOMPARE(QFile::exists("band_ws/sources/band_ws.cpp"), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/band_ws.pro")), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/headers/band_ws.h")), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/sources/band_ws.cpp")), bool(true));
 
-    QWsdl *wsdl = new QWsdl("../../examples/wsdl/band_ws.asmx", this);
+    QWsdl *wsdl = new QWsdl(QString("../../examples/wsdl/band_ws.asmx"), this);
     QStringList methods = wsdl->methodNames();
 
     foreach (QString s, methods) {
-        QCOMPARE(QFile::exists("band_ws/headers/" + s + ".h"), bool(true));
-        QCOMPARE(QFile::exists("band_ws/sources/" + s + ".cpp"), bool(true));
+        QCOMPARE(QFile::exists(QString("band_ws/headers/" + s + ".h")), bool(true));
+        QCOMPARE(QFile::exists(QString("band_ws/sources/" + s + ".cpp")), bool(true));
     }
 
     delete wsdl;
     delete converter;
 }
 
-void TestConverter::buildSystemTest()
+void tst_qtwsdlconverter::buildSystemTest()
 {
     QStringList arguments;
-    arguments.append("--scons");
-    arguments.append("--cmake");
-    arguments.append("--json");
-    arguments.append("../../examples/wsdl/band_ws.asmx");
+    arguments.append(QString("--scons"));
+    arguments.append(QString("--cmake"));
+    arguments.append(QString("--json"));
+    arguments.append(QString("../../examples/wsdl/band_ws.asmx"));
 
     WsdlConverter *converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
     QCOMPARE(converter->webServiceName(), QString("band_ws"));
 
     converter->convert();
-    QCOMPARE(QFile::exists("band_ws/band_ws.pro"), bool(true));
-    QCOMPARE(QFile::exists("band_ws/SConstruct"), bool(true));
-    QCOMPARE(QFile::exists("band_ws/CMakeLists.txt"), bool(true));
-    QCOMPARE(QFile::exists("band_ws/headers/band_ws.h"), bool(true));
-    QCOMPARE(QFile::exists("band_ws/sources/band_ws.cpp"), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/band_ws.pro")), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/SConstruct")), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/CMakeLists.txt")), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/headers/band_ws.h")), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/sources/band_ws.cpp")), bool(true));
 
-    QWsdl *wsdl = new QWsdl("../../examples/wsdl/band_ws.asmx", this);
+    QWsdl *wsdl = new QWsdl(QString("../../examples/wsdl/band_ws.asmx"), this);
     QStringList methods = wsdl->methodNames();
 
     foreach (QString s, methods) {
-        QCOMPARE(QFile::exists("band_ws/headers/" + s + ".h"), bool(true));
-        QCOMPARE(QFile::exists("band_ws/sources/" + s + ".cpp"), bool(true));
+        QCOMPARE(QFile::exists(QString("band_ws/headers/" + s + ".h")), bool(true));
+        QCOMPARE(QFile::exists(QString("band_ws/sources/" + s + ".cpp")), bool(true));
     }
 
     delete wsdl;
     delete converter;
 }
 
-void TestConverter::noMessagesTest()
+void tst_qtwsdlconverter::noMessagesTest()
 {
     QStringList arguments;
-    arguments.append("--no-messages-structure");
-    arguments.append("../../examples/wsdl/band_ws.asmx");
+    arguments.append(QString("--no-messages-structure");
+    arguments.append(QString("../../examples/wsdl/band_ws.asmx");
 
     WsdlConverter *converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
     QCOMPARE(converter->webServiceName(), QString("band_ws"));
 
     converter->convert();
-    QCOMPARE(QFile::exists("band_ws/band_ws.pro"), bool(true));
-    QCOMPARE(QFile::exists("band_ws/headers/band_ws.h"), bool(true));
-    QCOMPARE(QFile::exists("band_ws/sources/band_ws.cpp"), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/band_ws.pro")), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/headers/band_ws.h")), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/sources/band_ws.cpp")), bool(true));
 
-    QWsdl *wsdl = new QWsdl("../../examples/wsdl/band_ws.asmx", this);
+    QWsdl *wsdl = new QWsdl(QString("../../examples/wsdl/band_ws.asmx"), this);
     QStringList methods = wsdl->methodNames();
 
     foreach (QString s, methods) {
-        QCOMPARE(QFile::exists("band_ws/headers/" + s + ".h"), bool(false));
-        QCOMPARE(QFile::exists("band_ws/sources/" + s + ".cpp"), bool(false));
+        QCOMPARE(QFile::exists(QString("band_ws/headers/" + s + ".h")), bool(false));
+        QCOMPARE(QFile::exists(QString("band_ws/sources/" + s + ".cpp")), bool(false));
     }
 
     delete wsdl;
     delete converter;
 }
 
-void TestConverter::noMessagesAsynchronousTest()
+void tst_qtwsdlconverter::noMessagesAsynchronousTest()
 {
     QStringList arguments;
-    arguments.append("--no-messages-structure");
-    arguments.append("--asynchronous");
-    arguments.append("../../examples/wsdl/band_ws.asmx");
+    arguments.append(QString("--no-messages-structure"));
+    arguments.append(QString("--asynchronous"));
+    arguments.append(QString("../../examples/wsdl/band_ws.asmx"));
 
     WsdlConverter *converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
     QCOMPARE(converter->webServiceName(), QString("band_ws"));
 
     converter->convert();
-    QCOMPARE(QFile::exists("band_ws/band_ws.pro"), bool(true));
-    QCOMPARE(QFile::exists("band_ws/headers/band_ws.h"), bool(true));
-    QCOMPARE(QFile::exists("band_ws/sources/band_ws.cpp"), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/band_ws.pro")), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/headers/band_ws.h")), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/sources/band_ws.cpp")), bool(true));
 
-    QWsdl *wsdl = new QWsdl("../../examples/wsdl/band_ws.asmx", this);
+    QWsdl *wsdl = new QWsdl(QString("../../examples/wsdl/band_ws.asmx"), this);
     QStringList methods = wsdl->methodNames();
 
     foreach (QString s, methods) {
-        QCOMPARE(QFile::exists("band_ws/headers/" + s + ".h"), bool(false));
-        QCOMPARE(QFile::exists("band_ws/sources/" + s + ".cpp"), bool(false));
+        QCOMPARE(QFile::exists(QString("band_ws/headers/" + s + ".h")), bool(false));
+        QCOMPARE(QFile::exists(QString("band_ws/sources/" + s + ".cpp")), bool(false));
     }
 
     delete wsdl;
     delete converter;
 }
 
-void TestConverter::allInOneDirTest()
+void tst_qtwsdlconverter::allInOneDirTest()
 {
     QStringList arguments;
-    arguments.append("--all-in-one-dir-structure");
-    arguments.append("../../examples/wsdl/band_ws.asmx");
+    arguments.append(QString("--all-in-one-dir-structure"));
+    arguments.append(QString("../../examples/wsdl/band_ws.asmx"));
 
     WsdlConverter *converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
     QCOMPARE(converter->webServiceName(), QString("band_ws"));
 
     converter->convert();
-    QCOMPARE(QFile::exists("band_ws/band_ws.pro"), bool(true));
-    QCOMPARE(QFile::exists("band_ws/band_ws.h"), bool(true));
-    QCOMPARE(QFile::exists("band_ws/band_ws.cpp"), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/band_ws.pro")), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/band_ws.h")), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/band_ws.cpp")), bool(true));
 
-    QWsdl *wsdl = new QWsdl("../../examples/wsdl/band_ws.asmx", this);
+    QWsdl *wsdl = new QWsdl(QString("../../examples/wsdl/band_ws.asmx"), this);
     QStringList methods = wsdl->methodNames();
 
     foreach (QString s, methods) {
-        QCOMPARE(QFile::exists("band_ws/" + s + ".h"), bool(true));
-        QCOMPARE(QFile::exists("band_ws/" + s + ".cpp"), bool(true));
+        QCOMPARE(QFile::exists(QString("band_ws/" + s + ".h")), bool(true));
+        QCOMPARE(QFile::exists(QString("band_ws/" + s + ".cpp")), bool(true));
     }
 
     delete wsdl;
     delete converter;
 }
 
-void TestConverter::errorsTest()
+void tst_qtwsdlconverter::errorsTest()
 {
     QStringList arguments;
     WsdlConverter *converter = new WsdlConverter(arguments, this);
@@ -254,9 +254,9 @@ void TestConverter::errorsTest()
 
     delete converter;
 
-    arguments.append("--json");
-    arguments.append("--xml");
-    arguments.append("../../examples/wsdl/band_ws.asmx");
+    arguments.append(QString("--json"));
+    arguments.append(QString("--xml"));
+    arguments.append(QString("../../examples/wsdl/band_ws.asmx"));
     converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
 
@@ -266,43 +266,43 @@ void TestConverter::errorsTest()
     delete converter;
 }
 
-void TestConverter::noBuildSystemTest()
+void tst_qtwsdlconverter::noBuildSystemTest()
 {
     QStringList arguments;
-    arguments.append("--no-build-system");
-    arguments.append("../../examples/wsdl/band_ws.asmx");
+    arguments.append(QString("--no-build-system"));
+    arguments.append(QString("../../examples/wsdl/band_ws.asmx"));
 
     WsdlConverter *converter = new WsdlConverter(arguments, this);
     QCOMPARE(converter->isErrorState(), bool(false));
     QCOMPARE(converter->webServiceName(), QString("band_ws"));
 
     converter->convert();
-    QCOMPARE(QFile::exists("band_ws/band_ws.pro"), bool(false));
-    QCOMPARE(QFile::exists("band_ws/CMakeLists.txt"), bool(false));
-    QCOMPARE(QFile::exists("band_ws/SConstruct"), bool(false));
+    QCOMPARE(QFile::exists(QString("band_ws/band_ws.pro")), bool(false));
+    QCOMPARE(QFile::exists(QString("band_ws/CMakeLists.txt")), bool(false));
+    QCOMPARE(QFile::exists(QString("band_ws/SConstruct")), bool(false));
 
-    QCOMPARE(QFile::exists("band_ws/headers/band_ws.h"), bool(true));
-    QCOMPARE(QFile::exists("band_ws/sources/band_ws.cpp"), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/headers/band_ws.h")), bool(true));
+    QCOMPARE(QFile::exists(QString("band_ws/sources/band_ws.cpp")), bool(true));
 
-    QWsdl *wsdl = new QWsdl("../../examples/wsdl/band_ws.asmx", this);
+    QWsdl *wsdl = new QWsdl(QString("../../examples/wsdl/band_ws.asmx"), this);
     QStringList methods = wsdl->methodNames();
 
     foreach (QString s, methods) {
-        QCOMPARE(QFile::exists("band_ws/headers/" + s + ".h"), bool(true));
-        QCOMPARE(QFile::exists("band_ws/sources/" + s + ".cpp"), bool(true));
+        QCOMPARE(QFile::exists(QString("band_ws/headers/" + s + ".h")), bool(true));
+        QCOMPARE(QFile::exists(QString("band_ws/sources/" + s + ".cpp")), bool(true));
     }
 
     delete wsdl;
     delete converter;
 }
 
-void TestConverter::cleanupTestCase()
+void tst_qtwsdlconverter::cleanupTestCase()
 {
     // Remove files created during conversion:
-    removeDir("band_ws");
+    removeDir(QString("band_ws"));
 }
 
-bool TestConverter::removeDir(QString path)
+bool tst_qtwsdlconverter::removeDir(QString path)
 {
     QDir dir(path);
     bool err = false;

@@ -8,7 +8,8 @@ Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link i
  - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
 
 Example arguments for converter:
- --force --asynchronous --scons --cmake --json ../examples/band_ws.asmx
+ --force --asynchronous --scons --cmake --json ../examples/wsdl/band_ws.asmx
+ -af --cmake --scons --json ../examples/wsdl/band_ws.asmx
 
 13.09.2011 12:33 CEST:
  - added QWebService::removeMethod(), which deletes a web method specified by it's name,
