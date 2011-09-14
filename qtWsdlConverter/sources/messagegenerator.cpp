@@ -50,8 +50,7 @@ bool MessageGenerator::createMessages()
             workingDir.cd("sources");
             createMainCpp();
             workingDir.cdUp();
-        }
-        else {
+        } else {
             createMainCpp();
         }
 
@@ -68,8 +67,7 @@ bool MessageGenerator::createMessages()
             if (!createSubclassedMessageHeader(m))
                 return enterErrorState("Creating header for message \""
                                        + m->methodName() + "\" failed!");
-        }
-        else {
+        } else {
             if (!createMessageHeader(m))
                 return enterErrorState("Creating header for message \""
                                        + m->methodName() + "\" failed!");
@@ -88,8 +86,7 @@ bool MessageGenerator::createMessages()
             if (!createSubclassedMessageSource(n))
                 return enterErrorState("Creating header for message \""
                                        + n->methodName() + "\" failed!");
-        }
-        else {
+        } else {
             if (!createMessageSource(n))
                 return enterErrorState("Creating source for message \""
                                        + n->methodName() + "\" failed!");
@@ -176,8 +173,7 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
         out << "    QString static sendMessage(QObject *parent";
         if (msgParameters != "") {
             out << ", " << msgParameters << ");" << endl;
-        }
-        else {
+        } else {
             out << ");" << endl;
         }
     }
@@ -439,8 +435,7 @@ bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
         if (msgParameters != "") {
             out << "," << endl;
             out << "                                " << msgParameters << ");" << endl;
-        }
-        else {
+        } else {
             out << ");" << endl;
         }
     }
@@ -585,8 +580,7 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
 
         if (msg->host() != "") {
             out << "    hostUrlUsed.setHost(\"" << msg->host() << "\");" << endl;
-        }
-        else {
+        } else {
             out << "    hostUrlUsed.setHost(\"" << msg->targetNamespace()
                 << "\");" << endl;
         }

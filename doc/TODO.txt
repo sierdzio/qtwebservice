@@ -3,7 +3,7 @@ Remote Features and TODO's list can be found at: http://goo.gl/L1C6X
 TODO'S:
 *Please wrap your lines at 80 or, at most, 100 characters.
 *You don’t need \fn if the documentation is for the function that comes right after the documentation. Better leave it out.
-
+*Please make the “else” be on the same line as the closing brace of the previous if-branch.
 
 Please add the copyright headers (copyright you, not Nokia) and the license for the files.
 
@@ -13,7 +13,7 @@ Please don’t use QString::fromLatin1(“”); Use QString(). And that’s if t
 
 QString / QByteArray / etc. must always be passed by const-ref. Change all functions that take a by-value QString to by-const-ref. Including in signals.
 
-Please make the “else” be on the same line as the closing brace of the previous if-branch.
+
 
 Do not write: if (newMethod.toLower() == QString::fromLatin1(“…”)). First of all, store the result of toLower() instead of calling it multiple times. Second, use QLatin1String, not QString::fromLatin1.
 

@@ -60,52 +60,40 @@ void TestQWsdl::gettersTest()
         if (s == QString("getBandName")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
-        }
-        else if (s == QString("getBandDescription")) {
+        } else if (s == QString("getBandDescription")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
-        }
-        else if (s == QString("getBandsList")) {
+        } else if (s == QString("getBandsList")) {
             QCOMPARE(tempParams.size(), int(0));
             QCOMPARE(tempReturns.size(), int(1));
-        }
-        else if (s == QString("getBandsListForGenreAndDate")) {
+        } else if (s == QString("getBandsListForGenreAndDate")) {
             QCOMPARE(tempParams.size(), int(2));
             QCOMPARE(tempReturns.size(), int(1));
-        }
-        else if (s == QString("getBandsListForGenre")) {
+        } else if (s == QString("getBandsListForGenre")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
-        }
-        else if (s == QString("getGenreList")) {
+        } else if (s == QString("getGenreList")) {
             QCOMPARE(tempParams.size(), int(0));
             QCOMPARE(tempReturns.size(), int(1));
-        }
-        else if (s == QString("getBandPricePerShow")) {
+        } else if (s == QString("getBandPricePerShow")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
-        }
-        else if (s == QString("getBandsForADate")) {
+        } else if (s == QString("getBandsForADate")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
-        }
-        else if (s == QString("getNextEmptySlot")) {
+        } else if (s == QString("getNextEmptySlot")) {
             QCOMPARE(tempParams.size(), int(2));
             QCOMPARE(tempReturns.size(), int(1));
-        }
-        else if (s == QString("bookABand")) {
+        } else if (s == QString("bookABand")) {
             QCOMPARE(tempParams.size(), int(11));
             QCOMPARE(tempReturns.size(), int(1));
-        }
-        else if (s == QString("cancelBookingById")) {
+        } else if (s == QString("cancelBookingById")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
-        }
-        else if (s == QString("cancelBookingById")) {
+        } else if (s == QString("cancelBookingById")) {
             QCOMPARE(tempParams.size(), int(3));
             QCOMPARE(tempReturns.size(), int(1));
-        }
-        else if (s == QString("getBandSchedule")) {
+        } else if (s == QString("getBandSchedule")) {
             QCOMPARE(tempParams.size(), int(1));
             QCOMPARE(tempReturns.size(), int(1));
         }

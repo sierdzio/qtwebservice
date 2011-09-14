@@ -290,8 +290,7 @@ void QWebMethod::setProtocol(Protocol prot)
             protocolUsed = soap12;
         else
             protocolUsed = prot;
-    }
-    else {
+    } else {
         enterErrorState(QString::fromLatin1("Wrong protocol is set. You have "
                                             "combined exclusive flags."));
 //        protocolUsed = soap12;
@@ -373,13 +372,11 @@ bool QWebMethod::sendMessage(QByteArray requestData)
                 connect(manager, SIGNAL(finished(QNetworkReply*)),
                         this, SLOT(replyFinished(QNetworkReply*)));
                 break;
-            }
-            else {
+            } else {
                 qApp->processEvents();
             }
         }
-    }
-    else if ((m_username != QString::fromLatin1("")) && (authReply == true)) {
+    } else if ((m_username != QString::fromLatin1("")) && (authReply == true)) {
         disconnect(manager, SIGNAL(finished(QNetworkReply*)),
                    this, SLOT(authReplyFinished(QNetworkReply*)));
         connect(manager, SIGNAL(finished(QNetworkReply*)),
@@ -392,16 +389,13 @@ bool QWebMethod::sendMessage(QByteArray requestData)
     if (protocolUsed & soap) {
         request.setHeader(QNetworkRequest::ContentTypeHeader,
                           QVariant(QString::fromLatin1("application/soap+xml; charset=utf-8")));
-    }
-    else if (protocolUsed & json) {
+    } else if (protocolUsed & json) {
         request.setHeader(QNetworkRequest::ContentTypeHeader,
                           QVariant(QString::fromLatin1("application/json; charset=utf-8")));
-    }
-    else if (protocolUsed & http) {
+    } else if (protocolUsed & http) {
         request.setHeader(QNetworkRequest::ContentTypeHeader,
                           QVariant(QString::fromLatin1("Content-Type: application/x-www-form-urlencoded")));
-    }
-    else if (protocolUsed & xml) {
+    } else if (protocolUsed & xml) {
         request.setHeader(QNetworkRequest::ContentTypeHeader,
                           QVariant(QString::fromLatin1("application/xml; charset=utf-8")));
     }
@@ -428,8 +422,7 @@ bool QWebMethod::sendMessage(QByteArray requestData)
             manager->put(request, data);
         else if (httpMethodUsed == DELETE)
             manager->deleteResource(request);
-    }
-    else {
+    } else {
         manager->post(request, data);
     }
 
@@ -542,10 +535,10 @@ QVariant QWebMethod::replyReadParsed()
 
         result = (QVariant) replyString.mid(replyBeginIndex,
                                             replyFinishIndex - replyBeginIndex);
-    }
-    // EO section.
-    else
+    } else {
         result = replyString;
+    }
+
     return replyBytes;
 }
 
@@ -839,8 +832,7 @@ void QWebMethod::prepareRequestData()
                      " <soap12:Body> " + endl);
 
             footer = QString("</soap12:Body> " + endl + "</soap12:Envelope>");
-        }
-        else if (protocolUsed & soap10) {
+        } else if (protocolUsed & soap10) {
             header = QString("<?xml version=\"1.0\" encoding=\"utf-8\"?> " + endl +
                     " <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
                     "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" " +
@@ -861,16 +853,14 @@ void QWebMethod::prepareRequestData()
         }
 
         body += QString("\t</" + m_methodName + "> " + endl);
-    }
-    else if (protocolUsed & http) {
+    } else if (protocolUsed & http) {
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
             // Currently, this does not handle nested lists
             body += QString(currentKey + "=" + qv.toString() + "&");
         }
         body.chop(1);
-    }
-    else if (protocolUsed & json) {
+    } else if (protocolUsed & json) {
         body += "{" + endl;
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
@@ -879,8 +869,7 @@ void QWebMethod::prepareRequestData()
                             + qv.toString() + "\"" + endl);
         }
         body += QString::fromLatin1("}");
-    }
-    else if (protocolUsed & xml) {
+    } else if (protocolUsed & xml) {
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
             // Currently, this does not handle nested lists

@@ -14,6 +14,7 @@ Example arguments for converter:
 .09.2011 : CEST:
  - make lines in code wrap at around 80 characters,
  - remove \fn declarations from QDoc comments,
+ - make the “else” be on the same line as the closing brace of the previous if-branch,
  - 
 
 13.09.2011 12:33 CEST:

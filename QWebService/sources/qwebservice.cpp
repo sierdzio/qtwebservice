@@ -210,8 +210,7 @@ void QWebService::resetWsdl(QWsdl *newWsdl)
     if (newWsdl == 0) {
         methods->clear();
         wsdl = new QWsdl(this);
-    }
-    else {
+    } else {
         wsdl = newWsdl;
         methods->clear();
 //        delete methods;

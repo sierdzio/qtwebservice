@@ -146,8 +146,7 @@ bool CodeGenerator::createServiceHeader()
         foreach (QString s, tempMp) {
             out << "#include \"" << s << ".h\"" << endl;
         }
-    }
-    else
+    } else
     {
 //        out << "#include <QWebService/QWebServiceMethod.h>" << endl;
         out << "#include <QWebService>" << endl;
@@ -403,8 +402,7 @@ bool CodeGenerator::createServiceSource()
                         protocols.prepend(", ");
 
                     out << protocols << ").toString();" << endl;
-                }
-                else {
+                } else {
                     out << "    return " << m->methodName()
                         << "::sendMessage(this";
 
@@ -415,8 +413,7 @@ bool CodeGenerator::createServiceSource()
                 }
                 out << "}" << endl;
                 out << endl;
-            }
-            else if (flags->flags() & Flags::asynchronous) {
+            } else if (flags->flags() & Flags::asynchronous) {
                 // Name of the message object.
                 QString objName = s.toLower() + flags->objectSuffix();
                 out << "void " << wsName << "::" << s << flags->messageSuffix()
@@ -447,8 +444,7 @@ bool CodeGenerator::createServiceSource()
                     // Add REST handling!
 
                     out << "    " << objName << ".sendMessage(parameters);" << endl;
-                }
-                else {
+                } else {
                     out << "    " << objName << ".sendMessage(" << tmpPN
                         << ");" << endl;
                 }
@@ -790,8 +786,7 @@ bool CodeGenerator::createSconsProject()
         if (!(flags->flags() & Flags::allInOneDirStructure))
             out << "\"sources/";
         out << wsName << ".cpp\"" << endl;
-    }
-    else {
+    } else {
         out << "    ";
         if (!(flags->flags() & Flags::allInOneDirStructure))
             out << "\"sources/";

@@ -163,8 +163,7 @@ void WsdlConverter::convert()
         enterErrorState("Error - directory already exists! Use -f or --force "
                         "to force deleting existing directories.");
         return;
-    }
-    else {
+    } else {
         if (flags->isForced() == true) {
             if(removeDir(mainPath)) {
                 enterErrorState("When using '--force': Removing "
@@ -214,8 +213,7 @@ bool WsdlConverter::removeDir(QString path)
 
             if (entryInfo.isDir()) {
                 err = removeDir(tpath);
-            }
-            else {
+            } else {
                 QFile file(tpath);
                 if (!file.remove())
                     err = true;
@@ -248,157 +246,122 @@ bool WsdlConverter::parseArguments(QStringList arguments)
             if (s == "--") {
                 endOfOptions = true;
                 continue;
-            }
-            // Protocol flags:
-            else if (s == "--soap12") {
+            } else if (s == "--soap12") { // Protocol flags:
                 flags->resetFlags(Flags::soap10 | Flags::http
                                   | Flags::json | Flags::xml);
                 flags->setFlags(Flags::soap12);
-            }
-            else if (s == "--soap10") {
+            } else if (s == "--soap10") {
                 flags->resetFlags(Flags::soap12 | Flags::http
                                   | Flags::json | Flags::xml);
                 flags->setFlags(Flags::soap10);
-            }
-            else if (s == "--soap") {
+            } else if (s == "--soap") {
                 flags->resetFlags(Flags::http | Flags::json | Flags::xml);
                 flags->setFlags(Flags::soap);
-            }
-            else if (s == "--http") {
+            } else if (s == "--http") {
                 flags->resetFlags(Flags::soap | Flags::json | Flags::xml);
                 flags->setFlags(Flags::http);
-            }
-            else if (s == "--json") {
+            } else if (s == "--json") {
                 flags->resetFlags(Flags::soap | Flags::http | Flags::xml);
                 flags->setFlags(Flags::json);
-            }
-            else if (s == "--xml") {
+            } else if (s == "--xml") {
                 flags->resetFlags(Flags::soap | Flags::http | Flags::json);
                 flags->setFlags(Flags::xml);
-            }
-            else if (s.startsWith("--rest")) {
+            } else if (s.startsWith("--rest")) {
                 flags->setFlags(Flags::rest);
                 // Set HTTP method:
                 if (s == "--rest") {
                     flags->setHttpMethod(Flags::POST);
-                }
-                else if (s.startsWith("--rest=")) {
+                } else if (s.startsWith("--rest=")) {
                     if (!flags->setHttpMethod(s.mid(7)))
                         return false;
                 }
-            }
-            // Synchronousness:
-            else if (s == "--synchronous") {
+            } else if (s == "--synchronous") { // Synchronousness:
                 flags->resetFlags(Flags::asynchronous);
                 flags->setFlags(Flags::synchronous);
-            }
-            else if (s == "--asynchronous") {
+            } else if (s == "--asynchronous") {
                 flags->resetFlags(Flags::synchronous);
                 flags->setFlags(Flags::asynchronous);
-            }
-            // Modes:
-            else if (s == "--subclass") {
+            } else if (s == "--subclass") { // Modes:
                 flags->resetFlags(Flags::debugMode
                                   | Flags::compactMode
                                   | Flags::fullMode);
                 flags->setFlags(Flags::subclass);
-            }
-            else if ((s == "--full-mode") || (s == "--full")) {
+            } else if ((s == "--full-mode") || (s == "--full")) {
                 flags->resetFlags(Flags::debugMode
                                   | Flags::compactMode
                                   | Flags::subclass);
                 flags->setFlags(Flags::fullMode);
-            }
-            else if ((s == "--debug-mode") || (s == "--debug")) {
+            } else if ((s == "--debug-mode") || (s == "--debug")) {
                 flags->resetFlags(Flags::fullMode
                                   | Flags::compactMode
                                   | Flags::subclass);
                 flags->setFlags(Flags::debugMode);
-            }
-            else if ((s == "--compact-mode") || (s == "--compact")) {
+            } else if ((s == "--compact-mode") || (s == "--compact")) {
                 flags->resetFlags(Flags::fullMode
                                   | Flags::compactMode
                                   | Flags::subclass);
                 flags->setFlags(Flags::compactMode);
-            }
-            // Structures:
-            else if ((s == "--standard-structure") || (s == "--standard")) {
+            } else if ((s == "--standard-structure")
+                       || (s == "--standard")) { // Structures:
                 flags->resetFlags(Flags::noMessagesStructure
                                   | Flags::allInOneDirStructure);
                 flags->setFlags(Flags::standardStructure);
-            }
-            else if ((s == "--no-messages-structure") || (s == "--no-messages")) {
+            } else if ((s == "--no-messages-structure")
+                       || (s == "--no-messages")) {
                 flags->resetFlags(Flags::standardStructure
                                   | Flags::allInOneDirStructure);
                 flags->setFlags(Flags::noMessagesStructure);
-            }
-            else if ((s == "--all-in-one-dir-structure") || (s == "--all-in-one-dir")) {
+            } else if ((s == "--all-in-one-dir-structure")
+                     || (s == "--all-in-one-dir")) {
                 flags->resetFlags(Flags::standardStructure
                                   | Flags::noMessagesStructure);
                 flags->setFlags(Flags::allInOneDirStructure);
-            }
-            // Build systems (qmake, cmake and scons can be build simultaneously):
-            else if (s == "--qmake") {
+            } else if (s == "--qmake") { // Build systems (qmake, cmake and scons can be build simultaneously):
                 flags->setFlags(Flags::qmake);
-            }
-            else if (s == "--cmake") {
+            } else if (s == "--cmake") {
                 flags->setFlags(Flags::cmake);
-            }
-            else if (s == "--scons") {
+            } else if (s == "--scons") {
                 flags->setFlags(Flags::scons);
-            }
-            else if (s == "--no-build-system") {
+            } else if (s == "--no-build-system") {
                 flags->resetFlags(Flags::qmake | Flags::cmake | Flags::scons);
                 flags->setFlags(Flags::noBuildSystem);
-            }
-            // Suffixes:
-            else if (s.startsWith("--msgSuffix=")) {
+            } else if (s.startsWith("--msgSuffix=")) { // Suffixes:
                 flags->setMsgSuffix(s.mid(12));
-            }
-            else if (s.startsWith("--objSuffix=")) {
+            } else if (s.startsWith("--objSuffix=")) {
                 flags->setObjSuffix(s.mid(12));
-            }
-            // Force:
-            else if (s == "--force") {
+            } else if (s == "--force") { // Force:
                 flags->setForced(true);
-            }
-            else {
+            } else {
                 qWarning() << "WARNING: unrecognised command: "
                            << s << ". Converter will continue.";
             }
-        }
-        // Handles '-' arguments
-        else if (s.startsWith("-") && (endOfOptions == false)) {
+        } else if (s.startsWith("-") && (endOfOptions == false)) {
+            // Handles '-' arguments
             for (int i = 1; i < s.size(); i++) {
                 QChar chr = s.at(i);
 
                 if (chr == ('a')) {
                     flags->resetFlags(Flags::synchronous);
                     flags->setFlags(Flags::asynchronous);
-                }
-                else if (chr == ('s')) {
+                } else if (chr == ('s')) {
                     flags->resetFlags(Flags::debugMode
                                       | Flags::compactMode
                                       | Flags::fullMode);
                     flags->setFlags(Flags::subclass);
-                }
-                else if (chr == ('n')) {
+                } else if (chr == ('n')) {
                     flags->resetFlags(Flags::qmake
                                       | Flags::cmake
                                       | Flags::scons);
                     flags->setFlags(Flags::noBuildSystem);
-                }
-                else if (chr == ('f')) {
+                } else if (chr == ('f')) {
                     flags->setForced(true);
-                }
-                else {
+                } else {
                     qWarning() << "WARNING: unrecognised command: "
                                << s << ". Converter will continue.";
                 }
             }
-        }
-        // Handles file names, class name etc.
-        else if ((s != "") && (s != appFilePath)) {
+        } else if ((s != "") && (s != appFilePath)) {
+            // Handles file names, class name etc.
             // Handles wsdl file, base class name, output dir.
             if (!wasFile) {
                 wasFile = true;
@@ -407,8 +370,7 @@ bool WsdlConverter::parseArguments(QStringList arguments)
 
                 if (!QFile::exists(tmp) && tempUrl.isValid()) {
                     argList->insert(Path, tmp);;
-                }
-                else {
+                } else {
                     QFileInfo tempInfo(tmp);
 
                     if (tempInfo.isRelative()) {
@@ -416,12 +378,10 @@ bool WsdlConverter::parseArguments(QStringList arguments)
                         argList->insert(Path, tmp);
                     }
                 }
-            }
-            else if (!wasOutDir) {
+            } else if (!wasOutDir) {
                 wasOutDir = true;
                 argList->insert(Dir, s);
-            }
-            else if (!wasClassName) {
+            } else if (!wasClassName) {
                 wasClassName = true;
                 argList->insert(ClassName, s);
             }

@@ -317,8 +317,7 @@ bool tst_qtwsdlconverter::removeDir(QString path)
 
             if (entryInfo.isDir()) {
                 err = removeDir(tpath);
-            }
-            else {
+            } else {
                 QFile file(tpath);
                 if (!file.remove())
                     err = true;
