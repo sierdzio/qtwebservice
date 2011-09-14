@@ -12,7 +12,8 @@ Example arguments for converter:
  -af --cmake --scons --json ../examples/wsdl/band_ws.asmx
 
 .09.2011 : CEST:
- - made lines in code wrap at around 80 characters,
+ - make lines in code wrap at around 80 characters,
+ - remove \fn declarations from QDoc comments,
  - 
 
 13.09.2011 12:33 CEST:

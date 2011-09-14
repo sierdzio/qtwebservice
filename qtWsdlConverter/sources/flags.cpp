@@ -86,8 +86,6 @@
   */
 
 /*!
-    \fn Flags::Flags(Options options_, HttpMethod method_, bool forced, QObject *parent)
-
     Constructs the Flags object. All params are optional. If you want to
     set non-default suffixes, use setObjSuffix() and setMsgSuffix().
 
@@ -118,8 +116,6 @@ Flags::Flags(Options options_, HttpMethod method_, bool forced, QObject *parent)
 }
 
 /*!
-    \fn Flags::resetFlags()
-
     Resets all flags to default values. This does not apply to '--forced'.
   */
 void Flags::resetFlags()
@@ -129,8 +125,6 @@ void Flags::resetFlags()
 }
 
 /*!
-    \fn Flags::resetFlags(Options whatToReset)
-
     Resets (zeroes) flags set to 1 in \a whatToReset.
     This does not apply to '--forced'.
   */
@@ -140,8 +134,6 @@ void Flags::resetFlags(Options whatToReset)
 }
 
 /*!
-    \fn Flags::setFlags(Options options)
-
     Does OR combination of \a options with those already set.
   */
 void Flags::setFlags(Options options)
@@ -155,8 +147,6 @@ void Flags::setFlags(Options options)
 }
 
 /*!
-  \fn Flags::setHttpMethod(HttpMethod newMethod)
-
   Sets HTTP method flag to \a newMethod. Any previous setting is discarded.
 
   */
@@ -166,8 +156,6 @@ void Flags::setHttpMethod(HttpMethod newMethod)
 }
 
 /*!
-  \fn Flags::setHttpMethod(QString newMethod)
-
   Sets HTTP method flag to \a newMethod. Any previous setting is discarded.
   Only valid values are accepted, but checks are not case sensitive.
   Therefore, you can for example pass "delete" or "DELETE".
@@ -191,8 +179,6 @@ bool Flags::setHttpMethod(QString newMethod)
 }
 
 /*!
-    \fn Flags::setForced(bool forced)
-
     Sets the \a forced value to given one.
 
     When 'true', converter will delete old sources, and create
@@ -204,8 +190,6 @@ void Flags::setForced(bool forced)
 }
 
 /*!
-    \fn Flags::setMsgSuffix(QString newMsgSuffix)
-
     Sets the message suffix using \a newMsgSuffix.
     */
 void Flags::setMsgSuffix(QString newMsgSuffix)
@@ -214,8 +198,6 @@ void Flags::setMsgSuffix(QString newMsgSuffix)
 }
 
 /*!
-    \fn Flags::setObjSuffix(QString newObjSuffix)
-
     Sets the object suffix using \a newObjSuffix.
     */
 void Flags::setObjSuffix(QString newObjSuffix)
@@ -224,8 +206,6 @@ void Flags::setObjSuffix(QString newObjSuffix)
 }
 
 /*!
-    \fn Flags::flags() const
-
     Returns currently set options enum.
   */
 Flags::Options Flags::flags() const
@@ -234,8 +214,6 @@ Flags::Options Flags::flags() const
 }
 
 /*!
-  \fn Flags::protocolString(bool includeRest) const
-
   Returns protocol used in form of a QString. If \a includeRest is
   true, and --rest flag was specified, it appends ",rest" to the result.
   */
@@ -261,8 +239,6 @@ QString Flags::protocolString(bool includeRest) const
 }
 
 /*!
-  \fn Flags::httpMethod() const
-
   Returns the HTTP method used.
 
   \sa httpMethodString()
@@ -273,8 +249,6 @@ Flags::HttpMethod Flags::httpMethod() const
 }
 
 /*!
-  \fn Flags::httpMethodString() const
-
   Returns the HTTP method used, in form of a QString.
 
   \sa httpMethod()
@@ -296,8 +270,6 @@ QString Flags::httpMethodString() const
 }
 
 /*!
-    \fn Flags::forced() const
-
     Same as isForced().
 
     Returns force state.
@@ -310,11 +282,7 @@ bool Flags::forced() const
 }
 
 /*!
-    \fn Flags::isForced() const
-
-    Same as forced().
-
-    Returns force state.
+    Same as forced(). Returns force state.
 
     \sa forced()
   */
@@ -324,8 +292,6 @@ bool Flags::isForced() const
 }
 
 /*!
-    \fn Flags::messageSuffix() const
-
     Returns message suffix, which is appended to methods (ones that send
     the message) in generated code.
   */
@@ -335,8 +301,6 @@ QString Flags::messageSuffix() const
 }
 
 /*!
-    \fn Flags::objectSuffix() const
-
     Returns the suffix, which is appended to object names (used in service
     header and source when in asynchronous).
   */
@@ -346,8 +310,6 @@ QString Flags::objectSuffix() const
 }
 
 /*!
-    \fn Flags::operator =(const Flags &flag)
-
     Assign operator for Flags object. Copies r-value \a flag into
     r-value object, and returns the object.
   */

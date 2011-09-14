@@ -9,8 +9,6 @@
   */
 
 /*!
-    \fn MessageGenerator::MessageGenerator(QMap<QString, QWebServiceMethod *> *msgs, QDir wrkDir, Flags *flgs, QObject *parent)
-
     Constructs QObject using \a parent, initialises MessageGenerator
     with messages (\a msgs), working directory (\a wrkDir), and flags (\a flgs).
   */
@@ -23,8 +21,6 @@ MessageGenerator::MessageGenerator(QMap<QString, QWebServiceMethod *> *msgs,
 }
 
 /*!
-  \fn MessageGenerator::errorMessage()
-
   Returns QString containing error message (or "" if there was no error).
   */
 QString MessageGenerator::errorMessage()
@@ -34,7 +30,6 @@ QString MessageGenerator::errorMessage()
 
 /*!
     \internal
-    \fn MessageGenerator::enterErrorState(QString errMessage)
   */
 bool MessageGenerator::enterErrorState(QString errMessage)
 {
@@ -43,8 +38,6 @@ bool MessageGenerator::enterErrorState(QString errMessage)
 }
 
 /*!
-    \fn MessageGenerator::createMessages()
-
     Creates messages (both headers and sources) by generating the entire code
     or subclassing QWebServiceMethod (depending on whether --subclass flag is set).
 
@@ -113,7 +106,6 @@ bool MessageGenerator::createMessages()
 
 /*!
     \internal
-    \fn MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
   */
 bool MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
 {
@@ -216,7 +208,6 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
 
 /*!
     \internal
-    \fn MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
   */
 bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
 {
@@ -349,7 +340,6 @@ bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
 
 /*!
     \internal
-    \fn MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
   */
 bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
 {
@@ -520,7 +510,6 @@ bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
 
 /*!
     \internal
-    \fn MessageGenerator::createMessageSource(QWebServiceMethod *msg)
   */
 bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
 {

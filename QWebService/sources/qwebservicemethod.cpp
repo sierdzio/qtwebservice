@@ -14,8 +14,6 @@
   */
 
 /*!
-    \fn QWebServiceMethod::QWebServiceMethod(QObject *parent, Protocol protocol, HttpMethod httpMethod)
-
     A constructor that takes in \a protocol information,
     \a httpMethod to use, and \a parent
     to satisfy QObject requirements. All other data has to
@@ -27,8 +25,6 @@ QWebServiceMethod::QWebServiceMethod(QObject *parent, Protocol protocol, HttpMet
 }
 
 /*!
-    \fn QWebServiceMethod::QWebServiceMethod(QUrl url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method)
-
     Constructs the message using \a url, \a messageName, \a parent,
     \a protocol (which defaults to soap12),
     and \a method (which defaults to POST).
@@ -47,8 +43,6 @@ QWebServiceMethod::QWebServiceMethod(QUrl url, QString messageName, QObject *par
 }
 
 /*!
-    \fn QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method)
-
     Constructs the message using \a url, \a messageName, \a parent,
     \a protocol (which defaults to soap12),
     and \a method (which defaults to POST).
@@ -67,8 +61,6 @@ QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QObject *
 }
 
 /*!
-    \fn QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QString tNamespace, QMap<QString, QVariant> params, QObject *parent, Protocol protocol, HttpMethod method)
-
     Constructs the message using \a url, \a messageName, \a tNamespace,
     \a parent, \a protocol (which defaults to soap12),
     and \a method (which defaults to POST).
@@ -94,7 +86,6 @@ QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QString t
 
 
 /*!
-    \fn bool QWebServiceMethod::sendMessage(QMap<QString, QVariant> params)
     \overload sendMessage()
 
     Sends the message asynchronously using parameters specified in \a params.

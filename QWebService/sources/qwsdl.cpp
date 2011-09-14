@@ -10,8 +10,6 @@
   */
 
 /*!
-    \fn QWsdl::QWsdl(QObject *parent)
-
     Simple constructor, requires \a parent only, but needs other information
     to be specified later in order to run.
     You need to run setWsdlFile(), which automatically parses the file.
@@ -28,8 +26,6 @@ QWsdl::QWsdl(QObject *parent) :
 }
 
 /*!
-    \fn QWsdl::QWsdl(QString wsdlFile, QObject *parent)
-
     Constructs the object using optional \a parent. Uses the file path or URL
     specified in \a wsdlFile to parse the WSDL file.
   */
@@ -41,8 +37,6 @@ QWsdl::QWsdl(QString wsdlFile, QObject *parent) :
 }
 
 /*!
-    \fn QWsdl::~QWsdl()
-
     Destructor - cleans some internal variables.
   */
 QWsdl::~QWsdl()
@@ -60,8 +54,6 @@ QWsdl::~QWsdl()
   */
 
 /*!
-    \fn QWsdl::setWsdlFile(QString wsdlFile)
-
     Wrapper for resetWsdl(). Used to set the WSDL file or URL using \a wsdlFile.
     Compulsory after simple constructor, but not needed if you have already
     specified the file in the constructor or resetWsdl().
@@ -74,8 +66,6 @@ void QWsdl::setWsdlFile(QString wsdlFile) // == resetWsdl()
 }
 
 /*!
-    \fn QWsdl::resetWsdl(QString newWsdlPath)
-
     Can be used to set or reset a WSDL file (or URL), using \a newWsdlPath.
     Cleans and reinitialises the object, parses the file.
 
@@ -100,8 +90,6 @@ void QWsdl::resetWsdl(QString newWsdlPath)
 }
 
 /*!
-    \fn QWsdl::methodNames() const
-
     Returns a QStringList of names of web service's methods.
 
     \sa methods()
@@ -116,8 +104,6 @@ QStringList QWsdl::methodNames() const
 }
 
 /*!
-    \fn QWsdl::methods()
-
     Returns a QMap<QString, QWebServiceMethod *> pointer.
     Keys are method names (just as in getMethodNames()), and values are
     QWebServiceMethods themselves (which means they can be used
@@ -131,8 +117,6 @@ QMap<QString, QWebServiceMethod *> *QWsdl::methods()
 }
 
 /*!
-    \fn QWsdl::webServiceName() const
-
     Returns QString with the name of the web service specified in WSDL.
   */
 QString QWsdl::webServiceName() const
@@ -141,8 +125,6 @@ QString QWsdl::webServiceName() const
 }
 
 /*!
-    \fn QWsdl::host() const
-
     Returns web service's URL. If there is no valid URL in WSDL file,
     path to this file is returned.
 
@@ -157,8 +139,6 @@ QString QWsdl::host() const
 }
 
 /*!
-    \fn QWsdl::hostUrl() const
-
     Returns web service's URL. If there is no valid URL in WSDL file,
     path to this file is returned.
 
@@ -173,8 +153,6 @@ QUrl QWsdl::hostUrl() const
 }
 
 /*!
-    \fn QWsdl::wsdlFile() const
-
     Returns path to WSDL file.
   */
 QString QWsdl::wsdlFile() const
@@ -183,8 +161,6 @@ QString QWsdl::wsdlFile() const
 }
 
 /*!
-    \fn QWsdl::targetNamespace() const
-
     Returns target namespace specified in WSDL.
   */
 QString QWsdl::targetNamespace() const
@@ -193,8 +169,6 @@ QString QWsdl::targetNamespace() const
 }
 
 /*!
-    \fn QWsdl::errorInfo() const
-
     Returns QString with error message in case an error occured.
     Otherwise, returns empty string.
 
@@ -206,8 +180,6 @@ QString QWsdl::errorInfo() const
 }
 
 /*!
-    \fn QWsdl::isErrorState() const
-
     Returns true if there was an error, false otherwise.
     Details about an error can be read with getErrorInfo().
 
@@ -219,8 +191,6 @@ bool QWsdl::isErrorState() const
 }
 
 /*!
-    \fn QWsdl::fileReplyFinished(QNetworkReply *rply)
-
     Asynchronous public return slot. Reads WSDL reply (\a rply)
     from server (used in case URL was specified in wsdl file path).
 
@@ -252,7 +222,6 @@ void QWsdl::fileReplyFinished(QNetworkReply *rply)
 
 /*!
     \internal
-    \fn QWsdl::init()
 
     Initialises the object.
   */
@@ -272,7 +241,6 @@ void QWsdl::init()
 
 /*!
     \internal
-    \fn QWsdl::enterErrorState(QString errMessage)
 
     Enters into error state with message \a errMessage.
   */
@@ -287,7 +255,6 @@ bool QWsdl::enterErrorState(QString errMessage)
 
 /*!
     \internal
-    \fn QWsdl::parse()
 
     Central method of this class. Parses the WSDL file, creates all
     QWebServiceMethods, reads all necessary data,

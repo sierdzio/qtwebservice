@@ -10,8 +10,6 @@
   */
 
 /*!
-    \fn QWebServiceReader::QWebServiceReader(QObject *parent)
-
     Constructs QWebServiceAbstract with \a parent, defauling to 0.
   */
 QWebServiceReader::QWebServiceReader(QObject *parent) :
@@ -20,8 +18,6 @@ QWebServiceReader::QWebServiceReader(QObject *parent) :
 }
 
 /*!
-    \fn QWebServiceReader::QWebServiceReader(QWsdl *wsdl, QObject *parent)
-
     Constructs QWebServiceAbstract with \a wsdl and \a parent
     (which defaults to 0).
   */
@@ -31,8 +27,6 @@ QWebServiceReader::QWebServiceReader(QWsdl *wsdl, QObject *parent) :
 }
 
 /*!
-    \fn QWebServiceReader::QWebServiceReader(QString hostname, QObject *parent)
-
     Constructs QWebServiceAbstract with \a parent and \a hostname
     (which is used to create a wsdl object).
   */
@@ -43,8 +37,6 @@ QWebServiceReader::QWebServiceReader(QString hostname, QObject *parent) :
 }
 
 /*!
-    \fn QWebServiceReader::methodHandler(QVariant param)
-
     Pure virtual method, can be used to handle methods. Probably a bad idea,
     might be dropped in the future.
     Accepts parameters in a QVariant \a param.

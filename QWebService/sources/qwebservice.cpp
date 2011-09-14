@@ -9,8 +9,6 @@
   */
 
 /*!
-    \fn QWebService::QWebService(QObject *parent)
-
     Constructs the object with empty QWsdl and using \a parent (defaults to 0).
     You can set a WSDL file later using setWsdl(), or add custom web methods
     using addMethod().
@@ -26,8 +24,6 @@ QWebService::QWebService(QObject *parent)
 }
 
 /*!
-    \fn QWebService::QWebService(QWsdl *_wsdl, QObject *parent)
-
     Constructs and initializes the object with \a _wsdl and
     using \a parent (defaults to 0).
     WSDL file can be resetted later using resetWsdl().
@@ -45,8 +41,6 @@ QWebService::QWebService(QWsdl *_wsdl, QObject *parent)
 }
 
 /*!
-    \fn QWebService::QWebService(QString _hostname, QObject *parent)
-
     Constructs and initializes the object using \a parent (defaults to 0).
     \a _hostname is used to initialise QWsdl if an URL or path to
     a valid WSDL file was used. Otherwise, WSDL can be set later with setWsdl(),
@@ -68,8 +62,6 @@ QWebService::QWebService(QString _hostname, QObject *parent)
 }
 
 /*!
-    \fn QWebService::~QWebService()
-
     Deletes wsdl pointer.
   */
 QWebService::~QWebService()
@@ -85,8 +77,6 @@ QWebService::~QWebService()
   */
 
 /*!
-    \fn QWebService::methodNames() const
-
     Returns a list of methods' names.
   */
 QStringList QWebService::methodNames() const
@@ -95,8 +85,6 @@ QStringList QWebService::methodNames() const
 }
 
 /*!
-    \fn QWebService::methodParameters(QString methodName) const
-
     Returns list of names of parameters of a method specified by \a methodName.
   */
 QStringList QWebService::methodParameters(QString methodName) const
@@ -105,8 +93,6 @@ QStringList QWebService::methodParameters(QString methodName) const
 }
 
 /*!
-    \fn QWebService::methodReturnValue(QString methodName) const
-
     Returns names of return values, for a given method (\a methodName).
   */
 QStringList QWebService::methodReturnValue(QString methodName) const
@@ -115,8 +101,6 @@ QStringList QWebService::methodReturnValue(QString methodName) const
 }
 
 /*!
-    \fn QWebService::parameterNamesTypes(QString methodName) const
-
     For a given \a methodName, returns a QMap with QString paramater name
     as a key, and QVariant value. By running QVariant::typeName() you can
     determine the type of the parameter.
@@ -127,8 +111,6 @@ QMap<QString, QVariant> QWebService::parameterNamesTypes(QString methodName) con
 }
 
 /*!
-    \fn QWebService::returnValueNameType(QString methodName) const
-
     For a given \a methodName, returns a QMap with QString paramater name
     as a key, and QVariant value. By running QVariant::typeName() you can
     determine the type of the parameter.
@@ -139,8 +121,6 @@ QMap<QString, QVariant> QWebService::returnValueNameType(QString methodName) con
 }
 
 /*!
-    \fn QWebService::addMethod(QWebServiceMethod *newMethod)
-
     Adds the specified web method (\a newMethod) to the web service.
     Method name should be set in the object, it is used internally and
     for referencing.
@@ -153,7 +133,6 @@ void QWebService::addMethod(QWebServiceMethod *newMethod)
 }
 
 /*!
-    \fn QWebService::addMethod(QString methodName, QWebServiceMethod *newMethod)
     \overload addMethod()
 
     Adds the specified web method (\a newMethod) to the web service.
@@ -169,8 +148,6 @@ void QWebService::addMethod(QString methodName, QWebServiceMethod *newMethod)
 }
 
 /*!
-    \fn QWebService::removeMethod(QString methodName)
-
     Removes the method specified by \a methodName.
     It also deletes the underlying object, so be careful!
 
@@ -183,8 +160,6 @@ void QWebService::removeMethod(QString methodName)
 }
 
 /*!
-    \fn QWebService::setHost(QString hostname)
-
     Sets new \a hostname URL, resets the WSDL, and reinitialises.
   */
 void QWebService::setHost(QString hostname)
@@ -195,7 +170,6 @@ void QWebService::setHost(QString hostname)
 }
 
 /*!
-    \fn QWebService::setHost(QUrl hostUrl)
     \overload setHost()
 
     Sets new \a hostUrl URL, resets the WSDL, and reinitialises.
@@ -208,8 +182,6 @@ void QWebService::setHost(QUrl hostUrl)
 }
 
 /*!
-    \fn QWebService::setWsdl(QWsdl *newWsdl)
-
     Sets the WSDL (\a newWsdl) file to use. This does not override
     already present methods. If you want to override them, use resetWsdl().
 
@@ -225,8 +197,6 @@ void QWebService::setWsdl(QWsdl *newWsdl)
 }
 
 /*!
-    \fn QWebService::resetWsdl(QWsdl *newWsdl)
-
     Sets the WSDL (\a newWsdl) file to use. This does override already
     present methods.
     If you just want to add WSDL methods to existing ones, use setWsdl()
@@ -250,8 +220,6 @@ void QWebService::resetWsdl(QWsdl *newWsdl)
 }
 
 /*!
-    \fn QWebService::hostUrl() const
-
     Returns QUrl of the web service.
   */
 QUrl QWebService::hostUrl() const
@@ -260,8 +228,6 @@ QUrl QWebService::hostUrl() const
 }
 
 /*!
-    \fn QWebService::host() const
-
     Returns QString with URL of the web service.
   */
 QString QWebService::host() const
@@ -270,8 +236,6 @@ QString QWebService::host() const
 }
 
 /*!
-    \fn QWebService::isErrorState()
-
     Returns true if object is in error state.
   */
 bool QWebService::isErrorState()
@@ -282,8 +246,6 @@ bool QWebService::isErrorState()
 }
 
 /*!
-    \fn QWebService::errorInfo() const
-
     Returns QString with error message in case an error occured.
     Otherwise, returns empty string.
 
@@ -296,7 +258,6 @@ QString QWebService::errorInfo() const
 
 /*!
     \internal
-    \fn QWebService::init()
 
     Initialises the object, resets error state.
   */
@@ -311,7 +272,6 @@ void QWebService::init()
 
 /*!
     \internal
-    \fn QWebService::enterErrorState(QString errMessage)
 
     Enters into error state with message \a errMessage.
   */

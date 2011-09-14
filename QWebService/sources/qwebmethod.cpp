@@ -122,8 +122,6 @@
   */
 
 /*!
-    \fn QWebMethod::QWebMethod(QObject *parent, Protocol protocol, HttpMethod method)
-
     Constructs the message usign \a parent, \a protocol (which defaults to
     soap12), and \a method (which defaults to POST). Requires specifying
     other params later (setParameters()).
@@ -142,8 +140,6 @@ QWebMethod::QWebMethod(QObject *parent, Protocol protocol, HttpMethod method) :
 }
 
 /*!
-    \fn QWebMethod::QWebMethod(QUrl url, QObject *parent, Protocol protocol, HttpMethod method)
-
     Constructs the message usign \a parent, \a protocol (which defaults to soap12),
     and \a method (which defaults to POST), and \a url. Especially convenient for
     parameterless methods (like quick GET messages).
@@ -162,8 +158,6 @@ QWebMethod::QWebMethod(QUrl url, QObject *parent, Protocol protocol, HttpMethod 
 }
 
 /*!
-    \fn QWebMethod::~QWebMethod()
-
     Deletes internal pointers.
   */
 QWebMethod::~QWebMethod()
@@ -180,8 +174,6 @@ QWebMethod::~QWebMethod()
   */
 
 /*!
-    \fn QWebMethod::setHost(QString newHost)
-
     Sets message's host to \a newHost.
   */
 void QWebMethod::setHost(QString newHost)
@@ -190,8 +182,6 @@ void QWebMethod::setHost(QString newHost)
 }
 
 /*!
-    \fn QWebMethod::setHost(QUrl newHost)
-
     Sets message's host to \a newHost.
   */
 void QWebMethod::setHost(QUrl newHost)
@@ -200,8 +190,6 @@ void QWebMethod::setHost(QUrl newHost)
 }
 
 /*!
-    \fn QWebMethod::setUsername(QString newUsername)
-
     Used for authentication. Sets username using \a newUsername.
     To authenticate, call authenticate().
 
@@ -213,8 +201,6 @@ void QWebMethod::setUsername(QString newUsername)
 }
 
 /*!
-    \fn QWebMethod::setPassword(QString newPassword)
-
     Used for authentication. Sets password using \a newPassword.
     To authenticate, call authenticate().
 
@@ -226,8 +212,6 @@ void QWebMethod::setPassword(QString newPassword)
 }
 
 /*!
-    \fn QWebMethod::setCredentials(QString newUsername, QString newPassword)
-
     Used for authentication. Sets username (\a newUsername) and password
     (\a newPassword). To authenticate, call authenticate().
 
@@ -240,8 +224,6 @@ void QWebMethod::setCredentials(QString newUsername, QString newPassword)
 }
 
 /*!
-    \fn QWebMethod::setMessageName(QString newName)
-
     Sets message's name to \a newName.
   */
 void QWebMethod::setMessageName(QString newName)
@@ -250,8 +232,6 @@ void QWebMethod::setMessageName(QString newName)
 }
 
 /*!
-    \fn QWebMethod::setMethodName(QString newName)
-
     Sets message's name to \a newName.
   */
 void QWebMethod::setMethodName(QString newName)
@@ -260,8 +240,6 @@ void QWebMethod::setMethodName(QString newName)
 }
 
 /*!
-    \fn QWebMethod::setParameters(QMap<QString, QVariant> params)
-
     Sets method's parameters (\a params). This also includes their names.
   */
 void QWebMethod::setParameters(QMap<QString, QVariant> params)
@@ -270,8 +248,6 @@ void QWebMethod::setParameters(QMap<QString, QVariant> params)
 }
 
 /*!
-    \fn QWebMethod::setReturnValue(QMap<QString, QVariant> returnVal)
-
     Sets method's return value (\a returnVal). This also includes their names.
   */
 void QWebMethod::setReturnValue(QMap<QString, QVariant> returnVal)
@@ -280,8 +256,6 @@ void QWebMethod::setReturnValue(QMap<QString, QVariant> returnVal)
 }
 
 /*!
-    \fn QWebMethod::setTargetNamespace(QString tNamespace)
-
     Sets message's target namespace (\a tNamespace),
     which is needed in SOAP messaging.
   */
@@ -291,8 +265,6 @@ void QWebMethod::setTargetNamespace(QString tNamespace)
 }
 
 /*!
-    \fn QWebMethod::setProtocol(Protocol prot)
-
     Sets the protocol flag (\a prot, being one of the values
     of QWebMethod::Protocol). This determines the protocol used later,
     when sending request. Defaults to SOAP1.2.
@@ -327,8 +299,6 @@ void QWebMethod::setProtocol(Protocol prot)
 }
 
 /*!
-    \fn QWebMethod::setHttpMethod(HttpMethod method)
-
     Sets the httpMethod flag (\a method, a value of QWebMethod::HttpMethod).
     Default method is QWebMethod::POST.
   */
@@ -338,8 +308,6 @@ void QWebMethod::setHttpMethod(HttpMethod method)
 }
 
 /*!
-    \fn QWebMethod::setHttpMethod(QString newMethod)
-
     Sets the httpMethod flag (\a newMethod, using QString representation
     of HTTP method (post, get, put, or delete)). Setting is NOT case sensitive.
     Default method is POST.
@@ -363,8 +331,6 @@ bool QWebMethod::setHttpMethod(QString newMethod)
 }
 
 /*!
-    \fn bool QWebMethod::sendMessage(QByteArray requestData)
-
     Sends the message asynchronously, assuming that all neccessary data was
     specified earlier. Optionally, a QByteArray (\a requestData) can be
     specified - it will override standard data encapsulation (preparation,
@@ -471,8 +437,6 @@ bool QWebMethod::sendMessage(QByteArray requestData)
 }
 
 /*!
-    \fn QWebMethod::authenticate(QString newUsername, QString newPassword)
-
     Performs authentication using \a newUsername and \a newPassword,
     if specified. If not, and they were given using setCredentials(),
     setUsername() or setPassword(), it uses the existing values.
@@ -502,8 +466,6 @@ bool QWebMethod::authenticate(QString newUsername, QString newPassword)
 }
 
 /*!
-    \fn QWebMethod::authenticate(QUrl customAuthString)
-
     Performs authentication using \a customAuthString.
     Credentials specified by setCredentials(),
     setUsername() or setPassword() are NOT used.
@@ -537,8 +499,6 @@ bool QWebMethod::authenticate(QUrl customAuthString)
 }
 
 /*!
-    \fn QWebMethod::replyRead()
-
     After making asynchronous call, and getting the replyReady() signal,
     this method can be used to read the reply.
   */
@@ -550,8 +510,6 @@ QString QWebMethod::replyRead()
 }
 
 /*!
-    \fn QWebMethod::replyReadParsed()
-
     After making asynchronous call, and getting the replyReady() signal,
     this method can be used to read the reply.
 
@@ -592,8 +550,6 @@ QVariant QWebMethod::replyReadParsed()
 }
 
 /*!
-    \fn QWebMethod::replyReadRaw()
-
     After making asynchronous call, and getting the replyReady() signal,
     this method can be used to read the reply.
 
@@ -612,8 +568,6 @@ QByteArray QWebMethod::replyReadRaw()
   */
 
 /*!
-    \fn QWebMethod::methodName() const
-
     Returns message's name.
   */
 QString QWebMethod::methodName() const
@@ -622,8 +576,6 @@ QString QWebMethod::methodName() const
 }
 
 /*!
-    \fn QWebMethod::parameterNames() const
-
     Retrurns list of parameters' names.
   */
 QStringList QWebMethod::parameterNames() const
@@ -632,8 +584,6 @@ QStringList QWebMethod::parameterNames() const
 }
 
 /*!
-    \fn QWebMethod::returnValueName() const
-
     Returns return value's name.
   */
 QStringList QWebMethod::returnValueName() const
@@ -642,8 +592,6 @@ QStringList QWebMethod::returnValueName() const
 }
 
 /*!
-    \fn QWebMethod::parameterNamesTypes() const
-
     Returns whole parameter information (name and type).
   */
 QMap<QString, QVariant> QWebMethod::parameterNamesTypes() const
@@ -652,8 +600,6 @@ QMap<QString, QVariant> QWebMethod::parameterNamesTypes() const
 }
 
 /*!
-    \fn QWebMethod::returnValueNameType() const
-
     Returns whole return value information (name and type).
   */
 QMap<QString, QVariant> QWebMethod::returnValueNameType() const
@@ -662,8 +608,6 @@ QMap<QString, QVariant> QWebMethod::returnValueNameType() const
 }
 
 /*!
-    \fn QWebMethod::targetNamespace() const
-
     Returns target namespace.
   */
 QString QWebMethod::targetNamespace() const
@@ -672,8 +616,6 @@ QString QWebMethod::targetNamespace() const
 }
 
 /*!
-    \fn QWebMethod::host() const
-
     Returns host's URL (in QString). If you want a QUrl, call getHostUrl(),
     or QUrl(QWebMethod::getHost());
   */
@@ -683,8 +625,6 @@ QString QWebMethod::host() const
 }
 
 /*!
-    \fn QWebMethod::hostUrl() const
-
     Returns host's URL. If you want a QString, call getHost() or getHostUrl().host();
   */
 QUrl QWebMethod::hostUrl() const
@@ -693,8 +633,6 @@ QUrl QWebMethod::hostUrl() const
 }
 
 /*!
-    \fn QWebMethod::username() const
-
     Returns username.
   */
 QString QWebMethod::username() const
@@ -703,8 +641,6 @@ QString QWebMethod::username() const
 }
 
 /*!
-    \fn QWebMethod::protocol() const
-
     Returns currently set protocol.
 
     \sa httpMethod()
@@ -715,8 +651,6 @@ QWebMethod::Protocol QWebMethod::protocol() const
 }
 
 /*!
-    \fn QWebMethod::httpMethod() const
-
     Returns currently set HTTP method.
 
     \sa protocol()
@@ -727,8 +661,6 @@ QWebMethod::HttpMethod QWebMethod::httpMethod() const
 }
 
 /*!
-    \fn QWebMethod::protocolString(bool includeRest) const
-
     Returns protocol used in form of a QString. If \a includeRest is
     true, and --rest flag was specified, it appends ",rest" to the result.
   */
@@ -754,8 +686,6 @@ QString QWebMethod::protocolString(bool includeRest) const
 }
 
 /*!
-    \fn QWebMethod::httpMethodString() const
-
     Returns the HTTP method used, in form of a QString.
 
     \sa httpMethod()
@@ -777,8 +707,6 @@ QString QWebMethod::httpMethodString() const
 }
 
 /*!
-    \fn QWebMethod::errorInfo() const
-
     Returns QString with error message in case an error occured. Otherwise,
     returns empty string.
 
@@ -790,8 +718,6 @@ QString QWebMethod::errorInfo() const
 }
 
 /*!
-    \fn QWebMethod::isErrorState() const
-
     Returns true if there was an error, false otherwise. Details about
     an error can be read with getErrorInfo().
 
@@ -803,8 +729,6 @@ bool QWebMethod::isErrorState() const
 }
 
 /*!
-    \fn QWebMethod::isReplyReady() const
-
     Returns true if reply was received.
   */
 bool QWebMethod::isReplyReady() const
@@ -813,8 +737,6 @@ bool QWebMethod::isReplyReady() const
 }
 
 /*!
-    \fn QWebMethod::replyFinished(QNetworkReply *netReply)
-
     Public (will probably be private in the future) slot, which processes
     the reply (\a netReply) from the server.
     Emits the replyReady() signal.
@@ -828,8 +750,6 @@ void QWebMethod::replyFinished(QNetworkReply *netReply)
 }
 
 /*!
-    \fn QWebMethod::authReplyFinished(QNetworkReply *reply)
-
     TEMP Auth METHOD. HIGHLY EXPERIMENTAL.
     Checks for body of \a reply to determine correctness of authentication.
   */
@@ -846,8 +766,6 @@ void QWebMethod::authReplyFinished(QNetworkReply *reply)
 }
 
 /*!
-    \fn QWebMethod::authenticationSlot(QNetworkReply *reply, QAuthenticator *authenticator)
-
     Internal method used to authenticate the communication.
     Use setCredentials() or setUsername() and setPassword()
     to specify the data.
@@ -873,8 +791,6 @@ void QWebMethod::authenticationSlot(QNetworkReply *reply,
 }
 
 /*!
-    \fn QWebMethod::init()
-
     Performs genral initialisation of the object.
     Sets default variable values, initializes network manager,
     connects reply signals. Calls virtual method, configure().
@@ -900,8 +816,6 @@ void QWebMethod::init()
 }
 
 /*!
-    \fn QWebMethod::prepareRequestData()
-
     Protected function, invoked by sendMessage(). Modifies QByteArray data,
     so that it is consistent with protocol and HTTP method specification.
     It uses QMap<QString, QVariant> parameters to fill data object's body.
@@ -980,7 +894,6 @@ void QWebMethod::prepareRequestData()
 
 /*!
     \internal
-    \fn QWebMethod::convertReplyToUtf(QString textToConvert)
 
     Changes the encoding of the reply, in a rather crude fashion.
   */
@@ -996,7 +909,6 @@ QString QWebMethod::convertReplyToUtf(QString textToConvert)
 
 /*!
     \internal
-    \fn QWebMethod::enterErrorState(QString errMessage)
 
     Enters into error state with message \a errMessage.
   */

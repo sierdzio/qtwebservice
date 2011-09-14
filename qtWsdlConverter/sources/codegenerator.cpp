@@ -13,8 +13,6 @@
   */
 
 /*!
-    \fn CodeGenerator::CodeGenerator(QObject *parent)
-
     Constructs QObject using \a parent, initialises CodeGenerator.
   */
 CodeGenerator::CodeGenerator(QObject *parent) :
@@ -32,8 +30,6 @@ CodeGenerator::CodeGenerator(QObject *parent) :
   */
 
 /*!
-    \fn CodeGenerator::isErrorState()
-
     Returns true if object is in error state.
   */
 bool CodeGenerator::isErrorState()
@@ -43,7 +39,6 @@ bool CodeGenerator::isErrorState()
 
 /*!
     \internal
-    \fn CodeGenerator::enterErrorState(QString errMessage)
   */
 bool CodeGenerator::enterErrorState(QString errMessage)
 {
@@ -55,7 +50,6 @@ bool CodeGenerator::enterErrorState(QString errMessage)
 
 /*!
     \internal
-    \fn CodeGenerator::prepare()
   */
 void CodeGenerator::prepare()
 {
@@ -68,23 +62,21 @@ void CodeGenerator::prepare()
 }
 
 /*!
-    \fn CodeGenerator::create(QWsdl *wsdl, QDir workingDir, Flags *flgs, QString baseClassName = 0, QObject *parent = 0)
-
     Performs the conversion in CodeGenerator. Data from WSDL (\a wsdl) is
-    combined with options specified in flags (\a flgs), and base class name
+    combined with options specified in flags (\a flags), and base class name
     (\a baseClassName) to create a complete set of classes in given directory
     (\a workingDir). For Qt reasons, \a parent is also needed, although
     it defaults to 0.
 
     Returns true if successful.
   */
-bool CodeGenerator::create(QWsdl *w, QDir wrkDir, Flags *flgs, QString bsClsNme, QObject *parent)
+bool CodeGenerator::create(QWsdl *wsdl, QDir workingDir, Flags *flags, QString baseClassName, QObject *parent)
 {
     CodeGenerator obj(parent);
-    obj.baseClassName = bsClsNme;
-    obj.flags = flgs;
-    obj.workingDir = wrkDir;
-    obj.wsdl = w;
+    obj.baseClassName = baseClassName;
+    obj.flags = flags;
+    obj.workingDir = workingDir;
+    obj.wsdl = wsdl;
     obj.prepare();
 
     if (!obj.createMessages())
@@ -98,7 +90,6 @@ bool CodeGenerator::create(QWsdl *w, QDir wrkDir, Flags *flgs, QString bsClsNme,
 
 /*!
     \internal
-    \fn CodeGenerator::createService()
   */
 bool CodeGenerator::createService()
 {
@@ -124,7 +115,6 @@ bool CodeGenerator::createService()
 
 /*!
     \internal
-    \fn CodeGenerator::createServiceHeader()
   */
 bool CodeGenerator::createServiceHeader()
 {
@@ -284,7 +274,6 @@ bool CodeGenerator::createServiceHeader()
 
 /*!
     \internal
-    \fn CodeGenerator::createServiceSource()
   */
 bool CodeGenerator::createServiceSource()
 {
@@ -552,7 +541,6 @@ bool CodeGenerator::createServiceSource()
 
 /*!
     \internal
-    \fn CodeGenerator::createMessages()
   */
 bool CodeGenerator::createMessages()
 {
@@ -565,7 +553,6 @@ bool CodeGenerator::createMessages()
 }
 /*!
     \internal
-    \fn CodeGenerator::createBuildSystemFile()
   */
 bool CodeGenerator::createBuildSystemFile()
 {
@@ -588,7 +575,6 @@ bool CodeGenerator::createBuildSystemFile()
 
 /*!
     \internal
-    \fn CodeGenerator::createQMakeProject()
   */
 bool CodeGenerator::createQMakeProject()
 {
@@ -666,7 +652,6 @@ bool CodeGenerator::createQMakeProject()
 
 /*!
     \internal
-    \fn CodeGenerator::createCMakeProject()
   */
 bool CodeGenerator::createCMakeProject()
 {
@@ -748,7 +733,6 @@ bool CodeGenerator::createCMakeProject()
 
 /*!
     \internal
-    \fn CodeGenerator::createSconsProject()
   */
 bool CodeGenerator::createSconsProject()
 {

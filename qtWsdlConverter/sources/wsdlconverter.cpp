@@ -30,8 +30,6 @@
 */
 
 /*!
-    \fn WsdlConverter::WsdlConverter(QStringList appArguments, QObject *parent)
-
     Uses application's arguments (\a appArguments) to initialise
     QWsdl Flags and itself, and \a parent to construct the object.
   */
@@ -73,8 +71,6 @@ WsdlConverter::WsdlConverter(QStringList appArguments, QObject *parent) :
 }
 
 /*!
-    \fn WsdlConverter::~WsdlConverter()
-
     Deletes the wsdl pointer.
   */
 WsdlConverter::~WsdlConverter()
@@ -92,8 +88,6 @@ WsdlConverter::~WsdlConverter()
   */
 
 /*!
-    \fn WsdlConverter::setFlags(Flags flags)
-
     Sets the flags using \a flags object.
   */
 void WsdlConverter::setFlags(Flags flags)
@@ -102,8 +96,6 @@ void WsdlConverter::setFlags(Flags flags)
 }
 
 /*!
-    \fn WsdlConverter::isErrorState()
-
     Returns true if object is in error state.
 
     \sa errorInfo()
@@ -115,7 +107,6 @@ bool WsdlConverter::isErrorState()
 
 /*!
     \internal
-    \fn WsdlConverter::enterErrorState(QString errMessage)
 
     Enters into error state with message \a errMessage.
   */
@@ -128,8 +119,6 @@ bool WsdlConverter::enterErrorState(QString errMessage)
 }
 
 /*!
-    \fn WsdlConverter::errorInfo()
-
     Returns error message or empty string, when no error was encountered.
 
     \sa isErrorState()
@@ -140,8 +129,6 @@ QString WsdlConverter::errorInfo()
 }
 
 /*!
-  \fn WsdlConverter::resetError()
-
   Resets the WsdlConverter object, removing the error state.
   */
 void WsdlConverter::resetError()
@@ -151,8 +138,6 @@ void WsdlConverter::resetError()
 }
 
 /*!
-    \fn WsdlConverter::convert()
-
     Performs the WSDL => Qt/C++ code conversion.
   */
 void WsdlConverter::convert()
@@ -201,8 +186,6 @@ void WsdlConverter::convert()
 }
 
 /*!
-    \fn WsdlConverter::webServiceName()
-
     Returns web service's name.
   */
 QString WsdlConverter::webServiceName()
@@ -212,7 +195,6 @@ QString WsdlConverter::webServiceName()
 
 /*!
     \internal
-    \fn WsdlConverter::removeDir(QString path)
 
     Recursively removes directories.
   */
@@ -459,9 +441,8 @@ bool WsdlConverter::parseArguments(QStringList arguments)
     \internal
 
     Current implementation is not very nice.
-
     It simply throws out all the info into successive lines.
-No formatting is used.
+    No formatting is used.
 */
 void WsdlConverter::displayHelp()
 {
@@ -486,7 +467,6 @@ void WsdlConverter::displayHelp()
     \internal
 
     Current implementation is not very nice.
-
     Shows intro, before convertion commences.
 */
 void WsdlConverter::displayIntro()
@@ -501,7 +481,6 @@ void WsdlConverter::displayIntro()
   \internal
 
   Current implementation is not very nice.
-
   Displays outro, after convertion finishes.
 */
 void WsdlConverter::displayOutro()
