@@ -87,20 +87,20 @@
      This enum type specifies the protocol that QWebMethod will use in
      communicating with the server:
 
-     \value http
+     \value Http
             HTTP protocol will be used.
-     \value soap10
+     \value Soap10
             SOAP 1.0 will be used.
-     \value soap12
+     \value Soap12
             SOAP 1.2 will be used.
-     \value soap
+     \value Soap
             Convenience SOAP aggregator, used internally. If passed to
             setProtocol(), SOAP 1.2 will be used instead.
-     \value json
+     \value Json
             JSON message will be used.
-     \value xml
+     \value Xml
             Message will be sent using plain XML (much simpler than SOAP).
-     \value rest
+     \value Rest
             QWebMethod will switch into REST mode. This can be combined with
             any other Protocol flag to define, what message body should look like.
  */
@@ -111,13 +111,13 @@
     Defines HTTP method to use when sending the message. Using more than 1 at
     the same time is forbidden (will not work).
 
-    \value POST
+    \value Post
            QWebMethod will use POST.
-    \value GET
+    \value Get
            QWebMethod will use GET.
-    \value PUT
+    \value Put
            QWebMethod will use PUT.
-    \value DELETE
+    \value Delete
            QWebMethod will use DELETE.
   */
 
@@ -286,8 +286,8 @@ void QWebMethod::setProtocol(Protocol prot)
     allowedCombinations << 0x21 << 0x22 << 0x24 << 0x26 << 0x28 << 0x30;
 
     if (allowedCombinations.contains(prot)) {
-        if (prot & soap)
-            protocolUsed = soap12;
+        if (prot & Soap)
+            protocolUsed = Soap12;
         else
             protocolUsed = prot;
     } else {
@@ -316,13 +316,13 @@ void QWebMethod::setHttpMethod(HttpMethod method)
 bool QWebMethod::setHttpMethod(QString newMethod)
 {
     if (newMethod.toLower() == QString::fromLatin1("post"))
-        httpMethodUsed = POST;
+        httpMethodUsed = Post;
     else if (newMethod.toLower() == QString::fromLatin1("get"))
-        httpMethodUsed = GET;
+        httpMethodUsed = Get;
     else if (newMethod.toLower() == QString::fromLatin1("put"))
-        httpMethodUsed = PUT;
+        httpMethodUsed = Put;
     else if (newMethod.toLower() == QString::fromLatin1("delete"))
-        httpMethodUsed = DELETE;
+        httpMethodUsed = Delete;
     else
         return false;
 
@@ -386,21 +386,21 @@ bool QWebMethod::sendMessage(QByteArray requestData)
     QNetworkRequest request;
     request.setUrl(m_hostUrl);
 
-    if (protocolUsed & soap) {
+    if (protocolUsed & Soap) {
         request.setHeader(QNetworkRequest::ContentTypeHeader,
                           QVariant(QString::fromLatin1("application/soap+xml; charset=utf-8")));
-    } else if (protocolUsed & json) {
+    } else if (protocolUsed & Json) {
         request.setHeader(QNetworkRequest::ContentTypeHeader,
                           QVariant(QString::fromLatin1("application/json; charset=utf-8")));
-    } else if (protocolUsed & http) {
+    } else if (protocolUsed & Http) {
         request.setHeader(QNetworkRequest::ContentTypeHeader,
                           QVariant(QString::fromLatin1("Content-Type: application/x-www-form-urlencoded")));
-    } else if (protocolUsed & xml) {
+    } else if (protocolUsed & Xml) {
         request.setHeader(QNetworkRequest::ContentTypeHeader,
                           QVariant(QString::fromLatin1("application/xml; charset=utf-8")));
     }
 
-    if (protocolUsed & soap10)
+    if (protocolUsed & Soap10)
         request.setRawHeader(QByteArray("SOAPAction"), QByteArray(m_hostUrl.toString().toAscii()));
 
     if (requestData.isNull() || requestData.isEmpty())
@@ -413,14 +413,14 @@ bool QWebMethod::sendMessage(QByteArray requestData)
 //    qDebug() << QString(data);
     // ENDOF: OPTIONAL - FOR TESTING
 
-    if (protocolUsed & rest) {
-        if (httpMethodUsed == POST)
+    if (protocolUsed & Rest) {
+        if (httpMethodUsed == Post)
             manager->post(request, data);
-        else if (httpMethodUsed == GET)
+        else if (httpMethodUsed == Get)
             manager->get(request);
-        else if (httpMethodUsed == PUT)
+        else if (httpMethodUsed == Put)
             manager->put(request, data);
-        else if (httpMethodUsed == DELETE)
+        else if (httpMethodUsed == Delete)
             manager->deleteResource(request);
     } else {
         manager->post(request, data);
@@ -517,7 +517,7 @@ QVariant QWebMethod::replyReadParsed()
     // This section is SOAP-only and should be fixed for other protocols!
     // It's not done properly, anyway.
     // Should return type specified in replyValue.
-    if (protocolUsed & soap) {
+    if (protocolUsed & Soap) {
         QString tempBegin = QString("<" + m_methodName + "Result>");
         int replyBeginIndex = replyString.indexOf(tempBegin, 0,
                                                   Qt::CaseSensitive);
@@ -661,18 +661,18 @@ QString QWebMethod::protocolString(bool includeRest) const
 {
     QString result("");
 
-    if (protocolUsed & http)
+    if (protocolUsed & Http)
         result = QString::fromLatin1("http");
-    else if (protocolUsed & soap10)
+    else if (protocolUsed & Soap10)
         result = QString::fromLatin1("soap10");
-    else if (protocolUsed & soap12)
+    else if (protocolUsed & Soap12)
         result = QString::fromLatin1("soap12");
-    else if (protocolUsed & json)
+    else if (protocolUsed & Json)
         result = QString::fromLatin1("json");
-    else if (protocolUsed & xml)
+    else if (protocolUsed & Xml)
         result = QString::fromLatin1("xml");
 
-    if (includeRest && (protocolUsed & rest))
+    if (includeRest && (protocolUsed & Rest))
         result += QString::fromLatin1(",rest");
 
     return result;
@@ -687,13 +687,13 @@ QString QWebMethod::httpMethodString() const
 {
     QString result("");
 
-    if (httpMethodUsed == POST)
+    if (httpMethodUsed == Post)
         result = QString::fromLatin1("POST");
-    else if (httpMethodUsed == GET)
+    else if (httpMethodUsed == Get)
         result = QString::fromLatin1("GET");
-    else if (httpMethodUsed == PUT)
+    else if (httpMethodUsed == Put)
         result = QString::fromLatin1("PUT");
-    else if (httpMethodUsed == DELETE)
+    else if (httpMethodUsed == Delete)
         result = QString::fromLatin1("DELETE");
 
     return result;
@@ -823,8 +823,8 @@ void QWebMethod::prepareRequestData()
     QString header, body, footer;
     QString endl("\r\n"); // Replace with something OS-independent, or seriously rethink.
 
-    if (protocolUsed & soap) {
-        if (protocolUsed & soap12) {
+    if (protocolUsed & Soap) {
+        if (protocolUsed & Soap12) {
             header = QString("<?xml version=\"1.0\" encoding=\"utf-8\"?> " + endl +
                      " <soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
                      "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" " +
@@ -832,7 +832,7 @@ void QWebMethod::prepareRequestData()
                      " <soap12:Body> " + endl);
 
             footer = QString("</soap12:Body> " + endl + "</soap12:Envelope>");
-        } else if (protocolUsed & soap10) {
+        } else if (protocolUsed & Soap10) {
             header = QString("<?xml version=\"1.0\" encoding=\"utf-8\"?> " + endl +
                     " <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
                     "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" " +
@@ -853,14 +853,14 @@ void QWebMethod::prepareRequestData()
         }
 
         body += QString("\t</" + m_methodName + "> " + endl);
-    } else if (protocolUsed & http) {
+    } else if (protocolUsed & Http) {
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
             // Currently, this does not handle nested lists
             body += QString(currentKey + "=" + qv.toString() + "&");
         }
         body.chop(1);
-    } else if (protocolUsed & json) {
+    } else if (protocolUsed & Json) {
         body += "{" + endl;
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
@@ -869,7 +869,7 @@ void QWebMethod::prepareRequestData()
                             + qv.toString() + "\"" + endl);
         }
         body += QString::fromLatin1("}");
-    } else if (protocolUsed & xml) {
+    } else if (protocolUsed & Xml) {
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
             // Currently, this does not handle nested lists

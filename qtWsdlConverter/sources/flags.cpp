@@ -19,52 +19,52 @@
     This enum type specifies code creation mode.
     Sections are indicated in brackets:
 
-    \value fullMode
+    \value FullMode
            (mode) All enums and variables are copied, enabling some flexibility
            in use.
-    \value debugMode
+    \value DebugMode
            (mode) fullMode + debug messages.
-    \value compactMode
+    \value CompactMode
            (mode) Only most needed methods, variables and enums are preserved.
            Code is as small, as possible, at the expense of loosing flexibility.
-    \value subclass
+    \value Subclass
            converter creates messages by subclassing QWebMethod (this option
            requires QWebService library to be present).
-    \value synchronous
+    \value Synchronous
            (synchronousness) Web methods will wait for reply and return with data.
-    \value asynchronous
+    \value Asynchronous
            (synchronousness) Web methods will return instantly. Data availability
            will be announced by emitting a signal.
-    \value standardStructure
+    \value StandardStructure
            (structure) Headers will be placed in <dir>/headers,
            sources in <dir>/sources, build system and .pro files in <dir>/.
-    \value noMessagesStructure
+    \value NoMessagesStructure
            (structure) Converter will not create messages as separate classes,
            but use QWebMethod (this option requires QWebService library to be present).
-    \value allInOneDirStructure
+    \value AllInOneDirStructure
            (structure) All generated files will be stored in one folder.
-    \value qmake
+    \value Qmake
            (build system) qmake will be used.
-    \value cmake
+    \value Cmake
            (build system) cmake will be used.
-    \value scons
+    \value Scons
            (build system) scons will be used.
-    \value noBuildSystem
+    \value NoBuildSystem
            (build system) No build system files will be created.
-    \value http
+    \value Http
            (protocol) http protocol will be used.
-    \value soap10
+    \value Soap10
            (protocol) SOAP 1.0 protocol will be used.
-    \value soap12
+    \value Soap12
            (protocol) SOAP 1.2 protocol will be used.
-    \value soap
+    \value Soap
            (protocol) Internall wrapper for all SOAP protocols. When used in app,
            will default to SOAP 1.2
-    \value json
+    \value Json
            (protocol) JSON protocol will be used.
-    \value xml
+    \value Xml
            (protocol) XML protocol (non-SOAP) will be used.
-    \value rest
+    \value Rest
            (non-exclusive, protocol) Code for communicating with RESTful WSes
            will be generted. This can be combined with any other protocol flag.
  */
@@ -74,13 +74,13 @@
 
     This enum stores HTTP method chosen by user. Those options cannot be combined!
 
-    \value POST
+    \value Post
            HTTP POST will be used.
-    \value GET
+    \value Get
            HTTP GET will be used.
-    \value PUT
+    \value Put
            HTTP PUT will be used.
-    \value DELETE
+    \value Delete
            HTTP DELETE will be used.
 
   */
@@ -121,7 +121,7 @@ Flags::Flags(Options options_, HttpMethod method_, bool forced, QObject *parent)
 void Flags::resetFlags()
 {
     options = 0;
-    options = fullMode | synchronous | standardStructure | qmake | soap12;
+    options = FullMode | Synchronous | StandardStructure | Qmake | Soap12;
 }
 
 /*!
@@ -165,13 +165,13 @@ void Flags::setHttpMethod(HttpMethod newMethod)
 bool Flags::setHttpMethod(QString newMethod)
 {
     if (newMethod.toLower() == "post")
-        method = POST;
+        method = Post;
     else if (newMethod.toLower() == "get")
-        method = GET;
+        method = Get;
     else if (newMethod.toLower() == "put")
-        method = PUT;
+        method = Put;
     else if (newMethod.toLower() == "delete")
-        method = DELETE;
+        method = Delete;
     else
         return false;
 
@@ -221,18 +221,18 @@ QString Flags::protocolString(bool includeRest) const
 {
     QString result = "";
 
-    if (options & http)
+    if (options & Http)
         result = "http";
-    else if (options & soap10)
+    else if (options & Soap10)
         result = "soap10";
-    else if (options & soap12)
+    else if (options & Soap12)
         result = "soap12";
-    else if (options & json)
+    else if (options & Json)
         result = "json";
-    else if (options & xml)
+    else if (options & Xml)
         result = "xml";
 
-    if (includeRest && (options & rest))
+    if (includeRest && (options & Rest))
         result += ",rest";
 
     return result;
@@ -257,13 +257,13 @@ QString Flags::httpMethodString() const
 {
     QString result = "";
 
-    if (method == POST)
+    if (method == Post)
         result = "POST";
-    else if (method == GET)
+    else if (method == Get)
         result = "GET";
-    else if (method == PUT)
+    else if (method == Put)
         result = "PUT";
-    else if (method == DELETE)
+    else if (method == Delete)
         result = "DELETE";
 
     return result;

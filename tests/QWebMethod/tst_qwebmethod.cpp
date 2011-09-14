@@ -25,7 +25,7 @@ private:
   */
 void TestQWebMethod::initialTest()
 {
-    QWebMethod *message = new QWebMethod(0, QWebMethod::soap12, QWebMethod::POST);
+    QWebMethod *message = new QWebMethod(0, QWebMethod::Soap12, QWebMethod::Post);
     QCOMPARE(message->isErrorState(), bool(false));
 
     delete message;
@@ -36,7 +36,7 @@ void TestQWebMethod::initialTest()
   */
 void TestQWebMethod::gettersTest()
 {
-    QWebMethod *message = new QWebMethod(0, QWebMethod::soap12, QWebMethod::POST);
+    QWebMethod *message = new QWebMethod(0, QWebMethod::Soap12, QWebMethod::Post);
     defaultGettersTest(message);
     delete message;
 }
@@ -46,7 +46,7 @@ void TestQWebMethod::gettersTest()
   */
 void TestQWebMethod::settersTest()
 {
-    QWebMethod *message = new QWebMethod(0, QWebMethod::soap12, QWebMethod::POST);
+    QWebMethod *message = new QWebMethod(0, QWebMethod::Soap12, QWebMethod::Post);
     defaultGettersTest(message);
 
     QUrl tempUrl(QString("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx"));
@@ -61,25 +61,25 @@ void TestQWebMethod::settersTest()
     message->setTargetNamespace(tempTargetNmspc);
     QCOMPARE(message->targetNamespace(), tempTargetNmspc);
 
-    message->setProtocol(QWebMethod::json);
-    QCOMPARE(message->protocol(), QWebMethod::json);
+    message->setProtocol(QWebMethod::Json);
+    QCOMPARE(message->protocol(), QWebMethod::Json);
     QCOMPARE(message->protocolString(), QString("json"));
     QCOMPARE(message->protocolString(true), QString("json"));
 
-    message->setHttpMethod(QWebMethod::DELETE);
-    QCOMPARE(message->httpMethod(), QWebMethod::DELETE);
+    message->setHttpMethod(QWebMethod::Delete);
+    QCOMPARE(message->httpMethod(), QWebMethod::Delete);
     QCOMPARE(message->httpMethodString(), QString("DELETE"));
 
     message->setHttpMethod("get");
-    QCOMPARE(message->httpMethod(), QWebMethod::GET);
+    QCOMPARE(message->httpMethod(), QWebMethod::Get);
     QCOMPARE(message->httpMethodString(), QString("GET"));
 
     message->setHttpMethod("pUT");
-    QCOMPARE(message->httpMethod(), QWebMethod::PUT);
+    QCOMPARE(message->httpMethod(), QWebMethod::Put);
     QCOMPARE(message->httpMethodString(), QString("PUT"));
 
     message->setHttpMethod("POST");
-    QCOMPARE(message->httpMethod(), QWebMethod::POST);
+    QCOMPARE(message->httpMethod(), QWebMethod::Post);
     QCOMPARE(message->httpMethodString(), QString("POST"));
 
     QMap<QString, QVariant> tmpP;
@@ -102,7 +102,7 @@ void TestQWebMethod::settersTest()
   */
 void TestQWebMethod::asynchronousSendingTest()
 {
-    QWebMethod *message = new QWebMethod(0, QWebMethod::soap12, QWebMethod::POST);
+    QWebMethod *message = new QWebMethod(0, QWebMethod::Soap12, QWebMethod::Post);
     message->setHost("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx");
     message->setMessageName("getProviderList");
     message->setTargetNamespace("http://www.daenet.de/webservices/CurrencyServer");
@@ -128,10 +128,10 @@ void TestQWebMethod::defaultGettersTest(QWebMethod *message)
     QCOMPARE(message->isReplyReady(), bool(false));
     QCOMPARE(message->errorInfo(), QString(""));
     QCOMPARE(message->httpMethodString(), QString("POST"));
-    QCOMPARE(message->httpMethod(), QWebMethod::POST);
+    QCOMPARE(message->httpMethod(), QWebMethod::Post);
     QCOMPARE(message->protocolString(false), QString("soap12"));
     QCOMPARE(message->protocolString(true), QString("soap12"));
-    QCOMPARE(message->protocol(), QWebMethod::soap12);
+    QCOMPARE(message->protocol(), QWebMethod::Soap12);
     QCOMPARE(message->hostUrl(), QUrl(""));
     QCOMPARE(message->host(), QString(""));
     QCOMPARE(message->targetNamespace(), QString(""));

@@ -14,43 +14,43 @@ public:
     enum Option
     {
         // Mode
-        fullMode                = 0x000001,
-        debugMode               = 0x000002,
-        compactMode             = 0x000004,
-        subclass                = 0x000008,
+        FullMode                = 0x000001,
+        DebugMode               = 0x000002,
+        CompactMode             = 0x000004,
+        Subclass                = 0x000008,
         // Synchronousness
-        synchronous             = 0x000010,
-        asynchronous            = 0x000020,
+        Synchronous             = 0x000010,
+        Asynchronous            = 0x000020,
         // Structure
-        standardStructure       = 0x000100,
-        noMessagesStructure     = 0x000200,
-        allInOneDirStructure    = 0x000400,
+        StandardStructure       = 0x000100,
+        NoMessagesStructure     = 0x000200,
+        AllInOneDirStructure    = 0x000400,
         // Build system
-        qmake                   = 0x001000,
-        cmake                   = 0x002000,
-        scons                   = 0x004000,
-        noBuildSystem           = 0x008000,
+        Qmake                   = 0x001000,
+        Cmake                   = 0x002000,
+        Scons                   = 0x004000,
+        NoBuildSystem           = 0x008000,
         // Protocol
-        http                    = 0x010000,
-        soap10                  = 0x020000,
-        soap12                  = 0x040000,
-        soap                    = 0x060000,
-        json                    = 0x080000,
-        xml                     = 0x100000,
-        rest                    = 0x200000
+        Http                    = 0x010000,
+        Soap10                  = 0x020000,
+        Soap12                  = 0x040000,
+        Soap                    = 0x060000,
+        Json                    = 0x080000,
+        Xml                     = 0x100000,
+        Rest                    = 0x200000
     };
     Q_DECLARE_FLAGS(Options, Option)
 
     enum HttpMethod
     {
-        POST    = 0x1,
-        GET     = 0x2,
-        PUT     = 0x4,
-        DELETE  = 0x8
+        Post    = 0x1,
+        Get     = 0x2,
+        Put     = 0x4,
+        Delete  = 0x8
     };
 
-    Flags(Options options = Options(fullMode | synchronous | standardStructure | qmake | soap12),
-          HttpMethod method = POST,
+    Flags(Options options = Options(FullMode | Synchronous | StandardStructure | Qmake | Soap12),
+          HttpMethod method = Post,
           bool force = false,
           QObject *parent = 0);
 

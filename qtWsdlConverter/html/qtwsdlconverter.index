@@ -4,37 +4,37 @@
     <namespace access="public" threadsafety="unspecified" status="commendable" name="" href="" location="" module="">
         <class access="public" threadsafety="unspecified" status="commendable" name="Flags" href="flags.html" location="flags.h" bases="" module="">
             <enum access="public" threadsafety="unspecified" status="commendable" name="Option" fullname="Flags::Option" href="flags.html#Option-enum" location="flags.h" typedef="Flags::Options">
-                <value name="fullMode" value="0x000001"/>
-                <value name="debugMode" value="0x000002"/>
-                <value name="compactMode" value="0x000004"/>
-                <value name="subclass" value="0x000008"/>
-                <value name="synchronous" value="0x000010"/>
-                <value name="asynchronous" value="0x000020"/>
-                <value name="standardStructure" value="0x000100"/>
-                <value name="noMessagesStructure" value="0x000200"/>
-                <value name="allInOneDirStructure" value="0x000400"/>
-                <value name="qmake" value="0x001000"/>
-                <value name="cmake" value="0x002000"/>
-                <value name="scons" value="0x004000"/>
-                <value name="noBuildSystem" value="0x008000"/>
-                <value name="http" value="0x010000"/>
-                <value name="soap10" value="0x020000"/>
-                <value name="soap12" value="0x040000"/>
-                <value name="soap" value="0x060000"/>
-                <value name="json" value="0x080000"/>
-                <value name="xml" value="0x100000"/>
-                <value name="rest" value="0x200000"/>
+                <value name="FullMode" value="0x000001"/>
+                <value name="DebugMode" value="0x000002"/>
+                <value name="CompactMode" value="0x000004"/>
+                <value name="Subclass" value="0x000008"/>
+                <value name="Synchronous" value="0x000010"/>
+                <value name="Asynchronous" value="0x000020"/>
+                <value name="StandardStructure" value="0x000100"/>
+                <value name="NoMessagesStructure" value="0x000200"/>
+                <value name="AllInOneDirStructure" value="0x000400"/>
+                <value name="Qmake" value="0x001000"/>
+                <value name="Cmake" value="0x002000"/>
+                <value name="Scons" value="0x004000"/>
+                <value name="NoBuildSystem" value="0x008000"/>
+                <value name="Http" value="0x010000"/>
+                <value name="Soap10" value="0x020000"/>
+                <value name="Soap12" value="0x040000"/>
+                <value name="Soap" value="0x060000"/>
+                <value name="Json" value="0x080000"/>
+                <value name="Xml" value="0x100000"/>
+                <value name="Rest" value="0x200000"/>
             </enum>
             <typedef access="public" threadsafety="unspecified" status="commendable" name="Options" fullname="Flags::Options" href="flags.html#Options-typedef" location="flags.h" enum="Flags::Option"/>
             <enum access="public" threadsafety="unspecified" status="commendable" name="HttpMethod" fullname="Flags::HttpMethod" href="flags.html#HttpMethod-enum" location="flags.h">
-                <value name="POST" value="0x1"/>
-                <value name="GET" value="0x2"/>
-                <value name="PUT" value="0x4"/>
-                <value name="DELETE" value="0x8"/>
+                <value name="Post" value="0x1"/>
+                <value name="Get" value="0x2"/>
+                <value name="Put" value="0x4"/>
+                <value name="Delete" value="0x8"/>
             </enum>
             <function access="public" threadsafety="unspecified" status="commendable" name="Flags" fullname="Flags::Flags" href="flags.html#Flags" location="flags.h" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="Flags(QFlags&lt;Flags::Option&gt; options_, HttpMethod method_, bool forced, QObject * parent)">
-                <parameter left="QFlags&lt;Flags::Option&gt;" right="" name="options_" default="Options( fullMode | synchronous | standardStructure | qmake | soap12 )"/>
-                <parameter left="HttpMethod" right="" name="method_" default="POST"/>
+                <parameter left="QFlags&lt;Flags::Option&gt;" right="" name="options_" default="Options( FullMode | Synchronous | StandardStructure | Qmake | Soap12 )"/>
+                <parameter left="HttpMethod" right="" name="method_" default="Post"/>
                 <parameter left="bool" right="" name="forced" default="false"/>
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>

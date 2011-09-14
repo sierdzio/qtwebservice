@@ -15,7 +15,7 @@ Example arguments for converter:
  - make lines in code wrap at around 80 characters,
  - remove \fn declarations from QDoc comments,
  - make the “else” be on the same line as the closing brace of the previous if-branch,
- - 
+ - begin enum constants with uppercase letter, and not make them all-uppercase,
 
 13.09.2011 12:33 CEST:
  - added QWebService::removeMethod(), which deletes a web method specified by it's name,

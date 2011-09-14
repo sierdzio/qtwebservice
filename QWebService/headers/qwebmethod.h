@@ -22,28 +22,28 @@ class QWEBSERVICESHARED_EXPORT QWebMethod : public QObject
 public:
     enum Protocol
     {
-        http    = 0x01,
-        soap10  = 0x02,
-        soap12  = 0x04,
-        soap    = 0x06,
-        json    = 0x08,
-        xml     = 0x10,
-        rest    = 0x20
+        Http    = 0x01,
+        Soap10  = 0x02,
+        Soap12  = 0x04,
+        Soap    = 0x06,
+        Json    = 0x08,
+        Xml     = 0x10,
+        Rest    = 0x20
     };
     Q_DECLARE_FLAGS(Protocols, Protocol)
 
     enum HttpMethod
     {
-        POST    = 0x1,
-        GET     = 0x2,
-        PUT     = 0x4,
-        DELETE  = 0x8
+        Post    = 0x1,
+        Get     = 0x2,
+        Put     = 0x4,
+        Delete  = 0x8
     };
 
-    QWebMethod(QObject *parent = 0, Protocol protocol = soap12,
-               HttpMethod httpMethod = POST);
-    QWebMethod(QUrl url, QObject *parent = 0, Protocol protocol = soap12,
-               HttpMethod httpMethod = POST);
+    QWebMethod(QObject *parent = 0, Protocol protocol = Soap12,
+               HttpMethod httpMethod = Post);
+    QWebMethod(QUrl url, QObject *parent = 0, Protocol protocol = Soap12,
+               HttpMethod httpMethod = Post);
     ~QWebMethod();
 
     void setHost(QString newHost);

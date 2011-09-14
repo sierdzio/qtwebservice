@@ -45,8 +45,8 @@ bool MessageGenerator::enterErrorState(QString errMessage)
   */
 bool MessageGenerator::createMessages()
 {
-    if (flags->flags() & Flags::noMessagesStructure) {
-        if (!(flags->flags() & Flags::allInOneDirStructure)) {
+    if (flags->flags() & Flags::NoMessagesStructure) {
+        if (!(flags->flags() & Flags::AllInOneDirStructure)) {
             workingDir.cd("sources");
             createMainCpp();
             workingDir.cdUp();
@@ -57,13 +57,13 @@ bool MessageGenerator::createMessages()
         return true;
     }
 
-    if (!(flags->flags() & Flags::allInOneDirStructure))
+    if (!(flags->flags() & Flags::AllInOneDirStructure))
         workingDir.cd("headers");
 
     foreach (QString s, messages->keys()) {
         QWebServiceMethod *m = messages->value(s);
 
-        if (flags->flags() & Flags::subclass) {
+        if (flags->flags() & Flags::Subclass) {
             if (!createSubclassedMessageHeader(m))
                 return enterErrorState("Creating header for message \""
                                        + m->methodName() + "\" failed!");
@@ -74,7 +74,7 @@ bool MessageGenerator::createMessages()
         }
     }
 
-    if (!(flags->flags() & Flags::allInOneDirStructure)) {
+    if (!(flags->flags() & Flags::AllInOneDirStructure)) {
         workingDir.cdUp();
         workingDir.cd("sources");
     }
@@ -82,7 +82,7 @@ bool MessageGenerator::createMessages()
     foreach (QString s, messages->keys()) {
         QWebServiceMethod *n = messages->value(s);
 
-        if (flags->flags() & Flags::subclass) {
+        if (flags->flags() & Flags::Subclass) {
             if (!createSubclassedMessageSource(n))
                 return enterErrorState("Creating header for message \""
                                        + n->methodName() + "\" failed!");
@@ -93,7 +93,7 @@ bool MessageGenerator::createMessages()
         }
     }
 
-    if (!(flags->flags() & Flags::allInOneDirStructure)) {
+    if (!(flags->flags() & Flags::AllInOneDirStructure)) {
         createMainCpp();
         workingDir.cdUp();
     }
@@ -163,12 +163,12 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
     out << endl;
 
     out << "    using QWebServiceMethod::sendMessage;" << endl;
-    if ((msgParameters != "") && !((flags->flags() & Flags::compactMode)
-                                   && (flags->flags() & Flags::synchronous)))
+    if ((msgParameters != "") && !((flags->flags() & Flags::CompactMode)
+                                   && (flags->flags() & Flags::Synchronous)))
         out << "    bool sendMessage(" << msgParameters << ");" << endl;
 
-    if (!((flags->flags() & Flags::compactMode)
-          && (flags->flags() & Flags::asynchronous)))
+    if (!((flags->flags() & Flags::CompactMode)
+          && (flags->flags() & Flags::Asynchronous)))
     {
         out << "    QString static sendMessage(QObject *parent";
         if (msgParameters != "") {
@@ -240,7 +240,7 @@ bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
     QTextStream out(&file);
     out.setCodec("UTF-8");
     out << "#include \"";
-    if (!(flags->flags() & Flags::allInOneDirStructure))
+    if (!(flags->flags() & Flags::AllInOneDirStructure))
         out << "../headers/";
     out << msgName << ".h\"" << endl;
     out << endl;
@@ -272,8 +272,8 @@ bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
     out << "}" << endl;
     out << endl;
 
-    if ((msgParameters != "") && !((flags->flags() & Flags::compactMode)
-                                   && (flags->flags() & Flags::synchronous))) {
+    if ((msgParameters != "") && !((flags->flags() & Flags::CompactMode)
+                                   && (flags->flags() & Flags::Synchronous))) {
         out << "bool " << msgName << "::sendMessage(" << msgParameters << ")" << endl;
         out << "{" << endl;
 
@@ -284,8 +284,8 @@ bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
         out << "}" << endl;
         out << endl;
     }
-    if (!((flags->flags() & Flags::compactMode)
-          && (flags->flags() & Flags::asynchronous))) {
+    if (!((flags->flags() & Flags::CompactMode)
+          && (flags->flags() & Flags::Asynchronous))) {
         out << "/* STATIC */" << endl;
         out << "QString " << msgName << "::sendMessage(QObject *parent";
         if (msgParameters != "")
@@ -418,18 +418,18 @@ bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
     out << "    void setHost(QUrl newHost);" << endl;
     out << "    void setMessageName(QString newName);" << endl;
     out << "    void setTargetNamespace(QString tNamespace);" << endl;
-    if (!(flags->flags() & Flags::compactMode))
+    if (!(flags->flags() & Flags::CompactMode))
         out << "    void setProtocol(Protocol protocol);" << endl;
     out << "    void setHttpMethod(HttpMethod method);" << endl;
     out << "    void setParameters(" << msgParameters << ");" << endl << endl;
     out << "    bool sendMessage();" << endl;
-    if ((msgParameters != "") && !((flags->flags() & Flags::compactMode)
-                                   && (flags->flags() & Flags::synchronous)))
+    if ((msgParameters != "") && !((flags->flags() & Flags::CompactMode)
+                                   && (flags->flags() & Flags::Synchronous)))
         out << "    bool sendMessage(" << msgParameters << ");" << endl;
     // Temporarily, all messages will return QString!
 //    out << "    " << msgReplyType << " static sendMessage(QObject *parent";
-    if (!((flags->flags() & Flags::compactMode)
-          && (flags->flags() & Flags::asynchronous)))
+    if (!((flags->flags() & Flags::CompactMode)
+          && (flags->flags() & Flags::Asynchronous)))
     {
         out << "    QString static sendMessage(QObject *parent";
         if (msgParameters != "") {
@@ -541,7 +541,7 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     QTextStream out(&file);
     out.setCodec("UTF-8");
     out << "#include \"";
-    if (!(flags->flags() & Flags::allInOneDirStructure))
+    if (!(flags->flags() & Flags::AllInOneDirStructure))
         out << "../headers/";
     out << msgName << ".h\"" << endl;
     out << endl;
@@ -628,7 +628,7 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "    targetNamespaceUsed = tNamespace;" << endl;
     out << "}" << endl;
     out << endl;
-    if (!(flags->flags() & Flags::compactMode)) {
+    if (!(flags->flags() & Flags::CompactMode)) {
         out << "void " << msgName << "::setProtocol(Protocol prot)" << endl;
         out << "{" << endl;
         out << "    // Prevent incompatibile flags from being set simultaneously:"
@@ -679,7 +679,7 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << endl;
     out << "    prepareRequestData();" << endl;
     out << endl;
-    if (flags->flags() & Flags::debugMode) {
+    if (flags->flags() & Flags::DebugMode) {
         out << "    qDebug() << request.rawHeaderList() << \" \" "
             << "<< request.url().toString();" << endl;
         out << "    qDebug() << \"*************************\";" << endl;
@@ -702,8 +702,8 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "}" << endl;
     out << endl;
     if ((msgParameters != "")
-            && !((flags->flags() & Flags::compactMode)
-                 && (flags->flags() & Flags::synchronous))) {
+            && !((flags->flags() & Flags::CompactMode)
+                 && (flags->flags() & Flags::Synchronous))) {
         out << "bool " << msgName << "::sendMessage("
             << msgParameters << ")" << endl;
         out << "{" << endl;
@@ -715,8 +715,8 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
         out << "}" << endl;
         out << endl;
     }
-    if (!((flags->flags() & Flags::compactMode)
-          && (flags->flags() & Flags::asynchronous))) {
+    if (!((flags->flags() & Flags::CompactMode)
+          && (flags->flags() & Flags::Asynchronous))) {
         out << "/* STATIC */" << endl;
         // Temporarily, all messages will return QString!
         //    out << "" << msgReplyType << " " << msgName

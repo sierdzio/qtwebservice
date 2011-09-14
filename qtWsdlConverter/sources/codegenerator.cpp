@@ -53,7 +53,7 @@ bool CodeGenerator::enterErrorState(QString errMessage)
   */
 void CodeGenerator::prepare()
 {
-    if (!(flags->flags() & Flags::allInOneDirStructure)) {
+    if (!(flags->flags() & Flags::AllInOneDirStructure)) {
         workingDir.mkdir("headers");
         workingDir.mkdir("sources");
     }
@@ -93,13 +93,13 @@ bool CodeGenerator::create(QWsdl *wsdl, QDir workingDir, Flags *flags, QString b
   */
 bool CodeGenerator::createService()
 {
-    if (!(flags->flags() & Flags::allInOneDirStructure))
+    if (!(flags->flags() & Flags::AllInOneDirStructure))
         workingDir.cd("headers");
     if (!createServiceHeader())
         return enterErrorState("Creating header for Web Service \""
                                + wsdl->webServiceName() + "\" failed!");
 
-    if (!(flags->flags() & Flags::allInOneDirStructure)) {
+    if (!(flags->flags() & Flags::AllInOneDirStructure)) {
         workingDir.cdUp();
         workingDir.cd("sources");
     }
@@ -108,7 +108,7 @@ bool CodeGenerator::createService()
         return enterErrorState("Creating source for Web Service \""
                                + wsdl->webServiceName() + "\" failed!");
 
-    if (!(flags->flags() & Flags::allInOneDirStructure))
+    if (!(flags->flags() & Flags::AllInOneDirStructure))
         workingDir.cdUp();
     return true;
 }
@@ -139,7 +139,7 @@ bool CodeGenerator::createServiceHeader()
     out << endl;
     out << "#include <QtCore>" << endl;
     out << "#include <QUrl>" << endl;
-    if (!(flags->flags() & Flags::noMessagesStructure)) {
+    if (!(flags->flags() & Flags::NoMessagesStructure)) {
         // Include all messages.
         QStringList tempMp = wsdl->methodNames();
 
@@ -179,7 +179,7 @@ bool CodeGenerator::createServiceHeader()
             }
             tmpP.chop(2);
             // Temporarily, all messages will return QString!
-            if (flags->flags() & Flags::synchronous)
+            if (flags->flags() & Flags::Synchronous)
                 out << "    QString ";
             else
                 out << "    void ";
@@ -190,7 +190,7 @@ bool CodeGenerator::createServiceHeader()
     out << "    QUrl getHostUrl();" << endl;
     out << "    QString getHost();" << endl;
     out << "    bool isErrorState();" << endl;
-    if (flags->flags() & Flags::asynchronous) {
+    if (flags->flags() & Flags::Asynchronous) {
         // Declare getters of methods' replies.
         out << "    // Method reply getters: " << endl;
 
@@ -216,7 +216,7 @@ bool CodeGenerator::createServiceHeader()
     }
     out << endl;
     out << "protected slots:" << endl;
-    if (flags->flags() & Flags::asynchronous) {
+    if (flags->flags() & Flags::Asynchronous) {
         // Declare methods for processing asynchronous replies.
         foreach (QString s, tempMap->keys()) {
             /* Code not ready for compact mode checking.
@@ -236,7 +236,7 @@ bool CodeGenerator::createServiceHeader()
     out << "    bool errorState;" << endl;
     out << "    QUrl hostUrl;" << endl;
 
-    if (flags->flags() & Flags::asynchronous) {
+    if (flags->flags() & Flags::Asynchronous) {
         // Declare reply variables for asynchronous mode.
         out << "    // Message replies:" << endl;
 
@@ -253,7 +253,7 @@ bool CodeGenerator::createServiceHeader()
 
         out << "    // Messages:" << endl;
         foreach (QString s, tempMap->keys()) {
-            if (!(flags->flags() & Flags::noMessagesStructure))
+            if (!(flags->flags() & Flags::NoMessagesStructure))
                 out << "    " << s << " ";
             else // sierdzio I don't particurarly like this implementation, will rethink it later.
                 out << "    QWebServiceMethod ";
@@ -292,7 +292,7 @@ bool CodeGenerator::createServiceSource()
     QTextStream out(&file);
     out.setCodec("UTF-8");
     out << "#include \"";
-    if (!(flags->flags() & Flags::allInOneDirStructure))
+    if (!(flags->flags() & Flags::AllInOneDirStructure))
         out << "../headers/";
     out << wsName << ".h\"" << endl;
     out << endl;
@@ -300,7 +300,7 @@ bool CodeGenerator::createServiceSource()
     out << "    : QObject(parent)" << endl;
     out << "{" << endl;
 
-    if (flags->flags() & Flags::asynchronous) {
+    if (flags->flags() & Flags::Asynchronous) {
         // Connect signals and slots for asynchronous mode.
 
         foreach (QString s, tempMap->keys()) {
@@ -364,7 +364,7 @@ bool CodeGenerator::createServiceSource()
             tmpPN.chop(2);
 
 
-            if (flags->flags() & Flags::synchronous) {
+            if (flags->flags() & Flags::Synchronous) {
                 // Temporarily, all messages will return QString!
                 // out << tmpReturn << " " << wsName << "::" << s << "(" << tmpP << ")" << endl;
                 out << "QString " << wsName << "::" << s << flags->messageSuffix()
@@ -374,7 +374,7 @@ bool CodeGenerator::createServiceSource()
                     << "and make the whole method return" << endl;
                 out << "    //       proper type." << endl;
 
-                if (flags->flags() & Flags::noMessagesStructure) {
+                if (flags->flags() & Flags::NoMessagesStructure) {
                     out << "    QMap<QString, QVariant> parameters;" << endl;
 
                     foreach (QString param, tempParam.keys()) {
@@ -393,7 +393,7 @@ bool CodeGenerator::createServiceSource()
                     if (protocols != "QWebServiceMethod::")
                         protocols.append(", ");
 
-                    if (flags->flags() & Flags::rest) {
+                    if (flags->flags() & Flags::Rest) {
                         protocols += "QWebServiceMethod::"
                                 + flags->httpMethodString();
                     }
@@ -413,14 +413,14 @@ bool CodeGenerator::createServiceSource()
                 }
                 out << "}" << endl;
                 out << endl;
-            } else if (flags->flags() & Flags::asynchronous) {
+            } else if (flags->flags() & Flags::Asynchronous) {
                 // Name of the message object.
                 QString objName = s.toLower() + flags->objectSuffix();
                 out << "void " << wsName << "::" << s << flags->messageSuffix()
                     << "(" << tmpP << ")" << endl;
                 out << "{" << endl;
 
-                if (flags->flags() & Flags::noMessagesStructure) {
+                if (flags->flags() & Flags::NoMessagesStructure) {
                     out << "    QMap<QString, QVariant> parameters;" << endl;
 
                     foreach (QString param, tempParam.keys()) {
@@ -455,7 +455,7 @@ bool CodeGenerator::createServiceSource()
         }
     }
 
-    if (flags->flags() & Flags::asynchronous) {
+    if (flags->flags() & Flags::Asynchronous) {
         // Define getters of methods' replies.
         out << "    // Method reply getters: " << endl;
 
@@ -486,7 +486,7 @@ bool CodeGenerator::createServiceSource()
         out << endl;
     }
 
-    if (flags->flags() & Flags::asynchronous) {
+    if (flags->flags() & Flags::Asynchronous) {
         // Define all slots for asynchronous mode.
 
         foreach (QString s, tempMap->keys()) {
@@ -557,13 +557,13 @@ bool CodeGenerator::createBuildSystemFile()
     // if (flags->flags() & Flags::noMessagesStructure)
     // qDebug() << "Remember to include QWebService library in your build system file!";
 
-    if (flags->flags() & Flags::noBuildSystem)
+    if (flags->flags() & Flags::NoBuildSystem)
         return true;
-    if (flags->flags() & Flags::qmake)
+    if (flags->flags() & Flags::Qmake)
         result = createQMakeProject();
-    if (flags->flags() & Flags::cmake)
+    if (flags->flags() & Flags::Cmake)
         result = createCMakeProject();
-    if (flags->flags() & Flags::scons)
+    if (flags->flags() & Flags::Scons)
         result = createSconsProject();
 
     return result;
@@ -605,38 +605,38 @@ bool CodeGenerator::createQMakeProject()
     out << endl;
     out << "SOURCES += ";
     // Create main.cpp to prevent compile errors. This file is NOT NEEDED in any other sense.
-    if (!(flags->flags() & Flags::allInOneDirStructure))
+    if (!(flags->flags() & Flags::AllInOneDirStructure))
         out << "sources/";
     out << "main.cpp \\" << endl;
-    if (!(flags->flags() & Flags::noMessagesStructure)) {
+    if (!(flags->flags() & Flags::NoMessagesStructure)) {
         // Include all sources.
         QStringList tempMap = wsdl->methodNames();
 
         foreach (QString s, tempMap) {
-            if (!(flags->flags() & Flags::allInOneDirStructure))
+            if (!(flags->flags() & Flags::AllInOneDirStructure))
                 out << "sources/";
             out << s << ".cpp \\" << endl;
             out << "    ";
         }
     }
-    if (!(flags->flags() & Flags::allInOneDirStructure))
+    if (!(flags->flags() & Flags::AllInOneDirStructure))
         out << "sources/";
     out << wsName << ".cpp" << endl;
     out << endl;
     out << endl;
     out << "HEADERS += ";
-    if (!(flags->flags() & Flags::noMessagesStructure))
+    if (!(flags->flags() & Flags::NoMessagesStructure))
     { // Include all headers.
         QStringList tempMap = wsdl->methodNames();
 
         foreach (QString s, tempMap) {            
-            if (!(flags->flags() & Flags::allInOneDirStructure))
+            if (!(flags->flags() & Flags::AllInOneDirStructure))
                 out << "headers/";
             out << s << ".h \\" << endl;
             out << "    ";
         }
     }
-    if (!(flags->flags() & Flags::allInOneDirStructure))
+    if (!(flags->flags() & Flags::AllInOneDirStructure))
         out << "headers/";
     out << wsName << ".h";
     // EOF (QMake .pro file)
@@ -674,41 +674,41 @@ bool CodeGenerator::createCMakeProject()
     out << "set(" << wsName << "_SRCS" << endl;
     // Create main.cpp to prevent compile errors. This file is NOT NEEDED in any other sense.
     out << "    ";
-    if (!(flags->flags() & Flags::allInOneDirStructure))
+    if (!(flags->flags() & Flags::AllInOneDirStructure))
         out << "sources/";
     out << "main.cpp" << endl;
 
-    if (!(flags->flags() & Flags::noMessagesStructure)) {
+    if (!(flags->flags() & Flags::NoMessagesStructure)) {
         // Include all sources.
         QStringList tempMap = wsdl->methodNames();
 
         foreach (QString s, tempMap) {
-            if (!(flags->flags() & Flags::allInOneDirStructure))
+            if (!(flags->flags() & Flags::AllInOneDirStructure))
                 out << "sources/";
             out << s << ".cpp" << endl;
             out << "    ";
         }
     }
-    if (!(flags->flags() & Flags::allInOneDirStructure))
+    if (!(flags->flags() & Flags::AllInOneDirStructure))
         out << "sources/";
     out << wsName << ".cpp" << endl;
     out << ")" << endl;
     // --------------------
     // Include MOC:
     out << "set(" << wsName << "_MOC_SRCS" << endl;
-    if (!(flags->flags() & Flags::noMessagesStructure))
+    if (!(flags->flags() & Flags::NoMessagesStructure))
     { // Include all MOC headers.
         QStringList tempMap = wsdl->methodNames();
 
         foreach (QString s, tempMap) {
-            if (!(flags->flags() & Flags::allInOneDirStructure))
+            if (!(flags->flags() & Flags::AllInOneDirStructure))
                 out << "headers/";
             out << s << ".h" << endl;
             out << "    ";
         }
     }
     out << "    ";
-    if (!(flags->flags() & Flags::allInOneDirStructure))
+    if (!(flags->flags() & Flags::AllInOneDirStructure))
         out << "headers/";
     out << wsName << ".h" << endl;
     out << ")" << endl;
@@ -768,27 +768,27 @@ bool CodeGenerator::createSconsProject()
     out << "sources = [" << endl;
     // Create main.cpp to prevent compile errors. This file is NOT NEEDED in any other sense.
     out << "    ";
-    if (!(flags->flags() & Flags::allInOneDirStructure))
+    if (!(flags->flags() & Flags::AllInOneDirStructure))
         out << "\"sources/";
     out << "main.cpp\"," << endl;
 
-    if (!(flags->flags() & Flags::noMessagesStructure)) {
+    if (!(flags->flags() & Flags::NoMessagesStructure)) {
         // Include all sources.
         QStringList tempMap = wsdl->methodNames();
 
         out << "    ";
         foreach (QString s, tempMap) {
-            if (!(flags->flags() & Flags::allInOneDirStructure))
+            if (!(flags->flags() & Flags::AllInOneDirStructure))
                 out << "\"sources/";
             out << s << ".cpp\"," << endl;
             out << "    ";
         }
-        if (!(flags->flags() & Flags::allInOneDirStructure))
+        if (!(flags->flags() & Flags::AllInOneDirStructure))
             out << "\"sources/";
         out << wsName << ".cpp\"" << endl;
     } else {
         out << "    ";
-        if (!(flags->flags() & Flags::allInOneDirStructure))
+        if (!(flags->flags() & Flags::AllInOneDirStructure))
             out << "\"sources/";
         out << wsName << ".cpp\"" << endl;
         out << "]" << endl;

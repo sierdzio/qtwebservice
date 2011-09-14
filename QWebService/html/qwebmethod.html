@@ -33,15 +33,15 @@
 <a name="public-types"></a>
 <h2>Public Types</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a></b> { POST, GET, PUT, DELETE }</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#Protocol-enum">Protocol</a></b> { http, soap10, soap12, soap, ..., rest }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a></b> { Post, Get, Put, Delete }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#Protocol-enum">Protocol</a></b> { Http, Soap10, Soap12, Soap, ..., Rest }</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> flags </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#Protocol-enum">Protocols</a></b></td></tr>
 </table>
 <a name="public-functions"></a>
 <h2>Public Functions</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod">QWebMethod</a></b> ( QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = soap12, HttpMethod <i>method</i> = POST )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-2">QWebMethod</a></b> ( QUrl <i>url</i>, QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = soap12, HttpMethod <i>method</i> = POST )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod">QWebMethod</a></b> ( QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = Soap12, HttpMethod <i>method</i> = Post )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-2">QWebMethod</a></b> ( QUrl <i>url</i>, QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = Soap12, HttpMethod <i>method</i> = Post )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#dtor.QWebMethod">~QWebMethod</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#authenticate">authenticate</a></b> ( QString <i>newUsername</i> = QString(), QString <i>newPassword</i> = QString() )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#authenticate-2">authenticate</a></b> ( QUrl <i>customAuthString</i> )</td></tr>
@@ -112,7 +112,7 @@
     message-&gt;setTargetNamespace(&quot;http://www.daenet.de/webservices/CurrencyServer&quot;);
     message-&gt;sendMessage();</pre>
 <p>You then have to wait for replyReady(QVariant) signal, or check for reply using <a href="qwebmethod.html#isReplyReady">isReplyReady</a>() convenience method.</p>
-<p>To send a REST message with (for example) JSON body, pass (<a href="qwebmethod.html#Protocol-enum">QWebMethod::rest</a> | <a href="qwebmethod.html#Protocol-enum">QWebMethod::json</a>) as protocol flag. Additionally, specify HTTP method to be used (POST, GET, PUT, DELETE). When sending a REST message, <i>messageName</i> is used as request URI, and <i>parameters</i> specify additioanl data to be sent in message body.</p>
+<p>To send a REST message with (for example) JSON body, pass (QWebMethod::rest | QWebMethod::json) as protocol flag. Additionally, specify HTTP method to be used (POST, GET, PUT, DELETE). When sending a REST message, <i>messageName</i> is used as request URI, and <i>parameters</i> specify additioanl data to be sent in message body.</p>
 <p>This class provides asynchronous <a href="qwebmethod.html#sendMessage">sendMessage</a>() only. If synchronous operation is needed, you can:</p>
 <ul>
 <li>use <a href="qwebservicemethod.html">QWebServiceMethod</a>, which provides some additional, useful constructors and methods</li>
@@ -146,27 +146,27 @@
 <!-- @@@QWebMethod -->
 <div class="types">
 <h2>Member Type Documentation</h2>
-<!-- $$$HttpMethod$$$POST$$$GET$$$PUT$$$DELETE -->
+<!-- $$$HttpMethod$$$Post$$$Get$$$Put$$$Delete -->
 <h3 class="fn"><a name="HttpMethod-enum"></a>enum QWebMethod::HttpMethod</h3>
 <p>Defines HTTP method to use when sending the message. Using more than 1 at the same time is forbidden (will not work).</p>
 <table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::POST</tt></td><td class=" topAlign"><tt>0x1</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use POST.</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::GET</tt></td><td class=" topAlign"><tt>0x2</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use GET.</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::PUT</tt></td><td class=" topAlign"><tt>0x4</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use PUT.</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::DELETE</tt></td><td class=" topAlign"><tt>0x8</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use DELETE.</td></tr>
+<tr><td  class="topAlign"><tt>QWebMethod::Post</tt></td><td class=" topAlign"><tt>0x1</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use POST.</td></tr>
+<tr><td  class="topAlign"><tt>QWebMethod::Get</tt></td><td class=" topAlign"><tt>0x2</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use GET.</td></tr>
+<tr><td  class="topAlign"><tt>QWebMethod::Put</tt></td><td class=" topAlign"><tt>0x4</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use PUT.</td></tr>
+<tr><td  class="topAlign"><tt>QWebMethod::Delete</tt></td><td class=" topAlign"><tt>0x8</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use DELETE.</td></tr>
 </table>
 <!-- @@@HttpMethod -->
-<!-- $$$Protocol$$$http$$$soap10$$$soap12$$$soap$$$json$$$xml$$$rest -->
+<!-- $$$Protocol$$$Http$$$Soap10$$$Soap12$$$Soap$$$Json$$$Xml$$$Rest -->
 <h3 class="flags"><a name="Protocol-enum"></a>enum QWebMethod::Protocol<br/>flags QWebMethod::Protocols</h3>
 <p>This enum type specifies the protocol that <a href="qwebmethod.html">QWebMethod</a> will use in communicating with the server:</p>
 <table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::http</tt></td><td class=" topAlign"><tt>0x01</tt></td><td  class="topAlign">HTTP protocol will be used.</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::soap10</tt></td><td class=" topAlign"><tt>0x02</tt></td><td  class="topAlign">SOAP 1.0 will be used.</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::soap12</tt></td><td class=" topAlign"><tt>0x04</tt></td><td  class="topAlign">SOAP 1.2 will be used.</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::soap</tt></td><td class=" topAlign"><tt>0x06</tt></td><td  class="topAlign">Convenience SOAP aggregator, used internally. If passed to <a href="qwebmethod.html#setProtocol">setProtocol</a>(), SOAP 1.2 will be used instead.</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::json</tt></td><td class=" topAlign"><tt>0x08</tt></td><td  class="topAlign">JSON message will be used.</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::xml</tt></td><td class=" topAlign"><tt>0x10</tt></td><td  class="topAlign">Message will be sent using plain XML (much simpler than SOAP).</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::rest</tt></td><td class=" topAlign"><tt>0x20</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will switch into REST mode. This can be combined with any other Protocol flag to define, what message body should look like.</td></tr>
+<tr><td  class="topAlign"><tt>QWebMethod::Http</tt></td><td class=" topAlign"><tt>0x01</tt></td><td  class="topAlign">HTTP protocol will be used.</td></tr>
+<tr><td  class="topAlign"><tt>QWebMethod::Soap10</tt></td><td class=" topAlign"><tt>0x02</tt></td><td  class="topAlign">SOAP 1.0 will be used.</td></tr>
+<tr><td  class="topAlign"><tt>QWebMethod::Soap12</tt></td><td class=" topAlign"><tt>0x04</tt></td><td  class="topAlign">SOAP 1.2 will be used.</td></tr>
+<tr><td  class="topAlign"><tt>QWebMethod::Soap</tt></td><td class=" topAlign"><tt>0x06</tt></td><td  class="topAlign">Convenience SOAP aggregator, used internally. If passed to <a href="qwebmethod.html#setProtocol">setProtocol</a>(), SOAP 1.2 will be used instead.</td></tr>
+<tr><td  class="topAlign"><tt>QWebMethod::Json</tt></td><td class=" topAlign"><tt>0x08</tt></td><td  class="topAlign">JSON message will be used.</td></tr>
+<tr><td  class="topAlign"><tt>QWebMethod::Xml</tt></td><td class=" topAlign"><tt>0x10</tt></td><td  class="topAlign">Message will be sent using plain XML (much simpler than SOAP).</td></tr>
+<tr><td  class="topAlign"><tt>QWebMethod::Rest</tt></td><td class=" topAlign"><tt>0x20</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will switch into REST mode. This can be combined with any other Protocol flag to define, what message body should look like.</td></tr>
 </table>
 <p>The Protocols type is a typedef for <a href="qflags.html">QFlags</a>&lt;Protocol&gt;. It stores an OR combination of Protocol values.</p>
 <!-- @@@Protocol -->
@@ -174,12 +174,12 @@
 <div class="func">
 <h2>Member Function Documentation</h2>
 <!-- $$$QWebMethod[overload1]$$$QWebMethodQObject*ProtocolHttpMethod -->
-<h3 class="fn"><a name="QWebMethod"></a>QWebMethod::QWebMethod ( QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = POST )</h3>
+<h3 class="fn"><a name="QWebMethod"></a>QWebMethod::QWebMethod ( QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = Soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = Post )</h3>
 <p>Constructs the message usign <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST). Requires specifying other params later (<a href="qwebmethod.html#setParameters">setParameters</a>()).</p>
 <p>See also <a href="qwebmethod.html#init">init</a>(), <a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#sendMessage">sendMessage</a>().</p>
 <!-- @@@QWebMethod -->
 <!-- $$$QWebMethod$$$QWebMethodQUrlQObject*ProtocolHttpMethod -->
-<h3 class="fn"><a name="QWebMethod-2"></a>QWebMethod::QWebMethod ( QUrl <i>url</i>, QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = POST )</h3>
+<h3 class="fn"><a name="QWebMethod-2"></a>QWebMethod::QWebMethod ( QUrl <i>url</i>, QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = Soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = Post )</h3>
 <p>Constructs the message usign <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST), and <i>url</i>. Especially convenient for parameterless methods (like quick GET messages).</p>
 <p>See also <a href="qwebmethod.html#init">init</a>(), <a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#sendMessage">sendMessage</a>().</p>
 <!-- @@@QWebMethod -->
@@ -347,7 +347,7 @@
 <!-- @@@setHost -->
 <!-- $$$setHttpMethod[overload1]$$$setHttpMethodHttpMethod -->
 <h3 class="fn"><a name="setHttpMethod"></a>void QWebMethod::setHttpMethod ( <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> )</h3>
-<p>Sets the httpMethod flag (<i>method</i>, a value of <a href="qwebmethod.html#HttpMethod-enum">QWebMethod::HttpMethod</a>). Default method is <a href="qwebmethod.html#HttpMethod-enum">QWebMethod::POST</a>.</p>
+<p>Sets the httpMethod flag (<i>method</i>, a value of <a href="qwebmethod.html#HttpMethod-enum">QWebMethod::HttpMethod</a>). Default method is QWebMethod::POST.</p>
 <p>See also <a href="qwebmethod.html#httpMethod">httpMethod</a>().</p>
 <!-- @@@setHttpMethod -->
 <!-- $$$setHttpMethod$$$setHttpMethodQString -->

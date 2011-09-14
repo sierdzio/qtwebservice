@@ -11,7 +11,7 @@ QdnMain::QdnMain(QWidget *parent) :
     ui->tabPosts->setLayout(ui->layoutPosts);
     ui->lineEditPassword->setEchoMode(QLineEdit::Password);
 
-    webMethodProfile = new QWebMethod(this, QWebMethod::json, QWebMethod::GET);
+    webMethodProfile = new QWebMethod(this, QWebMethod::Json, QWebMethod::Get);
     webMethodProfile->setHost(QUrl::fromUserInput(
                               QString("http://developer.qt.nokia.com/qtapi/1/member/profile")));
     connect(webMethodProfile, SIGNAL(replyReady(QByteArray)), this, SLOT(profileReply()));
@@ -19,7 +19,7 @@ QdnMain::QdnMain(QWidget *parent) :
     webMethodPosts = new QWebMethod(
                 QUrl::fromUserInput(
                     QString("http://developer.qt.nokia.com/qtapi/1/forums/posts/unread")),
-                this, QWebMethod::json, QWebMethod::GET);
+                this, QWebMethod::Json, QWebMethod::Get);
     connect(webMethodPosts, SIGNAL(replyReady(QByteArray)), this, SLOT(postsReply()));
 }
 

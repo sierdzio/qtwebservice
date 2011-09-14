@@ -247,84 +247,84 @@ bool WsdlConverter::parseArguments(QStringList arguments)
                 endOfOptions = true;
                 continue;
             } else if (s == "--soap12") { // Protocol flags:
-                flags->resetFlags(Flags::soap10 | Flags::http
-                                  | Flags::json | Flags::xml);
-                flags->setFlags(Flags::soap12);
+                flags->resetFlags(Flags::Soap10 | Flags::Http
+                                  | Flags::Json | Flags::Xml);
+                flags->setFlags(Flags::Soap12);
             } else if (s == "--soap10") {
-                flags->resetFlags(Flags::soap12 | Flags::http
-                                  | Flags::json | Flags::xml);
-                flags->setFlags(Flags::soap10);
+                flags->resetFlags(Flags::Soap12 | Flags::Http
+                                  | Flags::Json | Flags::Xml);
+                flags->setFlags(Flags::Soap10);
             } else if (s == "--soap") {
-                flags->resetFlags(Flags::http | Flags::json | Flags::xml);
-                flags->setFlags(Flags::soap);
+                flags->resetFlags(Flags::Http | Flags::Json | Flags::Xml);
+                flags->setFlags(Flags::Soap);
             } else if (s == "--http") {
-                flags->resetFlags(Flags::soap | Flags::json | Flags::xml);
-                flags->setFlags(Flags::http);
+                flags->resetFlags(Flags::Soap | Flags::Json | Flags::Xml);
+                flags->setFlags(Flags::Http);
             } else if (s == "--json") {
-                flags->resetFlags(Flags::soap | Flags::http | Flags::xml);
-                flags->setFlags(Flags::json);
+                flags->resetFlags(Flags::Soap | Flags::Http | Flags::Xml);
+                flags->setFlags(Flags::Json);
             } else if (s == "--xml") {
-                flags->resetFlags(Flags::soap | Flags::http | Flags::json);
-                flags->setFlags(Flags::xml);
+                flags->resetFlags(Flags::Soap | Flags::Http | Flags::Json);
+                flags->setFlags(Flags::Xml);
             } else if (s.startsWith("--rest")) {
-                flags->setFlags(Flags::rest);
+                flags->setFlags(Flags::Rest);
                 // Set HTTP method:
                 if (s == "--rest") {
-                    flags->setHttpMethod(Flags::POST);
+                    flags->setHttpMethod(Flags::Post);
                 } else if (s.startsWith("--rest=")) {
                     if (!flags->setHttpMethod(s.mid(7)))
                         return false;
                 }
             } else if (s == "--synchronous") { // Synchronousness:
-                flags->resetFlags(Flags::asynchronous);
-                flags->setFlags(Flags::synchronous);
+                flags->resetFlags(Flags::Asynchronous);
+                flags->setFlags(Flags::Synchronous);
             } else if (s == "--asynchronous") {
-                flags->resetFlags(Flags::synchronous);
-                flags->setFlags(Flags::asynchronous);
+                flags->resetFlags(Flags::Synchronous);
+                flags->setFlags(Flags::Asynchronous);
             } else if (s == "--subclass") { // Modes:
-                flags->resetFlags(Flags::debugMode
-                                  | Flags::compactMode
-                                  | Flags::fullMode);
-                flags->setFlags(Flags::subclass);
+                flags->resetFlags(Flags::DebugMode
+                                  | Flags::CompactMode
+                                  | Flags::FullMode);
+                flags->setFlags(Flags::Subclass);
             } else if ((s == "--full-mode") || (s == "--full")) {
-                flags->resetFlags(Flags::debugMode
-                                  | Flags::compactMode
-                                  | Flags::subclass);
-                flags->setFlags(Flags::fullMode);
+                flags->resetFlags(Flags::DebugMode
+                                  | Flags::CompactMode
+                                  | Flags::Subclass);
+                flags->setFlags(Flags::FullMode);
             } else if ((s == "--debug-mode") || (s == "--debug")) {
-                flags->resetFlags(Flags::fullMode
-                                  | Flags::compactMode
-                                  | Flags::subclass);
-                flags->setFlags(Flags::debugMode);
+                flags->resetFlags(Flags::FullMode
+                                  | Flags::CompactMode
+                                  | Flags::Subclass);
+                flags->setFlags(Flags::DebugMode);
             } else if ((s == "--compact-mode") || (s == "--compact")) {
-                flags->resetFlags(Flags::fullMode
-                                  | Flags::compactMode
-                                  | Flags::subclass);
-                flags->setFlags(Flags::compactMode);
+                flags->resetFlags(Flags::FullMode
+                                  | Flags::CompactMode
+                                  | Flags::Subclass);
+                flags->setFlags(Flags::CompactMode);
             } else if ((s == "--standard-structure")
                        || (s == "--standard")) { // Structures:
-                flags->resetFlags(Flags::noMessagesStructure
-                                  | Flags::allInOneDirStructure);
-                flags->setFlags(Flags::standardStructure);
+                flags->resetFlags(Flags::NoMessagesStructure
+                                  | Flags::AllInOneDirStructure);
+                flags->setFlags(Flags::StandardStructure);
             } else if ((s == "--no-messages-structure")
                        || (s == "--no-messages")) {
-                flags->resetFlags(Flags::standardStructure
-                                  | Flags::allInOneDirStructure);
-                flags->setFlags(Flags::noMessagesStructure);
+                flags->resetFlags(Flags::StandardStructure
+                                  | Flags::AllInOneDirStructure);
+                flags->setFlags(Flags::NoMessagesStructure);
             } else if ((s == "--all-in-one-dir-structure")
                      || (s == "--all-in-one-dir")) {
-                flags->resetFlags(Flags::standardStructure
-                                  | Flags::noMessagesStructure);
-                flags->setFlags(Flags::allInOneDirStructure);
+                flags->resetFlags(Flags::StandardStructure
+                                  | Flags::NoMessagesStructure);
+                flags->setFlags(Flags::AllInOneDirStructure);
             } else if (s == "--qmake") { // Build systems (qmake, cmake and scons can be build simultaneously):
-                flags->setFlags(Flags::qmake);
+                flags->setFlags(Flags::Qmake);
             } else if (s == "--cmake") {
-                flags->setFlags(Flags::cmake);
+                flags->setFlags(Flags::Cmake);
             } else if (s == "--scons") {
-                flags->setFlags(Flags::scons);
+                flags->setFlags(Flags::Scons);
             } else if (s == "--no-build-system") {
-                flags->resetFlags(Flags::qmake | Flags::cmake | Flags::scons);
-                flags->setFlags(Flags::noBuildSystem);
+                flags->resetFlags(Flags::Qmake | Flags::Cmake | Flags::Scons);
+                flags->setFlags(Flags::NoBuildSystem);
             } else if (s.startsWith("--msgSuffix=")) { // Suffixes:
                 flags->setMsgSuffix(s.mid(12));
             } else if (s.startsWith("--objSuffix=")) {
@@ -341,18 +341,18 @@ bool WsdlConverter::parseArguments(QStringList arguments)
                 QChar chr = s.at(i);
 
                 if (chr == ('a')) {
-                    flags->resetFlags(Flags::synchronous);
-                    flags->setFlags(Flags::asynchronous);
+                    flags->resetFlags(Flags::Synchronous);
+                    flags->setFlags(Flags::Asynchronous);
                 } else if (chr == ('s')) {
-                    flags->resetFlags(Flags::debugMode
-                                      | Flags::compactMode
-                                      | Flags::fullMode);
-                    flags->setFlags(Flags::subclass);
+                    flags->resetFlags(Flags::DebugMode
+                                      | Flags::CompactMode
+                                      | Flags::FullMode);
+                    flags->setFlags(Flags::Subclass);
                 } else if (chr == ('n')) {
-                    flags->resetFlags(Flags::qmake
-                                      | Flags::cmake
-                                      | Flags::scons);
-                    flags->setFlags(Flags::noBuildSystem);
+                    flags->resetFlags(Flags::Qmake
+                                      | Flags::Cmake
+                                      | Flags::Scons);
+                    flags->setFlags(Flags::NoBuildSystem);
                 } else if (chr == ('f')) {
                     flags->setForced(true);
                 } else {

@@ -29,14 +29,14 @@
 <a name="public-types"></a>
 <h2>Public Types</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="flags.html#HttpMethod-enum">HttpMethod</a></b> { POST, GET, PUT, DELETE }</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Option-enum">Option</a></b> { fullMode, debugMode, compactMode, subclass, ..., rest }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="flags.html#HttpMethod-enum">HttpMethod</a></b> { Post, Get, Put, Delete }</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Option-enum">Option</a></b> { FullMode, DebugMode, CompactMode, Subclass, ..., Rest }</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> flags </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Option-enum">Options</a></b></td></tr>
 </table>
 <a name="public-functions"></a>
 <h2>Public Functions</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Flags">Flags</a></b> ( Options <i>options_</i> = Options( fullMode | synchronous | standardStructure | qmake | soap12 ), HttpMethod <i>method_</i> = POST, bool <i>forced</i> = false, QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="flags.html#Flags">Flags</a></b> ( Options <i>options_</i> = Options( FullMode | Synchronous | StandardStructure | Qmake | Soap12 ), HttpMethod <i>method_</i> = Post, bool <i>forced</i> = false, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> Options </td><td class="memItemRight bottomAlign"><b><a href="flags.html#flagsx">flags</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="flags.html#forced">forced</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> HttpMethod </td><td class="memItemRight bottomAlign"><b><a href="flags.html#httpMethod">httpMethod</a></b> () const</td></tr>
@@ -66,40 +66,40 @@
 <!-- @@@Flags -->
 <div class="types">
 <h2>Member Type Documentation</h2>
-<!-- $$$HttpMethod$$$POST$$$GET$$$PUT$$$DELETE -->
+<!-- $$$HttpMethod$$$Post$$$Get$$$Put$$$Delete -->
 <h3 class="fn"><a name="HttpMethod-enum"></a>enum Flags::HttpMethod</h3>
 <p>This enum stores HTTP method chosen by user. Those options cannot be combined!</p>
 <table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
-<tr><td  class="topAlign"><tt>Flags::POST</tt></td><td class=" topAlign"><tt>0x1</tt></td><td  class="topAlign">HTTP POST will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::GET</tt></td><td class=" topAlign"><tt>0x2</tt></td><td  class="topAlign">HTTP GET will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::PUT</tt></td><td class=" topAlign"><tt>0x4</tt></td><td  class="topAlign">HTTP PUT will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::DELETE</tt></td><td class=" topAlign"><tt>0x8</tt></td><td  class="topAlign">HTTP DELETE will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Post</tt></td><td class=" topAlign"><tt>0x1</tt></td><td  class="topAlign">HTTP POST will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Get</tt></td><td class=" topAlign"><tt>0x2</tt></td><td  class="topAlign">HTTP GET will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Put</tt></td><td class=" topAlign"><tt>0x4</tt></td><td  class="topAlign">HTTP PUT will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Delete</tt></td><td class=" topAlign"><tt>0x8</tt></td><td  class="topAlign">HTTP DELETE will be used.</td></tr>
 </table>
 <!-- @@@HttpMethod -->
-<!-- $$$Option$$$fullMode$$$debugMode$$$compactMode$$$subclass$$$synchronous$$$asynchronous$$$standardStructure$$$noMessagesStructure$$$allInOneDirStructure$$$qmake$$$cmake$$$scons$$$noBuildSystem$$$http$$$soap10$$$soap12$$$soap$$$json$$$xml$$$rest -->
+<!-- $$$Option$$$FullMode$$$DebugMode$$$CompactMode$$$Subclass$$$Synchronous$$$Asynchronous$$$StandardStructure$$$NoMessagesStructure$$$AllInOneDirStructure$$$Qmake$$$Cmake$$$Scons$$$NoBuildSystem$$$Http$$$Soap10$$$Soap12$$$Soap$$$Json$$$Xml$$$Rest -->
 <h3 class="flags"><a name="Option-enum"></a>enum Flags::Option<br/>flags Flags::Options</h3>
 <p>This enum type specifies code creation mode. Sections are indicated in brackets:</p>
 <table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
-<tr><td  class="topAlign"><tt>Flags::fullMode</tt></td><td class=" topAlign"><tt>0x000001</tt></td><td  class="topAlign">(mode) All enums and variables are copied, enabling some flexibility in use.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::debugMode</tt></td><td class=" topAlign"><tt>0x000002</tt></td><td  class="topAlign">(mode) fullMode + debug messages.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::compactMode</tt></td><td class=" topAlign"><tt>0x000004</tt></td><td  class="topAlign">(mode) Only most needed methods, variables and enums are preserved. Code is as small, as possible, at the expense of loosing flexibility.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::subclass</tt></td><td class=" topAlign"><tt>0x000008</tt></td><td  class="topAlign">converter creates messages by subclassing QWebMethod (this option requires QWebService library to be present).</td></tr>
-<tr><td  class="topAlign"><tt>Flags::synchronous</tt></td><td class=" topAlign"><tt>0x000010</tt></td><td  class="topAlign">(synchronousness) Web methods will wait for reply and return with data.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::asynchronous</tt></td><td class=" topAlign"><tt>0x000020</tt></td><td  class="topAlign">(synchronousness) Web methods will return instantly. Data availability will be announced by emitting a signal.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::standardStructure</tt></td><td class=" topAlign"><tt>0x000100</tt></td><td  class="topAlign">(structure) Headers will be placed in &lt;dir&gt;/headers, sources in &lt;dir&gt;/sources, build system and .pro files in &lt;dir&gt;/.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::noMessagesStructure</tt></td><td class=" topAlign"><tt>0x000200</tt></td><td  class="topAlign">(structure) Converter will not create messages as separate classes, but use QWebMethod (this option requires QWebService library to be present).</td></tr>
-<tr><td  class="topAlign"><tt>Flags::allInOneDirStructure</tt></td><td class=" topAlign"><tt>0x000400</tt></td><td  class="topAlign">(structure) All generated files will be stored in one folder.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::qmake</tt></td><td class=" topAlign"><tt>0x001000</tt></td><td  class="topAlign">(build system) qmake will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::cmake</tt></td><td class=" topAlign"><tt>0x002000</tt></td><td  class="topAlign">(build system) cmake will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::scons</tt></td><td class=" topAlign"><tt>0x004000</tt></td><td  class="topAlign">(build system) scons will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::noBuildSystem</tt></td><td class=" topAlign"><tt>0x008000</tt></td><td  class="topAlign">(build system) No build system files will be created.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::http</tt></td><td class=" topAlign"><tt>0x010000</tt></td><td  class="topAlign">(protocol) http protocol will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::soap10</tt></td><td class=" topAlign"><tt>0x020000</tt></td><td  class="topAlign">(protocol) SOAP 1.0 protocol will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::soap12</tt></td><td class=" topAlign"><tt>0x040000</tt></td><td  class="topAlign">(protocol) SOAP 1.2 protocol will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::soap</tt></td><td class=" topAlign"><tt>0x060000</tt></td><td  class="topAlign">(protocol) Internall wrapper for all SOAP protocols. When used in app, will default to SOAP 1.2</td></tr>
-<tr><td  class="topAlign"><tt>Flags::json</tt></td><td class=" topAlign"><tt>0x080000</tt></td><td  class="topAlign">(protocol) JSON protocol will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::xml</tt></td><td class=" topAlign"><tt>0x100000</tt></td><td  class="topAlign">(protocol) XML protocol (non-SOAP) will be used.</td></tr>
-<tr><td  class="topAlign"><tt>Flags::rest</tt></td><td class=" topAlign"><tt>0x200000</tt></td><td  class="topAlign">(non-exclusive, protocol) Code for communicating with RESTful WSes will be generted. This can be combined with any other protocol flag.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::FullMode</tt></td><td class=" topAlign"><tt>0x000001</tt></td><td  class="topAlign">(mode) All enums and variables are copied, enabling some flexibility in use.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::DebugMode</tt></td><td class=" topAlign"><tt>0x000002</tt></td><td  class="topAlign">(mode) fullMode + debug messages.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::CompactMode</tt></td><td class=" topAlign"><tt>0x000004</tt></td><td  class="topAlign">(mode) Only most needed methods, variables and enums are preserved. Code is as small, as possible, at the expense of loosing flexibility.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Subclass</tt></td><td class=" topAlign"><tt>0x000008</tt></td><td  class="topAlign">converter creates messages by subclassing QWebMethod (this option requires QWebService library to be present).</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Synchronous</tt></td><td class=" topAlign"><tt>0x000010</tt></td><td  class="topAlign">(synchronousness) Web methods will wait for reply and return with data.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Asynchronous</tt></td><td class=" topAlign"><tt>0x000020</tt></td><td  class="topAlign">(synchronousness) Web methods will return instantly. Data availability will be announced by emitting a signal.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::StandardStructure</tt></td><td class=" topAlign"><tt>0x000100</tt></td><td  class="topAlign">(structure) Headers will be placed in &lt;dir&gt;/headers, sources in &lt;dir&gt;/sources, build system and .pro files in &lt;dir&gt;/.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::NoMessagesStructure</tt></td><td class=" topAlign"><tt>0x000200</tt></td><td  class="topAlign">(structure) Converter will not create messages as separate classes, but use QWebMethod (this option requires QWebService library to be present).</td></tr>
+<tr><td  class="topAlign"><tt>Flags::AllInOneDirStructure</tt></td><td class=" topAlign"><tt>0x000400</tt></td><td  class="topAlign">(structure) All generated files will be stored in one folder.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Qmake</tt></td><td class=" topAlign"><tt>0x001000</tt></td><td  class="topAlign">(build system) qmake will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Cmake</tt></td><td class=" topAlign"><tt>0x002000</tt></td><td  class="topAlign">(build system) cmake will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Scons</tt></td><td class=" topAlign"><tt>0x004000</tt></td><td  class="topAlign">(build system) scons will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::NoBuildSystem</tt></td><td class=" topAlign"><tt>0x008000</tt></td><td  class="topAlign">(build system) No build system files will be created.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Http</tt></td><td class=" topAlign"><tt>0x010000</tt></td><td  class="topAlign">(protocol) http protocol will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Soap10</tt></td><td class=" topAlign"><tt>0x020000</tt></td><td  class="topAlign">(protocol) SOAP 1.0 protocol will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Soap12</tt></td><td class=" topAlign"><tt>0x040000</tt></td><td  class="topAlign">(protocol) SOAP 1.2 protocol will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Soap</tt></td><td class=" topAlign"><tt>0x060000</tt></td><td  class="topAlign">(protocol) Internall wrapper for all SOAP protocols. When used in app, will default to SOAP 1.2</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Json</tt></td><td class=" topAlign"><tt>0x080000</tt></td><td  class="topAlign">(protocol) JSON protocol will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Xml</tt></td><td class=" topAlign"><tt>0x100000</tt></td><td  class="topAlign">(protocol) XML protocol (non-SOAP) will be used.</td></tr>
+<tr><td  class="topAlign"><tt>Flags::Rest</tt></td><td class=" topAlign"><tt>0x200000</tt></td><td  class="topAlign">(non-exclusive, protocol) Code for communicating with RESTful WSes will be generted. This can be combined with any other protocol flag.</td></tr>
 </table>
 <p>The Options type is a typedef for <a href="qflags.html">QFlags</a>&lt;Option&gt;. It stores an OR combination of Option values.</p>
 <!-- @@@Option -->
@@ -107,14 +107,14 @@
 <div class="func">
 <h2>Member Function Documentation</h2>
 <!-- $$$Flags[overload1]$$$FlagsOptionsHttpMethodboolQObject* -->
-<h3 class="fn"><a name="Flags"></a>Flags::Flags ( <a href="flags.html#Option-enum">Options</a> <i>options_</i> = Options( fullMode | synchronous | standardStructure | qmake | soap12 ), <a href="flags.html#HttpMethod-enum">HttpMethod</a> <i>method_</i> = POST, bool <i>forced</i> = false, QObject * <i>parent</i> = 0 )</h3>
+<h3 class="fn"><a name="Flags"></a>Flags::Flags ( <a href="flags.html#Option-enum">Options</a> <i>options_</i> = Options( FullMode | Synchronous | StandardStructure | Qmake | Soap12 ), <a href="flags.html#HttpMethod-enum">HttpMethod</a> <i>method_</i> = Post, bool <i>forced</i> = false, QObject * <i>parent</i> = 0 )</h3>
 <p>Constructs the Flags object. All params are optional. If you want to set non-default suffixes, use <a href="flags.html#setObjSuffix">setObjSuffix</a>() and <a href="flags.html#setMsgSuffix">setMsgSuffix</a>().</p>
 <p>Default values:</p>
 <ul>
 <li><i>options_</i> :<ul>
-<li><a href="flags.html#Option-enum">fullMode</a></li>
+<li>fullMode</li>
 <li>synchronous</li>
-<li><a href="flags.html#Option-enum">standardStructure</a></li>
+<li>standardStructure</li>
 <li>soap12</li>
 <li>qmake</li>
 </ul>
