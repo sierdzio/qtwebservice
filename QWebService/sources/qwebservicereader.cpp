@@ -2,9 +2,11 @@
 
 /*!
     \class QWebServiceReader
-    \brief A QWebServiceAbstract derivative aimed specifically at communicatin with external web services.
+    \brief A QWebServiceAbstract derivative aimed specifically at communicatin
+           with external web services.
 
-    This class is in a very early stage of development and should be used with great caution, if at all.
+    This class is in a very early stage of development and should be used
+    with great caution, if at all.
   */
 
 /*!
@@ -20,7 +22,8 @@ QWebServiceReader::QWebServiceReader(QObject *parent) :
 /*!
     \fn QWebServiceReader::QWebServiceReader(QWsdl *wsdl, QObject *parent)
 
-    Constructs QWebServiceAbstract with \a wsdl and \a parent (which defaults to 0).
+    Constructs QWebServiceAbstract with \a wsdl and \a parent
+    (which defaults to 0).
   */
 QWebServiceReader::QWebServiceReader(QWsdl *wsdl, QObject *parent) :
     QWebService(wsdl, parent)
@@ -30,7 +33,8 @@ QWebServiceReader::QWebServiceReader(QWsdl *wsdl, QObject *parent) :
 /*!
     \fn QWebServiceReader::QWebServiceReader(QString hostname, QObject *parent)
 
-    Constructs QWebServiceAbstract with \a parent and \a hostname (which is used to create a wsdl object).
+    Constructs QWebServiceAbstract with \a parent and \a hostname
+    (which is used to create a wsdl object).
   */
 QWebServiceReader::QWebServiceReader(QString hostname, QObject *parent) :
     QWebService(new QWsdl(hostname, parent), parent)
@@ -41,7 +45,8 @@ QWebServiceReader::QWebServiceReader(QString hostname, QObject *parent) :
 /*!
     \fn QWebServiceReader::methodHandler(QVariant param)
 
-    Pure virtual method, can be used to handle methods. Probably a bad idea, might be dropped in the future.
+    Pure virtual method, can be used to handle methods. Probably a bad idea,
+    might be dropped in the future.
     Accepts parameters in a QVariant \a param.
   */
 void QWebServiceReader::methodHandler(QVariant param)

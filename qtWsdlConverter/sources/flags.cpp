@@ -4,80 +4,92 @@
     \class Flags
     \brief Holds all important flags used by converter.
 
-    All application's switches are unified thus enabling easy
-    OR switching. The only exception is the --force switch, which is held as a separate
+    All application's switches are unified thus enabling easy OR switching.
+    The only exception is the --force switch, which is held as a separate
     bool variable.
 
-    All entries in single sections (with an exception of build system related switches) are exclusive - you can use only one at a time (the lates one specified is used). For example, if you use --http and --json, only JSON flag will be set. Sections are specified in enum documentation (the table below).
+    All entries in single sections (with an exception of build system related
+    switches) are exclusive - you can use only one at a time (the lates one
+    specified is used). For example, if you use --http and --json, only JSON flag
+    will be set. Sections are specified in enum documentation (the table below).
   */
 
 /*!
-     \enum Flags::Option
+    \enum Flags::Option
+    This enum type specifies code creation mode.
+    Sections are indicated in brackets:
 
-     This enum type specifies code creation mode. Sections are indicated in brackets:
-
-     \value fullMode
-            (mode) All enums and variables are copied, enabling some flexibility in use.
-     \value debugMode
-            (mode) fullMode + debug messages.
-     \value compactMode
-            (mode) Only most needed methods, variables and enums are preserved. Code is as small, as possible, at the expense of loosing flexibility.
-     \value subclass
-            converter creates messages by subclassing QWebMethod (this option requires QWebService library to be present).
-     \value synchronous
-            (synchronousness) Web methods will wait for reply and return with data.
-     \value asynchronous
-            (synchronousness) Web methods will return instantly. Data availability will be announced by emitting a signal.
-     \value standardStructure
-            (structure) Headers will be placed in <dir>/headers, sources in <dir>/sources, build system and .pro files in <dir>/.
-     \value noMessagesStructure
-            (structure) Converter will not create messages as separate classes, but use QWebMethod (this option requires QWebService library to be present).
-     \value allInOneDirStructure
-            (structure) All generated files will be stored in one folder.
-     \value qmake
-            (build system) qmake will be used.
-     \value cmake
-            (build system) cmake will be used.
-     \value scons
-            (build system) scons will be used.
-     \value noBuildSystem
-            (build system) No build system files will be created.
-     \value http
-            (protocol) http protocol will be used.
-     \value soap10
-            (protocol) SOAP 1.0 protocol will be used.
-     \value soap12
-            (protocol) SOAP 1.2 protocol will be used.
-     \value soap
-            (protocol) Internall wrapper for all SOAP protocols. When used in app, will default to SOAP 1.2
-     \value json
-            (protocol) JSON protocol will be used.
-     \value xml
-            (protocol) XML protocol (non-SOAP) will be used.
-     \value rest
-            (non-exclusive, protocol) Code for communicating with RESTful WSes will be generted. This can be combined with any other protocol flag.
+    \value fullMode
+           (mode) All enums and variables are copied, enabling some flexibility
+           in use.
+    \value debugMode
+           (mode) fullMode + debug messages.
+    \value compactMode
+           (mode) Only most needed methods, variables and enums are preserved.
+           Code is as small, as possible, at the expense of loosing flexibility.
+    \value subclass
+           converter creates messages by subclassing QWebMethod (this option
+           requires QWebService library to be present).
+    \value synchronous
+           (synchronousness) Web methods will wait for reply and return with data.
+    \value asynchronous
+           (synchronousness) Web methods will return instantly. Data availability
+           will be announced by emitting a signal.
+    \value standardStructure
+           (structure) Headers will be placed in <dir>/headers,
+           sources in <dir>/sources, build system and .pro files in <dir>/.
+    \value noMessagesStructure
+           (structure) Converter will not create messages as separate classes,
+           but use QWebMethod (this option requires QWebService library to be present).
+    \value allInOneDirStructure
+           (structure) All generated files will be stored in one folder.
+    \value qmake
+           (build system) qmake will be used.
+    \value cmake
+           (build system) cmake will be used.
+    \value scons
+           (build system) scons will be used.
+    \value noBuildSystem
+           (build system) No build system files will be created.
+    \value http
+           (protocol) http protocol will be used.
+    \value soap10
+           (protocol) SOAP 1.0 protocol will be used.
+    \value soap12
+           (protocol) SOAP 1.2 protocol will be used.
+    \value soap
+           (protocol) Internall wrapper for all SOAP protocols. When used in app,
+           will default to SOAP 1.2
+    \value json
+           (protocol) JSON protocol will be used.
+    \value xml
+           (protocol) XML protocol (non-SOAP) will be used.
+    \value rest
+           (non-exclusive, protocol) Code for communicating with RESTful WSes
+           will be generted. This can be combined with any other protocol flag.
  */
 
 /*!
-  \enum Flags::HttpMethod
+    \enum Flags::HttpMethod
 
-  This enum stores HTTP method chosen by user. Those options cannot be combined!
+    This enum stores HTTP method chosen by user. Those options cannot be combined!
 
-  \value POST
-         HTTP POST will be used.
-  \value GET
-         HTTP GET will be used.
-  \value PUT
-         HTTP PUT will be used.
-  \value DELETE
-         HTTP DELETE will be used.
+    \value POST
+           HTTP POST will be used.
+    \value GET
+           HTTP GET will be used.
+    \value PUT
+           HTTP PUT will be used.
+    \value DELETE
+           HTTP DELETE will be used.
 
   */
 
 /*!
     \fn Flags::Flags(Options options_, HttpMethod method_, bool forced, QObject *parent)
 
-    Constructs the Flags object. All params are optional. If you want to set non-default suffixes, use setObjSuffix() and setMsgSuffix().
+    Constructs the Flags object. All params are optional. If you want to
+    set non-default suffixes, use setObjSuffix() and setMsgSuffix().
 
     Default values:
     \list
@@ -119,7 +131,8 @@ void Flags::resetFlags()
 /*!
     \fn Flags::resetFlags(Options whatToReset)
 
-    Resets (zeroes) flags set to 1 in \a whatToReset. This does not apply to '--forced'.
+    Resets (zeroes) flags set to 1 in \a whatToReset.
+    This does not apply to '--forced'.
   */
 void Flags::resetFlags(Options whatToReset)
 {
@@ -311,9 +324,10 @@ bool Flags::isForced() const
 }
 
 /*!
-  \fn Flags::messageSuffix() const
+    \fn Flags::messageSuffix() const
 
-  Returns message suffix, which is appended to methods (ones that send the message) in generated code.
+    Returns message suffix, which is appended to methods (ones that send
+    the message) in generated code.
   */
 QString Flags::messageSuffix() const
 {
@@ -321,9 +335,10 @@ QString Flags::messageSuffix() const
 }
 
 /*!
-  \fn Flags::objectSuffix() const
+    \fn Flags::objectSuffix() const
 
-  Returns the suffix, which is appended to object names (used in service header and source when in asynchronous).
+    Returns the suffix, which is appended to object names (used in service
+    header and source when in asynchronous).
   */
 QString Flags::objectSuffix() const
 {
@@ -331,9 +346,10 @@ QString Flags::objectSuffix() const
 }
 
 /*!
-  \fn Flags::operator =(const Flags &flag)
+    \fn Flags::operator =(const Flags &flag)
 
-  Assign operator for Flags object. Copies r-value \a flag into r-value object, and returns the object.
+    Assign operator for Flags object. Copies r-value \a flag into
+    r-value object, and returns the object.
   */
 Flags &Flags::operator =(const Flags &flag)
 {

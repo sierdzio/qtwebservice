@@ -5,18 +5,21 @@
     \brief Extends QWebMethod with some generic constructors and synchronous message sending.
 
 
-    Subclass of QWebMethod, contains many generic methods for sending messages. Can be used both synchronously
-    (through static sendMessage() method), or asynchronously (indicates, when reply is ready by emitting
+    Subclass of QWebMethod, contains many generic methods for sending messages.
+    Can be used both synchronously (through static sendMessage() method),
+    or asynchronously (indicates, when reply is ready by emitting
     a replyReady() signal).
 
-    More description in the future :)
+    More description will be added in the future.
   */
 
 /*!
     \fn QWebServiceMethod::QWebServiceMethod(QObject *parent, Protocol protocol, HttpMethod httpMethod)
 
-    A constructor that takes in \a protocol information, \a httpMethod to use, and \a parent
-    to satisfy QObject requirements. All other data has to be set using setter methods.
+    A constructor that takes in \a protocol information,
+    \a httpMethod to use, and \a parent
+    to satisfy QObject requirements. All other data has to
+    be set using setter methods.
   */
 QWebServiceMethod::QWebServiceMethod(QObject *parent, Protocol protocol, HttpMethod httpMethod) :
     QWebMethod(parent, protocol, httpMethod)
@@ -26,7 +29,8 @@ QWebServiceMethod::QWebServiceMethod(QObject *parent, Protocol protocol, HttpMet
 /*!
     \fn QWebServiceMethod::QWebServiceMethod(QUrl url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method)
 
-    Constructs the message using \a url, \a messageName, \a parent, \a protocol (which defaults to soap12),
+    Constructs the message using \a url, \a messageName, \a parent,
+    \a protocol (which defaults to soap12),
     and \a method (which defaults to POST).
     Requires params to be specified later.
 
@@ -45,7 +49,8 @@ QWebServiceMethod::QWebServiceMethod(QUrl url, QString messageName, QObject *par
 /*!
     \fn QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QObject *parent, Protocol protocol, HttpMethod method)
 
-    Constructs the message using \a url, \a messageName, \a parent, \a protocol (which defaults to soap12),
+    Constructs the message using \a url, \a messageName, \a parent,
+    \a protocol (which defaults to soap12),
     and \a method (which defaults to POST).
     Requires params to be specified later.
 
@@ -64,11 +69,13 @@ QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QObject *
 /*!
     \fn QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QString tNamespace, QMap<QString, QVariant> params, QObject *parent, Protocol protocol, HttpMethod method)
 
-    Constructs the message using \a url, \a messageName, \a tNamespace, \a parent, \a protocol (which defaults to soap12),
+    Constructs the message using \a url, \a messageName, \a tNamespace,
+    \a parent, \a protocol (which defaults to soap12),
     and \a method (which defaults to POST).
     This constructor also takes message parameters (\a params).
-    Does not require specifying any more information, but you still need to manually send the message
-    using sendMessage() (without any arguments, or else - if you want to change ones specified here).
+    Does not require specifying any more information, but you still need to
+    manually send the message using sendMessage() (without any arguments,
+    or else - if you want to change ones specified here).
 
     \sa init(), sendMessage(), setProtocol()
   */
@@ -87,8 +94,8 @@ QWebServiceMethod::QWebServiceMethod(QString url, QString messageName, QString t
 
 
 /*!
-  \fn bool QWebServiceMethod::sendMessage(QMap<QString, QVariant> params)
-  \overload sendMessage()
+    \fn bool QWebServiceMethod::sendMessage(QMap<QString, QVariant> params)
+    \overload sendMessage()
 
     Sends the message asynchronously using parameters specified in \a params.
 
@@ -102,25 +109,19 @@ bool QWebServiceMethod::sendMessage(QMap<QString, QVariant> params)
 }
 
 /*!
-  \overload sendMessage()
+    \overload sendMessage()
 
-     STATIC method. Sends the message synchronously, using \a url, \a msgName, \a tNamespace, \a params
-     and \a parent.
-     Protocol can optionally be specified by \a protocol (default is SOAP 1.2), as well as HTTP \a method
-     (default is POST).
-     Returns with web service reply.
+    STATIC method. Sends the message synchronously, using \a url, \a msgName,
+    \a tNamespace, \a params and \a parent.
+    Protocol can optionally be specified by \a protocol (default is SOAP 1.2),
+    as well as HTTP \a method (default is POST).
+    Returns with web service reply.
   */
 QByteArray QWebServiceMethod::sendMessage(QObject *parent, QUrl url,
                                  QString msgName, QString tNamespace,
                                  QMap<QString, QVariant> params,
                                  Protocol protocol, HttpMethod method)
 {
-    /*
-       Part of QDoc that does not work:   \fn QVariant QWebServiceMethod::sendMessage(QObject *parent, QUrl url,
-       QString _messageName, QMap<QString, QVariant> params,
-       QWebServiceMethod::Protocol protocol, QWebServiceMethod::HttpMethod httpMethod)
-    */
-
     QWebServiceMethod qsm(url.toString(), msgName, tNamespace, params, parent, protocol, method);
 
     qsm.sendMessage();

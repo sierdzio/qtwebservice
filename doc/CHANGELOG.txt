@@ -11,6 +11,10 @@ Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/wsdl/band_ws.asmx
  -af --cmake --scons --json ../examples/wsdl/band_ws.asmx
 
+.09.2011 : CEST:
+ - made lines in code wrap at around 80 characters,
+ - 
+
 13.09.2011 12:33 CEST:
  - added QWebService::removeMethod(), which deletes a web method specified by it's name,
  - added some QDoc descriptions to QWebService,

@@ -7,9 +7,9 @@
     Generates code, based on WSDL information and user defined flags.
 
     Note:
-    Generator also creates a dummy main.cpp file. It's needed only for successful compilation of
-    freshly generated code. It is NOT NEEDED for any other reason. You can safely delete
-    it in your project.
+    Generator also creates a dummy main.cpp file. It's needed only for
+    successful compilation of freshly generated code. It is NOT NEEDED
+    for any other reason. You can safely delete it in your project.
   */
 
 /*!
@@ -27,7 +27,8 @@ CodeGenerator::CodeGenerator(QObject *parent) :
 /*!
     \fn CodeGenerator::errorEncountered(QString errMessage)
 
-    Singal emitted when CodeGenerator encounters an error. Carries \a errMessage for convenience.
+    Singal emitted when CodeGenerator encounters an error. Carries \a errMessage
+    for convenience.
   */
 
 /*!
@@ -69,9 +70,11 @@ void CodeGenerator::prepare()
 /*!
     \fn CodeGenerator::create(QWsdl *wsdl, QDir workingDir, Flags *flgs, QString baseClassName = 0, QObject *parent = 0)
 
-    Performs the conversion in CodeGenerator. Data from WSDL (\a wsdl) is combined with options specified
-    in flags (\a flgs), and base class name (\a baseClassName) to create a complete set of classes
-    in given directory (\a workingDir). For Qt reasons, \a parent is also needed, although it defaults to 0.
+    Performs the conversion in CodeGenerator. Data from WSDL (\a wsdl) is
+    combined with options specified in flags (\a flgs), and base class name
+    (\a baseClassName) to create a complete set of classes in given directory
+    (\a workingDir). For Qt reasons, \a parent is also needed, although
+    it defaults to 0.
 
     Returns true if successful.
   */
@@ -102,7 +105,8 @@ bool CodeGenerator::createService()
     if (!(flags->flags() & Flags::allInOneDirStructure))
         workingDir.cd("headers");
     if (!createServiceHeader())
-        return enterErrorState("Creating header for Web Service \"" + wsdl->webServiceName() + "\" failed!");
+        return enterErrorState("Creating header for Web Service \""
+                               + wsdl->webServiceName() + "\" failed!");
 
     if (!(flags->flags() & Flags::allInOneDirStructure)) {
         workingDir.cdUp();
@@ -110,7 +114,8 @@ bool CodeGenerator::createService()
     }
 
     if (!createServiceSource())
-        return enterErrorState("Creating source for Web Service \"" + wsdl->webServiceName() + "\" failed!");
+        return enterErrorState("Creating source for Web Service \""
+                               + wsdl->webServiceName() + "\" failed!");
 
     if (!(flags->flags() & Flags::allInOneDirStructure))
         workingDir.cdUp();
@@ -180,10 +185,11 @@ bool CodeGenerator::createServiceHeader()
             QMap<QString, QVariant> tempParam = m->parameterNamesTypes();
             // Create msgParameters (comma separated list)
             foreach (QString param, tempParam.keys()) {
-                tmpP += QString(tempParam.value(param).typeName()) + " " + param + ", ";
+                tmpP += QString(tempParam.value(param).typeName()) + " "
+                        + param + ", ";
             }
             tmpP.chop(2);
-// Temporarily, all messages will return QString!
+            // Temporarily, all messages will return QString!
             if (flags->flags() & Flags::synchronous)
                 out << "    QString ";
             else
@@ -260,7 +266,7 @@ bool CodeGenerator::createServiceHeader()
         foreach (QString s, tempMap->keys()) {
             if (!(flags->flags() & Flags::noMessagesStructure))
                 out << "    " << s << " ";
-            else // sierdzioL I don't particurarly like this implementation, will rethink it later.
+            else // sierdzio I don't particurarly like this implementation, will rethink it later.
                 out << "    QWebServiceMethod ";
 
             out << s.toLower() << flags->objectSuffix() << ";" << endl;
@@ -310,7 +316,8 @@ bool CodeGenerator::createServiceSource()
         // Connect signals and slots for asynchronous mode.
 
         foreach (QString s, tempMap->keys()) {
-            out << "    connect(&" << s.toLower() << flags->objectSuffix() << ", SIGNAL(replyReady(QString)), this, SLOT(";
+            out << "    connect(&" << s.toLower() << flags->objectSuffix()
+                << ", SIGNAL(replyReady(QString)), this, SLOT(";
             /* Code not ready for compact mode checking.
             if (flags->flags() & Flags::compactMode)
             {
@@ -361,7 +368,8 @@ bool CodeGenerator::createServiceSource()
 
             // Create msgParameters (comma separated list)
             foreach (QString param, tempParam.keys()) {
-                tmpP += QString(tempParam.value(param).typeName()) + " " + param + ", ";
+                tmpP += QString(tempParam.value(param).typeName()) + " "
+                        + param + ", ";
                 tmpPN += param + ", ";
             }
             tmpP.chop(2);
@@ -370,10 +378,12 @@ bool CodeGenerator::createServiceSource()
 
             if (flags->flags() & Flags::synchronous) {
                 // Temporarily, all messages will return QString!
-//                out << tmpReturn << " " << wsName << "::" << s << "(" << tmpP << ")" << endl;
-                out << "QString " << wsName << "::" << s << flags->messageSuffix() << "(" << tmpP << ")" << endl;
+                // out << tmpReturn << " " << wsName << "::" << s << "(" << tmpP << ")" << endl;
+                out << "QString " << wsName << "::" << s << flags->messageSuffix()
+                    << "(" << tmpP << ")" << endl;
                 out << "{" << endl;
-                out << "    // TODO: You can add your own data handling here, and make the whole method return" << endl;
+                out << "    // TODO: You can add your own data handling here, "
+                    << "and make the whole method return" << endl;
                 out << "    //       proper type." << endl;
 
                 if (flags->flags() & Flags::noMessagesStructure) {
@@ -386,17 +396,18 @@ bool CodeGenerator::createServiceSource()
 
                     out << endl;
                     out << "    return QWebServiceMethod::sendMessage(this";
-                    out << ", QUrl(\"" << m->host() << "\"), \"" << m->methodName()
-                        << "\", parameters";
+                    out << ", QUrl(\"" << m->host() << "\"), \""
+                        << m->methodName() << "\", parameters";
 
-                    QString protocols = "";
-                    protocols = "QWebServiceMethod::" + flags->protocolString(false);
+                    QString protocols = "QWebServiceMethod::"
+                            + flags->protocolString(false);
 
                     if (protocols != "QWebServiceMethod::")
                         protocols.append(", ");
 
                     if (flags->flags() & Flags::rest) {
-                        protocols += "QWebServiceMethod::" + flags->httpMethodString();
+                        protocols += "QWebServiceMethod::"
+                                + flags->httpMethodString();
                     }
 
                     if (protocols != "")
@@ -405,7 +416,8 @@ bool CodeGenerator::createServiceSource()
                     out << protocols << ").toString();" << endl;
                 }
                 else {
-                    out << "    return " << m->methodName() << "::sendMessage(this";
+                    out << "    return " << m->methodName()
+                        << "::sendMessage(this";
 
                     if (tmpPN != "")
                         out << ", " << tmpPN << ");" << endl;
@@ -416,8 +428,10 @@ bool CodeGenerator::createServiceSource()
                 out << endl;
             }
             else if (flags->flags() & Flags::asynchronous) {
-                QString objName = s.toLower() + flags->objectSuffix(); // Name of the message object.
-                out << "void " << wsName << "::" << s << flags->messageSuffix() << "(" << tmpP << ")" << endl;
+                // Name of the message object.
+                QString objName = s.toLower() + flags->objectSuffix();
+                out << "void " << wsName << "::" << s << flags->messageSuffix()
+                    << "(" << tmpP << ")" << endl;
                 out << "{" << endl;
 
                 if (flags->flags() & Flags::noMessagesStructure) {
@@ -429,20 +443,25 @@ bool CodeGenerator::createServiceSource()
                     }
 
                     out << endl;
-                    out << "    " << objName << ".setHost(\"" << m->host() << "\");" << endl;
-                    out << "    " << objName << ".setTargetNamespace(\"" << m->targetNamespace() << "\");" << endl;
-                    out << "    " << objName << ".setMessageName(\"" << m->methodName() << "\");" << endl;
+                    out << "    " << objName << ".setHost(\"" << m->host()
+                        << "\");" << endl;
+                    out << "    " << objName << ".setTargetNamespace(\""
+                        << m->targetNamespace() << "\");" << endl;
+                    out << "    " << objName << ".setMessageName(\""
+                        << m->methodName() << "\");" << endl;
 
-                    QString protocols = "";
-                    protocols = "QWebServiceMethod::" + flags->protocolString(false);
+                    QString protocols = "QWebServiceMethod::"
+                            + flags->protocolString(false);
 
-                    out << "    " << objName << ".setProtocol(" << protocols << ");" << endl;
+                    out << "    " << objName << ".setProtocol("
+                        << protocols << ");" << endl;
                     // Add REST handling!
 
                     out << "    " << objName << ".sendMessage(parameters);" << endl;
                 }
                 else {
-                    out << "    " << objName << ".sendMessage(" << tmpPN << ");" << endl;
+                    out << "    " << objName << ".sendMessage(" << tmpPN
+                        << ");" << endl;
                 }
 
                 out << "}" << endl;
@@ -471,7 +490,8 @@ bool CodeGenerator::createServiceSource()
                     tmpReturn = m->returnValueNameType().value(ret).typeName();
                     break; // This does not support multiple return values!
                 }
-                out << tmpReturn << " " << wsName << "::" << s << "ReplyRead()" << endl;
+                out << tmpReturn << " " << wsName << "::" << s
+                    << "ReplyRead()" << endl;
                 out << "{" << endl;
                 out << "    return " << s << "Result;" << endl;
                 out << "}" << endl;
@@ -551,8 +571,8 @@ bool CodeGenerator::createBuildSystemFile()
 {
     bool result = false;
 
-//    if (flags->flags() & Flags::noMessagesStructure)
-//        qDebug() << "Remember to include QWebService library in your build system file!";
+    // if (flags->flags() & Flags::noMessagesStructure)
+    // qDebug() << "Remember to include QWebService library in your build system file!";
 
     if (flags->flags() & Flags::noBuildSystem)
         return true;
@@ -758,7 +778,8 @@ bool CodeGenerator::createSconsProject()
     out << "os.environ[\"PKG_CONFIG_PATH\"] = pkgpath" << endl;
     out << "os.environ[\"QTDIR\"] = QTDIR # WARNING! As above." << endl;
     out << endl;
-    out << "env = Environment(tools=[\"default\", \"qt4\"], toolpath=[QT4_PY_PATH])" << endl;
+    out << "env = Environment(tools=[\"default\", \"qt4\"], toolpath=[QT4_PY_PATH])"
+        << endl;
     out << "env[\"CXXFILESUFFIX\"] = \".cpp\"" << endl;
     out << endl;
     out << "env.EnableQt4Modules([\"QtCore\", \"QtNetwork\"])" << endl;

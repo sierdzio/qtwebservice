@@ -1,5 +1,6 @@
 /**
-  This test checks QWebServiceMethod in operation (requires Internet connection or a working local web service)
+    This test checks QWebServiceMethod in operation
+    (requires Internet connection or a working local web service)
   */
 
 #include <QtTest/QtTest>
@@ -135,10 +136,10 @@ void TestQWebServiceMethod::synchronousTest()
     QMap<QString, QVariant> tmpP;
     bool result = false;
     QString reply = "pass";
-    reply =  QWebServiceMethod::sendMessage(this,
-                                           QUrl("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx"),
-                                           "getProviderList", "http://www.daenet.de/webservices/CurrencyServer",
-                                           tmpP, QWebMethod::soap12);
+    reply = QWebServiceMethod::sendMessage(this,
+             QUrl("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx"),
+             "getProviderList", "http://www.daenet.de/webservices/CurrencyServer",
+             tmpP, QWebMethod::soap12);
 
     if ((reply != "") && (reply != "pass"))
     {

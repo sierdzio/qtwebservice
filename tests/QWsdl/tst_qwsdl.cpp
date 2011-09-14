@@ -2,10 +2,10 @@
 #include <qwsdl.h>
 
 /*
-  This test tests QWsdl operation.
+    This test tests QWsdl operation.
 
-  It does not require Internet connection - you can check a physical WSDL file if you want to,
-  or specify address to where a remote WSDL resides.
+    It does not require Internet connection - you can check a physical WSDL file
+    if you want to, or specify address to where a remote WSDL resides.
   */
 
 class TestQWsdl : public QObject

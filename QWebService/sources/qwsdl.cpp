@@ -1,18 +1,20 @@
 #include "../headers/qwsdl.h"
 
 /*!
-  \class QWsdl
-  \brief Class for interaction with local and remote WSDL files. Currently read-only.
+    \class QWsdl
+    \brief Class for interaction with local and remote WSDL files.
+           Currently read-only.
 
-    Reads web service data (message names, parameters, return values, ws name etc) from a WSDL file or URL.
+    Reads web service data (message names, parameters, return values,
+    ws name etc) from a WSDL file or URL.
   */
 
 /*!
     \fn QWsdl::QWsdl(QObject *parent)
 
-    Simple constructor, requires \a parent only, but needs other information to be specified later
-    in order to run. You need to run setWsdlFile(), which automatically parses the file.
-
+    Simple constructor, requires \a parent only, but needs other information
+    to be specified later in order to run.
+    You need to run setWsdlFile(), which automatically parses the file.
 
     Initialises the whole object with default values.
 
@@ -53,14 +55,16 @@ QWsdl::~QWsdl()
 /*!
     \fn QWsdl::errorEncountered(QString errMessage)
 
-    Singal emitted when WsdlConverter encounters an error. Carries \a errMessage for convenience.
+    Singal emitted when WsdlConverter encounters an error.
+    Carries \a errMessage for convenience.
   */
 
 /*!
     \fn QWsdl::setWsdlFile(QString wsdlFile)
 
-    Wrapper for resetWsdl(). Used to set the WSDL file or URL using \a wsdlFile. Compulsory after simple constructor,
-    but not needed if you have already specified the file in the constructor or resetWsdl().
+    Wrapper for resetWsdl(). Used to set the WSDL file or URL using \a wsdlFile.
+    Compulsory after simple constructor, but not needed if you have already
+    specified the file in the constructor or resetWsdl().
 
     \sa resetWsdl()
   */
@@ -72,8 +76,8 @@ void QWsdl::setWsdlFile(QString wsdlFile) // == resetWsdl()
 /*!
     \fn QWsdl::resetWsdl(QString newWsdlPath)
 
-    Can be used to set or reset a WSDL file (or URL), using \a newWsdlPath. Cleans and reinitialises
-    the object, parses the file.
+    Can be used to set or reset a WSDL file (or URL), using \a newWsdlPath.
+    Cleans and reinitialises the object, parses the file.
 
     \sa setWsdlFile()
   */
@@ -114,8 +118,9 @@ QStringList QWsdl::methodNames() const
 /*!
     \fn QWsdl::methods()
 
-    Returns a QMap<QString, QWebServiceMethod *> pointer. Keys are method names (just as in
-    getMethodNames()), and values are QWebServiceMethods themselves (which means they can be used
+    Returns a QMap<QString, QWebServiceMethod *> pointer.
+    Keys are method names (just as in getMethodNames()), and values are
+    QWebServiceMethods themselves (which means they can be used
     not only to get information, but also to send messages, set them up etc.).
 
     \sa methodNames()
@@ -138,7 +143,8 @@ QString QWsdl::webServiceName() const
 /*!
     \fn QWsdl::host() const
 
-    Returns web service's URL. If there is no valid URL in WSDL file, path to this file is returned.
+    Returns web service's URL. If there is no valid URL in WSDL file,
+    path to this file is returned.
 
     \sa hostUrl()
   */
@@ -153,7 +159,8 @@ QString QWsdl::host() const
 /*!
     \fn QWsdl::hostUrl() const
 
-    Returns web service's URL. If there is no valid URL in WSDL file, path to this file is returned.
+    Returns web service's URL. If there is no valid URL in WSDL file,
+    path to this file is returned.
 
     \sa host()
   */
@@ -185,15 +192,11 @@ QString QWsdl::targetNamespace() const
     return m_targetNamespace;
 }
 
-//QFile QWsdl::getWsdl()
-//{
-
-//}
-
 /*!
     \fn QWsdl::errorInfo() const
 
-    Returns QString with error message in case an error occured. Otherwise, returns empty string.
+    Returns QString with error message in case an error occured.
+    Otherwise, returns empty string.
 
     \sa isErrorState()
   */
@@ -205,8 +208,8 @@ QString QWsdl::errorInfo() const
 /*!
     \fn QWsdl::isErrorState() const
 
-    Returns true if there was an error, false otherwise. Details about an error can be read with
-    getErrorInfo().
+    Returns true if there was an error, false otherwise.
+    Details about an error can be read with getErrorInfo().
 
     \sa errorInfo()
   */
@@ -218,8 +221,8 @@ bool QWsdl::isErrorState() const
 /*!
     \fn QWsdl::fileReplyFinished(QNetworkReply *rply)
 
-    Asynchronous public return slot. Reads WSDL reply (\a rply) from server (used in case
-    URL was specified in wsdl file path).
+    Asynchronous public return slot. Reads WSDL reply (\a rply)
+    from server (used in case URL was specified in wsdl file path).
 
     Not sure why it's public (sierdzio). Maybe it will go private in the future.
   */
@@ -232,7 +235,9 @@ void QWsdl::fileReplyFinished(QNetworkReply *rply)
         file.remove();
 
     if (!file.open(QFile::WriteOnly)) {
-        enterErrorState(QString("Error: cannot write WSDL file from remote location. Reason: " + file.errorString()));
+        enterErrorState(
+                    QString("Error: cannot write WSDL file from remote location. Reason: "
+                            + file.errorString()));
         return;
     }
     else {
@@ -246,10 +251,10 @@ void QWsdl::fileReplyFinished(QNetworkReply *rply)
 }
 
 /*!
-  \internal
-  \fn QWsdl::init()
+    \internal
+    \fn QWsdl::init()
 
-  Initialises the object.
+    Initialises the object.
   */
 void QWsdl::init()
 {
@@ -284,18 +289,21 @@ bool QWsdl::enterErrorState(QString errMessage)
     \internal
     \fn QWsdl::parse()
 
-    Central method of this class. Parses the WSDL file, creates all QWebServiceMethods,
-    reads all necessary data, like web service's name etc.
+    Central method of this class. Parses the WSDL file, creates all
+    QWebServiceMethods, reads all necessary data,
+    like web service's name etc.
   */
 bool QWsdl::parse()
 {
     /*
-      Algorithm extracts method names from "types" tags, which is most probably wrong,
-      as it should be cross-checked with other tags ("message", etc.)
+      Algorithm extracts method names from "types" tags,
+      which is most probably wrong, as it should be
+      cross-checked with other tags ("message", etc.)
     */
 
     if (errorState) {
-        enterErrorState(QString::fromLatin1("WSDL reader is in error state and cannot parse the file."));
+        enterErrorState(QString::fromLatin1("WSDL reader is in error state "
+                                            "and cannot parse the file."));
         return false;
     }
 
@@ -303,7 +311,8 @@ bool QWsdl::parse()
 
     QFile file(wsdlFilePath);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
-        enterErrorState(QString("Error: cannot read WSDL file: " + wsdlFilePath + ". Reason: " + file.errorString()));
+        enterErrorState(QString("Error: cannot read WSDL file: "
+                                + wsdlFilePath + ". Reason: " + file.errorString()));
         return false;
     }
 
@@ -315,11 +324,13 @@ bool QWsdl::parse()
             QString tempN = xmlReader.name().toString();
 
             if (tempN == QString::fromLatin1("definitions")) {
-                m_targetNamespace = xmlReader.attributes().value(QString::fromLatin1("targetNamespace")).toString();
+                m_targetNamespace = xmlReader.attributes().value(
+                            QString::fromLatin1("targetNamespace")).toString();
                 readDefinitions();
             }
             else {
-                enterErrorState(QString::fromLatin1("Error: file does not have WSDL definitions inside!"));
+                enterErrorState(QString::fromLatin1("Error: file does not have "
+                                                    "WSDL definitions inside!"));
                 return false;
             }
         }
@@ -339,8 +350,8 @@ bool QWsdl::parse()
 /*!
     \internal
 
-    If the host path is not a local file, but URL, QWsdl will download it into a temporary file,
-    then read, and delete at exit.
+    If the host path is not a local file, but URL, QWsdl will download
+    it into a temporary file, then read, and delete at exit.
   */
 void QWsdl::prepareFile()
 {
@@ -388,7 +399,8 @@ void QWsdl::readDefinitions()
     while(!xmlReader.atEnd()) {
         tempName = xmlReader.name().toString();
 
-        if (xmlReader.isEndElement() && (tempName == QString::fromLatin1("definitions"))) {
+        if (xmlReader.isEndElement()
+                && (tempName == QString::fromLatin1("definitions"))) {
             xmlReader.readNext();
             break;
         }
@@ -451,7 +463,8 @@ void QWsdl::readTypes()
         xmlReader.readNext();
     }
     else {
-        enterErrorState(QString::fromLatin1("Error: file does not have WSDL schema tag inside!"));
+        enterErrorState(QString::fromLatin1("Error: file does not have WSDL "
+                                            "schema tag inside!"));
         return;
     }
 
@@ -462,12 +475,15 @@ void QWsdl::readTypes()
             lastName = tempName;
         tempName = xmlReader.name().toString();
 
-        if (tempName == QString::fromLatin1("element") && (xmlReader.attributes().count() == 1)) {
-            QString elementName = xmlReader.attributes().value(QString::fromLatin1("name")).toString();
+        if (tempName == QString::fromLatin1("element")
+                && (xmlReader.attributes().count() == 1)) {
+            QString elementName = xmlReader.attributes().value(
+                        QString::fromLatin1("name")).toString();
             workMethodList->append(elementName);
             readTypeSchemaElement();
         }
-        else if (xmlReader.isEndElement() && (tempName == QString::fromLatin1("schema"))) {
+        else if (xmlReader.isEndElement()
+                 && (tempName == QString::fromLatin1("schema"))) {
             xmlReader.readNext();
             break;
         }
@@ -495,7 +511,8 @@ void QWsdl::readTypeSchemaElement()
 
         if (xmlReader.isEndElement()
                 && (xmlReader.name() == QString::fromLatin1("element"))
-                && ((lastName == QString::fromLatin1("complexType")) || (lastName == QString::fromLatin1("sequence")))
+                && ((lastName == QString::fromLatin1("complexType"))
+                    || (lastName == QString::fromLatin1("sequence")))
                 && (firstElem == false)) {
             int currentMethodIndex = workMethodList->length() - 1;
             workMethodParameters->insert(currentMethodIndex, params);
@@ -503,7 +520,8 @@ void QWsdl::readTypeSchemaElement()
             break;
         }
 
-        if ((tempName == QString::fromLatin1("complexType")) || (tempName == QString::fromLatin1("sequence"))) {
+        if ((tempName == QString::fromLatin1("complexType"))
+                || (tempName == QString::fromLatin1("sequence"))) {
             firstElem = false;
             xmlReader.readNext();
             continue;
@@ -512,17 +530,21 @@ void QWsdl::readTypeSchemaElement()
         if (tempName == QString::fromLatin1("element")) {
             firstElem = false;
             // Min and max occurences are not taken into account!
-            QString elementName = xmlReader.attributes().value(QString::fromLatin1("name")).toString();
+            QString elementName = xmlReader.attributes().value(
+                        QString::fromLatin1("name")).toString();
             // Ommits namespace ("s:int" => "int")
-            QString elementType = xmlReader.attributes().value(QString::fromLatin1("type")).toString();
+            QString elementType = xmlReader.attributes().value(
+                        QString::fromLatin1("type")).toString();
 
-            if ((elementName == QString::fromLatin1("")) || (elementType == QString::fromLatin1(""))) {
+            if ((elementName == QString::fromLatin1(""))
+                    || (elementType == QString::fromLatin1(""))) {
                 xmlReader.readNext();
                 continue;
             }
 
             QVariant element;
-            elementType = elementType.split(QChar::fromAscii(':')).at(1); // The int(1) looks very bad.
+            // The int(1) looks very bad.
+            elementType = elementType.split(QChar::fromAscii(':')).at(1);
             // NEEDS MANY MORE VALUE TYPES! VERY SHAKY IMPLEMENTATION!
             // Prob'ly better to use schemas.
             if (elementType == QString::fromLatin1("int")) {
@@ -573,8 +595,8 @@ void QWsdl::readTypeSchemaElement()
 /*!
     \internal
 
-    Analyses both "working" QList and QMap, and extracts methods data, which is then put into
-    'methods' QMap.
+    Analyses both "working" QList and QMap, and extracts methods data,
+    which is then put into 'methods' QMap.
  */
 void QWsdl::prepareMethods()
 {
@@ -630,11 +652,13 @@ void QWsdl::prepareMethods()
                 else
                     methodPath = m_hostUrl.path();
 
-                methodsMap->insert(methodName, new QWebServiceMethod(methodPath,
-                                                             methodName,
-                                                             m_targetNamespace,
-                                                             workMethodParameters->value(methodMain)));
-                methodsMap->value(methodName)->setReturnValue(workMethodParameters->value(methodReturn));
+                methodsMap->insert(methodName,
+                                   new QWebServiceMethod(methodPath,
+                                                         methodName,
+                                                         m_targetNamespace,
+                                                         workMethodParameters->value(methodMain)));
+                methodsMap->value(methodName)->setReturnValue(
+                            workMethodParameters->value(methodReturn));
             }
         }
     }
@@ -679,20 +703,25 @@ void QWsdl::readService()
     while (!xmlReader.atEnd()) {
         tempName = xmlReader.name().toString();
 
-        if ((xmlReader.isEndElement()) && (tempName == QString::fromLatin1("service"))) {
+        if ((xmlReader.isEndElement())
+                && (tempName == QString::fromLatin1("service"))) {
             xmlReader.readNext();
             return;
         }
 
         if ((tempName == QString::fromLatin1("service"))
-                && xmlReader.attributes().hasAttribute(QString::fromLatin1("name"))
+                && xmlReader.attributes().hasAttribute(
+                    QString::fromLatin1("name"))
                 && (m_webServiceName == QString::fromLatin1(""))) {
-            m_webServiceName = xmlReader.attributes().value(QString::fromLatin1("name")).toString();
+            m_webServiceName = xmlReader.attributes().value(
+                        QString::fromLatin1("name")).toString();
         }
 
         if ((tempName == QString::fromLatin1("address"))
-                && xmlReader.attributes().hasAttribute(QString::fromLatin1("location"))) {
-            m_hostUrl.setUrl(xmlReader.attributes().value(QString::fromLatin1("location")).toString());
+                && xmlReader.attributes().hasAttribute(
+                    QString::fromLatin1("location"))) {
+            m_hostUrl.setUrl(xmlReader.attributes().value(
+                                 QString::fromLatin1("location")).toString());
         }
 
         xmlReader.readNext();

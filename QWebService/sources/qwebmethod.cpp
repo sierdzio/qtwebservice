@@ -2,20 +2,25 @@
 
 /*!
     \class QWebMethod
-    \brief Class that can be used to asnchronously and synchronously send HTTP, SOAP 1.0, SOAP 1.2, JSON, XMLand REST messages to web services.
+    \brief Class that can be used to asnchronously and synchronously send HTTP,
+           SOAP 1.0, SOAP 1.2, JSON, XMLand REST messages to web services.
 
-    QWebMethod class is acting as web method. You can use it to send and retrieve data from web services. There are
-    many helper classes. QWsdl can be used to read a WSDL file - it will automatically create a QMap of QWebMethods,
-    all already set up and ready to be invoked. QWebService can be used similarily as it is a high-level wrapper
-    to QWsdl. Additionally, qtWsdlConverter console application can automatically generate custom classes
+    QWebMethod class is acting as web method. You can use it to send and retrieve
+    data from web services. There are many helper classes. QWsdl can be used to read
+    a WSDL file - it will automatically create a QMap of QWebMethods,
+    all already set up and ready to be invoked. QWebService can be used
+    similarily as it is a high-level wrapper to QWsdl. Additionally,
+    qtWsdlConverter console application can automatically generate custom classes
     for any WSDL file.
 
-    If you need to authenticate on the server, use authenticate() method. You can specify username and password
-    right there, or before, using setCredentials(), setUsername() and/ or setPassword().
+    If you need to authenticate on the server, use authenticate() method.
+    You can specify username and password right there, or before,
+    using setCredentials(), setUsername() and/ or setPassword().
 
-    Typically, to send a message, you will need to set the URL, message name, target namespace (when using SOAP),
-    parameters list (when invoking a medhod that has parameters), and then use the parameterless sendMessage()
-    method. Here is a snippet for that:
+    Typically, to send a message, you will need to set the URL, message name,
+    target namespace (when using SOAP), parameters list (when invoking a medhod
+    that has parameters), and then use the parameterless sendMessage() method.
+    Here is a snippet for that:
     \code
     QWebMethod *message = new QWebMethod(0, QWebMethod::soap12, QWebMethod::POST);
     message->setHost("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx");
@@ -23,18 +28,23 @@
     message->setTargetNamespace("http://www.daenet.de/webservices/CurrencyServer");
     message->sendMessage();
     \endcode
-    You then have to wait for replyReady(QVariant) signal, or check for reply using isReplyReady() convenience
-    method.
+    You then have to wait for replyReady(QVariant) signal, or check for reply
+    using isReplyReady() convenience method.
 
-    To send a REST message with (for example) JSON body, pass (QWebMethod::rest | QWebMethod::json) as protocol flag.
-    Additionally, specify HTTP method to be used (POST, GET, PUT, DELETE). When sending a REST message, \a messageName
-    is used as request URI, and \a parameters specify additioanl data to be sent in message body.
+    To send a REST message with (for example) JSON body, pass
+    (QWebMethod::rest | QWebMethod::json) as protocol flag. Additionally,
+    specify HTTP method to be used (POST, GET, PUT, DELETE).
+    When sending a REST message, \a messageName is used as request URI,
+    and \a parameters specify additioanl data to be sent in message body.
 
-    This class provides asynchronous sendMessage() only. If synchronous operation is needed, you can:
+    This class provides asynchronous sendMessage() only.
+    If synchronous operation is needed, you can:
     \list
-        \o use QWebServiceMethod, which provides some additional, useful constructors and methods
+        \o use QWebServiceMethod, which provides some additional,
+           useful constructors and methods
         \o use static QWebServiceMethod::sendMessage()
-        \o subclass QWebMethod, and add a static sendMessage() method with a "waiting loop"
+        \o subclass QWebMethod, and add a static sendMessage() method with
+           a "waiting loop"
         \o wait for replyReady() signal in a "waiting loop"
     \endlist
 
@@ -47,14 +57,16 @@
         if (qsm.replyReceived) {
             return qsm.reply;
         } else {
-            qApp->processEvents(); // Ensures that application remains responive to events (prevents freezing).
+            qApp->processEvents(); // Ensures that application remains responive
+                                   // to events (prevents freezing).
         }
     }
     \endcode
 
-    If you want to save some time on configuration in your code, you can subclass QWebMethod, implement a method, that
-    would store your settings (an example configure() method is described below). Then, create your own slot
-    for parsing the reply.
+    If you want to save some time on configuration in your code, you can
+    subclass QWebMethod, implement a method, that would store your settings
+    (an example configure() method is described below). Then, create your own
+    slot for parsing the reply.
 
     In your "settings method", named for example configure(), you may want to:
     \list
@@ -62,8 +74,8 @@
         \o set protocol
         \o set message name
         \o set target namespace
-        \o connect replyReady() signal to your custom slot (where you can parse the reply
-           and return it in a type of your convenience)
+        \o connect replyReady() signal to your custom slot (where you can
+           parse the reply and return it in a type of your convenience)
     \endlist
 
     \sa init()
@@ -72,7 +84,8 @@
 /*!
      \enum QWebMethod::Protocol
 
-     This enum type specifies the protocol that QWebMethod will use in communicating with the server:
+     This enum type specifies the protocol that QWebMethod will use in
+     communicating with the server:
 
      \value http
             HTTP protocol will be used.
@@ -81,36 +94,39 @@
      \value soap12
             SOAP 1.2 will be used.
      \value soap
-            Convenience SOAP aggregator, used internally. If passed to setProtocol(), SOAP 1.2 will be used instead.
+            Convenience SOAP aggregator, used internally. If passed to
+            setProtocol(), SOAP 1.2 will be used instead.
      \value json
             JSON message will be used.
      \value xml
             Message will be sent using plain XML (much simpler than SOAP).
      \value rest
-            QWebMethod will switch into REST mode. This can be combined with any other Protocol flag to define, what message body should look like.
+            QWebMethod will switch into REST mode. This can be combined with
+            any other Protocol flag to define, what message body should look like.
  */
 
 /*!
-  \enum QWebMethod::HttpMethod
+    \enum QWebMethod::HttpMethod
 
-  Defines HTTP method to use when sending the message. Using more than 1 at the same time is forbidden
-  (will not work).
+    Defines HTTP method to use when sending the message. Using more than 1 at
+    the same time is forbidden (will not work).
 
-  \value POST
-         QWebMethod will use POST.
-  \value GET
-         QWebMethod will use GET.
-  \value PUT
-         QWebMethod will use PUT.
-  \value DELETE
-         QWebMethod will use DELETE.
+    \value POST
+           QWebMethod will use POST.
+    \value GET
+           QWebMethod will use GET.
+    \value PUT
+           QWebMethod will use PUT.
+    \value DELETE
+           QWebMethod will use DELETE.
   */
 
 /*!
     \fn QWebMethod::QWebMethod(QObject *parent, Protocol protocol, HttpMethod method)
 
-    Constructs the message usign \a parent, \a protocol (which defaults to soap12),
-    and \a method (which defaults to POST). Requires specifying other params later (setParameters()).
+    Constructs the message usign \a parent, \a protocol (which defaults to
+    soap12), and \a method (which defaults to POST). Requires specifying
+    other params later (setParameters()).
 
     \sa init(), setParameters(), setProtocol(), sendMessage()
   */
@@ -159,13 +175,14 @@ QWebMethod::~QWebMethod()
 /*!
     \fn QWebMethod::errorEncountered(QString errMessage)
 
-    Singal emitted when WsdlConverter encounters an error. Carries \a errMessage for convenience.
+    Singal emitted when WsdlConverter encounters an error.
+    Carries \a errMessage for convenience.
   */
 
 /*!
-  \fn QWebMethod::setHost(QString newHost)
+    \fn QWebMethod::setHost(QString newHost)
 
-  Sets message's host to \a newHost.
+    Sets message's host to \a newHost.
   */
 void QWebMethod::setHost(QString newHost)
 {
@@ -173,9 +190,9 @@ void QWebMethod::setHost(QString newHost)
 }
 
 /*!
-  \fn QWebMethod::setHost(QUrl newHost)
+    \fn QWebMethod::setHost(QUrl newHost)
 
-  Sets message's host to \a newHost.
+    Sets message's host to \a newHost.
   */
 void QWebMethod::setHost(QUrl newHost)
 {
@@ -183,12 +200,12 @@ void QWebMethod::setHost(QUrl newHost)
 }
 
 /*!
-  \fn QWebMethod::setUsername(QString newUsername)
+    \fn QWebMethod::setUsername(QString newUsername)
 
-  Used for authentication. Sets username using \a newUsername.
-  To authenticate, call authenticate().
+    Used for authentication. Sets username using \a newUsername.
+    To authenticate, call authenticate().
 
-  \sa setPassword(), setCredentials(), authenticate()
+    \sa setPassword(), setCredentials(), authenticate()
   */
 void QWebMethod::setUsername(QString newUsername)
 {
@@ -196,12 +213,12 @@ void QWebMethod::setUsername(QString newUsername)
 }
 
 /*!
-  \fn QWebMethod::setPassword(QString newPassword)
+    \fn QWebMethod::setPassword(QString newPassword)
 
-  Used for authentication. Sets password using \a newPassword.
-  To authenticate, call authenticate().
+    Used for authentication. Sets password using \a newPassword.
+    To authenticate, call authenticate().
 
-  \sa setUsername(), setCredentials(), authenticate()
+    \sa setUsername(), setCredentials(), authenticate()
   */
 void QWebMethod::setPassword(QString newPassword)
 {
@@ -209,12 +226,12 @@ void QWebMethod::setPassword(QString newPassword)
 }
 
 /*!
-  \fn QWebMethod::setCredentials(QString newUsername, QString newPassword)
+    \fn QWebMethod::setCredentials(QString newUsername, QString newPassword)
 
-  Used for authentication. Sets username (\a newUsername) and password (\a newPassword).
-  To authenticate, call authenticate().
+    Used for authentication. Sets username (\a newUsername) and password
+    (\a newPassword). To authenticate, call authenticate().
 
-  \sa setUsername(), setPassword(), authenticate()
+    \sa setUsername(), setPassword(), authenticate()
   */
 void QWebMethod::setCredentials(QString newUsername, QString newPassword)
 {
@@ -223,9 +240,9 @@ void QWebMethod::setCredentials(QString newUsername, QString newPassword)
 }
 
 /*!
-  \fn QWebMethod::setMessageName(QString newName)
+    \fn QWebMethod::setMessageName(QString newName)
 
-  Sets message's name to \a newName.
+    Sets message's name to \a newName.
   */
 void QWebMethod::setMessageName(QString newName)
 {
@@ -233,9 +250,9 @@ void QWebMethod::setMessageName(QString newName)
 }
 
 /*!
-  \fn QWebMethod::setMethodName(QString newName)
+    \fn QWebMethod::setMethodName(QString newName)
 
-  Sets message's name to \a newName.
+    Sets message's name to \a newName.
   */
 void QWebMethod::setMethodName(QString newName)
 {
@@ -265,7 +282,8 @@ void QWebMethod::setReturnValue(QMap<QString, QVariant> returnVal)
 /*!
     \fn QWebMethod::setTargetNamespace(QString tNamespace)
 
-    Sets message's target namespace (\a tNamespace), which is needed in SOAP messaging.
+    Sets message's target namespace (\a tNamespace),
+    which is needed in SOAP messaging.
   */
 void QWebMethod::setTargetNamespace(QString tNamespace)
 {
@@ -275,21 +293,25 @@ void QWebMethod::setTargetNamespace(QString tNamespace)
 /*!
     \fn QWebMethod::setProtocol(Protocol prot)
 
-    Sets the protocol flag (\a prot, being one of the values of QWebMethod::Protocol).
-    This determines the protocol used later, when sending request. Defaults to SOAP1.2.
+    Sets the protocol flag (\a prot, being one of the values
+    of QWebMethod::Protocol). This determines the protocol used later,
+    when sending request. Defaults to SOAP1.2.
 
     WARNING:
-    This method also checks for disallowed combinations. If such combination is encountered,
-    it discards the set protocol, and sets SOAP 1.2.
+    This method also checks for disallowed combinations. If such combination
+    is encountered, it discards the set protocol, and sets SOAP 1.2.
 
-    This behavious will probably change in the future, when QWebMethod gets error handling.
+    This behavious will probably change in the future, when QWebMethod gets
+    error handling.
   */
 void QWebMethod::setProtocol(Protocol prot)
 {
     // Prevent incompatibile flags from being set simultaneously:
     QList<int> allowedCombinations;
-    allowedCombinations << 0x01 << 0x02 << 0x04 << 0x06 << 0x08 << 0x10 << 0x20; // Standard values.
-    allowedCombinations << 0x21 << 0x22 << 0x24 << 0x26 << 0x28 << 0x30; // REST combinations
+    // Standard values.
+    allowedCombinations << 0x01 << 0x02 << 0x04 << 0x06 << 0x08 << 0x10 << 0x20;
+    // REST combinations
+    allowedCombinations << 0x21 << 0x22 << 0x24 << 0x26 << 0x28 << 0x30;
 
     if (allowedCombinations.contains(prot)) {
         if (prot & soap)
@@ -298,16 +320,17 @@ void QWebMethod::setProtocol(Protocol prot)
             protocolUsed = prot;
     }
     else {
-        enterErrorState(QString::fromLatin1("Wrong protocol is set. You have combined exclusive flags."));
+        enterErrorState(QString::fromLatin1("Wrong protocol is set. You have "
+                                            "combined exclusive flags."));
 //        protocolUsed = soap12;
     }
 }
 
 /*!
-  \fn QWebMethod::setHttpMethod(HttpMethod method)
+    \fn QWebMethod::setHttpMethod(HttpMethod method)
 
-  Sets the httpMethod flag (\a method, a value of QWebMethod::HttpMethod).
-  Default method is QWebMethod::POST.
+    Sets the httpMethod flag (\a method, a value of QWebMethod::HttpMethod).
+    Default method is QWebMethod::POST.
   */
 void QWebMethod::setHttpMethod(HttpMethod method)
 {
@@ -315,13 +338,13 @@ void QWebMethod::setHttpMethod(HttpMethod method)
 }
 
 /*!
-  \fn QWebMethod::setHttpMethod(QString newMethod)
+    \fn QWebMethod::setHttpMethod(QString newMethod)
 
-  Sets the httpMethod flag (\a newMethod, using QString representation of HTTP method
-  (post, get, put, or delete)). Setting is NOT case sensitive.
-  Default method is POST.
+    Sets the httpMethod flag (\a newMethod, using QString representation
+    of HTTP method (post, get, put, or delete)). Setting is NOT case sensitive.
+    Default method is POST.
 
-  Returns true if successful.
+    Returns true if successful.
   */
 bool QWebMethod::setHttpMethod(QString newMethod)
 {
@@ -342,14 +365,16 @@ bool QWebMethod::setHttpMethod(QString newMethod)
 /*!
     \fn bool QWebMethod::sendMessage(QByteArray requestData)
 
-    Sends the message asynchronously, assuming that all neccessary data was specified earlier.
-    Optionally, a QByteArray (\a requestData) can be specified - it will override standard
-    data encapsulation (preparation, see prepareRequestData()), and send the byte array without any changes.
+    Sends the message asynchronously, assuming that all neccessary data was
+    specified earlier. Optionally, a QByteArray (\a requestData) can be
+    specified - it will override standard data encapsulation (preparation,
+    see prepareRequestData()), and send the byte array without any changes.
 
     If synchronous operation is needed, you can:
     \list
         \o use static QWebServiceMethod::sendMessage()
-        \o subclass QWebMethod, and add a static sendMessage() method with a "waiting loop"
+        \o subclass QWebMethod, and add a static sendMessage() method with
+           a "waiting loop"
         \o wait for replyReady() signal in a "waiting loop"
     \endlist
 
@@ -362,7 +387,8 @@ bool QWebMethod::setHttpMethod(QString newMethod)
         if (qsm.replyReceived) {
             return qsm.reply;
         } else {
-            qApp->processEvents(); // Ensures that application remains responive to events (prevents freezing).
+            // Ensures that application remains responive to events (prevents freezing).
+            qApp->processEvents();
         }
     }
     \endcode
@@ -376,8 +402,10 @@ bool QWebMethod::sendMessage(QByteArray requestData)
     if ((m_username != QString::fromLatin1("")) && (authReply == false)) {
         forever {
             if (authReply) {
-                disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
-                connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
+                disconnect(manager, SIGNAL(finished(QNetworkReply*)),
+                           this, SLOT(authReplyFinished(QNetworkReply*)));
+                connect(manager, SIGNAL(finished(QNetworkReply*)),
+                        this, SLOT(replyFinished(QNetworkReply*)));
                 break;
             }
             else {
@@ -386,8 +414,10 @@ bool QWebMethod::sendMessage(QByteArray requestData)
         }
     }
     else if ((m_username != QString::fromLatin1("")) && (authReply == true)) {
-        disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
-        connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
+        disconnect(manager, SIGNAL(finished(QNetworkReply*)),
+                   this, SLOT(authReplyFinished(QNetworkReply*)));
+        connect(manager, SIGNAL(finished(QNetworkReply*)),
+                this, SLOT(replyFinished(QNetworkReply*)));
     }
 
     QNetworkRequest request;
@@ -443,8 +473,9 @@ bool QWebMethod::sendMessage(QByteArray requestData)
 /*!
     \fn QWebMethod::authenticate(QString newUsername, QString newPassword)
 
-    Performs authentication using \a newUsername and \a newPassword, if specified. If not, and
-    they were given using setCredentials(), setUsername() or setPassword(), it uses the existing values.
+    Performs authentication using \a newUsername and \a newPassword,
+    if specified. If not, and they were given using setCredentials(),
+    setUsername() or setPassword(), it uses the existing values.
 
     If no data is specified, it does nothing. Returns true on success.
 
@@ -473,10 +504,12 @@ bool QWebMethod::authenticate(QString newUsername, QString newPassword)
 /*!
     \fn QWebMethod::authenticate(QUrl customAuthString)
 
-    Performs authentication using \a customAuthString. Credentials specified by setCredentials(),
+    Performs authentication using \a customAuthString.
+    Credentials specified by setCredentials(),
     setUsername() or setPassword() are NOT used.
 
-    If no data is specified, it does nothing (and returns false). Returns true on success.
+    If no data is specified, it does nothing (and returns false).
+    Returns true on success.
 
     \sa setCredentials(), setUsername(), setPassword()
   */
@@ -486,26 +519,28 @@ bool QWebMethod::authenticate(QUrl customAuthString)
         return false;
 
     authReply = false;
-    disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
-    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
+    disconnect(manager, SIGNAL(finished(QNetworkReply*)),
+               this, SLOT(replyFinished(QNetworkReply*)));
+    connect(manager, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(authReplyFinished(QNetworkReply*)));
 
-    QNetworkRequest rqst(QUrl::fromUserInput(QString("http://" + m_hostUrl.host() + "/")));
-    rqst.setHeader(QNetworkRequest::ContentTypeHeader, QString::fromLatin1("application/x-www-form-urlencoded"));
+    QNetworkRequest rqst(QUrl::fromUserInput(
+                             QString("http://" + m_hostUrl.host() + "/")));
+    rqst.setHeader(QNetworkRequest::ContentTypeHeader,
+                   QString::fromLatin1("application/x-www-form-urlencoded"));
 
     QByteArray paramBytes = customAuthString.toString().mid(1).toLatin1();
     paramBytes.replace("/", "%2F");
 
     manager->post(rqst, paramBytes);
-
-//    disconnect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(authReplyFinished(QNetworkReply*)));
-//    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
     return true;
 }
 
 /*!
     \fn QWebMethod::replyRead()
 
-    After making asynchronous call, and getting the replyReady() signal, this method can be used to read the reply.
+    After making asynchronous call, and getting the replyReady() signal,
+    this method can be used to read the reply.
   */
 QString QWebMethod::replyRead()
 {
@@ -517,7 +552,8 @@ QString QWebMethod::replyRead()
 /*!
     \fn QWebMethod::replyReadParsed()
 
-    After making asynchronous call, and getting the replyReady() signal, this method can be used to read the reply.
+    After making asynchronous call, and getting the replyReady() signal,
+    this method can be used to read the reply.
 
     Returns parsed data.
   */
@@ -527,22 +563,27 @@ QVariant QWebMethod::replyReadParsed()
     QByteArray replyBytes = reply;
     QString replyString = convertReplyToUtf(QString(replyBytes));
 
-    // This section is SOAP-only and should be fixed for other protocols! It's not done properly, anyway.
+    // This section is SOAP-only and should be fixed for other protocols!
+    // It's not done properly, anyway.
     // Should return type specified in replyValue.
     if (protocolUsed & soap) {
         QString tempBegin = QString("<" + m_methodName + "Result>");
-        int replyBeginIndex = replyString.indexOf(tempBegin, 0, Qt::CaseSensitive);
+        int replyBeginIndex = replyString.indexOf(tempBegin, 0,
+                                                  Qt::CaseSensitive);
         replyBeginIndex += tempBegin.length();
 
         QString tempFinish = QString("</" + m_methodName + "Result>");
-        int replyFinishIndex = replyString.indexOf(tempFinish, replyBeginIndex, Qt::CaseSensitive);
+        int replyFinishIndex = replyString.indexOf(tempFinish,
+                                                   replyBeginIndex,
+                                                   Qt::CaseSensitive);
 
         if (replyBeginIndex == -1)
             replyBytes = 0;
         if (replyFinishIndex == -1)
             replyFinishIndex = replyString.length();
 
-        result = (QVariant) replyString.mid(replyBeginIndex, replyFinishIndex - replyBeginIndex);
+        result = (QVariant) replyString.mid(replyBeginIndex,
+                                            replyFinishIndex - replyBeginIndex);
     }
     // EO section.
     else
@@ -553,7 +594,8 @@ QVariant QWebMethod::replyReadParsed()
 /*!
     \fn QWebMethod::replyReadRaw()
 
-    After making asynchronous call, and getting the replyReady() signal, this method can be used to read the reply.
+    After making asynchronous call, and getting the replyReady() signal,
+    this method can be used to read the reply.
 
     Returns the raw data acquired from server.
   */
@@ -565,7 +607,8 @@ QByteArray QWebMethod::replyReadRaw()
 /*!
     \fn QWebMethod::replyReady(QByteArray rply)
 
-    Signal invoked when the reply (\a rply) from web service's server is ready for reading.
+    Signal invoked when the reply (\a rply) from web service's server
+    is ready for reading.
   */
 
 /*!
@@ -631,7 +674,8 @@ QString QWebMethod::targetNamespace() const
 /*!
     \fn QWebMethod::host() const
 
-    Returns host's URL (in QString). If you want a QUrl, call getHostUrl(), or QUrl(QWebMethod::getHost());
+    Returns host's URL (in QString). If you want a QUrl, call getHostUrl(),
+    or QUrl(QWebMethod::getHost());
   */
 QString QWebMethod::host() const
 {
@@ -649,9 +693,9 @@ QUrl QWebMethod::hostUrl() const
 }
 
 /*!
-  \fn QWebMethod::username() const
+    \fn QWebMethod::username() const
 
-  Returns username.
+    Returns username.
   */
 QString QWebMethod::username() const
 {
@@ -659,11 +703,11 @@ QString QWebMethod::username() const
 }
 
 /*!
-  \fn QWebMethod::protocol() const
+    \fn QWebMethod::protocol() const
 
-  Returns currently set protocol.
+    Returns currently set protocol.
 
-  \sa httpMethod()
+    \sa httpMethod()
   */
 QWebMethod::Protocol QWebMethod::protocol() const
 {
@@ -671,11 +715,11 @@ QWebMethod::Protocol QWebMethod::protocol() const
 }
 
 /*!
-  \fn QWebMethod::httpMethod() const
+    \fn QWebMethod::httpMethod() const
 
-  Returns currently set HTTP method.
+    Returns currently set HTTP method.
 
-  \sa protocol()
+    \sa protocol()
   */
 QWebMethod::HttpMethod QWebMethod::httpMethod() const
 {
@@ -683,10 +727,10 @@ QWebMethod::HttpMethod QWebMethod::httpMethod() const
 }
 
 /*!
-  \fn QWebMethod::protocolString(bool includeRest) const
+    \fn QWebMethod::protocolString(bool includeRest) const
 
-  Returns protocol used in form of a QString. If \a includeRest is
-  true, and --rest flag was specified, it appends ",rest" to the result.
+    Returns protocol used in form of a QString. If \a includeRest is
+    true, and --rest flag was specified, it appends ",rest" to the result.
   */
 QString QWebMethod::protocolString(bool includeRest) const
 {
@@ -710,11 +754,11 @@ QString QWebMethod::protocolString(bool includeRest) const
 }
 
 /*!
-  \fn QWebMethod::httpMethodString() const
+    \fn QWebMethod::httpMethodString() const
 
-  Returns the HTTP method used, in form of a QString.
+    Returns the HTTP method used, in form of a QString.
 
-  \sa httpMethod()
+    \sa httpMethod()
   */
 QString QWebMethod::httpMethodString() const
 {
@@ -735,7 +779,8 @@ QString QWebMethod::httpMethodString() const
 /*!
     \fn QWebMethod::errorInfo() const
 
-    Returns QString with error message in case an error occured. Otherwise, returns empty string.
+    Returns QString with error message in case an error occured. Otherwise,
+    returns empty string.
 
     \sa isErrorState()
   */
@@ -747,8 +792,8 @@ QString QWebMethod::errorInfo() const
 /*!
     \fn QWebMethod::isErrorState() const
 
-    Returns true if there was an error, false otherwise. Details about an error can be read with
-    getErrorInfo().
+    Returns true if there was an error, false otherwise. Details about
+    an error can be read with getErrorInfo().
 
     \sa errorInfo()
   */
@@ -758,9 +803,9 @@ bool QWebMethod::isErrorState() const
 }
 
 /*!
-  \fn QWebMethod::isReplyReady() const
+    \fn QWebMethod::isReplyReady() const
 
-  Returns true if reply was received.
+    Returns true if reply was received.
   */
 bool QWebMethod::isReplyReady() const
 {
@@ -770,7 +815,8 @@ bool QWebMethod::isReplyReady() const
 /*!
     \fn QWebMethod::replyFinished(QNetworkReply *netReply)
 
-    Public (will probably be private in the future) slot, which processes the reply (\a netReply) from the server.
+    Public (will probably be private in the future) slot, which processes
+    the reply (\a netReply) from the server.
     Emits the replyReady() signal.
   */
 void QWebMethod::replyFinished(QNetworkReply *netReply)
@@ -784,8 +830,8 @@ void QWebMethod::replyFinished(QNetworkReply *netReply)
 /*!
     \fn QWebMethod::authReplyFinished(QNetworkReply *reply)
 
-  TEMP Auth METHOD. HIGHLY EXPERIMENTAL.
-  Checks for body of \a reply to determine correctness of authentication.
+    TEMP Auth METHOD. HIGHLY EXPERIMENTAL.
+    Checks for body of \a reply to determine correctness of authentication.
   */
 void QWebMethod::authReplyFinished(QNetworkReply *reply)
 {
@@ -800,17 +846,19 @@ void QWebMethod::authReplyFinished(QNetworkReply *reply)
 }
 
 /*!
-  \fn QWebMethod::authenticationSlot(QNetworkReply *reply, QAuthenticator *authenticator)
+    \fn QWebMethod::authenticationSlot(QNetworkReply *reply, QAuthenticator *authenticator)
 
-  Internal method used to authenticate the communication. Use setCredentials() or setUsername()
-  and setPassword() to specify the data.
+    Internal method used to authenticate the communication.
+    Use setCredentials() or setUsername() and setPassword()
+    to specify the data.
 
-  This is a fallback method of QNAM. Typically, authenticate() should be used.
+    This is a fallback method of QNAM. Typically, authenticate()
+    should be used.
 
-  Fills the \a authenticator object. Does not use \a reply.
-
+    Fills the \a authenticator object. Does not use \a reply.
   */
-void QWebMethod::authenticationSlot(QNetworkReply *reply, QAuthenticator *authenticator)
+void QWebMethod::authenticationSlot(QNetworkReply *reply,
+                                    QAuthenticator *authenticator)
 {
     if (authenticationError)
     {
@@ -827,8 +875,9 @@ void QWebMethod::authenticationSlot(QNetworkReply *reply, QAuthenticator *authen
 /*!
     \fn QWebMethod::init()
 
-    Performs genral initialisation of the object. Sets default variable values, initializes
-    network manager, connects reply signals. Calls virtual method, configure().
+    Performs genral initialisation of the object.
+    Sets default variable values, initializes network manager,
+    connects reply signals. Calls virtual method, configure().
   */
 void QWebMethod::init()
 {
@@ -844,7 +893,8 @@ void QWebMethod::init()
     manager = new QNetworkAccessManager(this);
 
     reply.clear();
-    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
+    connect(manager, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(replyFinished(QNetworkReply*)));
     connect(manager, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)),
             this, SLOT(authenticationSlot(QNetworkReply*,QAuthenticator*)));
 }
@@ -852,9 +902,11 @@ void QWebMethod::init()
 /*!
     \fn QWebMethod::prepareRequestData()
 
-    Protected function, invoked by sendMessage(). Modifies QByteArray data, so that it is consistent with
-    protocol and HTTP method specification. It uses QMap<QString, QVariant> parameters to fill data object's body.
-    Can be overriden by creating custom QByteArray and passing it to sendMessage().
+    Protected function, invoked by sendMessage(). Modifies QByteArray data,
+    so that it is consistent with protocol and HTTP method specification.
+    It uses QMap<QString, QVariant> parameters to fill data object's body.
+    Can be overriden by creating custom QByteArray and passing it to
+    sendMessage().
 
     \sa sendMessage()
   */
@@ -884,12 +936,14 @@ void QWebMethod::prepareRequestData()
             footer = QString("</soap:Body> " + endl + "</soap:Envelope>");
         }
 
-        body = QString("\t<" + m_methodName + " xmlns=\"" + m_targetNamespace + "\"> " + endl);
+        body = QString("\t<" + m_methodName
+                       + " xmlns=\"" + m_targetNamespace + "\"> " + endl);
 
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
             // Currently, this does not handle nested lists
-            body += QString("\t\t<" + currentKey + ">" + qv.toString() + "</" + currentKey + "> " + endl);
+            body += QString("\t\t<" + currentKey + ">" +
+                            qv.toString() + "</" + currentKey + "> " + endl);
         }
 
         body += QString("\t</" + m_methodName + "> " + endl);
@@ -907,7 +961,8 @@ void QWebMethod::prepareRequestData()
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
             // Currently, this does not handle nested lists
-            body += QString("{" + endl + "\t\"" + currentKey + "\" : \"" + qv.toString() + "\"" + endl);
+            body += QString("{" + endl + "\t\"" + currentKey + "\" : \""
+                            + qv.toString() + "\"" + endl);
         }
         body += QString::fromLatin1("}");
     }
@@ -915,7 +970,8 @@ void QWebMethod::prepareRequestData()
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
             // Currently, this does not handle nested lists
-            body += QString("\t\t<" + currentKey + ">" + qv.toString() + "</" + currentKey + "> " + endl);
+            body += QString("\t\t<" + currentKey + ">"
+                            + qv.toString() + "</" + currentKey + "> " + endl);
         }
     }
 

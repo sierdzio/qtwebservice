@@ -40,8 +40,10 @@ public:
         DELETE  = 0x8
     };
 
-    QWebMethod(QObject *parent = 0, Protocol protocol = soap12, HttpMethod httpMethod = POST);
-    QWebMethod(QUrl url, QObject *parent = 0, Protocol protocol = soap12, HttpMethod httpMethod = POST);
+    QWebMethod(QObject *parent = 0, Protocol protocol = soap12,
+               HttpMethod httpMethod = POST);
+    QWebMethod(QUrl url, QObject *parent = 0, Protocol protocol = soap12,
+               HttpMethod httpMethod = POST);
     ~QWebMethod();
 
     void setHost(QString newHost);
@@ -57,8 +59,10 @@ public:
     void setProtocol(Protocol protocol);
     void setHttpMethod(HttpMethod method);
     bool setHttpMethod(QString newMethod);
-    bool sendMessage(QByteArray requestData = QByteArray()); // should this be changed to invokeMethod()?
-    bool authenticate(QString newUsername = QString(), QString newPassword = QString());
+    // should this be changed to invokeMethod()?
+    bool sendMessage(QByteArray requestData = QByteArray());
+    bool authenticate(QString newUsername = QString(),
+                      QString newPassword = QString());
     bool authenticate(QUrl customAuthString);
 
 //    QVariant replyRead();
@@ -91,7 +95,7 @@ protected slots:
     void authReplyFinished(QNetworkReply *reply);
     void authenticationSlot(QNetworkReply *reply, QAuthenticator *authenticator);
 
-protected: // Changed for 0.3.5, but precisely what should be protected and what private shall be decided later.
+protected:
     void init();
     void prepareRequestData();
     QString convertReplyToUtf(QString textToConvert);

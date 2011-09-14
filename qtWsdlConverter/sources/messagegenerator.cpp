@@ -11,8 +11,8 @@
 /*!
     \fn MessageGenerator::MessageGenerator(QMap<QString, QWebServiceMethod *> *msgs, QDir wrkDir, Flags *flgs, QObject *parent)
 
-    Constructs QObject using \a parent, initialises MessageGenerator with messages (\a msgs),
-    working directory (\a wrkDir), and flags (\a flgs).
+    Constructs QObject using \a parent, initialises MessageGenerator
+    with messages (\a msgs), working directory (\a wrkDir), and flags (\a flgs).
   */
 MessageGenerator::MessageGenerator(QMap<QString, QWebServiceMethod *> *msgs,
                                    QDir wrkDir, Flags *flgs, QObject *parent) :
@@ -73,11 +73,13 @@ bool MessageGenerator::createMessages()
 
         if (flags->flags() & Flags::subclass) {
             if (!createSubclassedMessageHeader(m))
-                return enterErrorState("Creating header for message \"" + m->methodName() + "\" failed!");
+                return enterErrorState("Creating header for message \""
+                                       + m->methodName() + "\" failed!");
         }
         else {
             if (!createMessageHeader(m))
-                return enterErrorState("Creating header for message \"" + m->methodName() + "\" failed!");
+                return enterErrorState("Creating header for message \""
+                                       + m->methodName() + "\" failed!");
         }
     }
 
@@ -91,11 +93,13 @@ bool MessageGenerator::createMessages()
 
         if (flags->flags() & Flags::subclass) {
             if (!createSubclassedMessageSource(n))
-                return enterErrorState("Creating header for message \"" + n->methodName() + "\" failed!");
+                return enterErrorState("Creating header for message \""
+                                       + n->methodName() + "\" failed!");
         }
         else {
             if (!createMessageSource(n))
-                return enterErrorState("Creating source for message \"" + n->methodName() + "\" failed!");
+                return enterErrorState("Creating source for message \""
+                                       + n->methodName() + "\" failed!");
         }
     }
 
@@ -118,7 +122,8 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
         return enterErrorState("Error: could not open message header file for writing.");
 
-    QString msgReplyName = msg->returnValueName().first(); // Possible problem in case of multi-return.
+    // Possible problem in case of multi-return.
+    QString msgReplyName = msg->returnValueName().first();
 
     QString msgReplyType = "";
     QString msgParameters = "";
@@ -136,7 +141,8 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
 
         // Create msgParameters (comma separated list)
         foreach (QString s, tempMap.keys()) {
-            msgParameters += QString(tempMap.value(s).typeName()) + " " + s + ", ";
+            msgParameters += QString(tempMap.value(s).typeName())
+                    + " " + s + ", ";
         }
         msgParameters.chop(2);
     }
@@ -145,10 +151,12 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
     // Begin writing:
     QTextStream out(&file);
     out.setCodec("UTF-8");
-    out << "#ifndef " << msgName.toUpper() << "_H" << endl; // might break on curious names
+    // Might break on curious names
+    out << "#ifndef " << msgName.toUpper() << "_H" << endl;
     out << "#define " << msgName.toUpper() << "_H" << endl;
     out << endl;
-    out << "#include <QWebService>" << endl; // Should be <QWebService/QWebServiceMethod.h>
+    // Should be <QWebService/QWebServiceMethod.h>
+    out << "#include <QWebService>" << endl;
     out << endl;
     out << "class " << msgName << " : public QWebServiceMethod" << endl;
     out << "{" << endl;
@@ -158,17 +166,20 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
 
     out << "    " << msgName << "(QObject *parent = 0);" << endl;
     if (msgParameters != "")
-    out << "    " << msgName << "(" << msgParameters << ", QObject *parent = 0);" << endl;
+    out << "    " << msgName << "(" << msgParameters
+        << ", QObject *parent = 0);" << endl;
 
     out << endl;
     out << "    void setParameters(" << msgParameters << ");" << endl;
     out << endl;
 
     out << "    using QWebServiceMethod::sendMessage;" << endl;
-    if ((msgParameters != "") && !((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous)))
+    if ((msgParameters != "") && !((flags->flags() & Flags::compactMode)
+                                   && (flags->flags() & Flags::synchronous)))
         out << "    bool sendMessage(" << msgParameters << ");" << endl;
 
-    if (!((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::asynchronous)))
+    if (!((flags->flags() & Flags::compactMode)
+          && (flags->flags() & Flags::asynchronous)))
     {
         out << "    QString static sendMessage(QObject *parent";
         if (msgParameters != "") {
@@ -182,13 +193,16 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
     out << "private:" << endl;
     out << "    void configure();" << endl;
     { // Create parameters list in declarative form.
-        out << "    // -------------------------" << endl << "    // Parameters:" << endl;
+        out << "    // -------------------------" << endl
+            << "    // Parameters:" << endl;
+
         QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
 
         foreach (QString s, tempMap.keys()) {
-            out << "    " << tempMap.value(s).typeName() << " " << s  << ";" << endl;
+            out << "    " << tempMap.value(s).typeName() << " " << s << ";" << endl;
         }
-        out << "    // End of parameters." << endl << "    // -------------------------" << endl;
+        out << "    // End of parameters." << endl
+            << "    // -------------------------" << endl;
     }
     out << "};" << endl;
     out << endl;
@@ -211,7 +225,8 @@ bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
         return enterErrorState("Error: could not open message source file for writing.");
 
-    QString msgReplyName = msg->returnValueName().first(); // Possible problem in case of multi-return.
+    // Possible problem in case of multi-return.
+    QString msgReplyName = msg->returnValueName().first();
 
     QString msgReplyType = "";
     QString msgParameters = "";
@@ -227,7 +242,8 @@ bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
         tempMap = msg->parameterNamesTypes();
 
         foreach (QString s, tempMap.keys()) {
-            msgParameters += QString(tempMap.value(s).typeName()) + " " + s + ", ";
+            msgParameters += QString(tempMap.value(s).typeName())
+                    + " " + s + ", ";
         }
         msgParameters.chop(2);
     }
@@ -249,7 +265,8 @@ bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
     out << "}" << endl;
     out << endl;
     if (msgParameters != "") {
-        out << msgName << "::" << msgName << "(" << msgParameters << ", QObject *parent) :" << endl;
+        out << msgName << "::" << msgName << "(" << msgParameters
+            << ", QObject *parent) :" << endl;
         out << "    QWebServiceMethod(parent)" << endl;
         out << "{" << endl;
 
@@ -268,7 +285,8 @@ bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
     out << "}" << endl;
     out << endl;
 
-    if ((msgParameters != "") && !((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous))) {
+    if ((msgParameters != "") && !((flags->flags() & Flags::compactMode)
+                                   && (flags->flags() & Flags::synchronous))) {
         out << "bool " << msgName << "::sendMessage(" << msgParameters << ")" << endl;
         out << "{" << endl;
 
@@ -279,7 +297,8 @@ bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
         out << "}" << endl;
         out << endl;
     }
-    if (!((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::asynchronous))) {
+    if (!((flags->flags() & Flags::compactMode)
+          && (flags->flags() & Flags::asynchronous))) {
         out << "/* STATIC */" << endl;
         out << "QString " << msgName << "::sendMessage(QObject *parent";
         if (msgParameters != "")
@@ -339,7 +358,8 @@ bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
         return enterErrorState("Error: could not open message header file for writing.");
 
-    QString msgReplyName = msg->returnValueName().first(); // Possible problem in case of multi-return.
+    // Possible problem in case of multi-return.
+    QString msgReplyName = msg->returnValueName().first();
 
     QString msgReplyType = "";
     QString msgParameters = "";
@@ -366,7 +386,8 @@ bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
     // Begin writing:
     QTextStream out(&file);
     out.setCodec("UTF-8");
-    out << "#ifndef " << msgName.toUpper() << "_H" << endl; // might break on curious names
+    // Might break on curious names
+    out << "#ifndef " << msgName.toUpper() << "_H" << endl;
     out << "#define " << msgName.toUpper() << "_H" << endl;
     out << endl;
     out << "#include <QtCore>" << endl;
@@ -401,8 +422,10 @@ bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
     out << "    };" << endl;
     out << endl;
     out << "    explicit " << msgName << "(QObject *parent = 0);" << endl;
-    if (msgParameters != "")
-        out << "    " << msgName << "(" << msgParameters << ", QObject *parent = 0);" << endl;
+    if (msgParameters != "") {
+        out << "    " << msgName << "(" << msgParameters
+            << ", QObject *parent = 0);" << endl;
+    }
     out << "    ~" << msgName << "();" << endl;
     out << endl;
     out << "    void setHost(QString newHost);" << endl;
@@ -414,11 +437,13 @@ bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
     out << "    void setHttpMethod(HttpMethod method);" << endl;
     out << "    void setParameters(" << msgParameters << ");" << endl << endl;
     out << "    bool sendMessage();" << endl;
-    if ((msgParameters != "") && !((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous)))
+    if ((msgParameters != "") && !((flags->flags() & Flags::compactMode)
+                                   && (flags->flags() & Flags::synchronous)))
         out << "    bool sendMessage(" << msgParameters << ");" << endl;
     // Temporarily, all messages will return QString!
 //    out << "    " << msgReplyType << " static sendMessage(QObject *parent";
-    if (!((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::asynchronous)))
+    if (!((flags->flags() & Flags::compactMode)
+          && (flags->flags() & Flags::asynchronous)))
     {
         out << "    QString static sendMessage(QObject *parent";
         if (msgParameters != "") {
@@ -467,13 +492,17 @@ bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
 //    out << "    " << msgReplyType << " reply;" << endl;
     out << "    QString reply;" << endl;
     { // Create parameters list in declarative form.
-        out << "    // -------------------------" << endl << "    // Parameters:" << endl;
+        out << "    // -------------------------" << endl
+            << "    // Parameters:" << endl;
+
         QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
 
         foreach (QString s, tempMap.keys()) {
-            out << "    " << tempMap.value(s).typeName() << " " << s  << ";" << endl;
+            out << "    " << tempMap.value(s).typeName()
+                << " " << s  << ";" << endl;
         }
-        out << "    // End of parameters." << endl << "    // -------------------------" << endl;
+        out << "    // End of parameters." << endl
+            << "    // -------------------------" << endl;
     }
     out << "    " << msgReplyType << " " << msgReplyName << ";" << endl;
     out << "    QNetworkAccessManager *manager;" << endl;
@@ -500,7 +529,8 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
         return enterErrorState("Error: could not open message source file for writing.");
 
-    QString msgReplyName = msg->returnValueName().first(); // Possible problem in case of multi-return.
+    // Possible problem in case of multi-return.
+    QString msgReplyName = msg->returnValueName().first();
 
     QString msgReplyType = "";
     QString msgParameters = "";
@@ -516,7 +546,8 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
         tempMap = msg->parameterNamesTypes();
 
         foreach (QString s, tempMap.keys()) {
-            msgParameters += QString(tempMap.value(s).typeName()) + " " + s + ", ";
+            msgParameters += QString(tempMap.value(s).typeName())
+                    + " " + s + ", ";
         }
         msgParameters.chop(2);
     }
@@ -537,12 +568,14 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     if (msg->host() != "")
         out << "    hostUrlUsed.setHost(\"" << msg->host() << "\");" << endl;
     else
-        out << "    hostUrlUsed.setHost(\"" << msg->targetNamespace() << "\");" << endl;
+        out << "    hostUrlUsed.setHost(\"" << msg->targetNamespace()
+            << "\");" << endl;
 
     out << "    messageNameUsed = \"" << msgName << "\";" << endl;
     out << "    replyReceived = false;" << endl;
     out << "    reply.clear();" << endl;
-    out << "    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));" << endl;
+    out << "    connect(manager, SIGNAL(finished(QNetworkReply*)), "
+        << "this, SLOT(replyFinished(QNetworkReply*)));" << endl;
     { // Defaulting the protocol:
         out << "    protocolUsed = " << flags->protocolString() << ";" << endl;
     }
@@ -550,7 +583,8 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "}" << endl;
     out << endl;
     if (msgParameters != "") {
-        out << msgName << "::" << msgName << "(" << msgParameters << ", QObject *parent) :" << endl;
+        out << msgName << "::" << msgName << "(" << msgParameters
+            << ", QObject *parent) :" << endl;
         out << "    QObject(parent)" << endl;
         out << "{" << endl;
         { // Assign all parameters.
@@ -560,16 +594,19 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
             out << "    protocolUsed = " << flags->protocolString() << ";" << endl;
         }
 
-        if (msg->host() != "")
+        if (msg->host() != "") {
             out << "    hostUrlUsed.setHost(\"" << msg->host() << "\");" << endl;
-        else
-            out << "    hostUrlUsed.setHost(\"" << msg->targetNamespace() << "\");" << endl;
-//        out << "    hostUrl.setHost(host + messageName);" << endl; // This is probably wrong, vars are not set!
+        }
+        else {
+            out << "    hostUrlUsed.setHost(\"" << msg->targetNamespace()
+                << "\");" << endl;
+        }
 
         out << "    messageNameUsed = \"" << msgName << "\";" << endl;
         out << "    replyReceived = false;" << endl;
         out << "    reply.clear();" << endl;
-        out << "    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));" << endl;
+        out << "    connect(manager, SIGNAL(finished(QNetworkReply*)), "
+            << "this, SLOT(replyFinished(QNetworkReply*)));" << endl;
         out << "}" << endl;
         out << endl;
     }
@@ -611,10 +648,13 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     if (!(flags->flags() & Flags::compactMode)) {
         out << "void " << msgName << "::setProtocol(Protocol prot)" << endl;
         out << "{" << endl;
-        out << "    // Prevent incompatibile flags from being set simultaneously:" << endl;
+        out << "    // Prevent incompatibile flags from being set simultaneously:"
+            << endl;
         out << "    QList<int> allowedCombinations;" << endl;
-        out << "    allowedCombinations << 0x01 << 0x02 << 0x04 << 0x06 << 0x08 << 0x10 << 0x20; // Standard values." << endl;
-        out << "    allowedCombinations << 0x21 << 0x22 << 0x24 << 0x26 << 0x28 << 0x30; // REST combinations" << endl;
+        out << "    allowedCombinations << 0x01 << 0x02 << 0x04 << 0x06 "
+            << "<< 0x08 << 0x10 << 0x20; // Standard values." << endl;
+        out << "    allowedCombinations << 0x21 << 0x22 << 0x24 << 0x26 "
+            << "<< 0x28 << 0x30; // REST combinations" << endl;
         out << "" << endl;
         out << "    if (allowedCombinations.contains(prot)) {" << endl;
         out << "        if (prot & soap)" << endl;
@@ -638,21 +678,27 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "    QNetworkRequest request;" << endl;
     out << "    request.setUrl(hostUrlUsed);" << endl;
     out << "    if (protocolUsed & soap)" << endl;
-    out << "        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(\"application/soap+xml; charset=utf-8\"));" << endl;
+    out << "        request.setHeader(QNetworkRequest::ContentTypeHeader, "
+        << "QVariant(\"application/soap+xml; charset=utf-8\"));" << endl;
     out << "    else if (protocolUsed == json)" << endl;
-    out << "        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(\"application/json; charset=utf-8\"));" << endl;
+    out << "        request.setHeader(QNetworkRequest::ContentTypeHeader, "
+        << "QVariant(\"application/json; charset=utf-8\"));" << endl;
     out << "    else if (protocolUsed == http)" << endl;
-    out << "        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(\"Content-Type: application/x-www-form-urlencoded\"));" << endl;
+    out << "        request.setHeader(QNetworkRequest::ContentTypeHeader, "
+        << "QVariant(\"Content-Type: application/x-www-form-urlencoded\"));" << endl;
     out << "    else if (protocolUsed & xml)" << endl;
-    out << "        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(\"application/xml; charset=utf-8\"));" << endl;
+    out << "        request.setHeader(QNetworkRequest::ContentTypeHeader, "
+        << "QVariant(\"application/xml; charset=utf-8\"));" << endl;
     out << endl;
     out << "    if (protocolUsed == soap10)" << endl;
-    out << "        request.setRawHeader(QByteArray(\"SOAPAction\"), QByteArray(hostUrlUsed.toString().toAscii()));" << endl;
+    out << "        request.setRawHeader(QByteArray(\"SOAPAction\"), "
+        << "QByteArray(hostUrlUsed.toString().toAscii()));" << endl;
     out << endl;
     out << "    prepareRequestData();" << endl;
     out << endl;
     if (flags->flags() & Flags::debugMode) {
-        out << "    qDebug() << request.rawHeaderList() << \" \" << request.url().toString();" << endl;
+        out << "    qDebug() << request.rawHeaderList() << \" \" "
+            << "<< request.url().toString();" << endl;
         out << "    qDebug() << \"*************************\";" << endl;
         out << endl;
     }    
@@ -672,8 +718,11 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "    return true;" << endl;
     out << "}" << endl;
     out << endl;
-    if ((msgParameters != "") && !((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::synchronous))) {
-        out << "bool " << msgName << "::sendMessage(" << msgParameters << ")" << endl;
+    if ((msgParameters != "")
+            && !((flags->flags() & Flags::compactMode)
+                 && (flags->flags() & Flags::synchronous))) {
+        out << "bool " << msgName << "::sendMessage("
+            << msgParameters << ")" << endl;
         out << "{" << endl;
 
         assignAllParameters(msg, out);
@@ -683,10 +732,12 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
         out << "}" << endl;
         out << endl;
     }
-    if (!((flags->flags() & Flags::compactMode) && (flags->flags() & Flags::asynchronous))) {
+    if (!((flags->flags() & Flags::compactMode)
+          && (flags->flags() & Flags::asynchronous))) {
         out << "/* STATIC */" << endl;
         // Temporarily, all messages will return QString!
-        //    out << "" << msgReplyType << " " << msgName << "::sendMessage(QObject *parent, " << msgParameters << ")" << endl;
+        //    out << "" << msgReplyType << " " << msgName
+        // << "::sendMessage(QObject *parent, " << msgParameters << ")" << endl;
         out << "QString " << msgName << "::sendMessage(QObject *parent";
         if (msgParameters != "")
             out << ", " << msgParameters;
@@ -754,7 +805,8 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "    return \"" << msgReplyName << "\";" << endl;
     out << "}" << endl;
     out << endl;
-    out << "QMap<QString, QVariant> " << msgName << "::parameterNamesTypes() const" << endl;
+    out << "QMap<QString, QVariant> " << msgName
+        << "::parameterNamesTypes() const" << endl;
     out << "{" << endl;
     out << "    QMap<QString, QVariant> parameters;" << endl;
     { // Assign all parameters.
@@ -849,11 +901,13 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "    QString replyString = convertReplyToUtf(replyBytes);" << endl;
     out << endl;
     out << "    QString tempBegin = \"<\" + messageNameUsed + \"Result>\";" << endl;
-    out << "    int replyBeginIndex = replyString.indexOf(tempBegin, 0, Qt::CaseSensitive);" << endl;
+    out << "    int replyBeginIndex = replyString.indexOf(tempBegin, 0, "
+        << "Qt::CaseSensitive);" << endl;
     out << "    replyBeginIndex += tempBegin.length();" << endl;
     out << endl;
     out << "    QString tempFinish = \"</\" + messageNameUsed + \"Result>\";" << endl;
-    out << "    int replyFinishIndex = replyString.indexOf(tempFinish, replyBeginIndex, Qt::CaseSensitive);" << endl;
+    out << "    int replyFinishIndex = replyString.indexOf(tempFinish, "
+        << "replyBeginIndex, Qt::CaseSensitive);" << endl;
     out << endl;
     out << "    if (replyBeginIndex == -1)" << endl;
     out << "        replyBytes = 0;" << endl;
@@ -861,7 +915,8 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "        replyFinishIndex = replyString.length();" << endl;
     out << endl;
     // Temporarily, all messages will return QString!
-    out << "    reply = (QString) replyString.mid(replyBeginIndex, replyFinishIndex - replyBeginIndex);" << endl;
+    out << "    reply = (QString) replyString.mid(replyBeginIndex, "
+        << "replyFinishIndex - replyBeginIndex);" << endl;
     out << endl;
     out << "    replyReceived = true;" << endl;
     out << "    emit replyReady(reply);" << endl;
@@ -871,39 +926,51 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "{" << endl;
     out << "    data.clear();" << endl;
     out << "    QString header, body, footer;" << endl;
-    out << "    QString endl = \"\\r\\n\"; // Replace with something OS-independent, or seriously rethink." << endl;
+    out << "    QString endl = \"\\r\\n\";" << endl;
     out << "    QMap<QString, QVariant> parameters = parameterNamesTypes();" << endl;
     out << endl;
     out << "    if (protocolUsed & soap)" << endl;
     out << "    {" << endl;
     out << "        if (protocolUsed == soap12)" << endl;
     out << "        {" << endl;
-    out << "            header = \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?> \" + endl +" << endl;
-    out << "                 \"<soap12:Envelope xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" \" +" << endl;
-    out << "                 \"xmlns:xsd=\\\"http://www.w3.org/2001/XMLSchema\\\" \" +" << endl;
-    out << "                 \"xmlns:soap12=\\\"http://www.w3.org/2003/05/soap-envelope\\\"> \" + endl +" << endl;
+    out << "            header = \"<?xml version=\\\"1.0\\\" "
+        << "encoding=\\\"utf-8\\\"?> \" + endl +" << endl;
+    out << "                 \"<soap12:Envelope "
+        << "xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" \" +" << endl;
+    out << "                 "
+        << "\"xmlns:xsd=\\\"http://www.w3.org/2001/XMLSchema\\\" \" +" << endl;
+    out << "                 "
+        << "\"xmlns:soap12=\\\"http://www.w3.org/2003/05/soap-envelope\\\"> \""
+        << " + endl +" << endl;
     out << "                 \"<soap12:Body> \" + endl;" << endl;
     out << endl;
-    out << "            footer = \"</soap12:Body> \" + endl + \"</soap12:Envelope>\";" << endl;
+    out << "            footer = \"</soap12:Body> \" + endl + "
+        << "\"</soap12:Envelope>\";" << endl;
     out << "        }" << endl;
     out << "        else if (protocolUsed == soap10)" << endl;
     out << "        {" << endl;
-    out << "            header = \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?> \" + endl +" << endl;
-    out << "                \"<soap:Envelope xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" \" +" << endl;
-    out << "                \"xmlns:xsd=\\\"http://www.w3.org/2001/XMLSchema\\\" \" +" << endl;
-    out << "                \"xmlns:soap=\\\"http://www.w3.org/2003/05/soap-envelope\\\"> \" + endl +" << endl;
+    out << "            "
+        << "header = \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?> \" + endl +" << endl;
+    out << "                "
+        << "\"<soap:Envelope xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" \" +" << endl;
+    out << "                "
+        << "\"xmlns:xsd=\\\"http://www.w3.org/2001/XMLSchema\\\" \" +" << endl;
+    out << "                "
+        << "\"xmlns:soap=\\\"http://www.w3.org/2003/05/soap-envelope\\\"> \" + endl +" << endl;
     out << "                \"<soap:Body> \" + endl;" << endl;
     out << endl;
     out << "            footer = \"</soap:Body> \" + endl + \"</soap:Envelope>\";" << endl;
     out << "        }" << endl;
     out << endl;
-    out << "        body = \"\\t<\" + messageNameUsed + \" xmlns=\\\"\" + targetNamespaceUsed + \"\\\"> \" + endl;" << endl;
+    out << "        body = \"\\t<\" + messageNameUsed + \" xmlns=\\\"\" "
+        << "+ targetNamespaceUsed + \"\\\"> \" + endl;" << endl;
     out << endl;
     out << "        foreach (const QString currentKey, parameters.keys())" << endl;
     out << "        {" << endl;
     out << "            QVariant qv = parameters.value(currentKey);" << endl;
     out << "            // Currently, this does not handle nested lists" << endl;
-    out << "            body += \"\\t\\t<\" + currentKey + \">\" + qv.toString() + \"</\" + currentKey + \"> \" + endl;" << endl;
+    out << "            body += \"\\t\\t<\" + currentKey + \">\" + qv.toString() "
+        << "+ \"</\" + currentKey + \"> \" + endl;" << endl;
     out << "        }" << endl;
     out << endl;
     out << "        body += \"\\t</\" + messageNameUsed + \"> \" + endl;" << endl;
@@ -925,7 +992,8 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "        {" << endl;
     out << "            QVariant qv = parameters.value(currentKey);" << endl;
     out << "            // Currently, this does not handle nested lists" << endl;
-    out << "            body += \"{\" + endl + \"\\t\\\"\" + currentKey + \"\\\" : \\\"\" + qv.toString() + \"\\\"\" + endl;"
+    out << "            body += \"{\" + endl + \"\\t\\\"\" + currentKey + \"\\\" "
+        << ": \\\"\" + qv.toString() + \"\\\"\" + endl;"
         << endl;
     out << "        }" << endl;
     out << "        body += \"}\";" << endl;
@@ -934,7 +1002,8 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
     out << "        foreach (const QString currentKey, parameters.keys()) {" << endl;
     out << "            QVariant qv = parameters.value(currentKey);" << endl;
     out << "            // Currently, this does not handle nested lists" << endl;
-    out << "            body += \"\\t\\t<\" + currentKey + \">\" + qv.toString() + \"</\" + currentKey + \"> \" + endl;" << endl;
+    out << "            body += \"\\t\\t<\" + currentKey + \">\" + qv.toString() "
+        << "+ \"</\" + currentKey + \"> \" + endl;" << endl;
     out << "        }" << endl;
     out << "    }" << endl;
     out << endl;
@@ -958,11 +1027,11 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
 }
 
 /*!
-  \internal
+    \internal
 
-  Creates a dummy main.cpp file. It's needed only for successful compilation of
-  freshly generated code. It is NOT NEEDED for any other reason. You can safely delete
-  it fo your project.
+    Creates a dummy main.cpp file. It's needed only for successful compilation
+    of freshly generated code. It is NOT NEEDED for any other reason.
+    You can safely delete it fo your project.
   */
 bool MessageGenerator::createMainCpp()
 {
@@ -974,7 +1043,10 @@ bool MessageGenerator::createMainCpp()
     // Begin writing:
     QTextStream out(&file);
     out.setCodec("UTF-8");
-    out << "/*Creates a dummy main.cpp file. It's needed only for successful compilation of freshly generated code. It is NOT NEEDED for any other reason. You can safely delete it fo your project (just remember to remove it from .pro file, too). */" << endl;
+    out << "/*Creates a dummy main.cpp file. It's needed only for successful "
+        << "compilation of freshly generated code. It is NOT NEEDED for any "
+        << "other reason. You can safely delete it fo your project (just "
+        << "remember to remove it from .pro file, too). */" << endl;
     out << "#include \"../headers/band_ws.h\"" << endl;
     out << "int main() {return 0;}" << endl;
     // EOF (main.cpp)

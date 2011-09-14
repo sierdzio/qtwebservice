@@ -29,10 +29,9 @@ public:
     QUrl hostUrl() const;
     QString wsdlFile() const;
     QString targetNamespace() const;
-    //QFile getWsdl(); Rethink that. Maybe QString? Or saving to file specified in parameter?
+    //QFile getWsdl(); Rethink that.
     QString errorInfo() const;
     bool isErrorState() const;
-
 
 signals:
     void errorEncountered(QString errMessage);
@@ -58,7 +57,6 @@ private:
 
     bool errorState;
     bool replyReceived;
-//    QFile wsdlFile;
     QUrl m_hostUrl;
     QString errorMessage;
     QString wsdlFilePath;
@@ -67,7 +65,8 @@ private:
     QXmlStreamReader xmlReader;
 
     QStringList *workMethodList;
-    QMap<int, QMap<QString, QVariant> > *workMethodParameters; // Param if one, QList if many.
+    // Param if one, QList if many.
+    QMap<int, QMap<QString, QVariant> > *workMethodParameters;
     QMap<QString, QWebServiceMethod *> *methodsMap;
 };
 

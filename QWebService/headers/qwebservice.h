@@ -47,7 +47,8 @@ protected:
     QString errorMessage;
     QUrl m_hostUrl;
     QWsdl *wsdl;
-    QMap<QString, QWebServiceMethod *> *methods; // This is general, but should work for custom classes.
+    // This is general, but should work for custom classes.
+    QMap<QString, QWebServiceMethod *> *methods;
 };
 
 #endif // QWEBSERVICE_H

@@ -12,11 +12,14 @@ QdnMain::QdnMain(QWidget *parent) :
     ui->lineEditPassword->setEchoMode(QLineEdit::Password);
 
     webMethodProfile = new QWebMethod(this, QWebMethod::json, QWebMethod::GET);
-    webMethodProfile->setHost(QUrl::fromUserInput(QString::fromLatin1("http://developer.qt.nokia.com/qtapi/1/member/profile")));
+    webMethodProfile->setHost(QUrl::fromUserInput(
+                              QString("http://developer.qt.nokia.com/qtapi/1/member/profile")));
     connect(webMethodProfile, SIGNAL(replyReady(QByteArray)), this, SLOT(profileReply()));
 
-    webMethodPosts = new QWebMethod(QUrl::fromUserInput(QString::fromLatin1("http://developer.qt.nokia.com/qtapi/1/forums/posts/unread")),
-                                    this, QWebMethod::json, QWebMethod::GET);
+    webMethodPosts = new QWebMethod(
+                QUrl::fromUserInput(
+                    QString("http://developer.qt.nokia.com/qtapi/1/forums/posts/unread")),
+                this, QWebMethod::json, QWebMethod::GET);
     connect(webMethodPosts, SIGNAL(replyReady(QByteArray)), this, SLOT(postsReply()));
 }
 
@@ -32,15 +35,18 @@ void QdnMain::on_actionQuit_triggered()
 
 void QdnMain::on_buttonLogin_clicked()
 {
-    webMethodProfile->authenticate(ui->lineEditLogin->text(), ui->lineEditPassword->text());
+    webMethodProfile->authenticate(ui->lineEditLogin->text(),
+                                   ui->lineEditPassword->text());
     webMethodProfile->sendMessage();
 
     QUrl url;
     url.addEncodedQueryItem("ACT", QUrl::toPercentEncoding("11"));
     url.addEncodedQueryItem("RET", QUrl::toPercentEncoding("/"));
     url.addEncodedQueryItem("site_id", QUrl::toPercentEncoding("1"));
-    url.addEncodedQueryItem("username", QUrl::toPercentEncoding(ui->lineEditLogin->text()));
-    url.addEncodedQueryItem("password", QUrl::toPercentEncoding(ui->lineEditPassword->text()));
+    url.addEncodedQueryItem("username",
+                            QUrl::toPercentEncoding(ui->lineEditLogin->text()));
+    url.addEncodedQueryItem("password",
+                            QUrl::toPercentEncoding(ui->lineEditPassword->text()));
     webMethodPosts->authenticate(url);
     webMethodPosts->sendMessage();
 }
