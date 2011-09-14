@@ -5,7 +5,7 @@ TODO'S:
 *You don’t need \fn if the documentation is for the function that comes right after the documentation. Better leave it out.
 *Please make the “else” be on the same line as the closing brace of the previous if-branch.
 *Enum constants must start with uppercase letter. Do not make them all-uppercase either.
-
+*QObject-derived classes should have the QObject *parent parameter last.
 
 Please add the copyright headers (copyright you, not Nokia) and the license for the files.
 
@@ -17,6 +17,6 @@ Do not write: if (newMethod.toLower() == QString::fromLatin1(“…”)). First 
 
 Missing copyright and license header.
 
-QObject-derived classes should have the QObject *parent parameter last.
+
 
 Qt coding style requires that there be no private or protected members. Please move all privates to the Private class.

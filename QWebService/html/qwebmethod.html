@@ -40,8 +40,9 @@
 <a name="public-functions"></a>
 <h2>Public Functions</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod">QWebMethod</a></b> ( QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = Soap12, HttpMethod <i>method</i> = Post )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-2">QWebMethod</a></b> ( QUrl <i>url</i>, QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = Soap12, HttpMethod <i>method</i> = Post )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod">QWebMethod</a></b> ( QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-2">QWebMethod</a></b> ( Protocol <i>protocol</i> = Soap12, HttpMethod <i>method</i> = Post, QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-3">QWebMethod</a></b> ( QUrl <i>url</i>, Protocol <i>protocol</i> = Soap12, HttpMethod <i>method</i> = Post, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#dtor.QWebMethod">~QWebMethod</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#authenticate">authenticate</a></b> ( QString <i>newUsername</i> = QString(), QString <i>newPassword</i> = QString() )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#authenticate-2">authenticate</a></b> ( QUrl <i>customAuthString</i> )</td></tr>
@@ -173,14 +174,19 @@
 </div>
 <div class="func">
 <h2>Member Function Documentation</h2>
-<!-- $$$QWebMethod[overload1]$$$QWebMethodQObject*ProtocolHttpMethod -->
-<h3 class="fn"><a name="QWebMethod"></a>QWebMethod::QWebMethod ( QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = Soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = Post )</h3>
-<p>Constructs the message usign <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST). Requires specifying other params later (<a href="qwebmethod.html#setParameters">setParameters</a>()).</p>
+<!-- $$$QWebMethod[overload1]$$$QWebMethodQObject* -->
+<h3 class="fn"><a name="QWebMethod"></a>QWebMethod::QWebMethod ( QObject * <i>parent</i> = 0 )</h3>
+<p>Constructs web method object with <i>parent</i>. Requires specifying other parameters later.</p>
 <p>See also <a href="qwebmethod.html#init">init</a>(), <a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#sendMessage">sendMessage</a>().</p>
 <!-- @@@QWebMethod -->
-<!-- $$$QWebMethod$$$QWebMethodQUrlQObject*ProtocolHttpMethod -->
-<h3 class="fn"><a name="QWebMethod-2"></a>QWebMethod::QWebMethod ( QUrl <i>url</i>, QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = Soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = Post )</h3>
-<p>Constructs the message usign <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST), and <i>url</i>. Especially convenient for parameterless methods (like quick GET messages).</p>
+<!-- $$$QWebMethod$$$QWebMethodProtocolHttpMethodQObject* -->
+<h3 class="fn"><a name="QWebMethod-2"></a>QWebMethod::QWebMethod ( <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = Soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = Post, QObject * <i>parent</i> = 0 )</h3>
+<p>Constructs web method usign <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST). Requires specifying other params later (<a href="qwebmethod.html#setParameters">setParameters</a>()).</p>
+<p>See also <a href="qwebmethod.html#init">init</a>(), <a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#sendMessage">sendMessage</a>().</p>
+<!-- @@@QWebMethod -->
+<!-- $$$QWebMethod$$$QWebMethodQUrlProtocolHttpMethodQObject* -->
+<h3 class="fn"><a name="QWebMethod-3"></a>QWebMethod::QWebMethod ( QUrl <i>url</i>, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = Soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = Post, QObject * <i>parent</i> = 0 )</h3>
+<p>Constructs web method usign <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST), and <i>url</i>. Especially convenient for parameterless methods (like quick GET messages).</p>
 <p>See also <a href="qwebmethod.html#init">init</a>(), <a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#sendMessage">sendMessage</a>().</p>
 <!-- @@@QWebMethod -->
 <!-- $$$~QWebMethod[overload1]$$$~QWebMethod -->

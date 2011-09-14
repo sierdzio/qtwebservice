@@ -29,10 +29,11 @@
 <a name="public-functions"></a>
 <h2>Public Functions</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebservicemethod.html#QWebServiceMethod">QWebServiceMethod</a></b> ( QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = Soap12, HttpMethod <i>httpMethod</i> = Post )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebservicemethod.html#QWebServiceMethod-2">QWebServiceMethod</a></b> ( QUrl <i>url</i>, QString <i>messageName</i>, QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = Soap12, HttpMethod <i>method</i> = Post )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebservicemethod.html#QWebServiceMethod-3">QWebServiceMethod</a></b> ( QString <i>url</i>, QString <i>messageName</i>, QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = Soap12, HttpMethod <i>method</i> = Post )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebservicemethod.html#QWebServiceMethod-4">QWebServiceMethod</a></b> ( QString <i>url</i>, QString <i>messageName</i>, QString <i>tNamespace</i>, QMap&lt;QString, QVariant&gt; <i>params</i>, QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = Soap12, HttpMethod <i>method</i> = Post )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebservicemethod.html#QWebServiceMethod">QWebServiceMethod</a></b> ( QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebservicemethod.html#QWebServiceMethod-2">QWebServiceMethod</a></b> ( Protocol <i>protocol</i> = Soap12, HttpMethod <i>httpMethod</i> = Post, QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebservicemethod.html#QWebServiceMethod-3">QWebServiceMethod</a></b> ( QUrl <i>url</i>, QString <i>messageName</i>, Protocol <i>protocol</i> = Soap12, HttpMethod <i>method</i> = Post, QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebservicemethod.html#QWebServiceMethod-4">QWebServiceMethod</a></b> ( QString <i>url</i>, QString <i>messageName</i>, Protocol <i>protocol</i> = Soap12, HttpMethod <i>method</i> = Post, QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebservicemethod.html#QWebServiceMethod-5">QWebServiceMethod</a></b> ( QString <i>url</i>, QString <i>messageName</i>, QString <i>tNamespace</i>, QMap&lt;QString, QVariant&gt; <i>params</i>, Protocol <i>protocol</i> = Soap12, HttpMethod <i>method</i> = Post, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebservicemethod.html#sendMessage">sendMessage</a></b> ( QMap&lt;QString, QVariant&gt; <i>params</i> )</td></tr>
 </table>
 <ul>
@@ -55,22 +56,26 @@
 <!-- @@@QWebServiceMethod -->
 <div class="func">
 <h2>Member Function Documentation</h2>
-<!-- $$$QWebServiceMethod[overload1]$$$QWebServiceMethodQObject*ProtocolHttpMethod -->
-<h3 class="fn"><a name="QWebServiceMethod"></a>QWebServiceMethod::QWebServiceMethod ( QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = Soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>httpMethod</i> = Post )</h3>
+<!-- $$$QWebServiceMethod[overload1]$$$QWebServiceMethodQObject* -->
+<h3 class="fn"><a name="QWebServiceMethod"></a>QWebServiceMethod::QWebServiceMethod ( QObject * <i>parent</i> = 0 )</h3>
+<p>Constructs web method object with <i>parent</i>. Requires specifying other parameters later. If you use that constructor, you can probably go on and use the base <a href="qwebmethod.html">QWebMethod</a> class.</p>
+<!-- @@@QWebServiceMethod -->
+<!-- $$$QWebServiceMethod$$$QWebServiceMethodProtocolHttpMethodQObject* -->
+<h3 class="fn"><a name="QWebServiceMethod-2"></a>QWebServiceMethod::QWebServiceMethod ( <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = Soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>httpMethod</i> = Post, QObject * <i>parent</i> = 0 )</h3>
 <p>A constructor that takes in <i>protocol</i> information, <i>httpMethod</i> to use, and <i>parent</i> to satisfy QObject requirements. All other data has to be set using setter methods.</p>
 <!-- @@@QWebServiceMethod -->
-<!-- $$$QWebServiceMethod$$$QWebServiceMethodQUrlQStringQObject*ProtocolHttpMethod -->
-<h3 class="fn"><a name="QWebServiceMethod-2"></a>QWebServiceMethod::QWebServiceMethod ( QUrl <i>url</i>, QString <i>messageName</i>, QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = Soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = Post )</h3>
+<!-- $$$QWebServiceMethod$$$QWebServiceMethodQUrlQStringProtocolHttpMethodQObject* -->
+<h3 class="fn"><a name="QWebServiceMethod-3"></a>QWebServiceMethod::QWebServiceMethod ( QUrl <i>url</i>, QString <i>messageName</i>, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = Soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = Post, QObject * <i>parent</i> = 0 )</h3>
 <p>Constructs the message using <i>url</i>, <i>messageName</i>, <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST). Requires params to be specified later.</p>
 <p>See also <a href="qwebmethod.html#init">init</a>(), <a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebservicemethod.html#sendMessage">sendMessage</a>().</p>
 <!-- @@@QWebServiceMethod -->
-<!-- $$$QWebServiceMethod$$$QWebServiceMethodQStringQStringQObject*ProtocolHttpMethod -->
-<h3 class="fn"><a name="QWebServiceMethod-3"></a>QWebServiceMethod::QWebServiceMethod ( QString <i>url</i>, QString <i>messageName</i>, QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = Soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = Post )</h3>
+<!-- $$$QWebServiceMethod$$$QWebServiceMethodQStringQStringProtocolHttpMethodQObject* -->
+<h3 class="fn"><a name="QWebServiceMethod-4"></a>QWebServiceMethod::QWebServiceMethod ( QString <i>url</i>, QString <i>messageName</i>, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = Soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = Post, QObject * <i>parent</i> = 0 )</h3>
 <p>Constructs the message using <i>url</i>, <i>messageName</i>, <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST). Requires params to be specified later.</p>
 <p>See also <a href="qwebmethod.html#init">init</a>(), <a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebservicemethod.html#sendMessage">sendMessage</a>().</p>
 <!-- @@@QWebServiceMethod -->
-<!-- $$$QWebServiceMethod$$$QWebServiceMethodQStringQStringQStringQMap<QString,QVariant>QObject*ProtocolHttpMethod -->
-<h3 class="fn"><a name="QWebServiceMethod-4"></a>QWebServiceMethod::QWebServiceMethod ( QString <i>url</i>, QString <i>messageName</i>, QString <i>tNamespace</i>, QMap&lt;QString, QVariant&gt; <i>params</i>, QObject * <i>parent</i> = 0, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = Soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = Post )</h3>
+<!-- $$$QWebServiceMethod$$$QWebServiceMethodQStringQStringQStringQMap<QString,QVariant>ProtocolHttpMethodQObject* -->
+<h3 class="fn"><a name="QWebServiceMethod-5"></a>QWebServiceMethod::QWebServiceMethod ( QString <i>url</i>, QString <i>messageName</i>, QString <i>tNamespace</i>, QMap&lt;QString, QVariant&gt; <i>params</i>, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = Soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = Post, QObject * <i>parent</i> = 0 )</h3>
 <p>Constructs the message using <i>url</i>, <i>messageName</i>, <i>tNamespace</i>, <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST). This constructor also takes message parameters (<i>params</i>). Does not require specifying any more information, but you still need to manually send the message using <a href="qwebservicemethod.html#sendMessage">sendMessage</a>() (without any arguments, or else - if you want to change ones specified here).</p>
 <p>See also <a href="qwebmethod.html#init">init</a>(), <a href="qwebservicemethod.html#sendMessage">sendMessage</a>(), and <a href="qwebmethod.html#setProtocol">setProtocol</a>().</p>
 <!-- @@@QWebServiceMethod -->

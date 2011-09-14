@@ -82,7 +82,6 @@
            HTTP PUT will be used.
     \value Delete
            HTTP DELETE will be used.
-
   */
 
 /*!

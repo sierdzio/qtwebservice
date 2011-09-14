@@ -26,7 +26,7 @@ private:
   */
 void TestQWebServiceMethod::initialTest()
 {
-    QWebServiceMethod *message = new QWebServiceMethod(0, QWebMethod::Soap12, QWebMethod::Post);
+    QWebServiceMethod *message = new QWebServiceMethod(QWebMethod::Soap12, QWebMethod::Post, 0);
     QCOMPARE(message->isErrorState(), bool(false));
 
     delete message;
@@ -37,7 +37,7 @@ void TestQWebServiceMethod::initialTest()
   */
 void TestQWebServiceMethod::gettersTest()
 {
-    QWebServiceMethod *message = new QWebServiceMethod(0, QWebMethod::Soap12, QWebMethod::Post);
+    QWebServiceMethod *message = new QWebServiceMethod(QWebMethod::Soap12, QWebMethod::Post, 0);
     defaultGettersTest(message);
     delete message;
 }
@@ -47,7 +47,7 @@ void TestQWebServiceMethod::gettersTest()
   */
 void TestQWebServiceMethod::settersTest()
 {
-    QWebServiceMethod *message = new QWebServiceMethod(0, QWebMethod::Soap12, QWebMethod::Post);
+    QWebServiceMethod *message = new QWebServiceMethod(QWebMethod::Soap12, QWebMethod::Post, 0);
     defaultGettersTest(message);
 
     QUrl tempUrl("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx");
@@ -108,7 +108,7 @@ void TestQWebServiceMethod::asynchronousTest()
     QWebServiceMethod *message = new
             QWebServiceMethod("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx",
                               "getProviderList",
-                              this, QWebMethod::Soap12, QWebMethod::Post);
+                              QWebMethod::Soap12, QWebMethod::Post, this);
 
     message->setTargetNamespace("http://www.daenet.de/webservices/CurrencyServer");
     message->sendMessage(tmpP);
@@ -136,10 +136,10 @@ void TestQWebServiceMethod::synchronousTest()
     QMap<QString, QVariant> tmpP;
     bool result = false;
     QString reply = "pass";
-    reply = QWebServiceMethod::sendMessage(this,
+    reply = QWebServiceMethod::sendMessage(
              QUrl("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx"),
              "getProviderList", "http://www.daenet.de/webservices/CurrencyServer",
-             tmpP, QWebMethod::Soap12);
+             tmpP, QWebMethod::Soap12, QWebMethod::Post, this);
 
     if ((reply != "") && (reply != "pass"))
     {

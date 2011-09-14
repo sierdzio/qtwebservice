@@ -40,10 +40,11 @@ public:
         Delete  = 0x8
     };
 
-    QWebMethod(QObject *parent = 0, Protocol protocol = Soap12,
-               HttpMethod httpMethod = Post);
-    QWebMethod(QUrl url, QObject *parent = 0, Protocol protocol = Soap12,
-               HttpMethod httpMethod = Post);
+    explicit QWebMethod(QObject *parent = 0);
+    QWebMethod(Protocol protocol = Soap12, HttpMethod httpMethod = Post,
+               QObject *parent = 0);
+    QWebMethod(QUrl url, Protocol protocol = Soap12, HttpMethod httpMethod = Post,
+               QObject *parent = 0);
     ~QWebMethod();
 
     void setHost(QString newHost);

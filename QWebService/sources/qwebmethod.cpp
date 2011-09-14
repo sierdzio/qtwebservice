@@ -122,13 +122,30 @@
   */
 
 /*!
-    Constructs the message usign \a parent, \a protocol (which defaults to
+  Constructs web method object with \a parent.
+  Requires specifying other parameters later.
+
+  \sa init(), setParameters(), setProtocol(), sendMessage()
+  */
+QWebMethod::QWebMethod(QObject *parent) :
+    QObject(parent)
+{
+    init();
+    setProtocol(Soap12);
+    setHttpMethod(Post);
+    m_hostUrl.setHost(QString::fromLatin1(""));
+    m_methodName = QString::fromLatin1("");
+    parameters.clear();
+}
+
+/*!
+    Constructs web method usign \a parent, \a protocol (which defaults to
     soap12), and \a method (which defaults to POST). Requires specifying
     other params later (setParameters()).
 
     \sa init(), setParameters(), setProtocol(), sendMessage()
   */
-QWebMethod::QWebMethod(QObject *parent, Protocol protocol, HttpMethod method) :
+QWebMethod::QWebMethod(Protocol protocol, HttpMethod method, QObject *parent) :
     QObject(parent)
 {
     init();
@@ -140,13 +157,13 @@ QWebMethod::QWebMethod(QObject *parent, Protocol protocol, HttpMethod method) :
 }
 
 /*!
-    Constructs the message usign \a parent, \a protocol (which defaults to soap12),
+    Constructs web method usign \a parent, \a protocol (which defaults to soap12),
     and \a method (which defaults to POST), and \a url. Especially convenient for
     parameterless methods (like quick GET messages).
 
     \sa init(), setParameters(), setProtocol(), sendMessage()
   */
-QWebMethod::QWebMethod(QUrl url, QObject *parent, Protocol protocol, HttpMethod method) :
+QWebMethod::QWebMethod(QUrl url, Protocol protocol, HttpMethod method, QObject *parent) :
     QObject(parent)
 {
     init();
