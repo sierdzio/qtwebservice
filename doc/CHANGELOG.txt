@@ -22,6 +22,8 @@ Example arguments for converter:
  - add copyright headers and the license for the files,
  - optimise QWebMethod setters and it's use of QString,
  - pass QString / QByteArray / etc. by const-ref,
+ - use QLatin1String instead of QString::fromLatin1(“”),
+ - fix strings initialisations and handling,
  - 
 
 13.09.2011 12:33 CEST:

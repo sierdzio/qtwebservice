@@ -62,7 +62,7 @@
 QWsdl::QWsdl(QObject *parent) :
     QObject(parent)
 {
-    wsdlFilePath = QString::fromLatin1("");
+//    wsdlFilePath = QString();
     init();
 }
 
@@ -121,10 +121,10 @@ void QWsdl::resetWsdl(const QString &newWsdl)
     workMethodParameters->clear();
     replyReceived = false;
     errorState = false;
-    errorMessage = QString::fromLatin1("");
-    m_webServiceName = QString::fromLatin1("");
-    m_hostUrl.setUrl(QString::fromLatin1(""));
-    m_targetNamespace = QString::fromLatin1("");
+    errorMessage = QLatin1String("");
+    m_webServiceName = QLatin1String("");
+    m_hostUrl.setUrl(QLatin1String(""));
+    m_targetNamespace = QLatin1String("");
     xmlReader.clear();
 
     parse();
@@ -239,8 +239,8 @@ bool QWsdl::isErrorState() const
   */
 void QWsdl::fileReplyFinished(QNetworkReply *rply)
 {
-    QString replyString = convertReplyToUtf(QString::fromLatin1(rply->readAll()));
-    QFile file(QString::fromLatin1("tempWsdl.asmx~"));
+    QString replyString = convertReplyToUtf(QLatin1String(rply->readAll()));
+    QFile file(QLatin1String("tempWsdl.asmx~"));
 
     if (file.exists())
         file.remove();
@@ -269,10 +269,10 @@ void QWsdl::init()
 {
     replyReceived = false;
     errorState = false;
-    errorMessage = QString::fromLatin1("");
-    m_webServiceName = QString::fromLatin1("");
-    m_hostUrl.setUrl(QString::fromLatin1(""));
-    m_targetNamespace = QString::fromLatin1("");
+    errorMessage = QLatin1String("");
+    m_webServiceName = QLatin1String("");
+    m_hostUrl.setUrl(QLatin1String(""));
+    m_targetNamespace = QLatin1String("");
 
     workMethodList = new QStringList();
     workMethodParameters = new QMap<int, QMap<QString, QVariant> >();
@@ -309,7 +309,7 @@ bool QWsdl::parse()
     */
 
     if (errorState) {
-        enterErrorState(QString::fromLatin1("WSDL reader is in error state "
+        enterErrorState(QLatin1String("WSDL reader is in error state "
                                             "and cannot parse the file."));
         return false;
     }
@@ -330,12 +330,12 @@ bool QWsdl::parse()
         if (xmlReader.isStartElement()) {
             QString tempN = xmlReader.name().toString();
 
-            if (tempN == QString::fromLatin1("definitions")) {
+            if (tempN == QLatin1String("definitions")) {
                 m_targetNamespace = xmlReader.attributes().value(
-                            QString::fromLatin1("targetNamespace")).toString();
+                            QLatin1String("targetNamespace")).toString();
                 readDefinitions();
             } else {
-                enterErrorState(QString::fromLatin1("Error: file does not have "
+                enterErrorState(QLatin1String("Error: file does not have "
                                                     "WSDL definitions inside!"));
                 return false;
             }
@@ -390,12 +390,12 @@ void QWsdl::readDefinitions()
     // QMap used to supress multiple "tag not supported yet" messages.
     // May actually evolve into more universal tag recognition and handling structure.
     QMap<QString, bool> tagUsed;
-    tagUsed.insert(QString::fromLatin1("types"), false);
-    tagUsed.insert(QString::fromLatin1("message"), false);
-    tagUsed.insert(QString::fromLatin1("portType"), false);
-    tagUsed.insert(QString::fromLatin1("binding"), false);
-    tagUsed.insert(QString::fromLatin1("service"), false);
-    tagUsed.insert(QString::fromLatin1("documentation"), false);
+    tagUsed.insert(QLatin1String("types"), false);
+    tagUsed.insert(QLatin1String("message"), false);
+    tagUsed.insert(QLatin1String("portType"), false);
+    tagUsed.insert(QLatin1String("binding"), false);
+    tagUsed.insert(QLatin1String("service"), false);
+    tagUsed.insert(QLatin1String("documentation"), false);
     //END of EXPERIMENTAL
 
     xmlReader.readNext();
@@ -405,7 +405,7 @@ void QWsdl::readDefinitions()
         tempName = xmlReader.name().toString();
 
         if (xmlReader.isEndElement()
-                && (tempName == QString::fromLatin1("definitions"))) {
+                && (tempName == QLatin1String("definitions"))) {
             xmlReader.readNext();
             break;
         } else if (xmlReader.isEndElement()) {
@@ -413,34 +413,34 @@ void QWsdl::readDefinitions()
             continue;
         }
 
-        if (tempName == QString::fromLatin1("types")) {
+        if (tempName == QLatin1String("types")) {
             readTypes();
 //            tagUsed.insert("types", true);
             xmlReader.readNext();
-        } else if (tempName == QString::fromLatin1("message")) {
-            if (!tagUsed.value(QString::fromLatin1("message")))
+        } else if (tempName == QLatin1String("message")) {
+            if (!tagUsed.value(QLatin1String("message")))
                 readMessages();
-            tagUsed.insert(QString::fromLatin1("message"), true);
+            tagUsed.insert(QLatin1String("message"), true);
             xmlReader.readNext();
-        } else if (tempName == QString::fromLatin1("portType")) {
-            if (!tagUsed.value(QString::fromLatin1("portType")))
+        } else if (tempName == QLatin1String("portType")) {
+            if (!tagUsed.value(QLatin1String("portType")))
                 readPorts();
-            tagUsed.insert(QString::fromLatin1("portType"), true);
+            tagUsed.insert(QLatin1String("portType"), true);
             xmlReader.readNext();
-        } else if (tempName == QString::fromLatin1("binding")) {
-            if (!tagUsed.value(QString::fromLatin1("binding")))
+        } else if (tempName == QLatin1String("binding")) {
+            if (!tagUsed.value(QLatin1String("binding")))
                 readBindings();
-            tagUsed.insert(QString::fromLatin1("binding"), true);
+            tagUsed.insert(QLatin1String("binding"), true);
             xmlReader.readNext();
-        } else if (tempName == QString::fromLatin1("service")) {
+        } else if (tempName == QLatin1String("service")) {
 //            if (!tagUsed.value("service"))
                 readService();
-            tagUsed.insert(QString::fromLatin1("service"), true);
+            tagUsed.insert(QLatin1String("service"), true);
             xmlReader.readNext();
-        } else if (tempName == QString::fromLatin1("documentation")) {
-            if (!tagUsed.value(QString::fromLatin1("documentation")))
+        } else if (tempName == QLatin1String("documentation")) {
+            if (!tagUsed.value(QLatin1String("documentation")))
                 readDocumentation();
-            tagUsed.insert(QString::fromLatin1("documentation"), true);
+            tagUsed.insert(QLatin1String("documentation"), true);
             xmlReader.readNext();
         } else {
             xmlReader.readNext();
@@ -457,29 +457,29 @@ void QWsdl::readTypes()
     xmlReader.readNext();
     QString tempName = xmlReader.name().toString();
 
-    if (xmlReader.name().toString() == QString::fromLatin1("schema")) {
+    if (xmlReader.name().toString() == QLatin1String("schema")) {
         xmlReader.readNext();
     } else {
-        enterErrorState(QString::fromLatin1("Error: file does not have WSDL "
+        enterErrorState(QLatin1String("Error: file does not have WSDL "
                                             "schema tag inside!"));
         return;
     }
 
     QString lastName;
-    tempName = QString::fromLatin1("");
+    tempName = QLatin1String("");
     while(!xmlReader.atEnd()) {
-        if (tempName != QString::fromLatin1(""))
+        if (tempName != QLatin1String(""))
             lastName = tempName;
         tempName = xmlReader.name().toString();
 
-        if (tempName == QString::fromLatin1("element")
+        if (tempName == QLatin1String("element")
                 && (xmlReader.attributes().count() == 1)) {
             QString elementName = xmlReader.attributes().value(
-                        QString::fromLatin1("name")).toString();
+                        QLatin1String("name")).toString();
             workMethodList->append(elementName);
             readTypeSchemaElement();
         } else if (xmlReader.isEndElement()
-                 && (tempName == QString::fromLatin1("schema"))) {
+                 && (tempName == QLatin1String("schema"))) {
             xmlReader.readNext();
             break;
         } else {
@@ -500,14 +500,14 @@ void QWsdl::readTypeSchemaElement()
     QString tempName; //xmlReader.name().toString();
     QString lastName;
     while(!xmlReader.atEnd()) {
-        if (tempName != QString::fromLatin1(""))
+        if (tempName != QLatin1String(""))
             lastName = tempName;
         tempName = xmlReader.name().toString();
 
         if (xmlReader.isEndElement()
-                && (xmlReader.name() == QString::fromLatin1("element"))
-                && ((lastName == QString::fromLatin1("complexType"))
-                    || (lastName == QString::fromLatin1("sequence")))
+                && (xmlReader.name() == QLatin1String("element"))
+                && ((lastName == QLatin1String("complexType"))
+                    || (lastName == QLatin1String("sequence")))
                 && (firstElem == false)) {
             int currentMethodIndex = workMethodList->length() - 1;
             workMethodParameters->insert(currentMethodIndex, params);
@@ -515,24 +515,24 @@ void QWsdl::readTypeSchemaElement()
             break;
         }
 
-        if ((tempName == QString::fromLatin1("complexType"))
-                || (tempName == QString::fromLatin1("sequence"))) {
+        if ((tempName == QLatin1String("complexType"))
+                || (tempName == QLatin1String("sequence"))) {
             firstElem = false;
             xmlReader.readNext();
             continue;
         }
 
-        if (tempName == QString::fromLatin1("element")) {
+        if (tempName == QLatin1String("element")) {
             firstElem = false;
             // Min and max occurences are not taken into account!
             QString elementName = xmlReader.attributes().value(
-                        QString::fromLatin1("name")).toString();
+                        QLatin1String("name")).toString();
             // Ommits namespace ("s:int" => "int")
             QString elementType = xmlReader.attributes().value(
-                        QString::fromLatin1("type")).toString();
+                        QLatin1String("type")).toString();
 
-            if ((elementName == QString::fromLatin1(""))
-                    || (elementType == QString::fromLatin1(""))) {
+            if ((elementName == QLatin1String(""))
+                    || (elementType == QLatin1String(""))) {
                 xmlReader.readNext();
                 continue;
             }
@@ -542,30 +542,30 @@ void QWsdl::readTypeSchemaElement()
             elementType = elementType.split(QChar::fromAscii(':')).at(1);
             // NEEDS MANY MORE VALUE TYPES! VERY SHAKY IMPLEMENTATION!
             // Prob'ly better to use schemas.
-            if (elementType == QString::fromLatin1("int")) {
+            if (elementType == QLatin1String("int")) {
                 element.setValue(int());
-            } else if (elementType == QString::fromLatin1("float")) {
+            } else if (elementType == QLatin1String("float")) {
                 element.setValue(float());
-            } else if (elementType == QString::fromLatin1("double")) {
+            } else if (elementType == QLatin1String("double")) {
                 element.setValue(double());
-            } else if (elementType == QString::fromLatin1("boolean")) {
+            } else if (elementType == QLatin1String("boolean")) {
                 element.setValue(true);
-            } else if (elementType == QString::fromLatin1("dateTime")) {
+            } else if (elementType == QLatin1String("dateTime")) {
                 element.setValue(QDateTime());
-            } else if (elementType == QString::fromLatin1("string")) {
-                element.setValue(QString::fromLatin1(""));
-            } else if (elementType == QString::fromLatin1("char")) {
+            } else if (elementType == QLatin1String("string")) {
+                element.setValue(QString());
+            } else if (elementType == QLatin1String("char")) {
                 element.setValue(QChar());
-            } else if (elementType.startsWith(QString::fromLatin1("ArrayOf"))) {
+            } else if (elementType.startsWith(QLatin1String("ArrayOf"))) {
                 elementType = elementType.mid(7);
 
-                if (elementType == QString::fromLatin1("String")) {
+                if (elementType == QLatin1String("String")) {
                     element.setValue(QStringList());
                 } else {//if (elementType == "DateTime") {
                     element.setValue(QList<QVariant>());
                 }
             } else {
-                element.setValue(QString::fromLatin1("temp"));
+                element.setValue(QString());
             }
             // VERY SHAKY IMPLEMENTATION!
 
@@ -601,7 +601,7 @@ void QWsdl::prepareMethods()
             int methodReturn = 0;
             QString methodName = workMethodList->at(i);
 
-            if (methodName.contains(QString::fromLatin1("Response"))) {
+            if (methodName.contains(QLatin1String("Response"))) {
                 methodReturn = i;
                 methodsDone[i] = true;
                 QString tempMethodName = methodName;
@@ -688,24 +688,24 @@ void QWsdl::readService()
         tempName = xmlReader.name().toString();
 
         if ((xmlReader.isEndElement())
-                && (tempName == QString::fromLatin1("service"))) {
+                && (tempName == QLatin1String("service"))) {
             xmlReader.readNext();
             return;
         }
 
-        if ((tempName == QString::fromLatin1("service"))
+        if ((tempName == QLatin1String("service"))
                 && xmlReader.attributes().hasAttribute(
-                    QString::fromLatin1("name"))
-                && (m_webServiceName == QString::fromLatin1(""))) {
+                    QLatin1String("name"))
+                && (m_webServiceName == QLatin1String(""))) {
             m_webServiceName = xmlReader.attributes().value(
-                        QString::fromLatin1("name")).toString();
+                        QLatin1String("name")).toString();
         }
 
-        if ((tempName == QString::fromLatin1("address"))
+        if ((tempName == QLatin1String("address"))
                 && xmlReader.attributes().hasAttribute(
-                    QString::fromLatin1("location"))) {
+                    QLatin1String("location"))) {
             m_hostUrl.setUrl(xmlReader.attributes().value(
-                                 QString::fromLatin1("location")).toString());
+                                 QLatin1String("location")).toString());
         }
 
         xmlReader.readNext();
@@ -728,8 +728,8 @@ QString QWsdl::convertReplyToUtf(const QString &textToConvert)
 {
     QString result = textToConvert;
 
-    result.replace(QString::fromLatin1("&lt;"), QString::fromLatin1("<"));
-    result.replace(QString::fromLatin1("&gt;"), QString::fromLatin1(">"));
+    result.replace(QLatin1String("&lt;"), QLatin1String("<"));
+    result.replace(QLatin1String("&gt;"), QLatin1String(">"));
 
     return result;
 }

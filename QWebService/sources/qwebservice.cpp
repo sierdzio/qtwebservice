@@ -304,7 +304,7 @@ QString QWebService::errorInfo() const
 void QWebService::init()
 {
     errorState = false;
-    errorMessage = QString::fromLatin1("");
+//    errorMessage = QString();
 
     if (isErrorState())
         return;

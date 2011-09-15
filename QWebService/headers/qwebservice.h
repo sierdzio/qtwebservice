@@ -82,7 +82,7 @@ signals:
 
 protected:
     void init();
-    bool enterErrorState(const QString &errMessage = "");
+    bool enterErrorState(const QString &errMessage = QString());
 
     bool errorState;
     QString errorMessage;

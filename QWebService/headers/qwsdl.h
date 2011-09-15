@@ -94,7 +94,7 @@ private:
     void readService();
     void readDocumentation();
     QString convertReplyToUtf(const QString &textToConvert);
-    bool enterErrorState(const QString &errMessage = "");
+    bool enterErrorState(const QString &errMessage = QString());
 
     bool errorState;
     bool replyReceived;

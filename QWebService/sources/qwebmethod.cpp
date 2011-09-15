@@ -174,8 +174,8 @@ QWebMethod::QWebMethod(QObject *parent) :
     init();
     setProtocol(Soap12);
     setHttpMethod(Post);
-    m_hostUrl.setHost(QString::fromLatin1(""));
-    m_methodName = QString::fromLatin1("");
+//    m_hostUrl.setHost(QString());
+//    m_methodName = QString();
     parameters.clear();
 }
 
@@ -192,8 +192,8 @@ QWebMethod::QWebMethod(Protocol protocol, HttpMethod method, QObject *parent) :
     init();
     setProtocol(protocol);
     setHttpMethod(method);
-    m_hostUrl.setHost(QString::fromLatin1(""));
-    m_methodName = QString::fromLatin1("");
+//    m_hostUrl.setHost(QString());
+//    m_methodName = QString();
     parameters.clear();
 }
 
@@ -211,7 +211,7 @@ QWebMethod::QWebMethod(const QUrl &url, Protocol protocol, HttpMethod method, QO
     setProtocol(protocol);
     setHttpMethod(method);
     m_hostUrl = url;
-    m_methodName = QString::fromLatin1("");
+//    m_methodName = QString();
     parameters.clear();
 }
 
@@ -221,7 +221,6 @@ QWebMethod::QWebMethod(const QUrl &url, Protocol protocol, HttpMethod method, QO
 QWebMethod::~QWebMethod()
 {
     delete manager;
-//    this->deleteLater();
 }
 
 /*!
@@ -349,7 +348,7 @@ void QWebMethod::setProtocol(Protocol prot)
         else
             protocolUsed = prot;
     } else {
-        enterErrorState(QString::fromLatin1("Wrong protocol is set. You have "
+        enterErrorState(QLatin1String("Wrong protocol is set. You have "
                                             "combined exclusive flags."));
 //        protocolUsed = soap12;
     }
@@ -374,13 +373,13 @@ void QWebMethod::setHttpMethod(HttpMethod method)
 bool QWebMethod::setHttpMethod(const QString &newMethod)
 {
     QString tempMethod = newMethod.toLower();
-    if (tempMethod == QString::fromLatin1("post"))
+    if (tempMethod == QLatin1String("post"))
         httpMethodUsed = Post;
-    else if (tempMethod == QString::fromLatin1("get"))
+    else if (tempMethod == QLatin1String("get"))
         httpMethodUsed = Get;
-    else if (tempMethod == QString::fromLatin1("put"))
+    else if (tempMethod == QLatin1String("put"))
         httpMethodUsed = Put;
-    else if (tempMethod == QString::fromLatin1("delete"))
+    else if (tempMethod == QLatin1String("delete"))
         httpMethodUsed = Delete;
     else
         return false;
@@ -423,7 +422,7 @@ bool QWebMethod::setHttpMethod(const QString &newMethod)
   */
 bool QWebMethod::sendMessage(const QByteArray &requestData)
 {
-    if ((m_username != QString::fromLatin1("")) && (authReply == false)) {
+    if ((m_username != QLatin1String("")) && (authReply == false)) {
         forever {
             if (authReply) {
                 disconnect(manager, SIGNAL(finished(QNetworkReply*)),
@@ -435,7 +434,7 @@ bool QWebMethod::sendMessage(const QByteArray &requestData)
                 qApp->processEvents();
             }
         }
-    } else if ((m_username != QString::fromLatin1("")) && (authReply == true)) {
+    } else if ((m_username != QLatin1String("")) && (authReply == true)) {
         disconnect(manager, SIGNAL(finished(QNetworkReply*)),
                    this, SLOT(authReplyFinished(QNetworkReply*)));
         connect(manager, SIGNAL(finished(QNetworkReply*)),
@@ -447,16 +446,16 @@ bool QWebMethod::sendMessage(const QByteArray &requestData)
 
     if (protocolUsed & Soap) {
         request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QVariant(QString::fromLatin1("application/soap+xml; charset=utf-8")));
+                          QVariant(QLatin1String("application/soap+xml; charset=utf-8")));
     } else if (protocolUsed & Json) {
         request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QVariant(QString::fromLatin1("application/json; charset=utf-8")));
+                          QVariant(QLatin1String("application/json; charset=utf-8")));
     } else if (protocolUsed & Http) {
         request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QVariant(QString::fromLatin1("Content-Type: application/x-www-form-urlencoded")));
+                          QVariant(QLatin1String("Content-Type: application/x-www-form-urlencoded")));
     } else if (protocolUsed & Xml) {
         request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QVariant(QString::fromLatin1("application/xml; charset=utf-8")));
+                          QVariant(QLatin1String("application/xml; charset=utf-8")));
     }
 
     if (protocolUsed & Soap10)
@@ -504,7 +503,7 @@ bool QWebMethod::authenticate(const QString &newUsername, const QString &newPass
     if (!newPassword.isNull())
         m_password = newPassword;
 
-    if (m_username != QString::fromLatin1("")) {
+    if (m_username != QLatin1String("")) {
         QUrl url;
         url.addEncodedQueryItem("ACT", QUrl::toPercentEncoding("11"));
         url.addEncodedQueryItem("RET", QUrl::toPercentEncoding("/"));
@@ -541,7 +540,7 @@ bool QWebMethod::authenticate(const QUrl &customAuthString)
     QNetworkRequest rqst(QUrl::fromUserInput(
                              QString("http://" + m_hostUrl.host() + "/")));
     rqst.setHeader(QNetworkRequest::ContentTypeHeader,
-                   QString::fromLatin1("application/x-www-form-urlencoded"));
+                   QLatin1String("application/x-www-form-urlencoded"));
 
     QByteArray paramBytes = customAuthString.toString().mid(1).toLatin1();
     paramBytes.replace("/", "%2F");
@@ -721,18 +720,18 @@ QString QWebMethod::protocolString(bool includeRest) const
     QString result("");
 
     if (protocolUsed & Http)
-        result = QString::fromLatin1("http");
+        result = QLatin1String("http");
     else if (protocolUsed & Soap10)
-        result = QString::fromLatin1("soap10");
+        result = QLatin1String("soap10");
     else if (protocolUsed & Soap12)
-        result = QString::fromLatin1("soap12");
+        result = QLatin1String("soap12");
     else if (protocolUsed & Json)
-        result = QString::fromLatin1("json");
+        result = QLatin1String("json");
     else if (protocolUsed & Xml)
-        result = QString::fromLatin1("xml");
+        result = QLatin1String("xml");
 
     if (includeRest && (protocolUsed & Rest))
-        result += QString::fromLatin1(",rest");
+        result += QLatin1String(",rest");
 
     return result;
 }
@@ -747,13 +746,13 @@ QString QWebMethod::httpMethodString() const
     QString result("");
 
     if (httpMethodUsed == Post)
-        result = QString::fromLatin1("POST");
+        result = QLatin1String("POST");
     else if (httpMethodUsed == Get)
-        result = QString::fromLatin1("GET");
+        result = QLatin1String("GET");
     else if (httpMethodUsed == Put)
-        result = QString::fromLatin1("PUT");
+        result = QLatin1String("PUT");
     else if (httpMethodUsed == Delete)
-        result = QString::fromLatin1("DELETE");
+        result = QLatin1String("DELETE");
 
     return result;
 }
@@ -811,7 +810,7 @@ void QWebMethod::authReplyFinished(QNetworkReply *reply)
     QByteArray array = reply->readAll();
     if (!array.isEmpty())
     {
-        enterErrorState(QString::fromLatin1("Login incorrect."));
+        enterErrorState(QLatin1String("Login incorrect."));
     }
     //    else        qDebug() << "Login correct";
     reply->deleteLater();
@@ -849,14 +848,14 @@ void QWebMethod::authenticationSlot(QNetworkReply *reply,
   */
 void QWebMethod::init()
 {
-    m_username = QString::fromLatin1("");
-    m_password = QString::fromLatin1("");
+//    m_username = QLatin1String();
+//    m_password = QLatin1String();
 
     replyReceived = false;
     authReply = false;
     errorState = false;
     authenticationError = false;
-    errorMessage = QString::fromLatin1("");
+//    errorMessage = QLatin1String();
 
     manager = new QNetworkAccessManager(this);
 
@@ -927,7 +926,7 @@ void QWebMethod::prepareRequestData()
             body += QString("{" + endl + "\t\"" + currentKey + "\" : \""
                             + qv.toString() + "\"" + endl);
         }
-        body += QString::fromLatin1("}");
+        body += QLatin1String("}");
     } else if (protocolUsed & Xml) {
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
@@ -949,8 +948,8 @@ QString QWebMethod::convertReplyToUtf(const QString &textToConvert)
 {
     QString result = textToConvert;
 
-    result.replace(QString::fromLatin1("&lt;"), QString::fromLatin1("<"));
-    result.replace(QString::fromLatin1("&gt;"), QString::fromLatin1(">"));
+    result.replace(QLatin1String("&lt;"), QLatin1String("<"));
+    result.replace(QLatin1String("&gt;"), QLatin1String(">"));
 
     return result;
 }

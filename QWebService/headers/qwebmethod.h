@@ -141,7 +141,7 @@ protected:
     void init();
     void prepareRequestData();
     QString convertReplyToUtf(const QString &textToConvert);
-    bool enterErrorState(const QString &errMessage = "");
+    bool enterErrorState(const QString &errMessage = QString());
 
     bool errorState;
     bool authReply;
