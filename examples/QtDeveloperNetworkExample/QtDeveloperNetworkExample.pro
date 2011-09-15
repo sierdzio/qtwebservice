@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network
+QT       += core widgets network
 
 TARGET = QtDeveloperNetworkExample
 TEMPLATE = app

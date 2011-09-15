@@ -6,17 +6,12 @@ TODO'S:
 *Please make the “else” be on the same line as the closing brace of the previous if-branch.
 *Enum constants must start with uppercase letter. Do not make them all-uppercase either.
 *QObject-derived classes should have the QObject *parent parameter last.
-
-Please add the copyright headers (copyright you, not Nokia) and the license for the files.
+*Please add the copyright headers (copyright you, not Nokia) and the license for the files.
 
 Please don’t use QString::fromLatin1(“”); Use QString(). And that’s if the string is set to something else — in the constructor, it was already properly initialised.
 
 QString / QByteArray / etc. must always be passed by const-ref. Change all functions that take a by-value QString to by-const-ref. Including in signals.
 
 Do not write: if (newMethod.toLower() == QString::fromLatin1(“…”)). First of all, store the result of toLower() instead of calling it multiple times. Second, use QLatin1String, not QString::fromLatin1.
-
-Missing copyright and license header.
-
-
 
 Qt coding style requires that there be no private or protected members. Please move all privates to the Private class.
