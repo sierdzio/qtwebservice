@@ -70,7 +70,7 @@ public:
     };
     Q_DECLARE_FLAGS(ArgumentDescription, ArgumentDescriptionFlag)
 
-    explicit WsdlConverter(QStringList appArguments, QObject *parent = 0);
+    explicit WsdlConverter(const QStringList &appArguments, QObject *parent = 0);
     ~WsdlConverter();
 
     void setFlags(Flags flgs);
@@ -81,18 +81,18 @@ public:
     QString webServiceName();
 
 signals:
-    void errorEncountered(QString errMessage);
+    void errorEncountered(const QString &errMessage);
 
 public slots:
 
 private:
-    bool parseArguments(QStringList arguments);
+    bool parseArguments(const QStringList &arguments);
     void displayHelp();
     void displayIntro();
     void displayOutro();
 
-    bool enterErrorState(QString errMessage = "");
-    bool removeDir(QString path);
+    bool enterErrorState(const QString &errMessage = "");
+    bool removeDir(const QString &path);
 
     bool errorState;
     QString errorMessage;

@@ -74,7 +74,7 @@
     Uses application's arguments (\a appArguments) to initialise
     QWsdl Flags and itself, and \a parent to construct the object.
   */
-WsdlConverter::WsdlConverter(QStringList appArguments, QObject *parent) :
+WsdlConverter::WsdlConverter(const QStringList &appArguments, QObject *parent) :
     QObject(parent)
 {
     flags = new Flags();
@@ -122,7 +122,7 @@ WsdlConverter::~WsdlConverter()
 }
 
 /*!
-    \fn WsdlConverter::errorEncountered(QString errMessage)
+    \fn WsdlConverter::errorEncountered(const QString &errMessage)
 
     Singal emitted when WsdlConverter encounters an error.
     Carries \a errMessage for convenience.
@@ -151,7 +151,7 @@ bool WsdlConverter::isErrorState()
 
     Enters into error state with message \a errMessage.
   */
-bool WsdlConverter::enterErrorState(QString errMessage)
+bool WsdlConverter::enterErrorState(const QString &errMessage)
 {
     errorState = true;
     errorMessage += errMessage + "\n";
@@ -238,7 +238,7 @@ QString WsdlConverter::webServiceName()
 
     Recursively removes directories.
   */
-bool WsdlConverter::removeDir(QString path)
+bool WsdlConverter::removeDir(const QString &path)
 {
     QDir dir(path);
     bool err = false;
@@ -272,7 +272,7 @@ bool WsdlConverter::removeDir(QString path)
 
     Reads application's command line, sets Flags, paths etc.
   */
-bool WsdlConverter::parseArguments(QStringList arguments)
+bool WsdlConverter::parseArguments(const QStringList &arguments)
 {
     bool wasFile = false;
     bool wasOutDir = false;

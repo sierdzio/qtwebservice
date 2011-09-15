@@ -202,15 +202,16 @@ void Flags::setHttpMethod(HttpMethod newMethod)
 
   Returns true if succesfull.
   */
-bool Flags::setHttpMethod(QString newMethod)
+bool Flags::setHttpMethod(const QString &newMethod)
 {
-    if (newMethod.toLower() == "post")
+    QString tempMethod = newMethod.toLower();
+    if (tempMethod == QString::fromLatin1("post"))
         method = Post;
-    else if (newMethod.toLower() == "get")
+    else if (tempMethod == QString::fromLatin1("get"))
         method = Get;
-    else if (newMethod.toLower() == "put")
+    else if (tempMethod == QString::fromLatin1("put"))
         method = Put;
-    else if (newMethod.toLower() == "delete")
+    else if (tempMethod == QString::fromLatin1("delete"))
         method = Delete;
     else
         return false;
@@ -232,7 +233,7 @@ void Flags::setForced(bool forced)
 /*!
     Sets the message suffix using \a newMsgSuffix.
     */
-void Flags::setMsgSuffix(QString newMsgSuffix)
+void Flags::setMsgSuffix(const QString &newMsgSuffix)
 {
     msgSuffix = newMsgSuffix;
 }
@@ -240,7 +241,7 @@ void Flags::setMsgSuffix(QString newMsgSuffix)
 /*!
     Sets the object suffix using \a newObjSuffix.
     */
-void Flags::setObjSuffix(QString newObjSuffix)
+void Flags::setObjSuffix(const QString &newObjSuffix)
 {
     objSuffix = newObjSuffix;
 }

@@ -204,7 +204,7 @@ QWebMethod::QWebMethod(Protocol protocol, HttpMethod method, QObject *parent) :
 
     \sa init(), setParameters(), setProtocol(), sendMessage()
   */
-QWebMethod::QWebMethod(QUrl url, Protocol protocol, HttpMethod method, QObject *parent) :
+QWebMethod::QWebMethod(const QUrl &url, Protocol protocol, HttpMethod method, QObject *parent) :
     QObject(parent)
 {
     init();
@@ -225,7 +225,7 @@ QWebMethod::~QWebMethod()
 }
 
 /*!
-    \fn QWebMethod::errorEncountered(QString errMessage)
+    \fn QWebMethod::errorEncountered(const QString &errMessage)
 
     Singal emitted when WsdlConverter encounters an error.
     Carries \a errMessage for convenience.
@@ -234,7 +234,7 @@ QWebMethod::~QWebMethod()
 /*!
     Sets message's host to \a newHost.
   */
-void QWebMethod::setHost(QString newHost)
+void QWebMethod::setHost(const QString &newHost)
 {
     m_hostUrl.setPath(newHost);
 }
@@ -242,7 +242,7 @@ void QWebMethod::setHost(QString newHost)
 /*!
     Sets message's host to \a newHost.
   */
-void QWebMethod::setHost(QUrl newHost)
+void QWebMethod::setHost(const QUrl &newHost)
 {
     m_hostUrl = newHost;
 }
@@ -253,7 +253,7 @@ void QWebMethod::setHost(QUrl newHost)
 
     \sa setPassword(), setCredentials(), authenticate()
   */
-void QWebMethod::setUsername(QString newUsername)
+void QWebMethod::setUsername(const QString &newUsername)
 {
     m_username = newUsername;
 }
@@ -264,7 +264,7 @@ void QWebMethod::setUsername(QString newUsername)
 
     \sa setUsername(), setCredentials(), authenticate()
   */
-void QWebMethod::setPassword(QString newPassword)
+void QWebMethod::setPassword(const QString &newPassword)
 {
     m_password = newPassword;
 }
@@ -275,7 +275,7 @@ void QWebMethod::setPassword(QString newPassword)
 
     \sa setUsername(), setPassword(), authenticate()
   */
-void QWebMethod::setCredentials(QString newUsername, QString newPassword)
+void QWebMethod::setCredentials(const QString &newUsername, const QString &newPassword)
 {
     m_username = newUsername;
     m_password = newPassword;
@@ -284,7 +284,7 @@ void QWebMethod::setCredentials(QString newUsername, QString newPassword)
 /*!
     Sets message's name to \a newName.
   */
-void QWebMethod::setMessageName(QString newName)
+void QWebMethod::setMessageName(const QString &newName)
 {
     m_methodName = newName;
 }
@@ -292,7 +292,7 @@ void QWebMethod::setMessageName(QString newName)
 /*!
     Sets message's name to \a newName.
   */
-void QWebMethod::setMethodName(QString newName)
+void QWebMethod::setMethodName(const QString &newName)
 {
     m_methodName = newName;
 }
@@ -300,7 +300,7 @@ void QWebMethod::setMethodName(QString newName)
 /*!
     Sets method's parameters (\a params). This also includes their names.
   */
-void QWebMethod::setParameters(QMap<QString, QVariant> params)
+void QWebMethod::setParameters(const QMap<QString, QVariant> &params)
 {
     parameters = params;
 }
@@ -308,7 +308,7 @@ void QWebMethod::setParameters(QMap<QString, QVariant> params)
 /*!
     Sets method's return value (\a returnVal). This also includes their names.
   */
-void QWebMethod::setReturnValue(QMap<QString, QVariant> returnVal)
+void QWebMethod::setReturnValue(const QMap<QString, QVariant> &returnVal)
 {
     returnValue = returnVal;
 }
@@ -317,7 +317,7 @@ void QWebMethod::setReturnValue(QMap<QString, QVariant> returnVal)
     Sets message's target namespace (\a tNamespace),
     which is needed in SOAP messaging.
   */
-void QWebMethod::setTargetNamespace(QString tNamespace)
+void QWebMethod::setTargetNamespace(const QString &tNamespace)
 {
     m_targetNamespace = tNamespace;
 }
@@ -371,15 +371,16 @@ void QWebMethod::setHttpMethod(HttpMethod method)
 
     Returns true if successful.
   */
-bool QWebMethod::setHttpMethod(QString newMethod)
+bool QWebMethod::setHttpMethod(const QString &newMethod)
 {
-    if (newMethod.toLower() == QString::fromLatin1("post"))
+    QString tempMethod = newMethod.toLower();
+    if (tempMethod == QString::fromLatin1("post"))
         httpMethodUsed = Post;
-    else if (newMethod.toLower() == QString::fromLatin1("get"))
+    else if (tempMethod == QString::fromLatin1("get"))
         httpMethodUsed = Get;
-    else if (newMethod.toLower() == QString::fromLatin1("put"))
+    else if (tempMethod == QString::fromLatin1("put"))
         httpMethodUsed = Put;
-    else if (newMethod.toLower() == QString::fromLatin1("delete"))
+    else if (tempMethod == QString::fromLatin1("delete"))
         httpMethodUsed = Delete;
     else
         return false;
@@ -420,7 +421,7 @@ bool QWebMethod::setHttpMethod(QString newMethod)
 
     \sa setParameters(), setProtocol(), setTargetNamespace(), prepareRequestData()
   */
-bool QWebMethod::sendMessage(QByteArray requestData)
+bool QWebMethod::sendMessage(const QByteArray &requestData)
 {
     if ((m_username != QString::fromLatin1("")) && (authReply == false)) {
         forever {
@@ -496,7 +497,7 @@ bool QWebMethod::sendMessage(QByteArray requestData)
 
     \sa setCredentials(), setUsername(), setPassword()
   */
-bool QWebMethod::authenticate(QString newUsername, QString newPassword)
+bool QWebMethod::authenticate(const QString &newUsername, const QString &newPassword)
 {
     if (!newUsername.isNull())
         m_username = newUsername;
@@ -526,7 +527,7 @@ bool QWebMethod::authenticate(QString newUsername, QString newPassword)
 
     \sa setCredentials(), setUsername(), setPassword()
   */
-bool QWebMethod::authenticate(QUrl customAuthString)
+bool QWebMethod::authenticate(const QUrl &customAuthString)
 {
     if (customAuthString.isEmpty())
         return false;
@@ -612,7 +613,7 @@ QByteArray QWebMethod::replyReadRaw()
 }
 
 /*!
-    \fn QWebMethod::replyReady(QByteArray rply)
+    \fn QWebMethod::replyReady(const QByteArray &rply)
 
     Signal invoked when the reply (\a rply) from web service's server
     is ready for reading.
@@ -944,7 +945,7 @@ void QWebMethod::prepareRequestData()
 
     Changes the encoding of the reply, in a rather crude fashion.
   */
-QString QWebMethod::convertReplyToUtf(QString textToConvert)
+QString QWebMethod::convertReplyToUtf(const QString &textToConvert)
 {
     QString result = textToConvert;
 
@@ -959,7 +960,7 @@ QString QWebMethod::convertReplyToUtf(QString textToConvert)
 
     Enters into error state with message \a errMessage.
   */
-bool QWebMethod::enterErrorState(QString errMessage)
+bool QWebMethod::enterErrorState(const QString &errMessage)
 {
     errorState = true;
     errorMessage += QString(errMessage + " ");

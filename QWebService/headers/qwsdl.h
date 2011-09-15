@@ -57,11 +57,11 @@ class QWEBSERVICESHARED_EXPORT QWsdl : public QObject
 
 public:
     explicit QWsdl(QObject *parent = 0);
-    QWsdl(QString wsdlFile, QObject *parent = 0);
+    QWsdl(const QString &wsdlFile, QObject *parent = 0);
     ~QWsdl();
 
-    void setWsdlFile(QString wsdlFile); // == resetWsdl()
-    void resetWsdl(QString newWsdl);
+    void setWsdlFile(const QString &wsdlFile); // == resetWsdl()
+    void resetWsdl(const QString &newWsdl);
 
     QStringList methodNames() const;
     QMap<QString, QWebServiceMethod *> *methods();
@@ -75,7 +75,7 @@ public:
     bool isErrorState() const;
 
 signals:
-    void errorEncountered(QString errMessage);
+    void errorEncountered(const QString &errMessage);
 
 public slots:
     void fileReplyFinished(QNetworkReply *rply);
@@ -93,8 +93,8 @@ private:
     void readBindings();
     void readService();
     void readDocumentation();
-    QString convertReplyToUtf(QString textToConvert);
-    bool enterErrorState(QString errMessage = "");
+    QString convertReplyToUtf(const QString &textToConvert);
+    bool enterErrorState(const QString &errMessage = "");
 
     bool errorState;
     bool replyReceived;

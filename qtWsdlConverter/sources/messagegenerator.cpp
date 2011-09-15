@@ -51,11 +51,12 @@
 
 /*!
     Constructs QObject using \a parent, initialises MessageGenerator
-    with messages (\a msgs), working directory (\a wrkDir), and flags (\a flgs).
+    with messages (\a mthds), working directory (\a wrkDir), and flags (\a flgs).
   */
-MessageGenerator::MessageGenerator(QMap<QString, QWebServiceMethod *> *msgs,
-                                   QDir wrkDir, Flags *flgs, QObject *parent) :
-    QObject(parent), messages(msgs), workingDir(wrkDir), flags(flgs)
+MessageGenerator::MessageGenerator(QMap<QString, QWebServiceMethod *> *mthds,
+                                   const QDir &wrkDir,
+                                   Flags *flgs, QObject *parent) :
+    QObject(parent), methods(mthds), workingDir(wrkDir), flags(flgs)
 {
     errorState = false;
     m_errorMessage = "";
@@ -72,7 +73,7 @@ QString MessageGenerator::errorMessage()
 /*!
     \internal
   */
-bool MessageGenerator::enterErrorState(QString errMessage)
+bool MessageGenerator::enterErrorState(const QString errMessage)
 {
     m_errorMessage += errMessage + "\n";
     return false;
@@ -101,8 +102,8 @@ bool MessageGenerator::createMessages()
     if (!(flags->flags() & Flags::AllInOneDirStructure))
         workingDir.cd("headers");
 
-    foreach (QString s, messages->keys()) {
-        QWebServiceMethod *m = messages->value(s);
+    foreach (QString s, methods->keys()) {
+        QWebServiceMethod *m = methods->value(s);
 
         if (flags->flags() & Flags::Subclass) {
             if (!createSubclassedMessageHeader(m))
@@ -120,8 +121,8 @@ bool MessageGenerator::createMessages()
         workingDir.cd("sources");
     }
 
-    foreach (QString s, messages->keys()) {
-        QWebServiceMethod *n = messages->value(s);
+    foreach (QString s, methods->keys()) {
+        QWebServiceMethod *n = methods->value(s);
 
         if (flags->flags() & Flags::Subclass) {
             if (!createSubclassedMessageSource(n))

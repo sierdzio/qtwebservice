@@ -56,10 +56,10 @@ class QWEBSERVICESHARED_EXPORT QWebServiceReader : public QWebService
 public:
     explicit QWebServiceReader(QObject *parent = 0);
     QWebServiceReader(QWsdl *wsdl, QObject *parent = 0);
-    QWebServiceReader(QString host, QObject *parent = 0);
+    QWebServiceReader(const QString &host, QObject *parent = 0);
 
 public slots:
-    virtual void methodHandler(QVariant param);
+    virtual void methodHandler(const QVariant &param);
 };
 
 #endif // QWEBSERVICEREADER_H

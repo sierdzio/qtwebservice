@@ -36,7 +36,7 @@
 <a name="public-functions"></a>
 <h2>Public Functions</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#WsdlConverter">WsdlConverter</a></b> ( QStringList <i>appArguments</i>, QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#WsdlConverter">WsdlConverter</a></b> ( const QStringList &amp; <i>appArguments</i>, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#dtor.WsdlConverter">~WsdlConverter</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#convert">convert</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#errorInfo">errorInfo</a></b> ()</td></tr>
@@ -48,7 +48,7 @@
 <a name="signals"></a>
 <h2>Signals</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#errorEncountered">errorEncountered</a></b> ( QString <i>errMessage</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="wsdlconverter.html#errorEncountered">errorEncountered</a></b> ( const QString &amp; <i>errMessage</i> )</td></tr>
 </table>
 <a name="details"></a>
 <!-- $$$WsdlConverter-description -->
@@ -77,8 +77,8 @@
 </div>
 <div class="func">
 <h2>Member Function Documentation</h2>
-<!-- $$$WsdlConverter[overload1]$$$WsdlConverterQStringListQObject* -->
-<h3 class="fn"><a name="WsdlConverter"></a>WsdlConverter::WsdlConverter ( QStringList <i>appArguments</i>, QObject * <i>parent</i> = 0 )</h3>
+<!-- $$$WsdlConverter[overload1]$$$WsdlConverterconstQStringList&QObject* -->
+<h3 class="fn"><a name="WsdlConverter"></a>WsdlConverter::WsdlConverter ( const QStringList &amp; <i>appArguments</i>, QObject * <i>parent</i> = 0 )</h3>
 <p>Uses application's arguments (<i>appArguments</i>) to initialise QWsdl Flags and itself, and <i>parent</i> to construct the object.</p>
 <!-- @@@WsdlConverter -->
 <!-- $$$~WsdlConverter[overload1]$$$~WsdlConverter -->
@@ -89,8 +89,8 @@
 <h3 class="fn"><a name="convert"></a>void WsdlConverter::convert ()</h3>
 <p>Performs the WSDL =&gt; Qt/C++ code conversion.</p>
 <!-- @@@convert -->
-<!-- $$$errorEncountered[overload1]$$$errorEncounteredQString -->
-<h3 class="fn"><a name="errorEncountered"></a>void WsdlConverter::errorEncountered ( QString <i>errMessage</i> )<tt> [signal]</tt></h3>
+<!-- $$$errorEncountered[overload1]$$$errorEncounteredconstQString& -->
+<h3 class="fn"><a name="errorEncountered"></a>void WsdlConverter::errorEncountered ( const QString &amp; <i>errMessage</i> )<tt> [signal]</tt></h3>
 <p>Singal emitted when <a href="wsdlconverter.html">WsdlConverter</a> encounters an error. Carries <i>errMessage</i> for convenience.</p>
 <!-- @@@errorEncountered -->
 <!-- $$$errorInfo[overload1]$$$errorInfo -->

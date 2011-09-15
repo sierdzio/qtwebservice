@@ -20,18 +20,18 @@
 <li class="fn">flags <b><a href="qwebmethod.html#Protocol-enum">Protocols</a></b></li>
 <li class="fn"><b><a href="qwebservicemethod.html#QWebServiceMethod">QWebServiceMethod</a></b> ( QObject * )</li>
 <li class="fn"><b><a href="qwebservicemethod.html#QWebServiceMethod-2">QWebServiceMethod</a></b> ( Protocol, HttpMethod, QObject * )</li>
-<li class="fn"><b><a href="qwebservicemethod.html#QWebServiceMethod-3">QWebServiceMethod</a></b> ( QUrl, QString, Protocol, HttpMethod, QObject * )</li>
-<li class="fn"><b><a href="qwebservicemethod.html#QWebServiceMethod-4">QWebServiceMethod</a></b> ( QString, QString, Protocol, HttpMethod, QObject * )</li>
-<li class="fn"><b><a href="qwebservicemethod.html#QWebServiceMethod-5">QWebServiceMethod</a></b> ( QString, QString, QString, QMap&lt;QString, QVariant&gt;, Protocol, HttpMethod, QObject * )</li>
+<li class="fn"><b><a href="qwebservicemethod.html#QWebServiceMethod-3">QWebServiceMethod</a></b> ( const QUrl &amp;, const QString &amp;, Protocol, HttpMethod, QObject * )</li>
+<li class="fn"><b><a href="qwebservicemethod.html#QWebServiceMethod-4">QWebServiceMethod</a></b> ( const QString &amp;, const QString &amp;, Protocol, HttpMethod, QObject * )</li>
+<li class="fn"><b><a href="qwebservicemethod.html#QWebServiceMethod-5">QWebServiceMethod</a></b> ( const QString &amp;, const QString &amp;, const QString &amp;, const QMap&lt;QString, QVariant&gt; &amp;, Protocol, HttpMethod, QObject * )</li>
 <li class="fn"><b><a href="qwebservicemethod.html#Avar"></a></b> : QWebMethod::sendMessage</li>
 <li class="fn"><b><a href="qwebmethod.html#authReply-var">authReply</a></b> : bool</li>
 <li class="fn"><b><a href="qwebmethod.html#authReplyFinished">authReplyFinished</a></b> ( QNetworkReply * )</li>
-<li class="fn"><b><a href="qwebmethod.html#authenticate">authenticate</a></b> ( QString, QString ) : bool</li>
-<li class="fn"><b><a href="qwebmethod.html#authenticate-2">authenticate</a></b> ( QUrl ) : bool</li>
+<li class="fn"><b><a href="qwebmethod.html#authenticate">authenticate</a></b> ( const QString &amp;, const QString &amp; ) : bool</li>
+<li class="fn"><b><a href="qwebmethod.html#authenticate-2">authenticate</a></b> ( const QUrl &amp; ) : bool</li>
 <li class="fn"><b><a href="qwebmethod.html#authenticationError-var">authenticationError</a></b> : bool</li>
 <li class="fn"><b><a href="qwebmethod.html#authenticationSlot">authenticationSlot</a></b> ( QNetworkReply *, QAuthenticator * )</li>
 <li class="fn"><b><a href="qwebmethod.html#data-var">data</a></b> : QByteArray</li>
-<li class="fn"><b><a href="qwebmethod.html#errorEncountered">errorEncountered</a></b> ( QString )</li>
+<li class="fn"><b><a href="qwebmethod.html#errorEncountered">errorEncountered</a></b> ( const QString &amp; )</li>
 <li class="fn"><b><a href="qwebmethod.html#errorInfo">errorInfo</a></b> () const : QString</li>
 <li class="fn"><b><a href="qwebmethod.html#errorMessage-var">errorMessage</a></b> : QString</li>
 <li class="fn"><b><a href="qwebmethod.html#errorState-var">errorState</a></b> : bool</li>
@@ -63,25 +63,25 @@
 <li class="fn"><b><a href="qwebmethod.html#replyRead">replyRead</a></b> () : QString</li>
 <li class="fn"><b><a href="qwebmethod.html#replyReadParsed">replyReadParsed</a></b> () : QVariant</li>
 <li class="fn"><b><a href="qwebmethod.html#replyReadRaw">replyReadRaw</a></b> () : QByteArray</li>
-<li class="fn"><b><a href="qwebmethod.html#replyReady">replyReady</a></b> ( QByteArray )</li>
+<li class="fn"><b><a href="qwebmethod.html#replyReady">replyReady</a></b> ( const QByteArray &amp; )</li>
 <li class="fn"><b><a href="qwebmethod.html#replyReceived-var">replyReceived</a></b> : bool</li>
 <li class="fn"><b><a href="qwebmethod.html#returnValue-var">returnValue</a></b> : QMap&lt;QString, QVariant&gt;</li>
 <li class="fn"><b><a href="qwebmethod.html#returnValueName">returnValueName</a></b> () const : QStringList</li>
 <li class="fn"><b><a href="qwebmethod.html#returnValueNameType">returnValueNameType</a></b> () const : QMap&lt;QString, QVariant&gt;</li>
-<li class="fn"><b><a href="qwebservicemethod.html#sendMessage">sendMessage</a></b> ( QMap&lt;QString, QVariant&gt; ) : bool</li>
-<li class="fn"><b><a href="qwebmethod.html#setCredentials">setCredentials</a></b> ( QString, QString )</li>
-<li class="fn"><b><a href="qwebmethod.html#setHost">setHost</a></b> ( QString )</li>
-<li class="fn"><b><a href="qwebmethod.html#setHost-2">setHost</a></b> ( QUrl )</li>
+<li class="fn"><b><a href="qwebservicemethod.html#sendMessage">sendMessage</a></b> ( const QMap&lt;QString, QVariant&gt; &amp; ) : bool</li>
+<li class="fn"><b><a href="qwebmethod.html#setCredentials">setCredentials</a></b> ( const QString &amp;, const QString &amp; )</li>
+<li class="fn"><b><a href="qwebmethod.html#setHost">setHost</a></b> ( const QString &amp; )</li>
+<li class="fn"><b><a href="qwebmethod.html#setHost-2">setHost</a></b> ( const QUrl &amp; )</li>
 <li class="fn"><b><a href="qwebmethod.html#setHttpMethod">setHttpMethod</a></b> ( HttpMethod )</li>
-<li class="fn"><b><a href="qwebmethod.html#setHttpMethod-2">setHttpMethod</a></b> ( QString ) : bool</li>
-<li class="fn"><b><a href="qwebmethod.html#setMessageName">setMessageName</a></b> ( QString )</li>
-<li class="fn"><b><a href="qwebmethod.html#setMethodName">setMethodName</a></b> ( QString )</li>
-<li class="fn"><b><a href="qwebmethod.html#setParameters">setParameters</a></b> ( QMap&lt;QString, QVariant&gt; )</li>
-<li class="fn"><b><a href="qwebmethod.html#setPassword">setPassword</a></b> ( QString )</li>
+<li class="fn"><b><a href="qwebmethod.html#setHttpMethod-2">setHttpMethod</a></b> ( const QString &amp; ) : bool</li>
+<li class="fn"><b><a href="qwebmethod.html#setMessageName">setMessageName</a></b> ( const QString &amp; )</li>
+<li class="fn"><b><a href="qwebmethod.html#setMethodName">setMethodName</a></b> ( const QString &amp; )</li>
+<li class="fn"><b><a href="qwebmethod.html#setParameters">setParameters</a></b> ( const QMap&lt;QString, QVariant&gt; &amp; )</li>
+<li class="fn"><b><a href="qwebmethod.html#setPassword">setPassword</a></b> ( const QString &amp; )</li>
 <li class="fn"><b><a href="qwebmethod.html#setProtocol">setProtocol</a></b> ( Protocol )</li>
-<li class="fn"><b><a href="qwebmethod.html#setReturnValue">setReturnValue</a></b> ( QMap&lt;QString, QVariant&gt; )</li>
-<li class="fn"><b><a href="qwebmethod.html#setTargetNamespace">setTargetNamespace</a></b> ( QString )</li>
-<li class="fn"><b><a href="qwebmethod.html#setUsername">setUsername</a></b> ( QString )</li>
+<li class="fn"><b><a href="qwebmethod.html#setReturnValue">setReturnValue</a></b> ( const QMap&lt;QString, QVariant&gt; &amp; )</li>
+<li class="fn"><b><a href="qwebmethod.html#setTargetNamespace">setTargetNamespace</a></b> ( const QString &amp; )</li>
+<li class="fn"><b><a href="qwebmethod.html#setUsername">setUsername</a></b> ( const QString &amp; )</li>
 <li class="fn"><b><a href="qwebmethod.html#targetNamespace">targetNamespace</a></b> () const : QString</li>
 <li class="fn"><b><a href="qwebmethod.html#username">username</a></b> () const : QString</li>
 </ul>

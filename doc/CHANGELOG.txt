@@ -20,6 +20,9 @@ Example arguments for converter:
  - added some "clean" constructors to QWebMethod and QWebServiceMethod
    (they take in one parameter - QObject *parent = 0),
  - add copyright headers and the license for the files,
+ - optimise QWebMethod setters and it's use of QString,
+ - pass QString / QByteArray / etc. by const-ref,
+ - 
 
 13.09.2011 12:33 CEST:
  - added QWebService::removeMethod(), which deletes a web method specified by it's name,

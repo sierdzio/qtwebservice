@@ -90,7 +90,7 @@ QWebService::QWebService(QWsdl *_wsdl, QObject *parent)
 
     \sa setWsdl(), addMethod()
   */
-QWebService::QWebService(QString _hostname, QObject *parent)
+QWebService::QWebService(const QString &_hostname, QObject *parent)
     : QObject(parent)
 {
     m_hostUrl.setUrl(_hostname);
@@ -111,7 +111,7 @@ QWebService::~QWebService()
 }
 
 /*!
-    \fn QWebService::errorEncountered(QString errMessage)
+    \fn QWebService::errorEncountered(const QString &errMessage)
 
     Singal emitted when WsdlConverter encounters an error.
     Carries \a errMessage for convenience.
@@ -128,7 +128,7 @@ QStringList QWebService::methodNames() const
 /*!
     Returns list of names of parameters of a method specified by \a methodName.
   */
-QStringList QWebService::methodParameters(QString methodName) const
+QStringList QWebService::methodParameters(const QString &methodName) const
 {
     return methods->value(methodName)->parameterNames();
 }
@@ -136,7 +136,7 @@ QStringList QWebService::methodParameters(QString methodName) const
 /*!
     Returns names of return values, for a given method (\a methodName).
   */
-QStringList QWebService::methodReturnValue(QString methodName) const
+QStringList QWebService::methodReturnValue(const QString &methodName) const
 {
     return methods->value(methodName)->returnValueName();
 }
@@ -146,7 +146,7 @@ QStringList QWebService::methodReturnValue(QString methodName) const
     as a key, and QVariant value. By running QVariant::typeName() you can
     determine the type of the parameter.
   */
-QMap<QString, QVariant> QWebService::parameterNamesTypes(QString methodName) const
+QMap<QString, QVariant> QWebService::parameterNamesTypes(const QString &methodName) const
 {
     return methods->value(methodName)->parameterNamesTypes();
 }
@@ -156,7 +156,7 @@ QMap<QString, QVariant> QWebService::parameterNamesTypes(QString methodName) con
     as a key, and QVariant value. By running QVariant::typeName() you can
     determine the type of the parameter.
   */
-QMap<QString, QVariant> QWebService::returnValueNameType(QString methodName) const
+QMap<QString, QVariant> QWebService::returnValueNameType(const QString &methodName) const
 {
     return methods->value(methodName)->returnValueNameType();
 }
@@ -182,7 +182,7 @@ void QWebService::addMethod(QWebServiceMethod *newMethod)
 
     \sa removeMethod()
   */
-void QWebService::addMethod(QString methodName, QWebServiceMethod *newMethod)
+void QWebService::addMethod(const QString &methodName, QWebServiceMethod *newMethod)
 {
 //    newMethod->setMessageName(methodName);
     methods->insert(methodName, newMethod);
@@ -194,7 +194,7 @@ void QWebService::addMethod(QString methodName, QWebServiceMethod *newMethod)
 
     \sa addMethod()
   */
-void QWebService::removeMethod(QString methodName)
+void QWebService::removeMethod(const QString &methodName)
 {
     delete methods->value(methodName);
     methods->remove(methodName);
@@ -203,7 +203,7 @@ void QWebService::removeMethod(QString methodName)
 /*!
     Sets new \a hostname URL, resets the WSDL, and reinitialises.
   */
-void QWebService::setHost(QString hostname)
+void QWebService::setHost(const QString &hostname)
 {
     m_hostUrl.setUrl(hostname);
     resetWsdl(new QWsdl(hostname, this));
@@ -215,7 +215,7 @@ void QWebService::setHost(QString hostname)
 
     Sets new \a hostUrl URL, resets the WSDL, and reinitialises.
   */
-void QWebService::setHost(QUrl hostUrl)
+void QWebService::setHost(const QUrl &hostUrl)
 {
     m_hostUrl = hostUrl;
     resetWsdl(new QWsdl(hostUrl.host(), this));
@@ -315,7 +315,7 @@ void QWebService::init()
 
     Enters into error state with message \a errMessage.
   */
-bool QWebService::enterErrorState(QString errMessage)
+bool QWebService::enterErrorState(const QString &errMessage)
 {
     errorState = true;
     errorMessage += QString(errMessage + " ");

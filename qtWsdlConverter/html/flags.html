@@ -50,9 +50,9 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setFlags">setFlags</a></b> ( Options <i>options</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setForced">setForced</a></b> ( bool <i>forced</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setHttpMethod">setHttpMethod</a></b> ( HttpMethod <i>newMethod</i> )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setHttpMethod-2">setHttpMethod</a></b> ( QString <i>newMethod</i> )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setMsgSuffix">setMsgSuffix</a></b> ( QString <i>newMsgSuffix</i> )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setObjSuffix">setObjSuffix</a></b> ( QString <i>newObjSuffix</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setHttpMethod-2">setHttpMethod</a></b> ( const QString &amp; <i>newMethod</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setMsgSuffix">setMsgSuffix</a></b> ( const QString &amp; <i>newMsgSuffix</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setObjSuffix">setObjSuffix</a></b> ( const QString &amp; <i>newObjSuffix</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> Flags &amp; </td><td class="memItemRight bottomAlign"><b><a href="flags.html#operator-eq">operator=</a></b> ( const Flags &amp; <i>flag</i> )</td></tr>
 </table>
 <a name="details"></a>
@@ -187,17 +187,17 @@
 <p>Sets HTTP method flag to <i>newMethod</i>. Any previous setting is discarded.</p>
 <p>See also <a href="flags.html#httpMethod">httpMethod</a>().</p>
 <!-- @@@setHttpMethod -->
-<!-- $$$setHttpMethod$$$setHttpMethodQString -->
-<h3 class="fn"><a name="setHttpMethod-2"></a>bool Flags::setHttpMethod ( QString <i>newMethod</i> )</h3>
+<!-- $$$setHttpMethod$$$setHttpMethodconstQString& -->
+<h3 class="fn"><a name="setHttpMethod-2"></a>bool Flags::setHttpMethod ( const QString &amp; <i>newMethod</i> )</h3>
 <p>Sets HTTP method flag to <i>newMethod</i>. Any previous setting is discarded. Only valid values are accepted, but checks are not case sensitive. Therefore, you can for example pass &quot;delete&quot; or &quot;DELETE&quot;.</p>
 <p>Returns true if succesfull.</p>
 <!-- @@@setHttpMethod -->
-<!-- $$$setMsgSuffix[overload1]$$$setMsgSuffixQString -->
-<h3 class="fn"><a name="setMsgSuffix"></a>void Flags::setMsgSuffix ( QString <i>newMsgSuffix</i> )</h3>
+<!-- $$$setMsgSuffix[overload1]$$$setMsgSuffixconstQString& -->
+<h3 class="fn"><a name="setMsgSuffix"></a>void Flags::setMsgSuffix ( const QString &amp; <i>newMsgSuffix</i> )</h3>
 <p>Sets the message suffix using <i>newMsgSuffix</i>.</p>
 <!-- @@@setMsgSuffix -->
-<!-- $$$setObjSuffix[overload1]$$$setObjSuffixQString -->
-<h3 class="fn"><a name="setObjSuffix"></a>void Flags::setObjSuffix ( QString <i>newObjSuffix</i> )</h3>
+<!-- $$$setObjSuffix[overload1]$$$setObjSuffixconstQString& -->
+<h3 class="fn"><a name="setObjSuffix"></a>void Flags::setObjSuffix ( const QString &amp; <i>newObjSuffix</i> )</h3>
 <p>Sets the object suffix using <i>newObjSuffix</i>.</p>
 <!-- @@@setObjSuffix -->
 <!-- $$$operator=[overload1]$$$operator=constFlags& -->

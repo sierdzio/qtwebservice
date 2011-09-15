@@ -99,10 +99,10 @@ public:
     void resetFlags(Options whatToReset);
     void setFlags(Options options);
     void setHttpMethod(HttpMethod newMethod);
-    bool setHttpMethod(QString newMethod);
+    bool setHttpMethod(const QString &newMethod);
     void setForced(bool forced);
-    void setMsgSuffix(QString newMsgSuffix);
-    void setObjSuffix(QString newObjSuffix);
+    void setMsgSuffix(const QString &newMsgSuffix);
+    void setObjSuffix(const QString &newObjSuffix);
     Options flags() const;
     HttpMethod httpMethod() const;
     bool forced() const;

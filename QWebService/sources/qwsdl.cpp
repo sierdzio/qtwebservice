@@ -70,7 +70,7 @@ QWsdl::QWsdl(QObject *parent) :
     Constructs the object using optional \a parent. Uses the file path or URL
     specified in \a wsdlFile to parse the WSDL file.
   */
-QWsdl::QWsdl(QString wsdlFile, QObject *parent) :
+QWsdl::QWsdl(const QString &wsdlFile, QObject *parent) :
     QObject(parent), wsdlFilePath(wsdlFile)
 {
     init();
@@ -88,7 +88,7 @@ QWsdl::~QWsdl()
 }
 
 /*!
-    \fn QWsdl::errorEncountered(QString errMessage)
+    \fn QWsdl::errorEncountered(const QString &errMessage)
 
     Singal emitted when WsdlConverter encounters an error.
     Carries \a errMessage for convenience.
@@ -101,20 +101,20 @@ QWsdl::~QWsdl()
 
     \sa resetWsdl()
   */
-void QWsdl::setWsdlFile(QString wsdlFile) // == resetWsdl()
+void QWsdl::setWsdlFile(const QString &wsdlFile) // == resetWsdl()
 {
     resetWsdl(wsdlFile);
 }
 
 /*!
-    Can be used to set or reset a WSDL file (or URL), using \a newWsdlPath.
+    Can be used to set or reset a WSDL file (or URL), using \a newWsdl.
     Cleans and reinitialises the object, parses the file.
 
     \sa setWsdlFile()
   */
-void QWsdl::resetWsdl(QString newWsdlPath)
+void QWsdl::resetWsdl(const QString &newWsdl)
 {
-    wsdlFilePath = newWsdlPath;
+    wsdlFilePath = newWsdl;
 
     methodsMap->clear();
     workMethodList->clear();
@@ -284,7 +284,7 @@ void QWsdl::init()
 
     Enters into error state with message \a errMessage.
   */
-bool QWsdl::enterErrorState(QString errMessage)
+bool QWsdl::enterErrorState(const QString &errMessage)
 {
     errorState = true;
     errorMessage += QString(errMessage + " ");
@@ -724,7 +724,7 @@ void QWsdl::readDocumentation()
 /*!
     \internal
   */
-QString QWsdl::convertReplyToUtf(QString textToConvert)
+QString QWsdl::convertReplyToUtf(const QString &textToConvert)
 {
     QString result = textToConvert;
 

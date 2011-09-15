@@ -68,11 +68,11 @@ QWebServiceReader::QWebServiceReader(QWsdl *wsdl, QObject *parent) :
 }
 
 /*!
-    Constructs QWebServiceAbstract with \a parent and \a hostname
+    Constructs QWebServiceAbstract with \a parent and \a host
     (which is used to create a wsdl object).
   */
-QWebServiceReader::QWebServiceReader(QString hostname, QObject *parent) :
-    QWebService(new QWsdl(hostname, parent), parent)
+QWebServiceReader::QWebServiceReader(const QString &host, QObject *parent) :
+    QWebService(new QWsdl(host, parent), parent)
 {
 
 }
@@ -82,7 +82,7 @@ QWebServiceReader::QWebServiceReader(QString hostname, QObject *parent) :
     might be dropped in the future.
     Accepts parameters in a QVariant \a param.
   */
-void QWebServiceReader::methodHandler(QVariant param)
+void QWebServiceReader::methodHandler(const QVariant &param)
 {
     Q_UNUSED(param)
 }

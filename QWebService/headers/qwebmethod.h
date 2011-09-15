@@ -84,28 +84,28 @@ public:
     explicit QWebMethod(QObject *parent = 0);
     QWebMethod(Protocol protocol = Soap12, HttpMethod httpMethod = Post,
                QObject *parent = 0);
-    QWebMethod(QUrl url, Protocol protocol = Soap12, HttpMethod httpMethod = Post,
+    QWebMethod(const QUrl &url, Protocol protocol = Soap12, HttpMethod httpMethod = Post,
                QObject *parent = 0);
     ~QWebMethod();
 
-    void setHost(QString newHost);
-    void setHost(QUrl newHost);
-    void setUsername(QString newUsername);
-    void setPassword(QString newPassword);
-    void setCredentials(QString newUsername, QString newPassword);
-    void setMessageName(QString newName);
-    void setMethodName(QString newName);
-    void setParameters(QMap<QString, QVariant> params);
-    void setReturnValue(QMap<QString, QVariant> returnValue);
-    void setTargetNamespace(QString tNamespace);
+    void setHost(const QString &newHost);
+    void setHost(const QUrl &newHost);
+    void setUsername(const QString &newUsername);
+    void setPassword(const QString &newPassword);
+    void setCredentials(const QString &newUsername, const QString &newPassword);
+    void setMessageName(const QString &newName);
+    void setMethodName(const QString &newName);
+    void setParameters(const QMap<QString, QVariant> &params);
+    void setReturnValue(const QMap<QString, QVariant> &returnValue);
+    void setTargetNamespace(const QString &tNamespace);
     void setProtocol(Protocol protocol);
     void setHttpMethod(HttpMethod method);
-    bool setHttpMethod(QString newMethod);
+    bool setHttpMethod(const QString &newMethod);
     // should this be changed to invokeMethod()?
-    bool sendMessage(QByteArray requestData = QByteArray());
-    bool authenticate(QString newUsername = QString(),
-                      QString newPassword = QString());
-    bool authenticate(QUrl customAuthString);
+    bool sendMessage(const QByteArray &requestData = QByteArray());
+    bool authenticate(const QString &newUsername = QString(),
+                      const QString &newPassword = QString());
+    bool authenticate(const QUrl &customAuthString);
 
 //    QVariant replyRead();
     QVariant replyReadParsed();
@@ -129,8 +129,8 @@ public:
     bool isReplyReady() const;
 
 signals:
-    void replyReady(QByteArray rply);
-    void errorEncountered(QString errMessage);
+    void replyReady(const QByteArray &rply);
+    void errorEncountered(const QString &errMessage);
 
 protected slots:
     void replyFinished(QNetworkReply *reply);
@@ -140,8 +140,8 @@ protected slots:
 protected:
     void init();
     void prepareRequestData();
-    QString convertReplyToUtf(QString textToConvert);
-    bool enterErrorState(QString errMessage = "");
+    QString convertReplyToUtf(const QString &textToConvert);
+    bool enterErrorState(const QString &errMessage = "");
 
     bool errorState;
     bool authReply;

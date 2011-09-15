@@ -55,22 +55,27 @@ public:
     explicit QWebServiceMethod(QObject *parent = 0);
     QWebServiceMethod(Protocol protocol = Soap12, HttpMethod httpMethod = Post,
                                QObject *parent = 0);
-    QWebServiceMethod(QUrl hostUrl, QString methodName, Protocol protocol = Soap12,
-                      HttpMethod httpMethod = Post, QObject *parent = 0);
-    QWebServiceMethod(QString host, QString methodName, Protocol protocol = Soap12,
-                      HttpMethod httpMethod = Post, QObject *parent = 0);
-    QWebServiceMethod(QString host, QString methodName,  QString targetNamespace,
-                      QMap<QString, QVariant> params, Protocol protocol = Soap12,
-                      HttpMethod httpMethod = Post, QObject *parent = 0);
+    QWebServiceMethod(const QUrl &hostUrl, const QString &methodName,
+                      Protocol protocol = Soap12, HttpMethod httpMethod = Post,
+                      QObject *parent = 0);
+    QWebServiceMethod(const QString &host, const QString &methodName,
+                      Protocol protocol = Soap12, HttpMethod httpMethod = Post,
+                      QObject *parent = 0);
+    QWebServiceMethod(const QString &host, const QString &methodName,
+                      const QString &targetNamespace,
+                      const QMap<QString, QVariant> &params,
+                      Protocol protocol = Soap12, HttpMethod httpMethod = Post,
+                      QObject *parent = 0);
 
     using QWebMethod::sendMessage;
-    bool sendMessage(QMap<QString, QVariant> params);
-    QByteArray static sendMessage(QUrl url,
-                                  QString methodName, QString targetNamespace,
-                                  QMap<QString, QVariant> params,
-                                  Protocol protocol = Soap12, HttpMethod httpMethod = Post,
+    bool sendMessage(const QMap<QString, QVariant> &params);
+    QByteArray static sendMessage(const QUrl &url,
+                                  const QString &methodName,
+                                  const QString &targetNamespace,
+                                  const QMap<QString, QVariant> &params,
+                                  Protocol protocol = Soap12,
+                                  HttpMethod httpMethod = Post,
                                   QObject *parent = 0);
-
 };
 
 #endif // QWEBSERVICEMETHOD_H

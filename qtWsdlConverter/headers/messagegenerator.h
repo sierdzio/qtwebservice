@@ -55,13 +55,13 @@ class MessageGenerator : public QObject
 {
     Q_OBJECT
 public:
-    explicit MessageGenerator(QMap<QString, QWebServiceMethod *> *messages,
-                              QDir workingDir, Flags *flgs, QObject *parent = 0);
+    explicit MessageGenerator(QMap<QString, QWebServiceMethod *> *methods,
+                              const QDir &workingDir, Flags *flgs, QObject *parent = 0);
     QString errorMessage();
     bool createMessages();
 
 private:
-    bool enterErrorState(QString errMessage = "");
+    bool enterErrorState(const QString errMessage = "");
     bool createSubclassedMessageHeader(QWebServiceMethod *msg);
     bool createSubclassedMessageSource(QWebServiceMethod *msg);
     bool createMessageHeader(QWebServiceMethod *msg);
@@ -70,7 +70,7 @@ private:
 
     void assignAllParameters(QWebServiceMethod *msg, QTextStream &out);
 
-    QMap<QString, QWebServiceMethod *> *messages;
+    QMap<QString, QWebServiceMethod *> *methods;
     QDir workingDir;
     Flags *flags;
     bool errorState;

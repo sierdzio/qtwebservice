@@ -64,7 +64,7 @@ CodeGenerator::CodeGenerator(QObject *parent) :
 }
 
 /*!
-    \fn CodeGenerator::errorEncountered(QString errMessage)
+    \fn CodeGenerator::errorEncountered(const QString &errMessage)
 
     Singal emitted when CodeGenerator encounters an error. Carries \a errMessage
     for convenience.
@@ -81,7 +81,7 @@ bool CodeGenerator::isErrorState()
 /*!
     \internal
   */
-bool CodeGenerator::enterErrorState(QString errMessage)
+bool CodeGenerator::enterErrorState(const QString &errMessage)
 {
     errorState = true;
     errorMessage += errMessage + "\n";
@@ -99,7 +99,7 @@ void CodeGenerator::prepare()
         workingDir.mkdir("sources");
     }
 
-    messages = wsdl->methods();
+    methods = wsdl->methods();
 }
 
 /*!
@@ -111,7 +111,8 @@ void CodeGenerator::prepare()
 
     Returns true if successful.
   */
-bool CodeGenerator::create(QWsdl *wsdl, QDir workingDir, Flags *flags, QString baseClassName, QObject *parent)
+bool CodeGenerator::create(QWsdl *wsdl, const QDir &workingDir, Flags *flags,
+                           const QString &baseClassName, QObject *parent)
 {
     CodeGenerator obj(parent);
     obj.baseClassName = baseClassName;
@@ -581,7 +582,7 @@ bool CodeGenerator::createServiceSource()
   */
 bool CodeGenerator::createMessages()
 {
-    MessageGenerator msgGen(messages, workingDir, flags, this);
+    MessageGenerator msgGen(methods, workingDir, flags, this);
 
     if (!msgGen.createMessages())
         return enterErrorState(msgGen.errorMessage());

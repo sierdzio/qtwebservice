@@ -6,16 +6,16 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="QWsdl" fullname="QWsdl::QWsdl" href="qwsdl.html#QWsdl" location="qwsdl.h" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="QWsdl(QObject * parent)">
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="QWsdl" fullname="QWsdl::QWsdl" href="qwsdl.html#QWsdl-2" location="qwsdl.h" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="2" type="" signature="QWsdl(QString wsdlFile, QObject * parent)">
-                <parameter left="QString" right="" name="wsdlFile" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="QWsdl" fullname="QWsdl::QWsdl" href="qwsdl.html#QWsdl-2" location="qwsdl.h" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="2" type="" signature="QWsdl(const QString &amp; wsdlFile, QObject * parent)">
+                <parameter left="const QString &amp;" right="" name="wsdlFile" default=""/>
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="~QWsdl" fullname="QWsdl::~QWsdl" href="qwsdl.html#dtor.QWsdl" location="qwsdl.h" virtual="non" meta="destructor" const="false" static="false" overload="false" type="" signature="~QWsdl()"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setWsdlFile" fullname="QWsdl::setWsdlFile" href="qwsdl.html#setWsdlFile" location="qwsdl.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setWsdlFile(QString wsdlFile)">
-                <parameter left="QString" right="" name="wsdlFile" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setWsdlFile" fullname="QWsdl::setWsdlFile" href="qwsdl.html#setWsdlFile" location="qwsdl.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setWsdlFile(const QString &amp; wsdlFile)">
+                <parameter left="const QString &amp;" right="" name="wsdlFile" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="resetWsdl" fullname="QWsdl::resetWsdl" href="qwsdl.html#resetWsdl" location="qwsdl.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="resetWsdl(QString newWsdlPath)">
-                <parameter left="QString" right="" name="newWsdlPath" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="resetWsdl" fullname="QWsdl::resetWsdl" href="qwsdl.html#resetWsdl" location="qwsdl.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="resetWsdl(const QString &amp; newWsdl)">
+                <parameter left="const QString &amp;" right="" name="newWsdl" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="methodNames" fullname="QWsdl::methodNames" href="qwsdl.html#methodNames" location="qwsdl.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QStringList" signature="methodNames() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="methods" fullname="QWsdl::methods" href="qwsdl.html#methods" location="qwsdl.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="QMap&lt;QString, QWebServiceMethod *&gt; *" signature="methods()"/>
@@ -26,8 +26,8 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="targetNamespace" fullname="QWsdl::targetNamespace" href="qwsdl.html#targetNamespace" location="qwsdl.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="targetNamespace() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="errorInfo" fullname="QWsdl::errorInfo" href="qwsdl.html#errorInfo" location="qwsdl.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="errorInfo() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="isErrorState" fullname="QWsdl::isErrorState" href="qwsdl.html#isErrorState" location="qwsdl.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="isErrorState() const"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="errorEncountered" fullname="QWsdl::errorEncountered" href="qwsdl.html#errorEncountered" location="qwsdl.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="errorEncountered(QString errMessage)">
-                <parameter left="QString" right="" name="errMessage" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="errorEncountered" fullname="QWsdl::errorEncountered" href="qwsdl.html#errorEncountered" location="qwsdl.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="errorEncountered(const QString &amp; errMessage)">
+                <parameter left="const QString &amp;" right="" name="errMessage" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="fileReplyFinished" fullname="QWsdl::fileReplyFinished" href="qwsdl.html#fileReplyFinished" location="qwsdl.h" virtual="non" meta="slot" const="false" static="false" overload="false" type="void" signature="fileReplyFinished(QNetworkReply * rply)">
                 <parameter left="QNetworkReply *" right="" name="rply" default=""/>
@@ -42,31 +42,31 @@
                 <parameter left="HttpMethod" right="" name="httpMethod" default="Post"/>
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="QWebServiceMethod" fullname="QWebServiceMethod::QWebServiceMethod" href="qwebservicemethod.html#QWebServiceMethod-3" location="qwebservicemethod.h" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="3" type="" signature="QWebServiceMethod(QUrl url, QString messageName, Protocol protocol, HttpMethod method, QObject * parent)">
-                <parameter left="QUrl" right="" name="url" default=""/>
-                <parameter left="QString" right="" name="messageName" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="QWebServiceMethod" fullname="QWebServiceMethod::QWebServiceMethod" href="qwebservicemethod.html#QWebServiceMethod-3" location="qwebservicemethod.h" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="3" type="" signature="QWebServiceMethod(const QUrl &amp; hostUrl, const QString &amp; methodName, Protocol protocol, HttpMethod method, QObject * parent)">
+                <parameter left="const QUrl &amp;" right="" name="hostUrl" default=""/>
+                <parameter left="const QString &amp;" right="" name="methodName" default=""/>
                 <parameter left="Protocol" right="" name="protocol" default="Soap12"/>
                 <parameter left="HttpMethod" right="" name="method" default="Post"/>
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="QWebServiceMethod" fullname="QWebServiceMethod::QWebServiceMethod" href="qwebservicemethod.html#QWebServiceMethod-4" location="qwebservicemethod.h" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="4" type="" signature="QWebServiceMethod(QString url, QString messageName, Protocol protocol, HttpMethod method, QObject * parent)">
-                <parameter left="QString" right="" name="url" default=""/>
-                <parameter left="QString" right="" name="messageName" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="QWebServiceMethod" fullname="QWebServiceMethod::QWebServiceMethod" href="qwebservicemethod.html#QWebServiceMethod-4" location="qwebservicemethod.h" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="4" type="" signature="QWebServiceMethod(const QString &amp; host, const QString &amp; methodName, Protocol protocol, HttpMethod httpMethod, QObject * parent)">
+                <parameter left="const QString &amp;" right="" name="host" default=""/>
+                <parameter left="const QString &amp;" right="" name="methodName" default=""/>
                 <parameter left="Protocol" right="" name="protocol" default="Soap12"/>
-                <parameter left="HttpMethod" right="" name="method" default="Post"/>
+                <parameter left="HttpMethod" right="" name="httpMethod" default="Post"/>
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="QWebServiceMethod" fullname="QWebServiceMethod::QWebServiceMethod" href="qwebservicemethod.html#QWebServiceMethod-5" location="qwebservicemethod.h" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="5" type="" signature="QWebServiceMethod(QString url, QString messageName, QString tNamespace, QMap&lt;QString, QVariant&gt; params, Protocol protocol, HttpMethod method, QObject * parent)">
-                <parameter left="QString" right="" name="url" default=""/>
-                <parameter left="QString" right="" name="messageName" default=""/>
-                <parameter left="QString" right="" name="tNamespace" default=""/>
-                <parameter left="QMap&lt;QString, QVariant&gt;" right="" name="params" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="QWebServiceMethod" fullname="QWebServiceMethod::QWebServiceMethod" href="qwebservicemethod.html#QWebServiceMethod-5" location="qwebservicemethod.h" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="5" type="" signature="QWebServiceMethod(const QString &amp; host, const QString &amp; methodName, const QString &amp; targetNamespace, const QMap&lt;QString, QVariant&gt; &amp; params, Protocol protocol, HttpMethod httpMethod, QObject * parent)">
+                <parameter left="const QString &amp;" right="" name="host" default=""/>
+                <parameter left="const QString &amp;" right="" name="methodName" default=""/>
+                <parameter left="const QString &amp;" right="" name="targetNamespace" default=""/>
+                <parameter left="const QMap&lt;QString, QVariant&gt; &amp;" right="" name="params" default=""/>
                 <parameter left="Protocol" right="" name="protocol" default="Soap12"/>
-                <parameter left="HttpMethod" right="" name="method" default="Post"/>
+                <parameter left="HttpMethod" right="" name="httpMethod" default="Post"/>
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="sendMessage" fullname="QWebServiceMethod::sendMessage" href="qwebservicemethod.html#sendMessage" location="qwebservicemethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="sendMessage(QMap&lt;QString, QVariant&gt; params)">
-                <parameter left="QMap&lt;QString, QVariant&gt;" right="" name="params" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="sendMessage" fullname="QWebServiceMethod::sendMessage" href="qwebservicemethod.html#sendMessage" location="qwebservicemethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="sendMessage(const QMap&lt;QString, QVariant&gt; &amp; params)">
+                <parameter left="const QMap&lt;QString, QVariant&gt; &amp;" right="" name="params" default=""/>
             </function>
         </class>
         <class access="public" threadsafety="unspecified" status="commendable" name="QWebService" href="qwebservice.html" location="qwebservice.h" bases="" module="">
@@ -77,39 +77,39 @@
                 <parameter left="QWsdl *" right="" name="_wsdl" default=""/>
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="QWebService" fullname="QWebService::QWebService" href="qwebservice.html#QWebService-3" location="qwebservice.h" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="3" type="" signature="QWebService(QString _hostname, QObject * parent)">
-                <parameter left="QString" right="" name="_hostname" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="QWebService" fullname="QWebService::QWebService" href="qwebservice.html#QWebService-3" location="qwebservice.h" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="3" type="" signature="QWebService(const QString &amp; _hostname, QObject * parent)">
+                <parameter left="const QString &amp;" right="" name="_hostname" default=""/>
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="~QWebService" fullname="QWebService::~QWebService" href="qwebservice.html#dtor.QWebService" location="qwebservice.h" virtual="non" meta="destructor" const="false" static="false" overload="false" type="" signature="~QWebService()"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="methodNames" fullname="QWebService::methodNames" href="qwebservice.html#methodNames" location="qwebservice.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QStringList" signature="methodNames() const"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="methodParameters" fullname="QWebService::methodParameters" href="qwebservice.html#methodParameters" location="qwebservice.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QStringList" signature="methodParameters(QString methodName) const">
-                <parameter left="QString" right="" name="methodName" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="methodParameters" fullname="QWebService::methodParameters" href="qwebservice.html#methodParameters" location="qwebservice.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QStringList" signature="methodParameters(const QString &amp; methodName) const">
+                <parameter left="const QString &amp;" right="" name="methodName" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="methodReturnValue" fullname="QWebService::methodReturnValue" href="qwebservice.html#methodReturnValue" location="qwebservice.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QStringList" signature="methodReturnValue(QString methodName) const">
-                <parameter left="QString" right="" name="methodName" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="methodReturnValue" fullname="QWebService::methodReturnValue" href="qwebservice.html#methodReturnValue" location="qwebservice.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QStringList" signature="methodReturnValue(const QString &amp; methodName) const">
+                <parameter left="const QString &amp;" right="" name="methodName" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="parameterNamesTypes" fullname="QWebService::parameterNamesTypes" href="qwebservice.html#parameterNamesTypes" location="qwebservice.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QMap&lt;QString, QVariant&gt;" signature="parameterNamesTypes(QString methodName) const">
-                <parameter left="QString" right="" name="methodName" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="parameterNamesTypes" fullname="QWebService::parameterNamesTypes" href="qwebservice.html#parameterNamesTypes" location="qwebservice.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QMap&lt;QString, QVariant&gt;" signature="parameterNamesTypes(const QString &amp; methodName) const">
+                <parameter left="const QString &amp;" right="" name="methodName" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="returnValueNameType" fullname="QWebService::returnValueNameType" href="qwebservice.html#returnValueNameType" location="qwebservice.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QMap&lt;QString, QVariant&gt;" signature="returnValueNameType(QString methodName) const">
-                <parameter left="QString" right="" name="methodName" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="returnValueNameType" fullname="QWebService::returnValueNameType" href="qwebservice.html#returnValueNameType" location="qwebservice.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QMap&lt;QString, QVariant&gt;" signature="returnValueNameType(const QString &amp; methodName) const">
+                <parameter left="const QString &amp;" right="" name="methodName" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="addMethod" fullname="QWebService::addMethod" href="qwebservice.html#addMethod" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="addMethod(QWebServiceMethod * newMethod)">
                 <parameter left="QWebServiceMethod *" right="" name="newMethod" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="addMethod" fullname="QWebService::addMethod" href="qwebservice.html#addMethod-2" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="void" signature="addMethod(QString methodName, QWebServiceMethod * newMethod)">
-                <parameter left="QString" right="" name="methodName" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="addMethod" fullname="QWebService::addMethod" href="qwebservice.html#addMethod-2" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="void" signature="addMethod(const QString &amp; methodName, QWebServiceMethod * newMethod)">
+                <parameter left="const QString &amp;" right="" name="methodName" default=""/>
                 <parameter left="QWebServiceMethod *" right="" name="newMethod" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="removeMethod" fullname="QWebService::removeMethod" href="qwebservice.html#removeMethod" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="removeMethod(QString methodName)">
-                <parameter left="QString" right="" name="methodName" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="removeMethod" fullname="QWebService::removeMethod" href="qwebservice.html#removeMethod" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="removeMethod(const QString &amp; methodName)">
+                <parameter left="const QString &amp;" right="" name="methodName" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setHost" fullname="QWebService::setHost" href="qwebservice.html#setHost" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setHost(QString hostname)">
-                <parameter left="QString" right="" name="hostname" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setHost" fullname="QWebService::setHost" href="qwebservice.html#setHost" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setHost(const QString &amp; hostname)">
+                <parameter left="const QString &amp;" right="" name="hostname" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setHost" fullname="QWebService::setHost" href="qwebservice.html#setHost-2" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="void" signature="setHost(QUrl hostUrl)">
-                <parameter left="QUrl" right="" name="hostUrl" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setHost" fullname="QWebService::setHost" href="qwebservice.html#setHost-2" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="void" signature="setHost(const QUrl &amp; hostUrl)">
+                <parameter left="const QUrl &amp;" right="" name="hostUrl" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="setWsdl" fullname="QWebService::setWsdl" href="qwebservice.html#setWsdl" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setWsdl(QWsdl * newWsdl)">
                 <parameter left="QWsdl *" right="" name="newWsdl" default=""/>
@@ -121,8 +121,8 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="host" fullname="QWebService::host" href="qwebservice.html#host" location="qwebservice.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="host() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="isErrorState" fullname="QWebService::isErrorState" href="qwebservice.html#isErrorState" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="isErrorState()"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="errorInfo" fullname="QWebService::errorInfo" href="qwebservice.html#errorInfo" location="qwebservice.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="errorInfo() const"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="errorEncountered" fullname="QWebService::errorEncountered" href="qwebservice.html#errorEncountered" location="qwebservice.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="errorEncountered(QString errMessage)">
-                <parameter left="QString" right="" name="errMessage" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="errorEncountered" fullname="QWebService::errorEncountered" href="qwebservice.html#errorEncountered" location="qwebservice.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="errorEncountered(const QString &amp; errMessage)">
+                <parameter left="const QString &amp;" right="" name="errMessage" default=""/>
             </function>
             <variable access="protected" threadsafety="unspecified" status="commendable" name="errorState" fullname="QWebService::errorState" href="qwebservice.html#errorState-var" location="qwebservice.h" type="bool" static="false"/>
             <variable access="protected" threadsafety="unspecified" status="commendable" name="errorMessage" fullname="QWebService::errorMessage" href="qwebservice.html#errorMessage-var" location="qwebservice.h" type="QString" static="false"/>
@@ -138,12 +138,12 @@
                 <parameter left="QWsdl *" right="" name="wsdl" default=""/>
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="QWebServiceReader" fullname="QWebServiceReader::QWebServiceReader" href="qwebservicereader.html#QWebServiceReader-3" location="qwebservicereader.h" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="3" type="" signature="QWebServiceReader(QString hostname, QObject * parent)">
-                <parameter left="QString" right="" name="hostname" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="QWebServiceReader" fullname="QWebServiceReader::QWebServiceReader" href="qwebservicereader.html#QWebServiceReader-3" location="qwebservicereader.h" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="3" type="" signature="QWebServiceReader(const QString &amp; host, QObject * parent)">
+                <parameter left="const QString &amp;" right="" name="host" default=""/>
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="methodHandler" fullname="QWebServiceReader::methodHandler" href="qwebservicereader.html#methodHandler" location="qwebservicereader.h" virtual="impure" meta="slot" const="false" static="false" overload="false" type="void" signature="methodHandler(QVariant param)">
-                <parameter left="QVariant" right="" name="param" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="methodHandler" fullname="QWebServiceReader::methodHandler" href="qwebservicereader.html#methodHandler" location="qwebservicereader.h" virtual="impure" meta="slot" const="false" static="false" overload="false" type="void" signature="methodHandler(const QVariant &amp; param)">
+                <parameter left="const QVariant &amp;" right="" name="param" default=""/>
             </function>
         </class>
         <class access="public" threadsafety="unspecified" status="commendable" name="QWebMethod" href="qwebmethod.html" location="qwebmethod.h" bases="" module="">
@@ -171,43 +171,43 @@
                 <parameter left="HttpMethod" right="" name="method" default="Post"/>
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="QWebMethod" fullname="QWebMethod::QWebMethod" href="qwebmethod.html#QWebMethod-3" location="qwebmethod.h" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="3" type="" signature="QWebMethod(QUrl url, Protocol protocol, HttpMethod method, QObject * parent)">
-                <parameter left="QUrl" right="" name="url" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="QWebMethod" fullname="QWebMethod::QWebMethod" href="qwebmethod.html#QWebMethod-3" location="qwebmethod.h" virtual="non" meta="constructor" const="false" static="false" overload="true" overload-number="3" type="" signature="QWebMethod(const QUrl &amp; url, Protocol protocol, HttpMethod method, QObject * parent)">
+                <parameter left="const QUrl &amp;" right="" name="url" default=""/>
                 <parameter left="Protocol" right="" name="protocol" default="Soap12"/>
                 <parameter left="HttpMethod" right="" name="method" default="Post"/>
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="~QWebMethod" fullname="QWebMethod::~QWebMethod" href="qwebmethod.html#dtor.QWebMethod" location="qwebmethod.h" virtual="non" meta="destructor" const="false" static="false" overload="false" type="" signature="~QWebMethod()"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setHost" fullname="QWebMethod::setHost" href="qwebmethod.html#setHost" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setHost(QString newHost)">
-                <parameter left="QString" right="" name="newHost" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setHost" fullname="QWebMethod::setHost" href="qwebmethod.html#setHost" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setHost(const QString &amp; newHost)">
+                <parameter left="const QString &amp;" right="" name="newHost" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setHost" fullname="QWebMethod::setHost" href="qwebmethod.html#setHost-2" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="void" signature="setHost(QUrl newHost)">
-                <parameter left="QUrl" right="" name="newHost" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setHost" fullname="QWebMethod::setHost" href="qwebmethod.html#setHost-2" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="void" signature="setHost(const QUrl &amp; newHost)">
+                <parameter left="const QUrl &amp;" right="" name="newHost" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setUsername" fullname="QWebMethod::setUsername" href="qwebmethod.html#setUsername" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setUsername(QString newUsername)">
-                <parameter left="QString" right="" name="newUsername" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setUsername" fullname="QWebMethod::setUsername" href="qwebmethod.html#setUsername" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setUsername(const QString &amp; newUsername)">
+                <parameter left="const QString &amp;" right="" name="newUsername" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setPassword" fullname="QWebMethod::setPassword" href="qwebmethod.html#setPassword" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setPassword(QString newPassword)">
-                <parameter left="QString" right="" name="newPassword" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setPassword" fullname="QWebMethod::setPassword" href="qwebmethod.html#setPassword" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setPassword(const QString &amp; newPassword)">
+                <parameter left="const QString &amp;" right="" name="newPassword" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setCredentials" fullname="QWebMethod::setCredentials" href="qwebmethod.html#setCredentials" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setCredentials(QString newUsername, QString newPassword)">
-                <parameter left="QString" right="" name="newUsername" default=""/>
-                <parameter left="QString" right="" name="newPassword" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setCredentials" fullname="QWebMethod::setCredentials" href="qwebmethod.html#setCredentials" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setCredentials(const QString &amp; newUsername, const QString &amp; newPassword)">
+                <parameter left="const QString &amp;" right="" name="newUsername" default=""/>
+                <parameter left="const QString &amp;" right="" name="newPassword" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setMessageName" fullname="QWebMethod::setMessageName" href="qwebmethod.html#setMessageName" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setMessageName(QString newName)">
-                <parameter left="QString" right="" name="newName" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setMessageName" fullname="QWebMethod::setMessageName" href="qwebmethod.html#setMessageName" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setMessageName(const QString &amp; newName)">
+                <parameter left="const QString &amp;" right="" name="newName" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setMethodName" fullname="QWebMethod::setMethodName" href="qwebmethod.html#setMethodName" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setMethodName(QString newName)">
-                <parameter left="QString" right="" name="newName" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setMethodName" fullname="QWebMethod::setMethodName" href="qwebmethod.html#setMethodName" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setMethodName(const QString &amp; newName)">
+                <parameter left="const QString &amp;" right="" name="newName" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setParameters" fullname="QWebMethod::setParameters" href="qwebmethod.html#setParameters" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setParameters(QMap&lt;QString, QVariant&gt; params)">
-                <parameter left="QMap&lt;QString, QVariant&gt;" right="" name="params" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setParameters" fullname="QWebMethod::setParameters" href="qwebmethod.html#setParameters" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setParameters(const QMap&lt;QString, QVariant&gt; &amp; params)">
+                <parameter left="const QMap&lt;QString, QVariant&gt; &amp;" right="" name="params" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setReturnValue" fullname="QWebMethod::setReturnValue" href="qwebmethod.html#setReturnValue" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setReturnValue(QMap&lt;QString, QVariant&gt; returnVal)">
-                <parameter left="QMap&lt;QString, QVariant&gt;" right="" name="returnVal" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setReturnValue" fullname="QWebMethod::setReturnValue" href="qwebmethod.html#setReturnValue" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setReturnValue(const QMap&lt;QString, QVariant&gt; &amp; returnVal)">
+                <parameter left="const QMap&lt;QString, QVariant&gt; &amp;" right="" name="returnVal" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setTargetNamespace" fullname="QWebMethod::setTargetNamespace" href="qwebmethod.html#setTargetNamespace" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setTargetNamespace(QString tNamespace)">
-                <parameter left="QString" right="" name="tNamespace" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setTargetNamespace" fullname="QWebMethod::setTargetNamespace" href="qwebmethod.html#setTargetNamespace" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setTargetNamespace(const QString &amp; tNamespace)">
+                <parameter left="const QString &amp;" right="" name="tNamespace" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="setProtocol" fullname="QWebMethod::setProtocol" href="qwebmethod.html#setProtocol" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setProtocol(Protocol prot)">
                 <parameter left="Protocol" right="" name="prot" default=""/>
@@ -215,18 +215,18 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="setHttpMethod" fullname="QWebMethod::setHttpMethod" href="qwebmethod.html#setHttpMethod" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setHttpMethod(HttpMethod method)">
                 <parameter left="HttpMethod" right="" name="method" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setHttpMethod" fullname="QWebMethod::setHttpMethod" href="qwebmethod.html#setHttpMethod-2" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="bool" signature="setHttpMethod(QString newMethod)">
-                <parameter left="QString" right="" name="newMethod" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setHttpMethod" fullname="QWebMethod::setHttpMethod" href="qwebmethod.html#setHttpMethod-2" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="bool" signature="setHttpMethod(const QString &amp; newMethod)">
+                <parameter left="const QString &amp;" right="" name="newMethod" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="sendMessage" fullname="QWebMethod::sendMessage" href="qwebmethod.html#sendMessage" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="sendMessage(QByteArray requestData)">
-                <parameter left="QByteArray" right="" name="requestData" default="QByteArray()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="sendMessage" fullname="QWebMethod::sendMessage" href="qwebmethod.html#sendMessage" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="sendMessage(const QByteArray &amp; requestData)">
+                <parameter left="const QByteArray &amp;" right="" name="requestData" default="QByteArray()"/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="authenticate" fullname="QWebMethod::authenticate" href="qwebmethod.html#authenticate" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="authenticate(QString newUsername, QString newPassword)">
-                <parameter left="QString" right="" name="newUsername" default="QString()"/>
-                <parameter left="QString" right="" name="newPassword" default="QString()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="authenticate" fullname="QWebMethod::authenticate" href="qwebmethod.html#authenticate" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="authenticate(const QString &amp; newUsername, const QString &amp; newPassword)">
+                <parameter left="const QString &amp;" right="" name="newUsername" default="QString()"/>
+                <parameter left="const QString &amp;" right="" name="newPassword" default="QString()"/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="authenticate" fullname="QWebMethod::authenticate" href="qwebmethod.html#authenticate-2" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="bool" signature="authenticate(QUrl customAuthString)">
-                <parameter left="QUrl" right="" name="customAuthString" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="authenticate" fullname="QWebMethod::authenticate" href="qwebmethod.html#authenticate-2" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="bool" signature="authenticate(const QUrl &amp; customAuthString)">
+                <parameter left="const QUrl &amp;" right="" name="customAuthString" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="replyReadParsed" fullname="QWebMethod::replyReadParsed" href="qwebmethod.html#replyReadParsed" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="QVariant" signature="replyReadParsed()"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="replyReadRaw" fullname="QWebMethod::replyReadRaw" href="qwebmethod.html#replyReadRaw" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="QByteArray" signature="replyReadRaw()"/>
@@ -249,11 +249,11 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="errorInfo" fullname="QWebMethod::errorInfo" href="qwebmethod.html#errorInfo" location="qwebmethod.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="errorInfo() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="isErrorState" fullname="QWebMethod::isErrorState" href="qwebmethod.html#isErrorState" location="qwebmethod.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="isErrorState() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="isReplyReady" fullname="QWebMethod::isReplyReady" href="qwebmethod.html#isReplyReady" location="qwebmethod.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="isReplyReady() const"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="replyReady" fullname="QWebMethod::replyReady" href="qwebmethod.html#replyReady" location="qwebmethod.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="replyReady(QByteArray rply)">
-                <parameter left="QByteArray" right="" name="rply" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="replyReady" fullname="QWebMethod::replyReady" href="qwebmethod.html#replyReady" location="qwebmethod.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="replyReady(const QByteArray &amp; rply)">
+                <parameter left="const QByteArray &amp;" right="" name="rply" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="errorEncountered" fullname="QWebMethod::errorEncountered" href="qwebmethod.html#errorEncountered" location="qwebmethod.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="errorEncountered(QString errMessage)">
-                <parameter left="QString" right="" name="errMessage" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="errorEncountered" fullname="QWebMethod::errorEncountered" href="qwebmethod.html#errorEncountered" location="qwebmethod.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="errorEncountered(const QString &amp; errMessage)">
+                <parameter left="const QString &amp;" right="" name="errMessage" default=""/>
             </function>
             <function access="protected" threadsafety="unspecified" status="commendable" name="replyFinished" fullname="QWebMethod::replyFinished" href="qwebmethod.html#replyFinished" location="qwebmethod.h" virtual="non" meta="slot" const="false" static="false" overload="false" type="void" signature="replyFinished(QNetworkReply * netReply)">
                 <parameter left="QNetworkReply *" right="" name="netReply" default=""/>

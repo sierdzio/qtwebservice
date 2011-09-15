@@ -31,7 +31,7 @@
 <h2>Public Functions</h2>
 <table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#QWsdl">QWsdl</a></b> ( QObject * <i>parent</i> = 0 )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#QWsdl-2">QWsdl</a></b> ( QString <i>wsdlFile</i>, QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#QWsdl-2">QWsdl</a></b> ( const QString &amp; <i>wsdlFile</i>, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#dtor.QWsdl">~QWsdl</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#errorInfo">errorInfo</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#host">host</a></b> () const</td></tr>
@@ -39,8 +39,8 @@
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#isErrorState">isErrorState</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#methodNames">methodNames</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QWebServiceMethod *&gt; * </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#methods">methods</a></b> ()</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#resetWsdl">resetWsdl</a></b> ( QString <i>newWsdlPath</i> )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#setWsdlFile">setWsdlFile</a></b> ( QString <i>wsdlFile</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#resetWsdl">resetWsdl</a></b> ( const QString &amp; <i>newWsdl</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#setWsdlFile">setWsdlFile</a></b> ( const QString &amp; <i>wsdlFile</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#targetNamespace">targetNamespace</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#webServiceName">webServiceName</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#wsdlFile">wsdlFile</a></b> () const</td></tr>
@@ -53,7 +53,7 @@
 <a name="signals"></a>
 <h2>Signals</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#errorEncountered">errorEncountered</a></b> ( QString <i>errMessage</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#errorEncountered">errorEncountered</a></b> ( const QString &amp; <i>errMessage</i> )</td></tr>
 </table>
 <a name="details"></a>
 <!-- $$$QWsdl-description -->
@@ -71,16 +71,16 @@
 <p>Initialises the whole object with default values.</p>
 <p>See also <a href="qwsdl.html#setWsdlFile">setWsdlFile</a>() and <a href="qwsdl.html#resetWsdl">resetWsdl</a>().</p>
 <!-- @@@QWsdl -->
-<!-- $$$QWsdl$$$QWsdlQStringQObject* -->
-<h3 class="fn"><a name="QWsdl-2"></a>QWsdl::QWsdl ( QString <i>wsdlFile</i>, QObject * <i>parent</i> = 0 )</h3>
+<!-- $$$QWsdl$$$QWsdlconstQString&QObject* -->
+<h3 class="fn"><a name="QWsdl-2"></a>QWsdl::QWsdl ( const QString &amp; <i>wsdlFile</i>, QObject * <i>parent</i> = 0 )</h3>
 <p>Constructs the object using optional <i>parent</i>. Uses the file path or URL specified in <i>wsdlFile</i> to parse the WSDL file.</p>
 <!-- @@@QWsdl -->
 <!-- $$$~QWsdl[overload1]$$$~QWsdl -->
 <h3 class="fn"><a name="dtor.QWsdl"></a>QWsdl::~QWsdl ()</h3>
 <p>Destructor - cleans some internal variables.</p>
 <!-- @@@~QWsdl -->
-<!-- $$$errorEncountered[overload1]$$$errorEncounteredQString -->
-<h3 class="fn"><a name="errorEncountered"></a>void QWsdl::errorEncountered ( QString <i>errMessage</i> )<tt> [signal]</tt></h3>
+<!-- $$$errorEncountered[overload1]$$$errorEncounteredconstQString& -->
+<h3 class="fn"><a name="errorEncountered"></a>void QWsdl::errorEncountered ( const QString &amp; <i>errMessage</i> )<tt> [signal]</tt></h3>
 <p>Singal emitted when WsdlConverter encounters an error. Carries <i>errMessage</i> for convenience.</p>
 <!-- @@@errorEncountered -->
 <!-- $$$errorInfo[overload1]$$$errorInfo -->
@@ -118,13 +118,13 @@
 <p>Returns a QMap&lt;QString, <a href="qwebservicemethod.html">QWebServiceMethod</a> *&gt; pointer. Keys are method names (just as in getMethodNames()), and values are QWebServiceMethods themselves (which means they can be used not only to get information, but also to send messages, set them up etc.)&#x2e;</p>
 <p>See also <a href="qwsdl.html#methodNames">methodNames</a>().</p>
 <!-- @@@methods -->
-<!-- $$$resetWsdl[overload1]$$$resetWsdlQString -->
-<h3 class="fn"><a name="resetWsdl"></a>void QWsdl::resetWsdl ( QString <i>newWsdlPath</i> )</h3>
-<p>Can be used to set or reset a WSDL file (or URL), using <i>newWsdlPath</i>. Cleans and reinitialises the object, parses the file.</p>
+<!-- $$$resetWsdl[overload1]$$$resetWsdlconstQString& -->
+<h3 class="fn"><a name="resetWsdl"></a>void QWsdl::resetWsdl ( const QString &amp; <i>newWsdl</i> )</h3>
+<p>Can be used to set or reset a WSDL file (or URL), using <i>newWsdl</i>. Cleans and reinitialises the object, parses the file.</p>
 <p>See also <a href="qwsdl.html#setWsdlFile">setWsdlFile</a>().</p>
 <!-- @@@resetWsdl -->
-<!-- $$$setWsdlFile[overload1]$$$setWsdlFileQString -->
-<h3 class="fn"><a name="setWsdlFile"></a>void QWsdl::setWsdlFile ( QString <i>wsdlFile</i> )</h3>
+<!-- $$$setWsdlFile[overload1]$$$setWsdlFileconstQString& -->
+<h3 class="fn"><a name="setWsdlFile"></a>void QWsdl::setWsdlFile ( const QString &amp; <i>wsdlFile</i> )</h3>
 <p>Wrapper for <a href="qwsdl.html#resetWsdl">resetWsdl</a>(). Used to set the WSDL file or URL using <i>wsdlFile</i>. Compulsory after simple constructor, but not needed if you have already specified the file in the constructor or <a href="qwsdl.html#resetWsdl">resetWsdl</a>().</p>
 <p>See also <a href="qwsdl.html#wsdlFile">wsdlFile</a>() and <a href="qwsdl.html#resetWsdl">resetWsdl</a>().</p>
 <!-- @@@setWsdlFile -->

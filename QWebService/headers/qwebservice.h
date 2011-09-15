@@ -55,20 +55,20 @@ class QWEBSERVICESHARED_EXPORT QWebService : public QObject
 public:
     QWebService(QObject *parent = 0);
     QWebService(QWsdl *wsdl, QObject *parent = 0);
-    QWebService(QString host, QObject *parent = 0);
+    QWebService(const QString &host, QObject *parent = 0);
     ~QWebService();
 
     QStringList methodNames() const;
-    QStringList methodParameters(QString methodName) const;
-    QStringList methodReturnValue(QString methodName) const;
-    QMap<QString, QVariant> parameterNamesTypes(QString methodName) const;
-    QMap<QString, QVariant> returnValueNameType(QString methodName) const;
+    QStringList methodParameters(const QString &methodName) const;
+    QStringList methodReturnValue(const QString &methodName) const;
+    QMap<QString, QVariant> parameterNamesTypes(const QString &methodName) const;
+    QMap<QString, QVariant> returnValueNameType(const QString &methodName) const;
 
     void addMethod(QWebServiceMethod *newMethod);
-    void addMethod(QString methodName, QWebServiceMethod *newMethod);
-    void removeMethod(QString methodName);
-    void setHost(QString host);
-    void setHost(QUrl hostUrl);
+    void addMethod(const QString &methodName, QWebServiceMethod *newMethod);
+    void removeMethod(const QString &methodName);
+    void setHost(const QString &host);
+    void setHost(const QUrl &hostUrl);
     void setWsdl(QWsdl *newWsdl);
     void resetWsdl(QWsdl *newWsdl = 0);
     QUrl hostUrl() const;
@@ -78,11 +78,11 @@ public:
 //    QString getWsdl();
 
 signals:
-    void errorEncountered(QString errMessage);
+    void errorEncountered(const QString &errMessage);
 
 protected:
     void init();
-    bool enterErrorState(QString errMessage = "");
+    bool enterErrorState(const QString &errMessage = "");
 
     bool errorState;
     QString errorMessage;
