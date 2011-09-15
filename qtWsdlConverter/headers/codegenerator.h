@@ -67,7 +67,7 @@ signals:
 public slots:
 
 private:
-    bool enterErrorState(const QString &errMessage = "");
+    bool enterErrorState(const QString &errMessage = QString());
     void prepare();
     bool createMessages();
     bool createService();

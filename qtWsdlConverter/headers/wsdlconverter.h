@@ -91,7 +91,7 @@ private:
     void displayIntro();
     void displayOutro();
 
-    bool enterErrorState(const QString &errMessage = "");
+    bool enterErrorState(const QString &errMessage = QString());
     bool removeDir(const QString &path);
 
     bool errorState;

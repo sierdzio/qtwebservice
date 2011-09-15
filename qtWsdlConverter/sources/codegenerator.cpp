@@ -60,7 +60,7 @@ CodeGenerator::CodeGenerator(QObject *parent) :
     QObject(parent)
 {
     errorState = false;
-    errorMessage = "";
+//    errorMessage = "";
 }
 
 /*!
@@ -84,7 +84,7 @@ bool CodeGenerator::isErrorState()
 bool CodeGenerator::enterErrorState(const QString &errMessage)
 {
     errorState = true;
-    errorMessage += errMessage + "\n";
+    errorMessage += errMessage + QLatin1String("\n");
     emit errorEncountered(errMessage);
     return false;
 }
@@ -95,8 +95,8 @@ bool CodeGenerator::enterErrorState(const QString &errMessage)
 void CodeGenerator::prepare()
 {
     if (!(flags->flags() & Flags::AllInOneDirStructure)) {
-        workingDir.mkdir("headers");
-        workingDir.mkdir("sources");
+        workingDir.mkdir(QLatin1String("headers"));
+        workingDir.mkdir(QLatin1String("sources"));
     }
 
     methods = wsdl->methods();
@@ -136,7 +136,7 @@ bool CodeGenerator::create(QWsdl *wsdl, const QDir &workingDir, Flags *flags,
 bool CodeGenerator::createService()
 {
     if (!(flags->flags() & Flags::AllInOneDirStructure))
-        workingDir.cd("headers");
+        workingDir.cd(QLatin1String("headers"));
     if (!createServiceHeader())
         return enterErrorState("Creating header for Web Service \""
                                + wsdl->webServiceName() + "\" failed!");
@@ -160,17 +160,19 @@ bool CodeGenerator::createService()
   */
 bool CodeGenerator::createServiceHeader()
 {
-    QString wsName = "";
+    QString wsName;
     QMap<QString, QWebServiceMethod *> *tempMap = wsdl->methods();
 
-    if (baseClassName != "")
+    if (baseClassName != QString())
         wsName = baseClassName;
     else
         wsName = wsdl->webServiceName();
 
-    QFile file(workingDir.path() + "/" + wsName + ".h");
+    QFile file(QString(workingDir.path() + QLatin1String("/")
+                       + wsName + QLatin1String(".h")));
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
-        return enterErrorState("Error: could not open Web Service header file for writing.");
+        return enterErrorState(QLatin1String("Error: could not open Web Service"
+                                             "header file for writing."));
 
     // ---------------------------------
     // Begin writing:
@@ -205,7 +207,7 @@ bool CodeGenerator::createServiceHeader()
     out << "    QStringList getMethodNames();" << endl;
     { // Declare all messages (as wrappers for message classes).
         foreach (QString s, tempMap->keys()) {
-            QString tmpReturn = "", tmpP = "";
+            QString tmpReturn, tmpP;
             QWebServiceMethod *m = tempMap->value(s);
 
             foreach (QString ret, m->returnValueNameType().keys()) {
@@ -245,7 +247,7 @@ bool CodeGenerator::createServiceHeader()
             else if (flags->flags() & Flags::fullMode || flags->flags() & Flags::debugMode)
             */
             {
-                QString tmpReturn = "";
+                QString tmpReturn;
                 QWebServiceMethod *m = tempMap->value(s);
                 foreach (QString ret, m->returnValueNameType().keys()) {
                     tmpReturn = m->returnValueNameType().value(ret).typeName();
@@ -283,7 +285,7 @@ bool CodeGenerator::createServiceHeader()
         out << "    // Message replies:" << endl;
 
         foreach (QString s, tempMap->keys()) {
-            QString tmpReturn = "";
+            QString tmpReturn;
             QWebServiceMethod *m = tempMap->value(s);
 
             foreach (QString ret, m->returnValueNameType().keys()) {
@@ -318,16 +320,18 @@ bool CodeGenerator::createServiceHeader()
   */
 bool CodeGenerator::createServiceSource()
 {
-    QString wsName = "";
+    QString wsName;
     QMap<QString, QWebServiceMethod *> *tempMap = wsdl->methods();
-    if (baseClassName != "")
+    if (baseClassName != QString())
         wsName = baseClassName;
     else
         wsName = wsdl->webServiceName();
 
-    QFile file(workingDir.path() + "/" + wsName + ".cpp");
+    QFile file(QString(workingDir.path() + QLatin1String("/")
+                       + wsName + QLatin1String(".cpp")));
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
-        return enterErrorState("Error: could not open Web Service source file for writing.");
+        return enterErrorState(QLatin1String("Error: could not open Web Service"
+                                             "source file for writing."));
 
     // ---------------------------------
     // Begin writing:
@@ -386,7 +390,7 @@ bool CodeGenerator::createServiceSource()
     out << endl;
     { // Define all messages (as wrappers for message classes).
         foreach (QString s, tempMap->keys()) {
-            QString tmpReturn = "", tmpP = "", tmpPN = "";
+            QString tmpReturn, tmpP, tmpPN;
             QWebServiceMethod *m = tempMap->value(s);
 
             foreach (QString ret, m->returnValueNameType().keys()) {
@@ -398,9 +402,11 @@ bool CodeGenerator::createServiceSource()
 
             // Create msgParameters (comma separated list)
             foreach (QString param, tempParam.keys()) {
-                tmpP += QString(tempParam.value(param).typeName()) + " "
-                        + param + ", ";
-                tmpPN += param + ", ";
+                tmpP += QLatin1String(tempParam.value(param).typeName())
+                        + QLatin1String(" ")
+                        + param
+                        + QLatin1String(", ");
+                tmpPN += QString(param + ", ");
             }
             tmpP.chop(2);
             tmpPN.chop(2);
@@ -510,7 +516,7 @@ bool CodeGenerator::createServiceSource()
             else if (!(flags->flags() & Flags::compactMode))
             */
             {
-                QString tmpReturn = "";
+                QString tmpReturn;
                 QWebServiceMethod *m = tempMap->value(s);
 
                 foreach (QString ret, m->returnValueNameType().keys()) {
@@ -540,7 +546,7 @@ bool CodeGenerator::createServiceSource()
             else
             */
 
-            QString tmpReturn = "";
+            QString tmpReturn;
             QWebServiceMethod *m = tempMap->value(s);
 
             foreach (QString ret, m->returnValueNameType().keys()) {
@@ -616,15 +622,17 @@ bool CodeGenerator::createBuildSystemFile()
   */
 bool CodeGenerator::createQMakeProject()
 {
-    QString wsName = "";
-    if (baseClassName != "")
+    QString wsName;
+    if (baseClassName != QString())
         wsName = baseClassName;
     else
         wsName = wsdl->webServiceName();
 
-    QFile file(workingDir.path() + "/" + wsName + ".pro");
+    QFile file(QString(workingDir.path() + QLatin1String("/")
+                       + wsName + QLatin1String(".pro")));
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
-        return enterErrorState("Error: could not open Web Service .pro file for writing.");
+        return enterErrorState(QLatin1String("Error: could not open Web Service"
+                                             ".pro file for writing."));
 
     // ---------------------------------
     // Begin writing:
@@ -693,15 +701,16 @@ bool CodeGenerator::createQMakeProject()
   */
 bool CodeGenerator::createCMakeProject()
 {
-    QString wsName = "";
-    if (baseClassName != "")
+    QString wsName;
+    if (baseClassName != QString())
         wsName = baseClassName;
     else
         wsName = wsdl->webServiceName();
 
-    QFile file(workingDir.path() + "/CMakeLists.txt");
+    QFile file(QString(workingDir.path() + QLatin1String("/CMakeLists.txt")));
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
-        return enterErrorState("Error: could not open Web Service .pro file for writing.");
+        return enterErrorState(QLatin1String("Error: could not open Web Service"
+                                             ".pro file for writing."));
 
     // ---------------------------------
     // Begin writing:
@@ -774,15 +783,16 @@ bool CodeGenerator::createCMakeProject()
   */
 bool CodeGenerator::createSconsProject()
 {
-    QString wsName = "";
-    if (baseClassName != "")
+    QString wsName;
+    if (baseClassName != QString())
         wsName = baseClassName;
     else
         wsName = wsdl->webServiceName();
 
-    QFile file(workingDir.path() + "/SConstruct");
+    QFile file(QString(workingDir.path() + QLatin1String("/SConstruct")));
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
-        return enterErrorState("Error: could not open Web Service .pro file for writing.");
+        return enterErrorState(QLatin1String("Error: could not open Web Service"
+                                             ".pro file for writing."));
 
     // ---------------------------------
     // Begin writing:
@@ -793,7 +803,8 @@ bool CodeGenerator::createSconsProject()
     out << "import os" << endl;
     out << endl;
     out << "QT4_PY_PATH = \".\" # Probably not needed!" << endl;
-    out << "QTDIR = \".\" # WARNING! Set QTDIR properly!" << endl; // WARNING! QTDIR has to be set on end machine!
+    // WARNING! QTDIR has to be set on end machine!
+    out << "QTDIR = \".\" # WARNING! Set QTDIR properly!" << endl;
     out << endl;
     out << "pkgpath = os.environ.get(\"PKG_CONFIG_PATH\", \"\")" << endl;
     out << "pkgpath += \":%s/lib/pkgconfig\" % QTDIR" << endl;

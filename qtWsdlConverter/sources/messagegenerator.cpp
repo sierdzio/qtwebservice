@@ -59,7 +59,7 @@ MessageGenerator::MessageGenerator(QMap<QString, QWebServiceMethod *> *mthds,
     QObject(parent), methods(mthds), workingDir(wrkDir), flags(flgs)
 {
     errorState = false;
-    m_errorMessage = "";
+//    m_errorMessage = "";
 }
 
 /*!
@@ -75,7 +75,7 @@ QString MessageGenerator::errorMessage()
   */
 bool MessageGenerator::enterErrorState(const QString errMessage)
 {
-    m_errorMessage += errMessage + "\n";
+    m_errorMessage += errMessage + QLatin1String("\n");
     return false;
 }
 
@@ -89,7 +89,7 @@ bool MessageGenerator::createMessages()
 {
     if (flags->flags() & Flags::NoMessagesStructure) {
         if (!(flags->flags() & Flags::AllInOneDirStructure)) {
-            workingDir.cd("sources");
+            workingDir.cd(QLatin1String("sources"));
             createMainCpp();
             workingDir.cdUp();
         } else {
@@ -100,7 +100,7 @@ bool MessageGenerator::createMessages()
     }
 
     if (!(flags->flags() & Flags::AllInOneDirStructure))
-        workingDir.cd("headers");
+        workingDir.cd(QLatin1String("headers"));
 
     foreach (QString s, methods->keys()) {
         QWebServiceMethod *m = methods->value(s);
@@ -118,7 +118,7 @@ bool MessageGenerator::createMessages()
 
     if (!(flags->flags() & Flags::AllInOneDirStructure)) {
         workingDir.cdUp();
-        workingDir.cd("sources");
+        workingDir.cd(QLatin1String("sources"));
     }
 
     foreach (QString s, methods->keys()) {
@@ -149,15 +149,17 @@ bool MessageGenerator::createMessages()
 bool MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
 {
     QString msgName = msg->methodName();
-    QFile file(workingDir.path() + "/" + msgName + ".h");
+    QFile file(QString(workingDir.path() + QLatin1String("/")
+                       + msgName + QLatin1String(".h")));
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
-        return enterErrorState("Error: could not open message header file for writing.");
+        return enterErrorState(QLatin1String("Error: could not open message "
+                                             "header file for writing."));
 
     // Possible problem in case of multi-return.
     QString msgReplyName = msg->returnValueName().first();
 
-    QString msgReplyType = "";
-    QString msgParameters = "";
+    QString msgReplyType;
+    QString msgParameters;
     {
         // Create msgReplyType
         QMap<QString, QVariant> tempMap = msg->returnValueNameType();
@@ -213,7 +215,7 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
           && (flags->flags() & Flags::Asynchronous)))
     {
         out << "    QString static sendMessage(QObject *parent";
-        if (msgParameters != "") {
+        if (msgParameters != QString()) {
             out << ", " << msgParameters << ");" << endl;
         } else {
             out << ");" << endl;
@@ -250,15 +252,17 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
 bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
 {
     QString msgName = msg->methodName();
-    QFile file(workingDir.path() + "/" + msgName + ".cpp");
+    QFile file(QString(workingDir.path() + QLatin1String("/")
+                       + msgName + QLatin1String(".cpp")));
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
-        return enterErrorState("Error: could not open message source file for writing.");
+        return enterErrorState(QLatin1String("Error: could not open message "
+                                             "source file for writing."));
 
     // Possible problem in case of multi-return.
     QString msgReplyName = msg->returnValueName().first();
 
-    QString msgReplyType = "";
-    QString msgParameters = "";
+    QString msgReplyType;
+    QString msgParameters;
     {
         QMap<QString, QVariant> tempMap = msg->returnValueNameType();
 
@@ -314,7 +318,7 @@ bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
     out << "}" << endl;
     out << endl;
 
-    if ((msgParameters != "") && !((flags->flags() & Flags::CompactMode)
+    if ((msgParameters != QString()) && !((flags->flags() & Flags::CompactMode)
                                    && (flags->flags() & Flags::Synchronous))) {
         out << "bool " << msgName << "::sendMessage(" << msgParameters << ")" << endl;
         out << "{" << endl;
@@ -330,14 +334,14 @@ bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
           && (flags->flags() & Flags::Asynchronous))) {
         out << "/* STATIC */" << endl;
         out << "QString " << msgName << "::sendMessage(QObject *parent";
-        if (msgParameters != "")
+        if (msgParameters != QString())
             out << ", " << msgParameters;
         out << ")" << endl;
         out << "{" << endl;
         out << "    " << msgName << " qsm(";
         { // Assign all parameters.
 //            out << "    qsm.setParameters(";
-            QString tempS = "";
+            QString tempS;
             QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
 
             foreach (QString s, tempMap.keys()) {
@@ -382,15 +386,17 @@ bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
 bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
 {
     QString msgName = msg->methodName();
-    QFile file(workingDir.path() + "/" + msgName + ".h");
+    QFile file(QString(workingDir.path() + QLatin1String("/")
+                       + msgName + QLatin1String(".h")));
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
-        return enterErrorState("Error: could not open message header file for writing.");
+        return enterErrorState(QLatin1String("Error: could not open message "
+                                             "header file for writing."));
 
     // Possible problem in case of multi-return.
     QString msgReplyName = msg->returnValueName().first();
 
-    QString msgReplyType = "";
-    QString msgParameters = "";
+    QString msgReplyType;
+    QString msgParameters;
     {
         // Create msgReplyType
         QMap<QString, QVariant> tempMap = msg->returnValueNameType();
@@ -474,7 +480,7 @@ bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
           && (flags->flags() & Flags::Asynchronous)))
     {
         out << "    QString static sendMessage(QObject *parent";
-        if (msgParameters != "") {
+        if (msgParameters != QString()) {
             out << "," << endl;
             out << "                                " << msgParameters << ");" << endl;
         } else {
@@ -551,15 +557,17 @@ bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
 bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
 {
     QString msgName = msg->methodName();
-    QFile file(workingDir.path() + "/" + msgName + ".cpp");
+    QFile file(QString(workingDir.path() + QLatin1String("/")
+                       + msgName + QLatin1String(".cpp")));
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
-        return enterErrorState("Error: could not open message source file for writing.");
+        return enterErrorState(QLatin1String("Error: could not open message"
+                                             "source file for writing."));
 
     // Possible problem in case of multi-return.
     QString msgReplyName = msg->returnValueName().first();
 
-    QString msgReplyType = "";
-    QString msgParameters = "";
+    QString msgReplyType;
+    QString msgParameters;
     {
         QMap<QString, QVariant> tempMap = msg->returnValueNameType();
 
@@ -764,14 +772,14 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
         //    out << "" << msgReplyType << " " << msgName
         // << "::sendMessage(QObject *parent, " << msgParameters << ")" << endl;
         out << "QString " << msgName << "::sendMessage(QObject *parent";
-        if (msgParameters != "")
+        if (msgParameters != QString())
             out << ", " << msgParameters;
         out << ")" << endl;
         out << "{" << endl;
         out << "    " << msgName << " qsm(parent);" << endl;
         { // Assign all parameters.
             out << "    qsm.setParameters(";
-            QString tempS = "";
+            QString tempS;
             QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
 
             foreach (QString s, tempMap.keys()) {
@@ -817,7 +825,7 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
         foreach (QString s, tempMap.keys()) {
             out << "    parameters.insert(\"" << s << "\", QVariant(";
             QString tmpName = tempMap.value(s).typeName();
-            if (tmpName != "int")
+            if (tmpName != QLatin1String("int"))
                 out << tmpName;
             out << "(" << tempMap.value(s).toString() << ")));" << endl;
         }
@@ -840,7 +848,7 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
         foreach (QString s, tempMap.keys()) {
             out << "    parameters.insert(\"" << s << "\", QVariant(";
             QString tmpName = tempMap.value(s).typeName();
-            if (tmpName != "int")
+            if (tmpName != QLatin1String("int"))
                 out << tmpName;
             out << "(" << tempMap.value(s).toString() << ")));" << endl;
         }
@@ -1060,9 +1068,10 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
   */
 bool MessageGenerator::createMainCpp()
 {
-    QFile file(workingDir.path() + "/main.cpp");
+    QFile file(QString(workingDir.path() + QLatin1String("/main.cpp")));
     if (!file.open(QFile::WriteOnly | QFile::Text)) // Means \r\n on Windows. Might be a bad idea.
-        return enterErrorState("Error: could not open Web Service header file for writing.");
+        return enterErrorState(QLatin1String("Error: could not open Web "
+                                             "Service header file for writing."));
 
     // ---------------------------------
     // Begin writing:

@@ -61,7 +61,7 @@ public:
     bool createMessages();
 
 private:
-    bool enterErrorState(const QString errMessage = "");
+    bool enterErrorState(const QString errMessage = QString());
     bool createSubclassedMessageHeader(QWebServiceMethod *msg);
     bool createSubclassedMessageSource(QWebServiceMethod *msg);
     bool createMessageHeader(QWebServiceMethod *msg);

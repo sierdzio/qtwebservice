@@ -151,8 +151,8 @@ Flags::Flags(Options options_, HttpMethod method_, bool forced, QObject *parent)
     method = method_;
     force = forced;
 
-    msgSuffix = "Send";
-    objSuffix = "Msg";
+    msgSuffix = QLatin1String("Send");
+    objSuffix = QLatin1String("Msg");
 }
 
 /*!
@@ -205,13 +205,13 @@ void Flags::setHttpMethod(HttpMethod newMethod)
 bool Flags::setHttpMethod(const QString &newMethod)
 {
     QString tempMethod = newMethod.toLower();
-    if (tempMethod == QString::fromLatin1("post"))
+    if (tempMethod == QLatin1String("post"))
         method = Post;
-    else if (tempMethod == QString::fromLatin1("get"))
+    else if (tempMethod == QLatin1String("get"))
         method = Get;
-    else if (tempMethod == QString::fromLatin1("put"))
+    else if (tempMethod == QLatin1String("put"))
         method = Put;
-    else if (tempMethod == QString::fromLatin1("delete"))
+    else if (tempMethod == QLatin1String("delete"))
         method = Delete;
     else
         return false;
@@ -260,21 +260,21 @@ Flags::Options Flags::flags() const
   */
 QString Flags::protocolString(bool includeRest) const
 {
-    QString result = "";
+    QString result;
 
     if (options & Http)
-        result = "http";
+        result = QLatin1String("http");
     else if (options & Soap10)
-        result = "soap10";
+        result = QLatin1String("soap10");
     else if (options & Soap12)
-        result = "soap12";
+        result = QLatin1String("soap12");
     else if (options & Json)
-        result = "json";
+        result = QLatin1String("json");
     else if (options & Xml)
-        result = "xml";
+        result = QLatin1String("xml");
 
     if (includeRest && (options & Rest))
-        result += ",rest";
+        result += QLatin1String(",rest");
 
     return result;
 }
@@ -296,16 +296,16 @@ Flags::HttpMethod Flags::httpMethod() const
   */
 QString Flags::httpMethodString() const
 {
-    QString result = "";
+    QString result;
 
     if (method == Post)
-        result = "POST";
+        result = QLatin1String("POST");
     else if (method == Get)
-        result = "GET";
+        result = QLatin1String("GET");
     else if (method == Put)
-        result = "PUT";
+        result = QLatin1String("PUT");
     else if (method == Delete)
-        result = "DELETE";
+        result = QLatin1String("DELETE");
 
     return result;
 }
