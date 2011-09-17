@@ -24,7 +24,7 @@ Example arguments for converter:
  - pass QString / QByteArray / etc. by const-ref,
  - use QLatin1String instead of QString::fromLatin1(“”),
  - fix strings initialisations and handling,
- - 
+ - move all private and protected members to private headers.
 
 13.09.2011 12:33 CEST:
  - added QWebService::removeMethod(), which deletes a web method specified by it's name,

@@ -1,14 +1,3 @@
-#ifndef QWEBMETHOD_H
-#define QWEBMETHOD_H
-
-#include <QtNetwork/qnetworkaccessmanager.h>
-#include <QtNetwork/qnetworkrequest.h>
-#include <QtNetwork/qnetworkreply.h>
-#include <QtNetwork/qauthenticator.h>
-#include <QtCore/qstring.h>
-#include <QtCore/qstringlist.h>
-#include <QtCore/qurl.h>
-#include <QtCore/qvariant.h>
 /****************************************************************************
 **
 ** Copyright (C) 2011 Tomasz Siekierda
@@ -50,9 +39,22 @@
 **
 ****************************************************************************/
 
+#ifndef QWEBMETHOD_H
+#define QWEBMETHOD_H
+
+#include <QtNetwork/qnetworkaccessmanager.h>
+#include <QtNetwork/qnetworkrequest.h>
+#include <QtNetwork/qnetworkreply.h>
+#include <QtNetwork/qauthenticator.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qstringlist.h>
+#include <QtCore/qurl.h>
+#include <QtCore/qvariant.h>
 #include <QtCore/qmap.h>
 #include <QtCore/qbytearray.h>
 #include "QWebService_global.h"
+
+class QWebMethodPrivate;
 
 class QWEBSERVICESHARED_EXPORT QWebMethod : public QObject
 {
@@ -132,34 +134,13 @@ signals:
     void replyReady(const QByteArray &rply);
     void errorEncountered(const QString &errMessage);
 
-protected slots:
-    void replyFinished(QNetworkReply *reply);
-    void authReplyFinished(QNetworkReply *reply);
-    void authenticationSlot(QNetworkReply *reply, QAuthenticator *authenticator);
-
-protected:
-    void init();
-    void prepareRequestData();
-    QString convertReplyToUtf(const QString &textToConvert);
-    bool enterErrorState(const QString &errMessage = QString());
-
-    bool errorState;
-    bool authReply;
-    bool authenticationError;
-    QString errorMessage;
-    bool replyReceived;
-    Protocol protocolUsed;
-    HttpMethod httpMethodUsed;
-    QUrl m_hostUrl;
-    QString m_methodName;
-    QString m_targetNamespace;
-    QString m_username;
-    QString m_password;
-    QByteArray reply;
-    QMap<QString, QVariant> parameters;
-    QMap<QString, QVariant> returnValue;
-    QNetworkAccessManager *manager;
-    QByteArray data;
+private:
+    Q_DECLARE_PRIVATE(QWebMethod)
+    Q_PRIVATE_SLOT(d_func(), void replyFinished(QNetworkReply *))
+    Q_PRIVATE_SLOT(d_func(), void authReplyFinished(QNetworkReply *))
+    Q_PRIVATE_SLOT(d_func(), void authenticationSlot(QNetworkReply *, QAuthenticator *))
+//    QWebMethod(QWebMethodPrivate &d_ptr);
+//    QWebMethodPrivate *d;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QWebMethod::Protocols)

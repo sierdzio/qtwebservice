@@ -90,8 +90,9 @@ QWebServiceMethod::QWebServiceMethod(const QUrl &hostUrl, const QString &methodN
                                      QObject *parent) :
     QWebMethod(protocol, method, parent)
 {
-    m_hostUrl = hostUrl;
-    m_methodName = methodName;
+    Q_D(QWebMethod);
+    d->m_hostUrl = hostUrl;
+    d->m_methodName = methodName;
     setProtocol(protocol);
     setHttpMethod(method);
 }
@@ -109,10 +110,11 @@ QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodN
                                      QObject *parent) :
     QWebMethod(protocol, httpMethod, parent)
 {
-    m_methodName = methodName;
+    Q_D(QWebMethod);
+    d->m_methodName = methodName;
     setProtocol(protocol);
     setHttpMethod(httpMethod);
-    m_hostUrl.setUrl(host);
+    d->m_hostUrl.setUrl(host);
 }
 
 /*!
@@ -133,12 +135,13 @@ QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodN
                                      QObject *parent) :
     QWebMethod(protocol, httpMethod, parent)
 {
-    m_methodName = methodName;
-    m_targetNamespace = targetNamespace;
-    parameters = params;
+    Q_D(QWebMethod);
+    d->m_methodName = methodName;
+    d->m_targetNamespace = targetNamespace;
+    d->parameters = params;
     setProtocol(protocol);
     setHttpMethod(httpMethod);
-    m_hostUrl.setUrl(host);
+    d->m_hostUrl.setUrl(host);
 }
 
 
@@ -151,7 +154,8 @@ QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodN
   */
 bool QWebServiceMethod::sendMessage(const QMap<QString, QVariant> &params)
 {
-    parameters = params;
+    Q_D(QWebMethod);
+    d->parameters = params;
     sendMessage();
     return true;
 }
@@ -178,8 +182,8 @@ QByteArray QWebServiceMethod::sendMessage(const QUrl &url,
     qsm.sendMessage();
     // TODO: ADD ERROR HANDLING!
     forever {
-        if (qsm.replyReceived) {
-            return qsm.reply;
+        if (qsm.d_func()->replyReceived) {
+            return qsm.d_func()->reply;
         } else {
             qApp->processEvents();
         }

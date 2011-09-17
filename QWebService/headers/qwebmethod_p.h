@@ -39,46 +39,62 @@
 **
 ****************************************************************************/
 
-#ifndef QWEBSERVICEMETHOD_H
-#define QWEBSERVICEMETHOD_H
+#ifndef QWEBMETHOD_P_H
+#define QWEBMETHOD_P_H
 
-#include <QtCore/qobject.h>
+#include <QtNetwork/qnetworkaccessmanager.h>
+#include <QtNetwork/qnetworkrequest.h>
+#include <QtNetwork/qnetworkreply.h>
+#include <QtNetwork/qauthenticator.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qstringlist.h>
 #include <QtCore/qurl.h>
-#include "QWebService_global.h"
-#include "qwebmethod_p.h"
+#include <QtCore/qvariant.h>
+#include <QtCore/qmap.h>
+#include <QtCore/qbytearray.h>
+//#include "QWebService_global.h"
+#include "qwebmethod.h"
 
-class QWEBSERVICESHARED_EXPORT QWebServiceMethod : public QWebMethod
+class QWebMethodPrivate : public QObject// : public QObjectPrivate
 {
     Q_OBJECT
+    Q_DECLARE_PUBLIC(QWebMethod)
+
+//public slots:
+
 
 public:
-    explicit QWebServiceMethod(QObject *parent = 0);
-    QWebServiceMethod(Protocol protocol = Soap12, HttpMethod httpMethod = Post,
-                               QObject *parent = 0);
-    QWebServiceMethod(const QUrl &hostUrl, const QString &methodName,
-                      Protocol protocol = Soap12, HttpMethod httpMethod = Post,
-                      QObject *parent = 0);
-    QWebServiceMethod(const QString &host, const QString &methodName,
-                      Protocol protocol = Soap12, HttpMethod httpMethod = Post,
-                      QObject *parent = 0);
-    QWebServiceMethod(const QString &host, const QString &methodName,
-                      const QString &targetNamespace,
-                      const QMap<QString, QVariant> &params,
-                      Protocol protocol = Soap12, HttpMethod httpMethod = Post,
-                      QObject *parent = 0);
+    QWebMethodPrivate() {}
+    QWebMethodPrivate(QWebMethod *q) : q_ptr(q) {}
+    QWebMethod *q_ptr;
 
-    using QWebMethod::sendMessage;
-    bool sendMessage(const QMap<QString, QVariant> &params);
-    QByteArray static sendMessage(const QUrl &url,
-                                  const QString &methodName,
-                                  const QString &targetNamespace,
-                                  const QMap<QString, QVariant> &params,
-                                  Protocol protocol = Soap12,
-                                  HttpMethod httpMethod = Post,
-                                  QObject *parent = 0);
+    void init();
+    void prepareRequestData();
+    QString convertReplyToUtf(const QString &textToConvert);
+    bool enterErrorState(const QString &errMessage = QString());
 
-private:
-    Q_DECLARE_PRIVATE(QWebMethod)
+    //slots:
+    void replyFinished(QNetworkReply *reply);
+    void authReplyFinished(QNetworkReply *reply);
+    void authenticationSlot(QNetworkReply *reply, QAuthenticator *authenticator);
+
+    bool errorState;
+    bool authReply;
+    bool authenticationError;
+    QString errorMessage;
+    bool replyReceived;
+    QWebMethod::Protocol protocolUsed;
+    QWebMethod::HttpMethod httpMethodUsed;
+    QUrl m_hostUrl;
+    QString m_methodName;
+    QString m_targetNamespace;
+    QString m_username;
+    QString m_password;
+    QByteArray reply;
+    QMap<QString, QVariant> parameters;
+    QMap<QString, QVariant> returnValue;
+    QNetworkAccessManager *manager;
+    QByteArray data;
 };
 
-#endif // QWEBSERVICEMETHOD_H
+#endif // QWEBMETHOD_P_H
