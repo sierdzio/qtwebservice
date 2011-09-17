@@ -60,23 +60,20 @@ class QWebMethodPrivate : public QObject// : public QObjectPrivate
     Q_OBJECT
     Q_DECLARE_PUBLIC(QWebMethod)
 
-//public slots:
-
+public slots:
+    void replyFinished(QNetworkReply *reply);
+    void authReplyFinished(QNetworkReply *reply);
+    void authenticationSlot(QNetworkReply *reply, QAuthenticator *authenticator);
 
 public:
     QWebMethodPrivate() {}
-    QWebMethodPrivate(QWebMethod *q) : q_ptr(q) {}
-    QWebMethod *q_ptr;
+//    QWebMethodPrivate(QWebMethod *q) : q_ptr(q) {}
+//    QWebMethod *q_ptr;
 
     void init();
     void prepareRequestData();
     QString convertReplyToUtf(const QString &textToConvert);
     bool enterErrorState(const QString &errMessage = QString());
-
-    //slots:
-    void replyFinished(QNetworkReply *reply);
-    void authReplyFinished(QNetworkReply *reply);
-    void authenticationSlot(QNetworkReply *reply, QAuthenticator *authenticator);
 
     bool errorState;
     bool authReply;
