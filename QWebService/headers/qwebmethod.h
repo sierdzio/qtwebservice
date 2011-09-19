@@ -1,14 +1,3 @@
-#ifndef QWEBMETHOD_H
-#define QWEBMETHOD_H
-
-#include <QtNetwork/qnetworkaccessmanager.h>
-#include <QtNetwork/qnetworkrequest.h>
-#include <QtNetwork/qnetworkreply.h>
-#include <QtNetwork/qauthenticator.h>
-#include <QtCore/qstring.h>
-#include <QtCore/qstringlist.h>
-#include <QtCore/qurl.h>
-#include <QtCore/qvariant.h>
 /****************************************************************************
 **
 ** Copyright (C) 2011 Tomasz Siekierda
@@ -50,6 +39,17 @@
 **
 ****************************************************************************/
 
+#ifndef QWEBMETHOD_H
+#define QWEBMETHOD_H
+
+#include <QtNetwork/qnetworkaccessmanager.h>
+#include <QtNetwork/qnetworkrequest.h>
+#include <QtNetwork/qnetworkreply.h>
+#include <QtNetwork/qauthenticator.h>
+#include <QtCore/qstring.h>
+#include <QtCore/qstringlist.h>
+#include <QtCore/qurl.h>
+#include <QtCore/qvariant.h>
 #include <QtCore/qmap.h>
 #include <QtCore/qbytearray.h>
 #include "QWebService_global.h"

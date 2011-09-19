@@ -189,7 +189,6 @@ void TestQWebServiceMethod::synchronousTest()
     QCOMPARE(result, bool(true));
 }
 
-
 void TestQWebServiceMethod::defaultGettersTest(QWebServiceMethod *message)
 {
     QCOMPARE(message->isErrorState(), bool(false));
