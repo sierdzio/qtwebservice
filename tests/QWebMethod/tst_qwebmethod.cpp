@@ -66,7 +66,6 @@ void TestQWebMethod::initialTest()
 {
     QWebMethod *message = new QWebMethod(QWebMethod::Soap12, QWebMethod::Post, 0);
     QCOMPARE(message->isErrorState(), bool(false));
-
     delete message;
 }
 
@@ -152,9 +151,7 @@ void TestQWebMethod::asynchronousSendingTest()
     for (int i = 0; (i < 50) && (!message->isReplyReady()); i++)
         QTest::qWait(250);
 
-    if (message->isReplyReady()) {
-        result = true;
-    }
+    result = message->isReplyReady();
 
     QCOMPARE(result, bool(true));
 

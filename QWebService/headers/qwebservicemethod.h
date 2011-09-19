@@ -45,7 +45,9 @@
 #include <QtCore/qobject.h>
 #include <QtCore/qurl.h>
 #include "QWebService_global.h"
-#include "qwebmethod_p.h"
+#include "qwebmethod.h"
+
+class QWebServiceMethodPrivate;
 
 class QWEBSERVICESHARED_EXPORT QWebServiceMethod : public QWebMethod
 {
@@ -78,7 +80,7 @@ public:
                                   QObject *parent = 0);
 
 private:
-    Q_DECLARE_PRIVATE(QWebMethod)
+    Q_DECLARE_PRIVATE(QWebServiceMethod)
 };
 
 #endif // QWEBSERVICEMETHOD_H

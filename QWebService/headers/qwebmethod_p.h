@@ -55,20 +55,14 @@
 //#include "QWebService_global.h"
 #include "qwebmethod.h"
 
-class QWebMethodPrivate : public QObject// : public QObjectPrivate
+class QWebMethodPrivate
 {
-    Q_OBJECT
     Q_DECLARE_PUBLIC(QWebMethod)
-
-public slots:
-    void replyFinished(QNetworkReply *reply);
-    void authReplyFinished(QNetworkReply *reply);
-    void authenticationSlot(QNetworkReply *reply, QAuthenticator *authenticator);
 
 public:
     QWebMethodPrivate() {}
-//    QWebMethodPrivate(QWebMethod *q) : q_ptr(q) {}
-//    QWebMethod *q_ptr;
+    QWebMethodPrivate(QWebMethod *q) : q_ptr(q) {}
+    QWebMethod *q_ptr;
 
     void init();
     void prepareRequestData();
@@ -76,7 +70,8 @@ public:
     bool enterErrorState(const QString &errMessage = QString());
 
     bool errorState;
-    bool authReply;
+    bool authenticationPerformed;
+    bool authenticationReplyReceived;
     bool authenticationError;
     QString errorMessage;
     bool replyReceived;

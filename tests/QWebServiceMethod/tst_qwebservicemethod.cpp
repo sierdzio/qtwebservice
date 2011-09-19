@@ -149,19 +149,16 @@ void TestQWebServiceMethod::asynchronousTest()
             QWebServiceMethod("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx",
                               "getProviderList",
                               QWebMethod::Soap12, QWebMethod::Post, this);
-
     message->setTargetNamespace("http://www.daenet.de/webservices/CurrencyServer");
     message->sendMessage(tmpP);
-
+    qDebug() << "AAAA";
     QCOMPARE(message->isErrorState(), bool(false));
 
     bool result = false;
     for (int i = 0; (i < 50) && (!message->isReplyReady()); i++)
         QTest::qWait(250);
 
-    if (message->isReplyReady()) {
-        result = true;
-    }
+    result = message->isReplyReady();
 
     QCOMPARE(result, bool(true));
     delete message;

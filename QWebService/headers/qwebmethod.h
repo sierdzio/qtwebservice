@@ -134,13 +134,20 @@ signals:
     void replyReady(const QByteArray &rply);
     void errorEncountered(const QString &errMessage);
 
+protected:
+    QWebMethod(QWebMethodPrivate *dd,
+            Protocol protocol = Soap12, HttpMethod httpMethod = Post,
+            QObject *parent = 0);
+
+protected slots:
+    void replyFinished(QNetworkReply *reply);
+    void authReplyFinished(QNetworkReply *reply);
+    void authenticationSlot(QNetworkReply *reply, QAuthenticator *authenticator);
+
 private:
     Q_DECLARE_PRIVATE(QWebMethod)
-    Q_PRIVATE_SLOT(d_func(), void replyFinished(QNetworkReply *))
-    Q_PRIVATE_SLOT(d_func(), void authReplyFinished(QNetworkReply *))
-    Q_PRIVATE_SLOT(d_func(), void authenticationSlot(QNetworkReply *, QAuthenticator *))
-//    QWebMethod(QWebMethodPrivate &d_ptr);
-//    QWebMethodPrivate *d;
+    QWebMethodPrivate *d;
+//    friend class QWebMethodPrivate;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QWebMethod::Protocols)
