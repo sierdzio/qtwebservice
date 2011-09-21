@@ -62,17 +62,19 @@ public:
     QWsdl(const QString &wsdlFile, QObject *parent = 0);
     ~QWsdl();
 
+    //QFile wsdl();
+    QString wsdlFile() const;
     void setWsdlFile(const QString &wsdlFile); // == resetWsdl()
     void resetWsdl(const QString &newWsdl);
 
-    QStringList methodNames() const;
     QMap<QString, QWebServiceMethod *> *methods();
+    QStringList methodNames() const;
+
     QString webServiceName() const;
     QString host() const;
-    QUrl hostUrl() const;
-    QString wsdlFile() const;
+    QUrl hostUrl() const;    
     QString targetNamespace() const;
-    //QFile getWsdl(); Rethink that.
+
     QString errorInfo() const;
     bool isErrorState() const;
 

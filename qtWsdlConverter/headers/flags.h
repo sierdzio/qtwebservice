@@ -95,23 +95,26 @@ public:
           bool force = false,
           QObject *parent = 0);
 
+    Options flags() const;
+    void setFlags(Options options);
     void resetFlags();
     void resetFlags(Options whatToReset);
-    void setFlags(Options options);
+    QString protocolString(bool includeRest = false) const;
+
+    HttpMethod httpMethod() const;
+    QString httpMethodString() const;
     void setHttpMethod(HttpMethod newMethod);
     bool setHttpMethod(const QString &newMethod);
-    void setForced(bool forced);
-    void setMsgSuffix(const QString &newMsgSuffix);
-    void setObjSuffix(const QString &newObjSuffix);
-    Options flags() const;
-    HttpMethod httpMethod() const;
+
     bool forced() const;
     bool isForced() const;
+    void setForced(bool forced);
+
     QString messageSuffix() const;
+    void setMessageSuffix(const QString &newMsgSuffix);
+
     QString objectSuffix() const;
-    // Convenience getters:
-    QString httpMethodString() const;
-    QString protocolString(bool includeRest = false) const;
+    void setObjectSuffix(const QString &newObjSuffix);
 
     Flags & operator=(const Flags &flag);
 

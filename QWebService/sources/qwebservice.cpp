@@ -169,6 +169,31 @@ void QWebService::setName(const QString &newWebServiceName)
 }
 
 /*!
+    Returns pointers to QWebMethod objects, useful for invoking web methods.
+
+    \sa method()
+  */
+QMap<QString, QWebServiceMethod *> *QWebService::methods()
+{
+    Q_D(QWebService);
+    return d->methods;
+}
+
+/*!
+    Returns a pointer to a single web method object, sceficied by
+    \a methodName. If now method with that name exists,
+    a default-constructed value is returned (see QMap::value() documentation
+    for details).
+
+    \sa methods()
+  */
+QWebServiceMethod *QWebService::method(const QString &methodName)
+{
+    Q_D(QWebService);
+    return d->methods->value(methodName);
+}
+
+/*!
     Returns a list of methods' names.
   */
 QStringList QWebService::methodNames() const
@@ -218,31 +243,6 @@ QMap<QString, QVariant> QWebService::returnValueNameType(const QString &methodNa
 }
 
 /*!
-    Returns pointers to QWebMethod objects, useful for invoking web methods.
-
-    \sa method()
-  */
-QMap<QString, QWebServiceMethod *> *QWebService::methods()
-{
-    Q_D(QWebService);
-    return d->methods;
-}
-
-/*!
-    Returns a pointer to a single web method object, sceficied by
-    \a methodName. If now method with that name exists,
-    a default-constructed value is returned (see QMap::value() documentation
-    for details).
-
-    \sa methods()
-  */
-QWebServiceMethod *QWebService::method(const QString &methodName)
-{
-    Q_D(QWebService);
-    return d->methods->value(methodName);
-}
-
-/*!
     Adds the specified web method (\a newMethod) to the web service.
     Method name should be set in the object, it is used internally and
     for referencing.
@@ -282,6 +282,24 @@ void QWebService::removeMethod(const QString &methodName)
     Q_D(QWebService);
     delete d->methods->value(methodName);
     d->methods->remove(methodName);
+}
+
+/*!
+    Returns QString with URL of the web service.
+  */
+QString QWebService::host() const
+{
+    Q_D(const QWebService);
+    return d->m_hostUrl.path();
+}
+
+/*!
+    Returns QUrl of the web service.
+  */
+QUrl QWebService::hostUrl() const
+{
+    Q_D(const QWebService);
+    return d->m_hostUrl;
 }
 
 /*!
@@ -348,24 +366,6 @@ void QWebService::resetWsdl(QWsdl *newWsdl)
         d->methods = d->wsdl->methods();
         setName(d->wsdl->webServiceName());
     }
-}
-
-/*!
-    Returns QUrl of the web service.
-  */
-QUrl QWebService::hostUrl() const
-{
-    Q_D(const QWebService);
-    return d->m_hostUrl;
-}
-
-/*!
-    Returns QString with URL of the web service.
-  */
-QString QWebService::host() const
-{
-    Q_D(const QWebService);
-    return d->m_hostUrl.path();
 }
 
 /*!

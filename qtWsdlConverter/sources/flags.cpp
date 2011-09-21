@@ -156,21 +156,11 @@ Flags::Flags(Options options_, HttpMethod method_, bool forced, QObject *parent)
 }
 
 /*!
-    Resets all flags to default values. This does not apply to '--forced'.
+    Returns currently set options enum.
   */
-void Flags::resetFlags()
+Flags::Options Flags::flags() const
 {
-    options = 0;
-    options = FullMode | Synchronous | StandardStructure | Qmake | Soap12;
-}
-
-/*!
-    Resets (zeroes) flags set to 1 in \a whatToReset.
-    This does not apply to '--forced'.
-  */
-void Flags::resetFlags(Options whatToReset)
-{
-    this->options &= ~whatToReset;
+    return options;
 }
 
 /*!
@@ -187,71 +177,21 @@ void Flags::setFlags(Options options)
 }
 
 /*!
-  Sets HTTP method flag to \a newMethod. Any previous setting is discarded.
-
+    Resets all flags to default values. This does not apply to '--forced'.
   */
-void Flags::setHttpMethod(HttpMethod newMethod)
+void Flags::resetFlags()
 {
-    method = newMethod;
+    options = 0;
+    options = FullMode | Synchronous | StandardStructure | Qmake | Soap12;
 }
 
 /*!
-  Sets HTTP method flag to \a newMethod. Any previous setting is discarded.
-  Only valid values are accepted, but checks are not case sensitive.
-  Therefore, you can for example pass "delete" or "DELETE".
-
-  Returns true if succesfull.
+    Resets (zeroes) flags set to 1 in \a whatToReset.
+    This does not apply to '--forced'.
   */
-bool Flags::setHttpMethod(const QString &newMethod)
+void Flags::resetFlags(Options whatToReset)
 {
-    QString tempMethod = newMethod.toLower();
-    if (tempMethod == QLatin1String("post"))
-        method = Post;
-    else if (tempMethod == QLatin1String("get"))
-        method = Get;
-    else if (tempMethod == QLatin1String("put"))
-        method = Put;
-    else if (tempMethod == QLatin1String("delete"))
-        method = Delete;
-    else
-        return false;
-
-    return true;
-}
-
-/*!
-    Sets the \a forced value to given one.
-
-    When 'true', converter will delete old sources, and create
-    a fresh copy every time it is run.
-  */
-void Flags::setForced(bool forced)
-{
-    this->force = forced;
-}
-
-/*!
-    Sets the message suffix using \a newMsgSuffix.
-    */
-void Flags::setMsgSuffix(const QString &newMsgSuffix)
-{
-    msgSuffix = newMsgSuffix;
-}
-
-/*!
-    Sets the object suffix using \a newObjSuffix.
-    */
-void Flags::setObjSuffix(const QString &newObjSuffix)
-{
-    objSuffix = newObjSuffix;
-}
-
-/*!
-    Returns currently set options enum.
-  */
-Flags::Options Flags::flags() const
-{
-    return options;
+    this->options &= ~whatToReset;
 }
 
 /*!
@@ -311,6 +251,39 @@ QString Flags::httpMethodString() const
 }
 
 /*!
+  Sets HTTP method flag to \a newMethod. Any previous setting is discarded.
+
+  */
+void Flags::setHttpMethod(HttpMethod newMethod)
+{
+    method = newMethod;
+}
+
+/*!
+  Sets HTTP method flag to \a newMethod. Any previous setting is discarded.
+  Only valid values are accepted, but checks are not case sensitive.
+  Therefore, you can for example pass "delete" or "DELETE".
+
+  Returns true if succesfull.
+  */
+bool Flags::setHttpMethod(const QString &newMethod)
+{
+    QString tempMethod = newMethod.toLower();
+    if (tempMethod == QLatin1String("post"))
+        method = Post;
+    else if (tempMethod == QLatin1String("get"))
+        method = Get;
+    else if (tempMethod == QLatin1String("put"))
+        method = Put;
+    else if (tempMethod == QLatin1String("delete"))
+        method = Delete;
+    else
+        return false;
+
+    return true;
+}
+
+/*!
     Same as isForced().
 
     Returns force state.
@@ -333,6 +306,17 @@ bool Flags::isForced() const
 }
 
 /*!
+    Sets the \a forced value to given one.
+
+    When 'true', converter will delete old sources, and create
+    a fresh copy every time it is run.
+  */
+void Flags::setForced(bool forced)
+{
+    this->force = forced;
+}
+
+/*!
     Returns message suffix, which is appended to methods (ones that send
     the message) in generated code.
   */
@@ -342,12 +326,28 @@ QString Flags::messageSuffix() const
 }
 
 /*!
+    Sets the message suffix using \a newMsgSuffix.
+    */
+void Flags::setMessageSuffix(const QString &newMsgSuffix)
+{
+    msgSuffix = newMsgSuffix;
+}
+
+/*!
     Returns the suffix, which is appended to object names (used in service
     header and source when in asynchronous).
   */
 QString Flags::objectSuffix() const
 {
     return objSuffix;
+}
+
+/*!
+    Sets the object suffix using \a newObjSuffix.
+    */
+void Flags::setObjectSuffix(const QString &newObjSuffix)
+{
+    objSuffix = newObjSuffix;
 }
 
 /*!

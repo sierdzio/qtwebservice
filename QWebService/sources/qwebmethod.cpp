@@ -230,6 +230,25 @@ QWebMethod::~QWebMethod()
 }
 
 /*!
+    Returns host's URL (in QString). If you want a QUrl, call getHostUrl(),
+    or QUrl(QWebMethod::getHost());
+  */
+QString QWebMethod::host() const
+{
+    Q_D(const QWebMethod);
+    return d->m_hostUrl.path();
+}
+
+/*!
+    Returns host's URL. If you want a QString, call getHost() or getHostUrl().host();
+  */
+QUrl QWebMethod::hostUrl() const
+{
+    Q_D(const QWebMethod);
+    return d->m_hostUrl;
+}
+
+/*!
     \fn QWebMethod::errorEncountered(const QString &errMessage)
 
     Singal emitted when WsdlConverter encounters an error.
@@ -252,6 +271,15 @@ void QWebMethod::setHost(const QUrl &newHost)
 {
     Q_D(QWebMethod);
     d->m_hostUrl = newHost;
+}
+
+/*!
+    Returns username.
+  */
+QString QWebMethod::username() const
+{
+    Q_D(const QWebMethod);
+    return d->m_username;
 }
 
 /*!
@@ -292,12 +320,86 @@ void QWebMethod::setCredentials(const QString &newUsername, const QString &newPa
 }
 
 /*!
-    Sets message's name to \a newName.
+    Performs authentication using \a newUsername and \a newPassword,
+    if specified. If not, and they were given using setCredentials(),
+    setUsername() or setPassword(), it uses the existing values.
+
+    If no data is specified, it does nothing. Returns true on success.
+
+    \sa setCredentials(), setUsername(), setPassword()
   */
-void QWebMethod::setMessageName(const QString &newName)
+bool QWebMethod::authenticate(const QString &newUsername, const QString &newPassword)
 {
     Q_D(QWebMethod);
-    d->m_methodName = newName;
+    if (!newUsername.isNull())
+        d->m_username = newUsername;
+    if (!newPassword.isNull())
+        d->m_password = newPassword;
+
+    if (d->m_username != QLatin1String("")) {
+        QUrl url;
+        url.addEncodedQueryItem("ACT", QUrl::toPercentEncoding(QLatin1String("11")));
+        url.addEncodedQueryItem("RET", QUrl::toPercentEncoding(QLatin1String("/")));
+        url.addEncodedQueryItem("site_id", QUrl::toPercentEncoding(QLatin1String("1")));
+        url.addEncodedQueryItem("username", QUrl::toPercentEncoding(d->m_username));
+        url.addEncodedQueryItem("password", QUrl::toPercentEncoding(d->m_password));
+
+        return authenticate(url);
+    }
+    return false;
+}
+
+/*!
+    Performs authentication using \a customAuthString.
+    Credentials specified by setCredentials(),
+    setUsername() or setPassword() are NOT used.
+
+    If no data is specified, it does nothing (and returns false).
+    Returns true on success.
+
+    \sa setCredentials(), setUsername(), setPassword()
+  */
+bool QWebMethod::authenticate(const QUrl &customAuthString)
+{
+    Q_D(QWebMethod);
+    if (customAuthString.isEmpty())
+        return false;
+
+    d->authenticationPerformed = true;
+    d->authenticationReplyReceived = false;
+    connect(d->manager, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(authReplyFinished(QNetworkReply*)));
+    connect(d->manager, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)),
+            this, SLOT(authenticationSlot(QNetworkReply*,QAuthenticator*)));
+
+    QNetworkRequest rqst(QUrl::fromUserInput(
+                             QString(QLatin1String("http://")
+                                     + d->m_hostUrl.host()
+                                     + QLatin1String("/"))));
+    rqst.setHeader(QNetworkRequest::ContentTypeHeader,
+                   QLatin1String("application/x-www-form-urlencoded"));
+
+    QByteArray paramBytes = customAuthString.toString().mid(1).toLatin1();
+    paramBytes.replace("/", "%2F");
+
+    d->manager->post(rqst, paramBytes);
+    return true;
+}
+
+/*!
+    \fn QWebMethod::replyReady(const QByteArray &rply)
+
+    Signal invoked when the reply (\a rply) from web service's server
+    is ready for reading.
+  */
+
+/*!
+    Returns message's name.
+  */
+QString QWebMethod::methodName() const
+{
+    Q_D(const QWebMethod);
+    return d->m_methodName;
 }
 
 /*!
@@ -310,12 +412,48 @@ void QWebMethod::setMethodName(const QString &newName)
 }
 
 /*!
+    Retrurns list of parameters' names.
+  */
+QStringList QWebMethod::parameterNames() const
+{
+    Q_D(const QWebMethod);
+    return (QStringList) d->parameters.keys();
+}
+
+/*!
+    Returns whole parameter information (name and type).
+  */
+QMap<QString, QVariant> QWebMethod::parameterNamesTypes() const
+{
+    Q_D(const QWebMethod);
+    return d->parameters;
+}
+
+/*!
     Sets method's parameters (\a params). This also includes their names.
   */
 void QWebMethod::setParameters(const QMap<QString, QVariant> &params)
 {
     Q_D(QWebMethod);
     d->parameters = params;
+}
+
+/*!
+    Returns return value's name.
+  */
+QStringList QWebMethod::returnValueName() const
+{
+    Q_D(const QWebMethod);
+    return (QStringList) d->returnValue.keys();
+}
+
+/*!
+    Returns whole return value information (name and type).
+  */
+QMap<QString, QVariant> QWebMethod::returnValueNameType() const
+{
+    Q_D(const QWebMethod);
+    return d->returnValue;
 }
 
 /*!
@@ -328,6 +466,15 @@ void QWebMethod::setReturnValue(const QMap<QString, QVariant> &returnVal)
 }
 
 /*!
+    Returns target namespace.
+  */
+QString QWebMethod::targetNamespace() const
+{
+    Q_D(const QWebMethod);
+    return d->m_targetNamespace;
+}
+
+/*!
     Sets message's target namespace (\a tNamespace),
     which is needed in SOAP messaging.
   */
@@ -335,6 +482,43 @@ void QWebMethod::setTargetNamespace(const QString &tNamespace)
 {
     Q_D(QWebMethod);
     d->m_targetNamespace = tNamespace;
+}
+
+/*!
+    Returns currently set protocol.
+
+    \sa httpMethod()
+  */
+QWebMethod::Protocol QWebMethod::protocol() const
+{
+    Q_D(const QWebMethod);
+    return d->protocolUsed;
+}
+
+/*!
+    Returns protocol used in form of a QString. If \a includeRest is
+    true, and --rest flag was specified, it appends ",rest" to the result.
+  */
+QString QWebMethod::protocolString(bool includeRest) const
+{
+    Q_D(const QWebMethod);
+    QString result;
+
+    if (d->protocolUsed & Http)
+        result = QLatin1String("http");
+    else if (d->protocolUsed & Soap10)
+        result = QLatin1String("soap10");
+    else if (d->protocolUsed & Soap12)
+        result = QLatin1String("soap12");
+    else if (d->protocolUsed & Json)
+        result = QLatin1String("json");
+    else if (d->protocolUsed & Xml)
+        result = QLatin1String("xml");
+
+    if (includeRest && (d->protocolUsed & Rest))
+        result += QLatin1String(",rest");
+
+    return result;
 }
 
 /*!
@@ -368,6 +552,39 @@ void QWebMethod::setProtocol(Protocol prot)
         d->enterErrorState(QLatin1String("Wrong protocol is set. You have "
                                             "combined exclusive flags."));
     }
+}
+
+/*!
+    Returns currently set HTTP method.
+
+    \sa protocol()
+  */
+QWebMethod::HttpMethod QWebMethod::httpMethod() const
+{
+    Q_D(const QWebMethod);
+    return d->httpMethodUsed;
+}
+
+/*!
+    Returns the HTTP method used, in form of a QString.
+
+    \sa httpMethod()
+  */
+QString QWebMethod::httpMethodString() const
+{
+    Q_D(const QWebMethod);
+    QString result;
+
+    if (d->httpMethodUsed == Post)
+        result = QLatin1String("POST");
+    else if (d->httpMethodUsed == Get)
+        result = QLatin1String("GET");
+    else if (d->httpMethodUsed == Put)
+        result = QLatin1String("PUT");
+    else if (d->httpMethodUsed == Delete)
+        result = QLatin1String("DELETE");
+
+    return result;
 }
 
 /*!
@@ -512,73 +729,6 @@ bool QWebMethod::sendMessage(const QByteArray &requestData)
 }
 
 /*!
-    Performs authentication using \a newUsername and \a newPassword,
-    if specified. If not, and they were given using setCredentials(),
-    setUsername() or setPassword(), it uses the existing values.
-
-    If no data is specified, it does nothing. Returns true on success.
-
-    \sa setCredentials(), setUsername(), setPassword()
-  */
-bool QWebMethod::authenticate(const QString &newUsername, const QString &newPassword)
-{
-    Q_D(QWebMethod);
-    if (!newUsername.isNull())
-        d->m_username = newUsername;
-    if (!newPassword.isNull())
-        d->m_password = newPassword;
-
-    if (d->m_username != QLatin1String("")) {
-        QUrl url;
-        url.addEncodedQueryItem("ACT", QUrl::toPercentEncoding(QLatin1String("11")));
-        url.addEncodedQueryItem("RET", QUrl::toPercentEncoding(QLatin1String("/")));
-        url.addEncodedQueryItem("site_id", QUrl::toPercentEncoding(QLatin1String("1")));
-        url.addEncodedQueryItem("username", QUrl::toPercentEncoding(d->m_username));
-        url.addEncodedQueryItem("password", QUrl::toPercentEncoding(d->m_password));
-
-        return authenticate(url);
-    }
-    return false;
-}
-
-/*!
-    Performs authentication using \a customAuthString.
-    Credentials specified by setCredentials(),
-    setUsername() or setPassword() are NOT used.
-
-    If no data is specified, it does nothing (and returns false).
-    Returns true on success.
-
-    \sa setCredentials(), setUsername(), setPassword()
-  */
-bool QWebMethod::authenticate(const QUrl &customAuthString)
-{
-    Q_D(QWebMethod);
-    if (customAuthString.isEmpty())
-        return false;
-
-    d->authenticationPerformed = true;
-    d->authenticationReplyReceived = false;
-    connect(d->manager, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(authReplyFinished(QNetworkReply*)));
-    connect(d->manager, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)),
-            this, SLOT(authenticationSlot(QNetworkReply*,QAuthenticator*)));
-
-    QNetworkRequest rqst(QUrl::fromUserInput(
-                             QString(QLatin1String("http://")
-                                     + d->m_hostUrl.host()
-                                     + QLatin1String("/"))));
-    rqst.setHeader(QNetworkRequest::ContentTypeHeader,
-                   QLatin1String("application/x-www-form-urlencoded"));
-
-    QByteArray paramBytes = customAuthString.toString().mid(1).toLatin1();
-    paramBytes.replace("/", "%2F");
-
-    d->manager->post(rqst, paramBytes);
-    return true;
-}
-
-/*!
     After making asynchronous call, and getting the replyReady() signal,
     this method can be used to read the reply.
   */
@@ -645,165 +795,6 @@ QByteArray QWebMethod::replyReadRaw()
 {
     Q_D(QWebMethod);
     return d->reply;
-}
-
-/*!
-    \fn QWebMethod::replyReady(const QByteArray &rply)
-
-    Signal invoked when the reply (\a rply) from web service's server
-    is ready for reading.
-  */
-
-/*!
-    Returns message's name.
-  */
-QString QWebMethod::methodName() const
-{
-    Q_D(const QWebMethod);
-    return d->m_methodName;
-}
-
-/*!
-    Retrurns list of parameters' names.
-  */
-QStringList QWebMethod::parameterNames() const
-{
-    Q_D(const QWebMethod);
-    return (QStringList) d->parameters.keys();
-}
-
-/*!
-    Returns return value's name.
-  */
-QStringList QWebMethod::returnValueName() const
-{
-    Q_D(const QWebMethod);
-    return (QStringList) d->returnValue.keys();
-}
-
-/*!
-    Returns whole parameter information (name and type).
-  */
-QMap<QString, QVariant> QWebMethod::parameterNamesTypes() const
-{
-    Q_D(const QWebMethod);
-    return d->parameters;
-}
-
-/*!
-    Returns whole return value information (name and type).
-  */
-QMap<QString, QVariant> QWebMethod::returnValueNameType() const
-{
-    Q_D(const QWebMethod);
-    return d->returnValue;
-}
-
-/*!
-    Returns target namespace.
-  */
-QString QWebMethod::targetNamespace() const
-{
-    Q_D(const QWebMethod);
-    return d->m_targetNamespace;
-}
-
-/*!
-    Returns host's URL (in QString). If you want a QUrl, call getHostUrl(),
-    or QUrl(QWebMethod::getHost());
-  */
-QString QWebMethod::host() const
-{
-    Q_D(const QWebMethod);
-    return d->m_hostUrl.path();
-}
-
-/*!
-    Returns host's URL. If you want a QString, call getHost() or getHostUrl().host();
-  */
-QUrl QWebMethod::hostUrl() const
-{
-    Q_D(const QWebMethod);
-    return d->m_hostUrl;
-}
-
-/*!
-    Returns username.
-  */
-QString QWebMethod::username() const
-{
-    Q_D(const QWebMethod);
-    return d->m_username;
-}
-
-/*!
-    Returns currently set protocol.
-
-    \sa httpMethod()
-  */
-QWebMethod::Protocol QWebMethod::protocol() const
-{
-    Q_D(const QWebMethod);
-    return d->protocolUsed;
-}
-
-/*!
-    Returns currently set HTTP method.
-
-    \sa protocol()
-  */
-QWebMethod::HttpMethod QWebMethod::httpMethod() const
-{
-    Q_D(const QWebMethod);
-    return d->httpMethodUsed;
-}
-
-/*!
-    Returns protocol used in form of a QString. If \a includeRest is
-    true, and --rest flag was specified, it appends ",rest" to the result.
-  */
-QString QWebMethod::protocolString(bool includeRest) const
-{
-    Q_D(const QWebMethod);
-    QString result;
-
-    if (d->protocolUsed & Http)
-        result = QLatin1String("http");
-    else if (d->protocolUsed & Soap10)
-        result = QLatin1String("soap10");
-    else if (d->protocolUsed & Soap12)
-        result = QLatin1String("soap12");
-    else if (d->protocolUsed & Json)
-        result = QLatin1String("json");
-    else if (d->protocolUsed & Xml)
-        result = QLatin1String("xml");
-
-    if (includeRest && (d->protocolUsed & Rest))
-        result += QLatin1String(",rest");
-
-    return result;
-}
-
-/*!
-    Returns the HTTP method used, in form of a QString.
-
-    \sa httpMethod()
-  */
-QString QWebMethod::httpMethodString() const
-{
-    Q_D(const QWebMethod);
-    QString result;
-
-    if (d->httpMethodUsed == Post)
-        result = QLatin1String("POST");
-    else if (d->httpMethodUsed == Get)
-        result = QLatin1String("GET");
-    else if (d->httpMethodUsed == Put)
-        result = QLatin1String("PUT");
-    else if (d->httpMethodUsed == Delete)
-        result = QLatin1String("DELETE");
-
-    return result;
 }
 
 /*!

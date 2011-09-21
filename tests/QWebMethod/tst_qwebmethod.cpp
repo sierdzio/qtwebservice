@@ -92,7 +92,7 @@ void TestQWebMethod::settersTest()
     QCOMPARE(message->hostUrl(), tempUrl);
 
     QString tempName("getProviderList");
-    message->setMessageName(tempName);
+    message->setMethodName(tempName);
     QCOMPARE(message->methodName(), tempName);
 
     QString tempTargetNmspc("http://www.daenet.de/webservices/CurrencyServer");
@@ -142,7 +142,7 @@ void TestQWebMethod::asynchronousSendingTest()
 {
     QWebMethod *message = new QWebMethod(QWebMethod::Soap12, QWebMethod::Post, 0);
     message->setHost("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx");
-    message->setMessageName("getProviderList");
+    message->setMethodName("getProviderList");
     message->setTargetNamespace("http://www.daenet.de/webservices/CurrencyServer");
     message->sendMessage();
     QCOMPARE(message->isErrorState(), bool(false));

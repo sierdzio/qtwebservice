@@ -108,6 +108,15 @@ QWsdl::~QWsdl()
   */
 
 /*!
+    Returns path to WSDL file.
+  */
+QString QWsdl::wsdlFile() const
+{
+    Q_D(const QWsdl);
+    return d->wsdlFilePath;
+}
+
+/*!
     Wrapper for resetWsdl(). Used to set the WSDL file or URL using \a wsdlFile.
     Compulsory after simple constructor, but not needed if you have already
     specified the file in the constructor or resetWsdl().
@@ -145,6 +154,20 @@ void QWsdl::resetWsdl(const QString &newWsdl)
 }
 
 /*!
+    Returns a QMap<QString, QWebServiceMethod *> pointer.
+    Keys are method names (just as in getMethodNames()), and values are
+    QWebServiceMethods themselves (which means they can be used
+    not only to get information, but also to send messages, set them up etc.).
+
+    \sa methodNames()
+  */
+QMap<QString, QWebServiceMethod *> *QWsdl::methods()
+{
+    Q_D(QWsdl);
+    return d->methodsMap;
+}
+
+/*!
     Returns a QStringList of names of web service's methods.
 
     \sa methods()
@@ -157,20 +180,6 @@ QStringList QWsdl::methodNames() const
     result.append(tempMethods);
 
     return result;
-}
-
-/*!
-    Returns a QMap<QString, QWebServiceMethod *> pointer.
-    Keys are method names (just as in getMethodNames()), and values are
-    QWebServiceMethods themselves (which means they can be used
-    not only to get information, but also to send messages, set them up etc.).
-
-    \sa methodNames()
-  */
-QMap<QString, QWebServiceMethod *> *QWsdl::methods()
-{
-    Q_D(QWsdl);
-    return d->methodsMap;
 }
 
 /*!
@@ -210,15 +219,6 @@ QUrl QWsdl::hostUrl() const
         return d->m_hostUrl;
     else
         return QUrl(d->wsdlFilePath);
-}
-
-/*!
-    Returns path to WSDL file.
-  */
-QString QWsdl::wsdlFile() const
-{
-    Q_D(const QWsdl);
-    return d->wsdlFilePath;
 }
 
 /*!

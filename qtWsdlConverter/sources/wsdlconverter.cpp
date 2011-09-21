@@ -375,9 +375,9 @@ bool WsdlConverter::parseArguments(const QStringList &arguments)
                 flags->setFlags(Flags::NoBuildSystem);
             } else if (s.startsWith(QLatin1String("--msgSuffix="))) {
                 // Suffixes:
-                flags->setMsgSuffix(s.mid(12));
+                flags->setMessageSuffix(s.mid(12));
             } else if (s.startsWith(QLatin1String("--objSuffix="))) {
-                flags->setObjSuffix(s.mid(12));
+                flags->setObjectSuffix(s.mid(12));
             } else if (s == QLatin1String("--force")) { // Force:
                 flags->setForced(true);
             } else {

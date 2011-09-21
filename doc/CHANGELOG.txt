@@ -11,7 +11,7 @@ Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/wsdl/band_ws.asmx
  -af --cmake --scons --json ../examples/wsdl/band_ws.asmx
 
-21.09.2011 : CEST:
+.09.2011 : CEST:
  - make lines in code wrap at around 80 characters,
  - remove \fn declarations from QDoc comments,
  - make the “else” be on the same line as the closing brace of the previous if-branch,
@@ -31,7 +31,10 @@ Example arguments for converter:
     - method(),
     - methods(),
  - updated and expanded documentation,
- - marked v0.4.4.
+ - rewritten headers and sources to reflect Qt coding style in getters/ setters
+   declaration (methods are now grouped into getter-setter pairs. Previously,
+   there was a big group of getters followed by another big group of setters),
+ - marked v0.5.0.
 
 13.09.2011 12:33 CEST:
  - added QWebService::removeMethod(), which deletes a web method specified by it's name,

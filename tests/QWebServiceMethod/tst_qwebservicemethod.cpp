@@ -95,7 +95,7 @@ void TestQWebServiceMethod::settersTest()
     QCOMPARE(message->hostUrl(), tempUrl);
 
     QString tempName = "getProviderList";
-    message->setMessageName(tempName);
+    message->setMethodName(tempName);
     QCOMPARE(message->methodName(), tempName);
 
     QString tempTargetNmspc = "http://www.daenet.de/webservices/CurrencyServer";

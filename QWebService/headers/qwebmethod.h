@@ -90,42 +90,48 @@ public:
                QObject *parent = 0);
     ~QWebMethod();
 
+    QString host() const;
+    QUrl hostUrl() const;
     void setHost(const QString &newHost);
     void setHost(const QUrl &newHost);
+
+    QString username() const;
     void setUsername(const QString &newUsername);
     void setPassword(const QString &newPassword);
     void setCredentials(const QString &newUsername, const QString &newPassword);
-    void setMessageName(const QString &newName);
-    void setMethodName(const QString &newName);
-    void setParameters(const QMap<QString, QVariant> &params);
-    void setReturnValue(const QMap<QString, QVariant> &returnValue);
-    void setTargetNamespace(const QString &tNamespace);
-    void setProtocol(Protocol protocol);
-    void setHttpMethod(HttpMethod method);
-    bool setHttpMethod(const QString &newMethod);
-    // should this be changed to invokeMethod()?
-    bool sendMessage(const QByteArray &requestData = QByteArray());
     bool authenticate(const QString &newUsername = QString(),
                       const QString &newPassword = QString());
     bool authenticate(const QUrl &customAuthString);
 
-//    QVariant replyRead();
+    QString methodName() const;
+    void setMethodName(const QString &newName);
+
+    QStringList parameterNames() const;
+    QMap<QString, QVariant> parameterNamesTypes() const;
+    void setParameters(const QMap<QString, QVariant> &params);
+
+    QStringList returnValueName() const;
+    QMap<QString, QVariant> returnValueNameType() const;
+    void setReturnValue(const QMap<QString, QVariant> &returnValue);
+
+    QString targetNamespace() const;
+    void setTargetNamespace(const QString &tNamespace);
+
+    Protocol protocol() const;
+    QString protocolString(bool includeRest = false) const;
+    void setProtocol(Protocol protocol);
+
+    HttpMethod httpMethod() const;
+    QString httpMethodString() const;
+    void setHttpMethod(HttpMethod method);
+    bool setHttpMethod(const QString &newMethod);
+
+    // should this be changed to invokeMethod()?
+    bool sendMessage(const QByteArray &requestData = QByteArray());
     QVariant replyReadParsed();
     QByteArray replyReadRaw();
     QString replyRead();
-    QString methodName() const;
-    QStringList parameterNames() const;
-    QStringList returnValueName() const;
-    QMap<QString, QVariant> parameterNamesTypes() const;
-    QMap<QString, QVariant> returnValueNameType() const;
-    QString targetNamespace() const;
-    QString host() const;
-    QUrl hostUrl() const;
-    QString username() const;
-    Protocol protocol() const;
-    QString protocolString(bool includeRest = false) const;
-    HttpMethod httpMethod() const;
-    QString httpMethodString() const;
+
     QString errorInfo() const;
     bool isErrorState() const;
     bool isReplyReady() const;
