@@ -169,9 +169,9 @@
   \sa init(), setParameters(), setProtocol(), sendMessage()
   */
 QWebMethod::QWebMethod(QObject *parent) :
-    QObject(parent), d(new QWebMethodPrivate)
+    QObject(parent), d_ptr(new QWebMethodPrivate)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     d->init();
     setProtocol(Soap12);
     setHttpMethod(Post);
@@ -185,9 +185,9 @@ QWebMethod::QWebMethod(QObject *parent) :
     \sa init(), setParameters(), setProtocol(), sendMessage()
   */
 QWebMethod::QWebMethod(Protocol protocol, HttpMethod method, QObject *parent) :
-    QObject(parent), d(new QWebMethodPrivate)
+    QObject(parent), d_ptr(new QWebMethodPrivate)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     d->init();
     setProtocol(protocol);
     setHttpMethod(method);
@@ -201,9 +201,9 @@ QWebMethod::QWebMethod(Protocol protocol, HttpMethod method, QObject *parent) :
     \sa init(), setParameters(), setProtocol(), sendMessage()
   */
 QWebMethod::QWebMethod(const QUrl &url, Protocol protocol, HttpMethod method, QObject *parent) :
-    QObject(parent), d(new QWebMethodPrivate)
+    QObject(parent), d_ptr(new QWebMethodPrivate)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     d->init();
     setProtocol(protocol);
     setHttpMethod(method);
@@ -213,10 +213,10 @@ QWebMethod::QWebMethod(const QUrl &url, Protocol protocol, HttpMethod method, QO
 /*!
   \internal
   */
-QWebMethod::QWebMethod(QWebMethodPrivate *dd, Protocol protocol, HttpMethod httpMethod, QObject *parent) :
-    QObject(parent), d(dd)
+QWebMethod::QWebMethod(QWebMethodPrivate &dd, Protocol protocol, HttpMethod httpMethod, QObject *parent) :
+    QObject(parent), d_ptr(&dd)
 {
-    d->init();
+    d_ptr->init();
     setProtocol(protocol);
     setHttpMethod(httpMethod);
 }
@@ -226,7 +226,7 @@ QWebMethod::QWebMethod(QWebMethodPrivate *dd, Protocol protocol, HttpMethod http
   */
 QWebMethod::~QWebMethod()
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     delete d->manager;
 }
 
@@ -242,7 +242,7 @@ QWebMethod::~QWebMethod()
   */
 void QWebMethod::setHost(const QString &newHost)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     d->m_hostUrl.setPath(newHost);
 }
 
@@ -251,7 +251,7 @@ void QWebMethod::setHost(const QString &newHost)
   */
 void QWebMethod::setHost(const QUrl &newHost)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     d->m_hostUrl = newHost;
 }
 
@@ -263,7 +263,7 @@ void QWebMethod::setHost(const QUrl &newHost)
   */
 void QWebMethod::setUsername(const QString &newUsername)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     d->m_username = newUsername;
 }
 
@@ -275,7 +275,7 @@ void QWebMethod::setUsername(const QString &newUsername)
   */
 void QWebMethod::setPassword(const QString &newPassword)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     d->m_password = newPassword;
 }
 
@@ -287,7 +287,7 @@ void QWebMethod::setPassword(const QString &newPassword)
   */
 void QWebMethod::setCredentials(const QString &newUsername, const QString &newPassword)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     d->m_username = newUsername;
     d->m_password = newPassword;
 }
@@ -297,7 +297,7 @@ void QWebMethod::setCredentials(const QString &newUsername, const QString &newPa
   */
 void QWebMethod::setMessageName(const QString &newName)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     d->m_methodName = newName;
 }
 
@@ -306,7 +306,7 @@ void QWebMethod::setMessageName(const QString &newName)
   */
 void QWebMethod::setMethodName(const QString &newName)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     d->m_methodName = newName;
 }
 
@@ -315,7 +315,7 @@ void QWebMethod::setMethodName(const QString &newName)
   */
 void QWebMethod::setParameters(const QMap<QString, QVariant> &params)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     d->parameters = params;
 }
 
@@ -324,7 +324,7 @@ void QWebMethod::setParameters(const QMap<QString, QVariant> &params)
   */
 void QWebMethod::setReturnValue(const QMap<QString, QVariant> &returnVal)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     d->returnValue = returnVal;
 }
 
@@ -334,7 +334,7 @@ void QWebMethod::setReturnValue(const QMap<QString, QVariant> &returnVal)
   */
 void QWebMethod::setTargetNamespace(const QString &tNamespace)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     d->m_targetNamespace = tNamespace;
 }
 
@@ -352,7 +352,7 @@ void QWebMethod::setTargetNamespace(const QString &tNamespace)
   */
 void QWebMethod::setProtocol(Protocol prot)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     // Prevent incompatibile flags from being set simultaneously:
     QList<int> allowedCombinations;
     // Standard values.
@@ -377,7 +377,7 @@ void QWebMethod::setProtocol(Protocol prot)
   */
 void QWebMethod::setHttpMethod(HttpMethod method)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     d->httpMethodUsed = method;
 }
 
@@ -390,7 +390,7 @@ void QWebMethod::setHttpMethod(HttpMethod method)
   */
 bool QWebMethod::setHttpMethod(const QString &newMethod)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     QString tempMethod = newMethod.toLower();
     if (tempMethod == QLatin1String("post"))
         d->httpMethodUsed = Post;
@@ -441,11 +441,10 @@ bool QWebMethod::setHttpMethod(const QString &newMethod)
   */
 bool QWebMethod::sendMessage(const QByteArray &requestData)
 {
-//    Q_D(QWebMethod);
-    qDebug() << "1";
+    Q_D(QWebMethod);
     connect(d->manager, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)),
             this, SLOT(authenticationSlot(QNetworkReply*,QAuthenticator*)));
-    qDebug() << "2";
+
     if ((d->authenticationPerformed == true)
             && (d->authenticationReplyReceived == false)) {
         forever {
@@ -462,10 +461,10 @@ bool QWebMethod::sendMessage(const QByteArray &requestData)
         disconnect(d->manager, SIGNAL(finished(QNetworkReply*)),
                    this, SLOT(authReplyFinished(QNetworkReply*)));
     }
-    qDebug() << "3";
+
     connect(d->manager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(replyFinished(QNetworkReply*)));
-    qDebug() << "4";
+
     QNetworkRequest request;
     request.setUrl(d->m_hostUrl);
 
@@ -524,7 +523,7 @@ bool QWebMethod::sendMessage(const QByteArray &requestData)
   */
 bool QWebMethod::authenticate(const QString &newUsername, const QString &newPassword)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     if (!newUsername.isNull())
         d->m_username = newUsername;
     if (!newPassword.isNull())
@@ -555,7 +554,7 @@ bool QWebMethod::authenticate(const QString &newUsername, const QString &newPass
   */
 bool QWebMethod::authenticate(const QUrl &customAuthString)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     if (customAuthString.isEmpty())
         return false;
 
@@ -584,7 +583,7 @@ bool QWebMethod::authenticate(const QUrl &customAuthString)
   */
 QString QWebMethod::replyRead()
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     QString replyString(d->reply);
     replyString = d->convertReplyToUtf(replyString);
     return replyString;
@@ -598,7 +597,7 @@ QString QWebMethod::replyRead()
   */
 QVariant QWebMethod::replyReadParsed()
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     QVariant result;
     QByteArray replyBytes = d->reply;
     QString replyString = d->convertReplyToUtf(QString(replyBytes));
@@ -639,7 +638,7 @@ QVariant QWebMethod::replyReadParsed()
   */
 QByteArray QWebMethod::replyReadRaw()
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     return d->reply;
 }
 
@@ -655,7 +654,7 @@ QByteArray QWebMethod::replyReadRaw()
   */
 QString QWebMethod::methodName() const
 {
-    //Q_D(const QWebMethod);
+    Q_D(const QWebMethod);
     return d->m_methodName;
 }
 
@@ -664,7 +663,7 @@ QString QWebMethod::methodName() const
   */
 QStringList QWebMethod::parameterNames() const
 {
-    //Q_D(const QWebMethod);
+    Q_D(const QWebMethod);
     return (QStringList) d->parameters.keys();
 }
 
@@ -673,7 +672,7 @@ QStringList QWebMethod::parameterNames() const
   */
 QStringList QWebMethod::returnValueName() const
 {
-    //Q_D(const QWebMethod);
+    Q_D(const QWebMethod);
     return (QStringList) d->returnValue.keys();
 }
 
@@ -682,7 +681,7 @@ QStringList QWebMethod::returnValueName() const
   */
 QMap<QString, QVariant> QWebMethod::parameterNamesTypes() const
 {
-    //Q_D(const QWebMethod);
+    Q_D(const QWebMethod);
     return d->parameters;
 }
 
@@ -691,7 +690,7 @@ QMap<QString, QVariant> QWebMethod::parameterNamesTypes() const
   */
 QMap<QString, QVariant> QWebMethod::returnValueNameType() const
 {
-    //Q_D(const QWebMethod);
+    Q_D(const QWebMethod);
     return d->returnValue;
 }
 
@@ -700,7 +699,7 @@ QMap<QString, QVariant> QWebMethod::returnValueNameType() const
   */
 QString QWebMethod::targetNamespace() const
 {
-    //Q_D(const QWebMethod);
+    Q_D(const QWebMethod);
     return d->m_targetNamespace;
 }
 
@@ -710,7 +709,7 @@ QString QWebMethod::targetNamespace() const
   */
 QString QWebMethod::host() const
 {
-    //Q_D(const QWebMethod);
+    Q_D(const QWebMethod);
     return d->m_hostUrl.path();
 }
 
@@ -719,7 +718,7 @@ QString QWebMethod::host() const
   */
 QUrl QWebMethod::hostUrl() const
 {
-    //Q_D(const QWebMethod);
+    Q_D(const QWebMethod);
     return d->m_hostUrl;
 }
 
@@ -728,7 +727,7 @@ QUrl QWebMethod::hostUrl() const
   */
 QString QWebMethod::username() const
 {
-    //Q_D(const QWebMethod);
+    Q_D(const QWebMethod);
     return d->m_username;
 }
 
@@ -739,7 +738,7 @@ QString QWebMethod::username() const
   */
 QWebMethod::Protocol QWebMethod::protocol() const
 {
-    //Q_D(const QWebMethod);
+    Q_D(const QWebMethod);
     return d->protocolUsed;
 }
 
@@ -750,7 +749,7 @@ QWebMethod::Protocol QWebMethod::protocol() const
   */
 QWebMethod::HttpMethod QWebMethod::httpMethod() const
 {
-    //Q_D(const QWebMethod);
+    Q_D(const QWebMethod);
     return d->httpMethodUsed;
 }
 
@@ -760,7 +759,7 @@ QWebMethod::HttpMethod QWebMethod::httpMethod() const
   */
 QString QWebMethod::protocolString(bool includeRest) const
 {
-    //Q_D(const QWebMethod);
+    Q_D(const QWebMethod);
     QString result;
 
     if (d->protocolUsed & Http)
@@ -787,7 +786,7 @@ QString QWebMethod::protocolString(bool includeRest) const
   */
 QString QWebMethod::httpMethodString() const
 {
-    //Q_D(const QWebMethod);
+    Q_D(const QWebMethod);
     QString result;
 
     if (d->httpMethodUsed == Post)
@@ -810,7 +809,7 @@ QString QWebMethod::httpMethodString() const
   */
 QString QWebMethod::errorInfo() const
 {
-    //Q_D(const QWebMethod);
+    Q_D(const QWebMethod);
     return d->errorMessage;
 }
 
@@ -822,7 +821,7 @@ QString QWebMethod::errorInfo() const
   */
 bool QWebMethod::isErrorState() const
 {
-    //Q_D(const QWebMethod);
+    Q_D(const QWebMethod);
     return d->errorState;
 }
 
@@ -831,7 +830,7 @@ bool QWebMethod::isErrorState() const
   */
 bool QWebMethod::isReplyReady() const
 {
-    //Q_D(const QWebMethod);
+    Q_D(const QWebMethod);
     return d->replyReceived;
 }
 
@@ -842,7 +841,7 @@ bool QWebMethod::isReplyReady() const
   */
 void QWebMethod::replyFinished(QNetworkReply *netReply)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     d->reply = netReply->readAll();
     d->replyReceived = true;
     emit replyReady(d->reply);
@@ -855,7 +854,7 @@ void QWebMethod::replyFinished(QNetworkReply *netReply)
   */
 void QWebMethod::authReplyFinished(QNetworkReply *reply)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     d->authenticationReplyReceived = true;
     QByteArray array = reply->readAll();
     if (!array.isEmpty())
@@ -879,7 +878,7 @@ void QWebMethod::authReplyFinished(QNetworkReply *reply)
 void QWebMethod::authenticationSlot(QNetworkReply *reply,
                                     QAuthenticator *authenticator)
 {
-    //Q_D(QWebMethod);
+    Q_D(QWebMethod);
     if (d->authenticationError)
     {
         d->enterErrorState(QString("Authentication error! " + reply->readAll()));

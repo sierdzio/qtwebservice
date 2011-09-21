@@ -6,7 +6,7 @@
 
 class QWebServiceMethodPrivate : public QWebMethodPrivate
 {
-//    Q_DECLARE_PUBLIC(QWebServiceMethod)
+    Q_DECLARE_PUBLIC(QWebServiceMethod)
 
 public:
     QWebServiceMethodPrivate() {}

@@ -79,6 +79,11 @@ public:
                                   HttpMethod httpMethod = Post,
                                   QObject *parent = 0);
 
+protected:
+    QWebServiceMethod(QWebServiceMethodPrivate &d,
+                      Protocol protocol = Soap12, HttpMethod httpMethod = Post,
+                      QObject *parent = 0);
+
 private:
     Q_DECLARE_PRIVATE(QWebServiceMethod)
 };

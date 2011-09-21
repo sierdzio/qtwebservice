@@ -151,7 +151,7 @@ void TestQWebServiceMethod::asynchronousTest()
                               QWebMethod::Soap12, QWebMethod::Post, this);
     message->setTargetNamespace("http://www.daenet.de/webservices/CurrencyServer");
     message->sendMessage(tmpP);
-    qDebug() << "AAAA";
+
     QCOMPARE(message->isErrorState(), bool(false));
 
     bool result = false;

@@ -61,7 +61,7 @@
   and use the base QWebMethod class.
   */
 QWebServiceMethod::QWebServiceMethod(QObject *parent) :
-    QWebMethod(new QWebServiceMethodPrivate, Soap12, Post, parent)
+    QWebMethod(*new QWebServiceMethodPrivate, Soap12, Post, parent)
 {
 }
 
@@ -73,7 +73,7 @@ QWebServiceMethod::QWebServiceMethod(QObject *parent) :
   */
 QWebServiceMethod::QWebServiceMethod(Protocol protocol, HttpMethod httpMethod,
                                      QObject *parent) :
-    QWebMethod(new QWebServiceMethodPrivate, protocol, httpMethod, parent)
+    QWebMethod(*new QWebServiceMethodPrivate, protocol, httpMethod, parent)
 {
 }
 
@@ -88,7 +88,7 @@ QWebServiceMethod::QWebServiceMethod(Protocol protocol, HttpMethod httpMethod,
 QWebServiceMethod::QWebServiceMethod(const QUrl &hostUrl, const QString &methodName,
                                      Protocol protocol, HttpMethod method,
                                      QObject *parent) :
-    QWebMethod(new QWebServiceMethodPrivate, protocol, method, parent)
+    QWebMethod(*new QWebServiceMethodPrivate, protocol, method, parent)
 {
     Q_D(QWebServiceMethod);
     d->m_hostUrl = hostUrl;
@@ -108,7 +108,7 @@ QWebServiceMethod::QWebServiceMethod(const QUrl &hostUrl, const QString &methodN
 QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodName,
                                      Protocol protocol, HttpMethod httpMethod,
                                      QObject *parent) :
-    QWebMethod(new QWebServiceMethodPrivate, protocol, httpMethod, parent)
+    QWebMethod(*new QWebServiceMethodPrivate, protocol, httpMethod, parent)
 {
     Q_D(QWebServiceMethod);
     d->m_methodName = methodName;
@@ -133,7 +133,7 @@ QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodN
                                      const QMap<QString, QVariant> &params,
                                      Protocol protocol, HttpMethod httpMethod,
                                      QObject *parent) :
-    QWebMethod(new QWebServiceMethodPrivate, protocol, httpMethod, parent)
+    QWebMethod(*new QWebServiceMethodPrivate, protocol, httpMethod, parent)
 {
     Q_D(QWebServiceMethod);
     d->m_methodName = methodName;
@@ -144,6 +144,15 @@ QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodN
     d->m_hostUrl.setUrl(host);
 }
 
+/*!
+    \internal
+  */
+QWebServiceMethod::QWebServiceMethod(QWebServiceMethodPrivate &d,
+                                     Protocol protocol, HttpMethod httpMethod,
+                                     QObject *parent) :
+    QWebMethod(d, protocol, httpMethod, parent)
+{
+}
 
 /*!
     \overload sendMessage()
@@ -154,7 +163,6 @@ QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodN
   */
 bool QWebServiceMethod::sendMessage(const QMap<QString, QVariant> &params)
 {
-    Q_D(QWebServiceMethod);
     setParameters(params);
     sendMessage();
     return true;
