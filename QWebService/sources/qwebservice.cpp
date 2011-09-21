@@ -45,6 +45,9 @@
     \class QWebService
     \brief Class providing Web Service functionality.
 
+    This class serves as central point for multi-web method uses. You can store
+    all relevant information about a web service in a single class.
+
     You can supply a WSDl file, which will be parsed (using QWsdl), and web
     methods will be extracted. You can also specify your own web methods by
     using addMethod().

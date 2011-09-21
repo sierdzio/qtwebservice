@@ -38,37 +38,37 @@
                 <parameter left="bool" right="" name="forced" default="false"/>
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="flags" fullname="Flags::flags" href="flags.html#flags" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="Options" signature="flags() const"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setFlags" fullname="Flags::setFlags" href="flags.html#setFlags" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setFlags(QFlags&lt;Flags::Option&gt; options)">
+                <parameter left="QFlags&lt;Flags::Option&gt;" right="" name="options" default=""/>
+            </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="resetFlags" fullname="Flags::resetFlags" href="flags.html#resetFlags" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="resetFlags()"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="resetFlags" fullname="Flags::resetFlags" href="flags.html#resetFlags-2" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="void" signature="resetFlags(QFlags&lt;Flags::Option&gt; whatToReset)">
                 <parameter left="QFlags&lt;Flags::Option&gt;" right="" name="whatToReset" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setFlags" fullname="Flags::setFlags" href="flags.html#setFlags" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setFlags(QFlags&lt;Flags::Option&gt; options)">
-                <parameter left="QFlags&lt;Flags::Option&gt;" right="" name="options" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="protocolString" fullname="Flags::protocolString" href="flags.html#protocolString" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="protocolString(bool includeRest) const">
+                <parameter left="bool" right="" name="includeRest" default="false"/>
             </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="httpMethod" fullname="Flags::httpMethod" href="flags.html#httpMethod" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="HttpMethod" signature="httpMethod() const"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="httpMethodString" fullname="Flags::httpMethodString" href="flags.html#httpMethodString" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="httpMethodString() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="setHttpMethod" fullname="Flags::setHttpMethod" href="flags.html#setHttpMethod" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setHttpMethod(HttpMethod newMethod)">
                 <parameter left="HttpMethod" right="" name="newMethod" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="setHttpMethod" fullname="Flags::setHttpMethod" href="flags.html#setHttpMethod-2" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="bool" signature="setHttpMethod(const QString &amp; newMethod)">
                 <parameter left="const QString &amp;" right="" name="newMethod" default=""/>
             </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="forced" fullname="Flags::forced" href="flags.html#forced" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="forced() const"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="isForced" fullname="Flags::isForced" href="flags.html#isForced" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="isForced() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="setForced" fullname="Flags::setForced" href="flags.html#setForced" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setForced(bool forced)">
                 <parameter left="bool" right="" name="forced" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setMsgSuffix" fullname="Flags::setMsgSuffix" href="flags.html#setMsgSuffix" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setMsgSuffix(const QString &amp; newMsgSuffix)">
+            <function access="public" threadsafety="unspecified" status="commendable" name="messageSuffix" fullname="Flags::messageSuffix" href="flags.html#messageSuffix" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="messageSuffix() const"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setMessageSuffix" fullname="Flags::setMessageSuffix" href="flags.html#setMessageSuffix" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setMessageSuffix(const QString &amp; newMsgSuffix)">
                 <parameter left="const QString &amp;" right="" name="newMsgSuffix" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setObjSuffix" fullname="Flags::setObjSuffix" href="flags.html#setObjSuffix" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setObjSuffix(const QString &amp; newObjSuffix)">
-                <parameter left="const QString &amp;" right="" name="newObjSuffix" default=""/>
-            </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="flags" fullname="Flags::flags" href="flags.html#flags" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="Options" signature="flags() const"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="httpMethod" fullname="Flags::httpMethod" href="flags.html#httpMethod" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="HttpMethod" signature="httpMethod() const"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="forced" fullname="Flags::forced" href="flags.html#forced" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="forced() const"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="isForced" fullname="Flags::isForced" href="flags.html#isForced" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="isForced() const"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="messageSuffix" fullname="Flags::messageSuffix" href="flags.html#messageSuffix" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="messageSuffix() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="objectSuffix" fullname="Flags::objectSuffix" href="flags.html#objectSuffix" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="objectSuffix() const"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="httpMethodString" fullname="Flags::httpMethodString" href="flags.html#httpMethodString" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="httpMethodString() const"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="protocolString" fullname="Flags::protocolString" href="flags.html#protocolString" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="protocolString(bool includeRest) const">
-                <parameter left="bool" right="" name="includeRest" default="false"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setObjectSuffix" fullname="Flags::setObjectSuffix" href="flags.html#setObjectSuffix" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setObjectSuffix(const QString &amp; newObjSuffix)">
+                <parameter left="const QString &amp;" right="" name="newObjSuffix" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="operator=" fullname="Flags::operator=" href="flags.html#operator=" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="Flags &amp;" signature="operator=(const Flags &amp; flag)">
                 <parameter left="const Flags &amp;" right="" name="flag" default=""/>

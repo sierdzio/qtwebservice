@@ -51,8 +51,8 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setForced">setForced</a></b> ( bool <i>forced</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setHttpMethod">setHttpMethod</a></b> ( HttpMethod <i>newMethod</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setHttpMethod-2">setHttpMethod</a></b> ( const QString &amp; <i>newMethod</i> )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setMsgSuffix">setMsgSuffix</a></b> ( const QString &amp; <i>newMsgSuffix</i> )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setObjSuffix">setObjSuffix</a></b> ( const QString &amp; <i>newObjSuffix</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setMessageSuffix">setMessageSuffix</a></b> ( const QString &amp; <i>newMsgSuffix</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="flags.html#setObjectSuffix">setObjectSuffix</a></b> ( const QString &amp; <i>newObjSuffix</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> Flags &amp; </td><td class="memItemRight bottomAlign"><b><a href="flags.html#operator-eq">operator=</a></b> ( const Flags &amp; <i>flag</i> )</td></tr>
 </table>
 <a name="details"></a>
@@ -108,7 +108,7 @@
 <h2>Member Function Documentation</h2>
 <!-- $$$Flags[overload1]$$$FlagsOptionsHttpMethodboolQObject* -->
 <h3 class="fn"><a name="Flags"></a>Flags::Flags ( <a href="flags.html#Option-enum">Options</a> <i>options_</i> = Options( FullMode | Synchronous | StandardStructure | Qmake | Soap12 ), <a href="flags.html#HttpMethod-enum">HttpMethod</a> <i>method_</i> = Post, bool <i>forced</i> = false, QObject * <i>parent</i> = 0 )</h3>
-<p>Constructs the Flags object. All params are optional. If you want to set non-default suffixes, use <a href="flags.html#setObjSuffix">setObjSuffix</a>() and <a href="flags.html#setMsgSuffix">setMsgSuffix</a>().</p>
+<p>Constructs the Flags object. All params are optional. If you want to set non-default suffixes, use setObjSuffix() and setMsgSuffix().</p>
 <p>Default values:</p>
 <ul>
 <li><i>options_</i> :<ul>
@@ -154,10 +154,12 @@
 <!-- $$$messageSuffix[overload1]$$$messageSuffix -->
 <h3 class="fn"><a name="messageSuffix"></a>QString Flags::messageSuffix () const</h3>
 <p>Returns message suffix, which is appended to methods (ones that send the message) in generated code.</p>
+<p>See also <a href="flags.html#setMessageSuffix">setMessageSuffix</a>().</p>
 <!-- @@@messageSuffix -->
 <!-- $$$objectSuffix[overload1]$$$objectSuffix -->
 <h3 class="fn"><a name="objectSuffix"></a>QString Flags::objectSuffix () const</h3>
 <p>Returns the suffix, which is appended to object names (used in service header and source when in asynchronous).</p>
+<p>See also <a href="flags.html#setObjectSuffix">setObjectSuffix</a>().</p>
 <!-- @@@objectSuffix -->
 <!-- $$$protocolString[overload1]$$$protocolStringbool -->
 <h3 class="fn"><a name="protocolString"></a>QString Flags::protocolString ( bool <i>includeRest</i> = false ) const</h3>
@@ -192,14 +194,16 @@
 <p>Sets HTTP method flag to <i>newMethod</i>. Any previous setting is discarded. Only valid values are accepted, but checks are not case sensitive. Therefore, you can for example pass &quot;delete&quot; or &quot;DELETE&quot;.</p>
 <p>Returns true if succesfull.</p>
 <!-- @@@setHttpMethod -->
-<!-- $$$setMsgSuffix[overload1]$$$setMsgSuffixconstQString& -->
-<h3 class="fn"><a name="setMsgSuffix"></a>void Flags::setMsgSuffix ( const QString &amp; <i>newMsgSuffix</i> )</h3>
+<!-- $$$setMessageSuffix[overload1]$$$setMessageSuffixconstQString& -->
+<h3 class="fn"><a name="setMessageSuffix"></a>void Flags::setMessageSuffix ( const QString &amp; <i>newMsgSuffix</i> )</h3>
 <p>Sets the message suffix using <i>newMsgSuffix</i>.</p>
-<!-- @@@setMsgSuffix -->
-<!-- $$$setObjSuffix[overload1]$$$setObjSuffixconstQString& -->
-<h3 class="fn"><a name="setObjSuffix"></a>void Flags::setObjSuffix ( const QString &amp; <i>newObjSuffix</i> )</h3>
+<p>See also <a href="flags.html#messageSuffix">messageSuffix</a>().</p>
+<!-- @@@setMessageSuffix -->
+<!-- $$$setObjectSuffix[overload1]$$$setObjectSuffixconstQString& -->
+<h3 class="fn"><a name="setObjectSuffix"></a>void Flags::setObjectSuffix ( const QString &amp; <i>newObjSuffix</i> )</h3>
 <p>Sets the object suffix using <i>newObjSuffix</i>.</p>
-<!-- @@@setObjSuffix -->
+<p>See also <a href="flags.html#objectSuffix">objectSuffix</a>().</p>
+<!-- @@@setObjectSuffix -->
 <!-- $$$operator=[overload1]$$$operator=constFlags& -->
 <h3 class="fn"><a name="operator-eq"></a>Flags &amp; Flags::operator= ( const Flags &amp; <i>flag</i> )</h3>
 <p>Assign operator for Flags object. Copies r-value <i>flag</i> into r-value object, and returns the object.</p>

@@ -49,8 +49,8 @@
         <keyword ref="flags.html#setFlags">setFlags</keyword>
         <keyword ref="flags.html#setForced">setForced</keyword>
         <keyword ref="flags.html#setHttpMethod">setHttpMethod</keyword>
-        <keyword ref="flags.html#setMsgSuffix">setMsgSuffix</keyword>
-        <keyword ref="flags.html#setObjSuffix">setObjSuffix</keyword>
+        <keyword ref="flags.html#setMessageSuffix">setMessageSuffix</keyword>
+        <keyword ref="flags.html#setObjectSuffix">setObjectSuffix</keyword>
         <keyword ref="flags.html#operator-eq">operator=</keyword>
         <section ref="flags-members.html" title="List of all members"/>
     </section>

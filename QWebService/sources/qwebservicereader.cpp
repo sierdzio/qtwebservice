@@ -47,7 +47,8 @@
            with external web services.
 
     This class is in a very early stage of development and should be used
-    with great caution, if at all.
+    with great caution, if at all. Currently, it does not provide any more
+    functionality, than QWebService itself.
   */
 
 /*!

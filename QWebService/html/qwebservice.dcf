@@ -44,7 +44,6 @@
         <keyword ref="qwebmethod.html#setCredentials">setCredentials</keyword>
         <keyword ref="qwebmethod.html#setHost">setHost</keyword>
         <keyword ref="qwebmethod.html#setHttpMethod">setHttpMethod</keyword>
-        <keyword ref="qwebmethod.html#setMessageName">setMessageName</keyword>
         <keyword ref="qwebmethod.html#setMethodName">setMethodName</keyword>
         <keyword ref="qwebmethod.html#setParameters">setParameters</keyword>
         <keyword ref="qwebmethod.html#setPassword">setPassword</keyword>

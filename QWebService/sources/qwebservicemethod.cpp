@@ -45,8 +45,7 @@
     \class QWebServiceMethod
     \brief Extends QWebMethod with some generic constructors and synchronous message sending.
 
-
-    Subclass of QWebMethod, contains many generic methods for sending messages
+    Subclass of QWebMethod, contains some generic methods for sending messages
     and various additional convenience constructors.
     Can be used both synchronously (through static sendMessage() method),
     or asynchronously (indicates, when reply is ready by emitting

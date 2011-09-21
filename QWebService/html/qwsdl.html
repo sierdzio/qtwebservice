@@ -60,7 +60,14 @@
 <div class="descr">
 <h2>Detailed Description</h2>
 <p>Class for interaction with local and remote WSDL files. Currently read-only.</p>
-<p>Reads web service data (message names, parameters, return values, ws name etc) from a WSDL file or URL.</p>
+<p>Reads web service data (message names, parameters, return values, ws name etc) from a WSDL file. The file can be on a local filesystem, or a remote one (specified by URL).</p>
+<p>To get started, you have to:</p>
+<ul>
+<li>construct QWsdl object</li>
+<li>specify WSDL file or URL (can be done in constructor, or using setWsdl(), <a href="qwsdl.html#resetWsdl">resetWsdl</a>(),</li>
+<li>check for errors using <a href="qwsdl.html#isErrorState">isErrorState</a>(),</li>
+<li>web methods are ready to read using <a href="qwsdl.html#methods">methods</a>(). Other info available from numerous getter methods (<a href="qwsdl.html#webServiceName">webServiceName</a>(), <a href="qwsdl.html#targetNamespace">targetNamespace</a>() etc.)</li>
+</ul>
 </div>
 <!-- @@@QWsdl -->
 <div class="func">

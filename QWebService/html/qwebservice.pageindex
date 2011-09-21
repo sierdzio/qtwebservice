@@ -1,636 +1,630 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <qtPageIndex>
-    <page id="{f8391290-e1b5-4c9f-baaf-eaa4dad6fbf9}">
+    <page id="{b31af928-2d2f-4d23-9fdc-22298014c3e9}">
         <pageWords>QWsdl class reference</pageWords>
         <pageTitle>QWsdl Class Reference</pageTitle>
         <pageUrl>qwsdl.html</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{8f79115c-f8b6-4651-bdd1-857bd7942c39}">
+    <page id="{02ea7d1b-0895-44bd-b821-5e63cbdb2c72}">
         <pageWords>QWsdl function QWsdl</pageWords>
         <pageTitle>QWsdl Function Reference</pageTitle>
         <pageUrl>qwsdl.html#QWsdl</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{ce46d695-58c2-42f4-ba7e-6fc1144798ce}">
+    <page id="{ec469fa1-09b3-4cc1-adf9-db7543942c9c}">
         <pageWords>QWsdl function QWsdl</pageWords>
         <pageTitle>QWsdl Function Reference</pageTitle>
         <pageUrl>qwsdl.html#QWsdl</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{531ea80f-97bd-4e0b-a2fe-9fc193cfcdbd}">
+    <page id="{624e180b-2dcb-4b0a-a413-dd509efbde20}">
         <pageWords>~QWsdl function QWsdl</pageWords>
         <pageTitle>~QWsdl Function Reference</pageTitle>
         <pageUrl>qwsdl.html#~QWsdl</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{7c5d8086-9106-455b-be88-50d083625aa0}">
-        <pageWords>setWsdlFile function QWsdl</pageWords>
-        <pageTitle>setWsdlFile Function Reference</pageTitle>
-        <pageUrl>qwsdl.html#setWsdlFile</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{e1a6ca45-d475-4b4f-8d78-44d15a60ad0f}">
-        <pageWords>resetWsdl function QWsdl</pageWords>
-        <pageTitle>resetWsdl Function Reference</pageTitle>
-        <pageUrl>qwsdl.html#resetWsdl</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{04c0a96e-dc88-4ae2-91b7-bb25f27848bd}">
-        <pageWords>methodNames function QWsdl</pageWords>
-        <pageTitle>methodNames Function Reference</pageTitle>
-        <pageUrl>qwsdl.html#methodNames</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{03d2c545-cd07-4fc2-8bf1-70288dbe9cfd}">
-        <pageWords>methods function QWsdl</pageWords>
-        <pageTitle>methods Function Reference</pageTitle>
-        <pageUrl>qwsdl.html#methods</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{7109c417-01b3-4b4d-92be-60c4db3ae550}">
-        <pageWords>webServiceName function QWsdl</pageWords>
-        <pageTitle>webServiceName Function Reference</pageTitle>
-        <pageUrl>qwsdl.html#webServiceName</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{b758a06f-c940-45ba-af3e-223e74e31d47}">
-        <pageWords>host function QWsdl</pageWords>
-        <pageTitle>host Function Reference</pageTitle>
-        <pageUrl>qwsdl.html#host</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{ad74f294-703b-4958-90bf-16b4ddc826b9}">
-        <pageWords>hostUrl function QWsdl</pageWords>
-        <pageTitle>hostUrl Function Reference</pageTitle>
-        <pageUrl>qwsdl.html#hostUrl</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{1ca05bab-9d2b-4ab5-a90e-9863b327679e}">
+    <page id="{0bf583d2-a300-4cf7-b945-0599af0f023e}">
         <pageWords>wsdlFile function QWsdl</pageWords>
         <pageTitle>wsdlFile Function Reference</pageTitle>
         <pageUrl>qwsdl.html#wsdlFile</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{64e0ce9e-e8f7-46d2-bb3e-0e6d9f2ce7b5}">
+    <page id="{5e69a7fd-1346-4fd6-b228-f6ed7393594b}">
+        <pageWords>setWsdlFile function QWsdl</pageWords>
+        <pageTitle>setWsdlFile Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#setWsdlFile</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{7912ad1e-b280-49f4-82c6-1511480130c4}">
+        <pageWords>resetWsdl function QWsdl</pageWords>
+        <pageTitle>resetWsdl Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#resetWsdl</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{2cc86a4b-e9f0-4389-96f9-981f60230b32}">
+        <pageWords>methods function QWsdl</pageWords>
+        <pageTitle>methods Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#methods</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{4a453943-350a-4394-8b11-032a5bbb2a52}">
+        <pageWords>methodNames function QWsdl</pageWords>
+        <pageTitle>methodNames Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#methodNames</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{a735785a-85b1-486d-8575-24ebded6c39d}">
+        <pageWords>webServiceName function QWsdl</pageWords>
+        <pageTitle>webServiceName Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#webServiceName</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{b82ef1cc-58ef-4638-bd04-6b3a4e6c2030}">
+        <pageWords>host function QWsdl</pageWords>
+        <pageTitle>host Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#host</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{acd67d23-639e-43ee-99b5-1b5c6b93ede9}">
+        <pageWords>hostUrl function QWsdl</pageWords>
+        <pageTitle>hostUrl Function Reference</pageTitle>
+        <pageUrl>qwsdl.html#hostUrl</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{24213248-c4f4-4821-a134-4f862ac44abb}">
         <pageWords>targetNamespace function QWsdl</pageWords>
         <pageTitle>targetNamespace Function Reference</pageTitle>
         <pageUrl>qwsdl.html#targetNamespace</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{aef9e799-b85f-4fbe-94ad-1ce05b9cbd60}">
+    <page id="{34edc37f-52da-4c99-ac95-2b98c063e0a6}">
         <pageWords>errorInfo function QWsdl</pageWords>
         <pageTitle>errorInfo Function Reference</pageTitle>
         <pageUrl>qwsdl.html#errorInfo</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{fd405120-ae7e-4f1f-b357-bb946fe2e1ec}">
+    <page id="{c43577f4-c590-432a-a3c7-303fe5bb5fd1}">
         <pageWords>isErrorState function QWsdl</pageWords>
         <pageTitle>isErrorState Function Reference</pageTitle>
         <pageUrl>qwsdl.html#isErrorState</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{2bcb6360-bb31-4b80-bf63-94b0b99b2794}">
+    <page id="{b1aea83d-bc30-40bd-8895-6c92b17596d7}">
         <pageWords>errorEncountered function QWsdl</pageWords>
         <pageTitle>errorEncountered Function Reference</pageTitle>
         <pageUrl>qwsdl.html#errorEncountered</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{e488dfdb-ddd0-4b66-96b3-b28888fcfeb2}">
+    <page id="{6f08da6c-03fe-4659-bd96-42fe56aded10}">
         <pageWords>fileReplyFinished function QWsdl</pageWords>
         <pageTitle>fileReplyFinished Function Reference</pageTitle>
         <pageUrl>qwsdl.html#fileReplyFinished</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{3b8e518c-2628-4021-ad6e-3b463c8bf661}">
+    <page id="{0bb73de3-9a6e-41d3-aee7-ef3e8c14dcd3}">
         <pageWords>d_ptr QWsdl</pageWords>
         <pageTitle>d_ptr</pageTitle>
         <pageUrl>qwsdl.html</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{3535eb4a-8c05-4ccf-95d0-c34caaeb2446}">
+    <page id="{196d6b5e-c62d-49df-a047-56d295ef6f5e}">
         <pageWords>QWebServiceMethod class reference</pageWords>
         <pageTitle>QWebServiceMethod Class Reference</pageTitle>
         <pageUrl>qwebservicemethod.html</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{f9785f59-ebb0-4e56-913a-2b111220d656}">
+    <page id="{c769c25c-b0eb-4789-aef1-98fa6f02c3fa}">
         <pageWords>QWebServiceMethod function QWebServiceMethod</pageWords>
         <pageTitle>QWebServiceMethod Function Reference</pageTitle>
         <pageUrl>qwebservicemethod.html#QWebServiceMethod</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{7b81be62-6134-45bf-9ba7-747727f27450}">
+    <page id="{bc3c4683-81e3-4c11-b635-69879c3e4dee}">
         <pageWords>QWebServiceMethod function QWebServiceMethod</pageWords>
         <pageTitle>QWebServiceMethod Function Reference</pageTitle>
         <pageUrl>qwebservicemethod.html#QWebServiceMethod</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{43c3ea9a-0337-47f5-9c2d-802012c73037}">
+    <page id="{42b745b6-6a5d-474b-805a-91382fc14122}">
         <pageWords>QWebServiceMethod function QWebServiceMethod</pageWords>
         <pageTitle>QWebServiceMethod Function Reference</pageTitle>
         <pageUrl>qwebservicemethod.html#QWebServiceMethod</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{3e0dc390-9963-4537-b9fc-2e01cd0edd02}">
+    <page id="{b228ffb6-4d2c-485d-8894-65e88d013006}">
         <pageWords>QWebServiceMethod function QWebServiceMethod</pageWords>
         <pageTitle>QWebServiceMethod Function Reference</pageTitle>
         <pageUrl>qwebservicemethod.html#QWebServiceMethod</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{e5adec74-1597-401a-9b0c-221f69d0325a}">
+    <page id="{78ff7277-6a7e-4fab-a5bc-17e288f26635}">
         <pageWords>QWebServiceMethod function QWebServiceMethod</pageWords>
         <pageTitle>QWebServiceMethod Function Reference</pageTitle>
         <pageUrl>qwebservicemethod.html#QWebServiceMethod</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{a13f48e3-50e1-4357-ac8d-c2246e9d81b2}">
+    <page id="{bc420133-5ab2-4497-a771-76e81aece62a}">
         <pageWords>sendMessage function QWebServiceMethod</pageWords>
         <pageTitle>sendMessage Function Reference</pageTitle>
         <pageUrl>qwebservicemethod.html#sendMessage</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{11aca3b9-253c-453c-a69a-f5c3ad1371ae}">
+    <page id="{85cd80b3-edc5-4a39-a0e2-20c8881d5a6b}">
         <pageWords>QWebService class reference</pageWords>
         <pageTitle>QWebService Class Reference</pageTitle>
         <pageUrl>qwebservice.html</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{f30719da-6f3f-4960-9e80-5dd06bbb4881}">
+    <page id="{26bc623f-fb97-41cf-95e9-098e8b2ebca9}">
         <pageWords>QWebService function QWebService</pageWords>
         <pageTitle>QWebService Function Reference</pageTitle>
         <pageUrl>qwebservice.html#QWebService</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{386d51b4-ad6e-487d-8d90-7234f17583c4}">
+    <page id="{5afbfcd4-5542-491b-aa90-d968bf138117}">
         <pageWords>QWebService function QWebService</pageWords>
         <pageTitle>QWebService Function Reference</pageTitle>
         <pageUrl>qwebservice.html#QWebService</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{5c4ee936-1bbd-48f3-9796-f4741e4834de}">
+    <page id="{323663d6-d3c2-48e8-962c-408e2eb9b925}">
         <pageWords>QWebService function QWebService</pageWords>
         <pageTitle>QWebService Function Reference</pageTitle>
         <pageUrl>qwebservice.html#QWebService</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{bcc73570-5846-4be7-91c5-9db92d599a7c}">
+    <page id="{868fef71-a07c-4b70-942d-d56b55afb77c}">
         <pageWords>~QWebService function QWebService</pageWords>
         <pageTitle>~QWebService Function Reference</pageTitle>
         <pageUrl>qwebservice.html#~QWebService</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{1b0e9404-0f06-44af-ae93-88d9876d9a05}">
+    <page id="{69225c59-09c2-4a14-98c9-821b4050fd3d}">
         <pageWords>name function QWebService</pageWords>
         <pageTitle>name Function Reference</pageTitle>
         <pageUrl>qwebservice.html#name</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{19f83248-3d22-4429-8e9a-5bf3af5c8ea1}">
-        <pageWords>methodNames function QWebService</pageWords>
-        <pageTitle>methodNames Function Reference</pageTitle>
-        <pageUrl>qwebservice.html#methodNames</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{cef5d3f0-2122-49e4-8eaf-0b7ece449b0e}">
-        <pageWords>methodParameters function QWebService</pageWords>
-        <pageTitle>methodParameters Function Reference</pageTitle>
-        <pageUrl>qwebservice.html#methodParameters</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{768c95d2-d7ef-4e0c-93c3-2b7f97b3bc0f}">
-        <pageWords>methodReturnValue function QWebService</pageWords>
-        <pageTitle>methodReturnValue Function Reference</pageTitle>
-        <pageUrl>qwebservice.html#methodReturnValue</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{f7459e35-6d5a-446d-a7e7-7202c0c56df7}">
-        <pageWords>parameterNamesTypes function QWebService</pageWords>
-        <pageTitle>parameterNamesTypes Function Reference</pageTitle>
-        <pageUrl>qwebservice.html#parameterNamesTypes</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{c33e3abb-fa50-4985-83a4-582a27963a3e}">
-        <pageWords>returnValueNameType function QWebService</pageWords>
-        <pageTitle>returnValueNameType Function Reference</pageTitle>
-        <pageUrl>qwebservice.html#returnValueNameType</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{f4179b96-6cb9-4c6a-979b-e0c714a6a1bd}">
-        <pageWords>methods function QWebService</pageWords>
-        <pageTitle>methods Function Reference</pageTitle>
-        <pageUrl>qwebservice.html#methods</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{cfc31406-6ab8-4c8d-a3cd-a1f7821d6f88}">
-        <pageWords>method function QWebService</pageWords>
-        <pageTitle>method Function Reference</pageTitle>
-        <pageUrl>qwebservice.html#method</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{fb0ea4b0-0073-4c48-a196-f163abd959c7}">
-        <pageWords>addMethod function QWebService</pageWords>
-        <pageTitle>addMethod Function Reference</pageTitle>
-        <pageUrl>qwebservice.html#addMethod</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{93b8e152-aed5-4a37-bc2c-2534e094e871}">
-        <pageWords>addMethod function QWebService</pageWords>
-        <pageTitle>addMethod Function Reference</pageTitle>
-        <pageUrl>qwebservice.html#addMethod</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{ef561a89-6c64-4883-9a60-af5d98ff04d0}">
-        <pageWords>removeMethod function QWebService</pageWords>
-        <pageTitle>removeMethod Function Reference</pageTitle>
-        <pageUrl>qwebservice.html#removeMethod</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{8241aa44-083e-43fb-bda0-10268852aa6e}">
-        <pageWords>setHost function QWebService</pageWords>
-        <pageTitle>setHost Function Reference</pageTitle>
-        <pageUrl>qwebservice.html#setHost</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{2dd4639a-c506-43e4-988b-10aae1c8d9f9}">
-        <pageWords>setHost function QWebService</pageWords>
-        <pageTitle>setHost Function Reference</pageTitle>
-        <pageUrl>qwebservice.html#setHost</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{2c07805f-9975-4a3c-90a5-2910a7d2d2fc}">
+    <page id="{1a20a4d2-f80e-4eae-90b6-8dc0cbc1472b}">
         <pageWords>setName function QWebService</pageWords>
         <pageTitle>setName Function Reference</pageTitle>
         <pageUrl>qwebservice.html#setName</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{75c71255-3009-42c9-9128-a608029d68dd}">
-        <pageWords>setWsdl function QWebService</pageWords>
-        <pageTitle>setWsdl Function Reference</pageTitle>
-        <pageUrl>qwebservice.html#setWsdl</pageUrl>
+    <page id="{14497310-de62-4403-89b4-8e7de6be010d}">
+        <pageWords>methods function QWebService</pageWords>
+        <pageTitle>methods Function Reference</pageTitle>
+        <pageUrl>qwebservice.html#methods</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{9b95ecf9-4ff9-43a2-97a3-44c8fad2cb25}">
-        <pageWords>resetWsdl function QWebService</pageWords>
-        <pageTitle>resetWsdl Function Reference</pageTitle>
-        <pageUrl>qwebservice.html#resetWsdl</pageUrl>
+    <page id="{153a5d23-24a3-4ee2-86dd-40b64f6d66c4}">
+        <pageWords>method function QWebService</pageWords>
+        <pageTitle>method Function Reference</pageTitle>
+        <pageUrl>qwebservice.html#method</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{1d0e9b96-67d4-4e81-bdbe-6c52da3c53f4}">
+    <page id="{e8fcc683-db2e-4f04-8249-977b9c221487}">
+        <pageWords>methodNames function QWebService</pageWords>
+        <pageTitle>methodNames Function Reference</pageTitle>
+        <pageUrl>qwebservice.html#methodNames</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{3deb794c-3a22-4053-a52f-94e6ffe4c8a8}">
+        <pageWords>methodParameters function QWebService</pageWords>
+        <pageTitle>methodParameters Function Reference</pageTitle>
+        <pageUrl>qwebservice.html#methodParameters</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{dcb088c8-c8a4-40ab-bb41-135c8b645e8d}">
+        <pageWords>methodReturnValue function QWebService</pageWords>
+        <pageTitle>methodReturnValue Function Reference</pageTitle>
+        <pageUrl>qwebservice.html#methodReturnValue</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{70ad5c6a-753a-4ccb-a011-1dba2d6f598d}">
+        <pageWords>parameterNamesTypes function QWebService</pageWords>
+        <pageTitle>parameterNamesTypes Function Reference</pageTitle>
+        <pageUrl>qwebservice.html#parameterNamesTypes</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{ed6dc949-0c4f-472e-8212-b80884dcb56c}">
+        <pageWords>returnValueNameType function QWebService</pageWords>
+        <pageTitle>returnValueNameType Function Reference</pageTitle>
+        <pageUrl>qwebservice.html#returnValueNameType</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{21ece704-5b99-4360-8c24-095546c87daf}">
+        <pageWords>addMethod function QWebService</pageWords>
+        <pageTitle>addMethod Function Reference</pageTitle>
+        <pageUrl>qwebservice.html#addMethod</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{eb914265-2d8d-49b1-823d-93f359d21915}">
+        <pageWords>addMethod function QWebService</pageWords>
+        <pageTitle>addMethod Function Reference</pageTitle>
+        <pageUrl>qwebservice.html#addMethod</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{daa87293-195b-4d51-aa58-09d5a41eab58}">
+        <pageWords>removeMethod function QWebService</pageWords>
+        <pageTitle>removeMethod Function Reference</pageTitle>
+        <pageUrl>qwebservice.html#removeMethod</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{d8c13184-8708-49df-ab46-f348be1b4e1a}">
         <pageWords>hostUrl function QWebService</pageWords>
         <pageTitle>hostUrl Function Reference</pageTitle>
         <pageUrl>qwebservice.html#hostUrl</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{c95e3453-ee7b-4d47-b2f7-44144a619003}">
+    <page id="{3e22444c-4584-49e2-bb58-35873b070248}">
         <pageWords>host function QWebService</pageWords>
         <pageTitle>host Function Reference</pageTitle>
         <pageUrl>qwebservice.html#host</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{e008982e-fff7-4b84-beaa-854eb3d9710c}">
+    <page id="{9c363e77-9914-42fa-bd5e-92894fd36149}">
+        <pageWords>setHost function QWebService</pageWords>
+        <pageTitle>setHost Function Reference</pageTitle>
+        <pageUrl>qwebservice.html#setHost</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{560420ea-0d24-4b25-947c-4250b7fae8dd}">
+        <pageWords>setHost function QWebService</pageWords>
+        <pageTitle>setHost Function Reference</pageTitle>
+        <pageUrl>qwebservice.html#setHost</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{b83c9f7a-49e4-4ad7-a61d-d7dfca5b0724}">
+        <pageWords>setWsdl function QWebService</pageWords>
+        <pageTitle>setWsdl Function Reference</pageTitle>
+        <pageUrl>qwebservice.html#setWsdl</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{727b97d7-a309-44ce-a2a9-3609713eccd5}">
+        <pageWords>resetWsdl function QWebService</pageWords>
+        <pageTitle>resetWsdl Function Reference</pageTitle>
+        <pageUrl>qwebservice.html#resetWsdl</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{dc01e55b-504a-4126-88ae-0c1b46e9f668}">
         <pageWords>isErrorState function QWebService</pageWords>
         <pageTitle>isErrorState Function Reference</pageTitle>
         <pageUrl>qwebservice.html#isErrorState</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{24ad801d-3423-4a9a-9ad1-90a5683a5aa6}">
+    <page id="{05ab6735-45e0-4dee-b4d4-f6ddb6a26128}">
         <pageWords>errorInfo function QWebService</pageWords>
         <pageTitle>errorInfo Function Reference</pageTitle>
         <pageUrl>qwebservice.html#errorInfo</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{7a114b67-fd6c-48ee-9ea4-812de889caf6}">
+    <page id="{dcfb66ae-5859-4200-9f67-371fc3d0b843}">
         <pageWords>errorEncountered function QWebService</pageWords>
         <pageTitle>errorEncountered Function Reference</pageTitle>
         <pageUrl>qwebservice.html#errorEncountered</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{a09c59fd-0485-43c6-b75b-c9f2a302f40b}">
+    <page id="{bd8dc8e9-1f33-424f-ac88-9b2ba2a80a97}">
         <pageWords>d_ptr QWebService</pageWords>
         <pageTitle>d_ptr</pageTitle>
         <pageUrl>qwebservice.html</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{e82d3a64-2848-4afe-8b3f-909b0a88fd6c}">
+    <page id="{4353f0ab-4b8b-482a-940c-80e3f869f33d}">
         <pageWords>QWebServiceReader class reference</pageWords>
         <pageTitle>QWebServiceReader Class Reference</pageTitle>
         <pageUrl>qwebservicereader.html</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{b59f75ed-afb8-4de7-bf98-fe6841633667}">
+    <page id="{39ba9f39-d871-4074-a399-027e6ec13b02}">
         <pageWords>QWebServiceReader function QWebServiceReader</pageWords>
         <pageTitle>QWebServiceReader Function Reference</pageTitle>
         <pageUrl>qwebservicereader.html#QWebServiceReader</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{f37d34e0-a6e1-46ef-b16b-005b819caaac}">
+    <page id="{56792d1e-550e-425f-93ea-ce6d406aff65}">
         <pageWords>QWebServiceReader function QWebServiceReader</pageWords>
         <pageTitle>QWebServiceReader Function Reference</pageTitle>
         <pageUrl>qwebservicereader.html#QWebServiceReader</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{65403bb7-8b17-4603-ac8e-e23608360ba0}">
+    <page id="{77264c1b-2815-4d84-b21c-65cd42c91e23}">
         <pageWords>QWebServiceReader function QWebServiceReader</pageWords>
         <pageTitle>QWebServiceReader Function Reference</pageTitle>
         <pageUrl>qwebservicereader.html#QWebServiceReader</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{2eb0383a-b816-4aa8-87c7-38f91c86025c}">
+    <page id="{d5a3ccf7-c284-48cc-bc68-df5445adbe4e}">
         <pageWords>methodHandler function QWebServiceReader</pageWords>
         <pageTitle>methodHandler Function Reference</pageTitle>
         <pageUrl>qwebservicereader.html#methodHandler</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{22bb6d62-98f9-4a64-a4e1-07cbe2222191}">
+    <page id="{fa58cbeb-9e11-4bfd-9cfa-c43a96ffa4a7}">
         <pageWords>QWebMethod class reference</pageWords>
         <pageTitle>QWebMethod Class Reference</pageTitle>
         <pageUrl>qwebmethod.html</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{a5546e9a-a0e7-460d-822c-47f50ea82739}">
+    <page id="{c3da3892-9b7b-4a09-94ab-6f54b1ec0c06}">
         <pageWords>Protocol enum type QWebMethod</pageWords>
         <pageTitle>Protocol Enum Reference</pageTitle>
         <pageUrl>qwebmethod.html#Protocol-enum</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{594869cb-5b90-4528-bed4-ed1d58e48fa2}">
+    <page id="{e08ba8e2-16fa-4cb5-b324-fa53fc7c02d2}">
         <pageWords>Protocols typedef type QWebMethod</pageWords>
         <pageTitle>Protocols Type Reference</pageTitle>
         <pageUrl>qwebmethod.html#Protocols</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{ae09803e-741c-4c47-9996-ca445d1ad600}">
+    <page id="{8f4e76b5-34d3-46d3-ac56-47a01fe9f547}">
         <pageWords>HttpMethod enum type QWebMethod</pageWords>
         <pageTitle>HttpMethod Enum Reference</pageTitle>
         <pageUrl>qwebmethod.html#HttpMethod-enum</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{ccd771dc-e4d5-4d00-8641-7200f1385ddf}">
+    <page id="{1774a033-8059-4e2c-bd8d-7ad06b665882}">
         <pageWords>QWebMethod function QWebMethod</pageWords>
         <pageTitle>QWebMethod Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#QWebMethod</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{f55fbc6c-d1d8-42f1-af78-5d884fa4889c}">
+    <page id="{0b4a4a1b-75a5-47f0-a09f-bd80bcec3188}">
         <pageWords>QWebMethod function QWebMethod</pageWords>
         <pageTitle>QWebMethod Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#QWebMethod</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{be4138a9-3b86-421d-abc1-26fff76a27c9}">
+    <page id="{59a7988b-20f6-4152-b5e2-58da271f5d74}">
         <pageWords>QWebMethod function QWebMethod</pageWords>
         <pageTitle>QWebMethod Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#QWebMethod</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{6893f91d-e03f-42d3-a57f-80cc78da478f}">
+    <page id="{33ca64a1-0b15-440f-973e-c170f816e85e}">
         <pageWords>~QWebMethod function QWebMethod</pageWords>
         <pageTitle>~QWebMethod Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#~QWebMethod</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{dab8c312-25fa-430d-aaac-37db4bb46536}">
-        <pageWords>setHost function QWebMethod</pageWords>
-        <pageTitle>setHost Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#setHost</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{8f036891-016e-4f6f-aba9-9a681ed336bf}">
-        <pageWords>setHost function QWebMethod</pageWords>
-        <pageTitle>setHost Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#setHost</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{7579d9bd-1522-436c-b049-e4b85f79a83a}">
-        <pageWords>setUsername function QWebMethod</pageWords>
-        <pageTitle>setUsername Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#setUsername</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{3ff5a95a-be13-45a2-a0d4-a99f5b0b1a12}">
-        <pageWords>setPassword function QWebMethod</pageWords>
-        <pageTitle>setPassword Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#setPassword</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{829f224f-b25d-40fe-bd63-7ce72b8bd742}">
-        <pageWords>setCredentials function QWebMethod</pageWords>
-        <pageTitle>setCredentials Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#setCredentials</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{3f105454-7ff1-44f7-b01f-52503aaf1fcd}">
-        <pageWords>setMessageName function QWebMethod</pageWords>
-        <pageTitle>setMessageName Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#setMessageName</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{55449f06-7b6a-4c35-afca-82a73963dc6f}">
-        <pageWords>setMethodName function QWebMethod</pageWords>
-        <pageTitle>setMethodName Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#setMethodName</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{2559f880-1e8f-4b5a-bd79-625bc8fe6eb4}">
-        <pageWords>setParameters function QWebMethod</pageWords>
-        <pageTitle>setParameters Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#setParameters</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{3fc4e180-83dc-40d0-9bca-206d8ae04b2f}">
-        <pageWords>setReturnValue function QWebMethod</pageWords>
-        <pageTitle>setReturnValue Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#setReturnValue</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{5bafda96-3440-4949-a151-7c9469fb4db2}">
-        <pageWords>setTargetNamespace function QWebMethod</pageWords>
-        <pageTitle>setTargetNamespace Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#setTargetNamespace</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{ba39190f-e420-4f8d-b0c8-d0afacd0d036}">
-        <pageWords>setProtocol function QWebMethod</pageWords>
-        <pageTitle>setProtocol Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#setProtocol</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{099a8dde-7f53-4739-aa3f-60642a1463bd}">
-        <pageWords>setHttpMethod function QWebMethod</pageWords>
-        <pageTitle>setHttpMethod Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#setHttpMethod</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{63febb22-5890-4fe3-b23b-009d8d433fb6}">
-        <pageWords>setHttpMethod function QWebMethod</pageWords>
-        <pageTitle>setHttpMethod Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#setHttpMethod</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{8bc2492e-cb6d-443f-a1d1-d78f1c6428fe}">
-        <pageWords>sendMessage function QWebMethod</pageWords>
-        <pageTitle>sendMessage Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#sendMessage</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{a4075425-118b-4e9f-b4c7-cf8b1a0e55e7}">
-        <pageWords>authenticate function QWebMethod</pageWords>
-        <pageTitle>authenticate Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#authenticate</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{0e601683-d7b0-4171-b0bf-8e5c8282235e}">
-        <pageWords>authenticate function QWebMethod</pageWords>
-        <pageTitle>authenticate Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#authenticate</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{4e7e6bc2-e17e-4622-a477-1776b670504b}">
-        <pageWords>replyReadParsed function QWebMethod</pageWords>
-        <pageTitle>replyReadParsed Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#replyReadParsed</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{853e9602-e524-46ab-a872-a45a8b6ceee5}">
-        <pageWords>replyReadRaw function QWebMethod</pageWords>
-        <pageTitle>replyReadRaw Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#replyReadRaw</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{ed224863-bf44-4d8d-ba62-37752b0f1d61}">
-        <pageWords>replyRead function QWebMethod</pageWords>
-        <pageTitle>replyRead Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#replyRead</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{4b3895e3-8295-4a5f-af82-16b5f131d20e}">
-        <pageWords>methodName function QWebMethod</pageWords>
-        <pageTitle>methodName Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#methodName</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{aec0b3d4-cf61-42a6-9478-b57b5aa7d54a}">
-        <pageWords>parameterNames function QWebMethod</pageWords>
-        <pageTitle>parameterNames Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#parameterNames</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{ae8d7e01-7a2f-44c8-9475-f981041d972d}">
-        <pageWords>returnValueName function QWebMethod</pageWords>
-        <pageTitle>returnValueName Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#returnValueName</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{9965c59b-23c9-4915-8d42-863eceaf96a4}">
-        <pageWords>parameterNamesTypes function QWebMethod</pageWords>
-        <pageTitle>parameterNamesTypes Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#parameterNamesTypes</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{7eb070a8-8c79-490f-b930-89b213ab0789}">
-        <pageWords>returnValueNameType function QWebMethod</pageWords>
-        <pageTitle>returnValueNameType Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#returnValueNameType</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{e47a2f8a-6ace-425a-aa8b-9f5be0b13343}">
-        <pageWords>targetNamespace function QWebMethod</pageWords>
-        <pageTitle>targetNamespace Function Reference</pageTitle>
-        <pageUrl>qwebmethod.html#targetNamespace</pageUrl>
-        <pageType>APIPage</pageType>
-    </page>
-    <page id="{2612b459-5316-4f47-9830-d53bebf209ab}">
+    <page id="{cecdfa53-6343-4614-93f7-06494666de67}">
         <pageWords>host function QWebMethod</pageWords>
         <pageTitle>host Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#host</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{22c46ac1-3273-4ea8-976f-d0ca2acad91c}">
+    <page id="{ba0da649-28d1-474b-963e-0540f309d59d}">
         <pageWords>hostUrl function QWebMethod</pageWords>
         <pageTitle>hostUrl Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#hostUrl</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{e4a12f11-d592-476e-96e2-586430ee2fc1}">
+    <page id="{f8c644bb-2391-41ff-b757-61b44cfb4ff6}">
+        <pageWords>setHost function QWebMethod</pageWords>
+        <pageTitle>setHost Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#setHost</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{0fb38920-9c1d-4dd2-afd7-9664272364bc}">
+        <pageWords>setHost function QWebMethod</pageWords>
+        <pageTitle>setHost Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#setHost</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{51a94a3f-05af-4176-aad6-3b8eda118bc3}">
         <pageWords>username function QWebMethod</pageWords>
         <pageTitle>username Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#username</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{b37a35f1-86c1-4780-8d4e-094bfbb9a7cc}">
+    <page id="{8b837739-843f-4e3b-8fad-3fca03000e0b}">
+        <pageWords>setUsername function QWebMethod</pageWords>
+        <pageTitle>setUsername Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#setUsername</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{811ab9e6-dc85-437c-b1c9-522efb86edbe}">
+        <pageWords>setPassword function QWebMethod</pageWords>
+        <pageTitle>setPassword Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#setPassword</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{06aca4dc-b11d-4c50-a263-a4f6961f1144}">
+        <pageWords>setCredentials function QWebMethod</pageWords>
+        <pageTitle>setCredentials Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#setCredentials</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{12489553-ea1e-4da7-86b0-01ac4d724e58}">
+        <pageWords>authenticate function QWebMethod</pageWords>
+        <pageTitle>authenticate Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#authenticate</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{3ddd07c5-2917-43de-be70-af2810cbc517}">
+        <pageWords>authenticate function QWebMethod</pageWords>
+        <pageTitle>authenticate Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#authenticate</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{5c62a394-022d-4eec-89f5-42fcfccecf55}">
+        <pageWords>methodName function QWebMethod</pageWords>
+        <pageTitle>methodName Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#methodName</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{26eee414-1a42-43e3-88a1-00f86008d5d1}">
+        <pageWords>setMethodName function QWebMethod</pageWords>
+        <pageTitle>setMethodName Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#setMethodName</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{3a343b46-0f82-474a-86f6-bbe8f3b43c67}">
+        <pageWords>parameterNames function QWebMethod</pageWords>
+        <pageTitle>parameterNames Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#parameterNames</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{7abe5072-b375-495f-9372-2edb06a26cea}">
+        <pageWords>parameterNamesTypes function QWebMethod</pageWords>
+        <pageTitle>parameterNamesTypes Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#parameterNamesTypes</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{9b378be8-586d-4818-87a3-d5fc56cd3ca5}">
+        <pageWords>setParameters function QWebMethod</pageWords>
+        <pageTitle>setParameters Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#setParameters</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{f7cca0f0-1e4e-4dbd-8ce0-61ce622ebb0f}">
+        <pageWords>returnValueName function QWebMethod</pageWords>
+        <pageTitle>returnValueName Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#returnValueName</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{2540c5e9-b587-4bca-95db-ddc2a3f7ccac}">
+        <pageWords>returnValueNameType function QWebMethod</pageWords>
+        <pageTitle>returnValueNameType Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#returnValueNameType</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{f49ddef8-c5fb-42a8-843f-a8083e49c03d}">
+        <pageWords>setReturnValue function QWebMethod</pageWords>
+        <pageTitle>setReturnValue Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#setReturnValue</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{b1057c7a-b868-4059-8541-4b77c280eff8}">
+        <pageWords>targetNamespace function QWebMethod</pageWords>
+        <pageTitle>targetNamespace Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#targetNamespace</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{6c291743-4ece-4cdb-bcc1-3d5b61e89cea}">
+        <pageWords>setTargetNamespace function QWebMethod</pageWords>
+        <pageTitle>setTargetNamespace Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#setTargetNamespace</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{f1dc5804-8260-4415-af23-5dadc24d74f5}">
         <pageWords>protocol function QWebMethod</pageWords>
         <pageTitle>protocol Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#protocol</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{92eff5fc-0302-4ae7-ad33-b6ded5788156}">
+    <page id="{3643bc06-9595-4601-b814-e9b0296a18d2}">
         <pageWords>protocolString function QWebMethod</pageWords>
         <pageTitle>protocolString Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#protocolString</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{94ba39c9-3e6c-43d0-b567-6cd9b4b6688f}">
+    <page id="{4f58edc2-c283-4fa2-84f7-c5fe6f7b3303}">
+        <pageWords>setProtocol function QWebMethod</pageWords>
+        <pageTitle>setProtocol Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#setProtocol</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{d41b1b2a-504f-4bdf-9895-d40c11557297}">
         <pageWords>httpMethod function QWebMethod</pageWords>
         <pageTitle>httpMethod Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#httpMethod</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{676267f7-337c-49dd-b477-1fd7d34c3dfd}">
+    <page id="{266749bb-5e4e-401c-b903-ecae2e4f9005}">
         <pageWords>httpMethodString function QWebMethod</pageWords>
         <pageTitle>httpMethodString Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#httpMethodString</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{176b9951-834a-4c50-bdf3-d7c9b8c1b213}">
+    <page id="{05858eda-d802-4249-aeef-8834bbbb5fad}">
+        <pageWords>setHttpMethod function QWebMethod</pageWords>
+        <pageTitle>setHttpMethod Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#setHttpMethod</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{cca1ac94-2576-4de0-8230-5a2e9784990a}">
+        <pageWords>setHttpMethod function QWebMethod</pageWords>
+        <pageTitle>setHttpMethod Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#setHttpMethod</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{c60f4f40-da6c-44d5-ab87-909a08b1b305}">
+        <pageWords>sendMessage function QWebMethod</pageWords>
+        <pageTitle>sendMessage Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#sendMessage</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{537c50d9-86f8-4b52-aac0-ff2790aadb82}">
+        <pageWords>replyReadParsed function QWebMethod</pageWords>
+        <pageTitle>replyReadParsed Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#replyReadParsed</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{787ddd46-8306-42a5-b7e1-29ac2cfd9135}">
+        <pageWords>replyReadRaw function QWebMethod</pageWords>
+        <pageTitle>replyReadRaw Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#replyReadRaw</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{cd53320e-3226-4524-8f69-6d694c475998}">
+        <pageWords>replyRead function QWebMethod</pageWords>
+        <pageTitle>replyRead Function Reference</pageTitle>
+        <pageUrl>qwebmethod.html#replyRead</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{12adc6fb-2601-42d1-a98d-e703a2125a45}">
         <pageWords>errorInfo function QWebMethod</pageWords>
         <pageTitle>errorInfo Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#errorInfo</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{0920a3e0-9702-440f-a667-7829104f45bd}">
+    <page id="{042298e5-890f-4112-94b8-e79cf55fcc9f}">
         <pageWords>isErrorState function QWebMethod</pageWords>
         <pageTitle>isErrorState Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#isErrorState</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{11a506f3-1180-4a5d-892f-af66db9001f3}">
+    <page id="{ccdaaaed-eaf2-460b-998b-f6eee22bf8b6}">
         <pageWords>isReplyReady function QWebMethod</pageWords>
         <pageTitle>isReplyReady Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#isReplyReady</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{16df53e3-bb62-4931-b0d5-a269e300b12e}">
+    <page id="{b40abff8-1dd0-453c-9256-186e1dcea886}">
         <pageWords>replyReady function QWebMethod</pageWords>
         <pageTitle>replyReady Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#replyReady</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{fe146a7a-4bef-44a8-8801-22c432675ae0}">
+    <page id="{b2dddee5-222f-41c7-86cc-3a70d7f563f6}">
         <pageWords>errorEncountered function QWebMethod</pageWords>
         <pageTitle>errorEncountered Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#errorEncountered</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{87bfeecc-1746-483b-a9ac-ba4d1357bc30}">
+    <page id="{e5cc9456-c888-411d-b7a6-1160f9734b09}">
         <pageWords>replyFinished function QWebMethod</pageWords>
         <pageTitle>replyFinished Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#replyFinished</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{b151b9a7-82e5-4ef4-b2f9-72d4d7a3a1c0}">
+    <page id="{c7d3bf6d-58ca-4523-ac74-47e377480784}">
         <pageWords>authReplyFinished function QWebMethod</pageWords>
         <pageTitle>authReplyFinished Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#authReplyFinished</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{76936751-0c8d-43de-be1a-2832a9c22085}">
+    <page id="{2d1a0d83-6a08-453c-b493-15d7f4f156d9}">
         <pageWords>authenticationSlot function QWebMethod</pageWords>
         <pageTitle>authenticationSlot Function Reference</pageTitle>
         <pageUrl>qwebmethod.html#authenticationSlot</pageUrl>
         <pageType>APIPage</pageType>
     </page>
-    <page id="{31342e6a-297a-4505-810e-5e6e5eebfec7}">
+    <page id="{647aabef-a5a8-410d-b1f9-c326946fde4e}">
         <pageWords>d_ptr QWebMethod</pageWords>
         <pageTitle>d_ptr</pageTitle>
         <pageUrl>qwebmethod.html</pageUrl>

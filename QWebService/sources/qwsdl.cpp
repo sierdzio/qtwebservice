@@ -47,7 +47,19 @@
            Currently read-only.
 
     Reads web service data (message names, parameters, return values,
-    ws name etc) from a WSDL file or URL.
+    ws name etc) from a WSDL file. The file can be on a local filesystem,
+    or a remote one (specified by URL).
+
+    To get started, you have to:
+    \list
+        \o construct QWsdl object
+        \o specify WSDL file or URL (can be done in constructor,
+           or using setWsdl(), resetWsdl(),
+        \o check for errors using isErrorState(),
+        \o web methods are ready to read using methods(). Other info
+           available from numerous getter methods (webServiceName(),
+           targetNamespace() etc.)
+    \endlist
   */
 
 /*!
