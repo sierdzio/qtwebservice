@@ -64,14 +64,18 @@
         <keyword ref="qwebservice.html#host">host</keyword>
         <keyword ref="qwebservice.html#hostUrl">hostUrl</keyword>
         <keyword ref="qwebservice.html#isErrorState">isErrorState</keyword>
+        <keyword ref="qwebservice.html#method">method</keyword>
         <keyword ref="qwebservice.html#methodNames">methodNames</keyword>
         <keyword ref="qwebservice.html#methodParameters">methodParameters</keyword>
         <keyword ref="qwebservice.html#methodReturnValue">methodReturnValue</keyword>
+        <keyword ref="qwebservice.html#methods">methods</keyword>
+        <keyword ref="qwebservice.html#name">name</keyword>
         <keyword ref="qwebservice.html#parameterNamesTypes">parameterNamesTypes</keyword>
         <keyword ref="qwebservice.html#removeMethod">removeMethod</keyword>
         <keyword ref="qwebservice.html#resetWsdl">resetWsdl</keyword>
         <keyword ref="qwebservice.html#returnValueNameType">returnValueNameType</keyword>
         <keyword ref="qwebservice.html#setHost">setHost</keyword>
+        <keyword ref="qwebservice.html#setName">setName</keyword>
         <keyword ref="qwebservice.html#setWsdl">setWsdl</keyword>
         <section ref="qwebservice-members.html" title="List of all members"/>
     </section>

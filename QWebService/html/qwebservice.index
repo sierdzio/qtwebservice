@@ -83,6 +83,7 @@
                 <parameter left="QObject *" right="" name="parent" default="0"/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="~QWebService" fullname="QWebService::~QWebService" href="qwebservice.html#dtor.QWebService" location="qwebservice.h" virtual="non" meta="destructor" const="false" static="false" overload="false" type="" signature="~QWebService()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="name" fullname="QWebService::name" href="qwebservice.html#name" location="qwebservice.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="name() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="methodNames" fullname="QWebService::methodNames" href="qwebservice.html#methodNames" location="qwebservice.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QStringList" signature="methodNames() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="methodParameters" fullname="QWebService::methodParameters" href="qwebservice.html#methodParameters" location="qwebservice.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QStringList" signature="methodParameters(const QString &amp; methodName) const">
                 <parameter left="const QString &amp;" right="" name="methodName" default=""/>
@@ -94,6 +95,10 @@
                 <parameter left="const QString &amp;" right="" name="methodName" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="returnValueNameType" fullname="QWebService::returnValueNameType" href="qwebservice.html#returnValueNameType" location="qwebservice.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QMap&lt;QString, QVariant&gt;" signature="returnValueNameType(const QString &amp; methodName) const">
+                <parameter left="const QString &amp;" right="" name="methodName" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="methods" fullname="QWebService::methods" href="qwebservice.html#methods" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="QMap&lt;QString, QWebServiceMethod *&gt; *" signature="methods()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="method" fullname="QWebService::method" href="qwebservice.html#method" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="QWebServiceMethod *" signature="method(const QString &amp; methodName)">
                 <parameter left="const QString &amp;" right="" name="methodName" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="addMethod" fullname="QWebService::addMethod" href="qwebservice.html#addMethod" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="addMethod(QWebServiceMethod * newMethod)">
@@ -111,6 +116,9 @@
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="setHost" fullname="QWebService::setHost" href="qwebservice.html#setHost-2" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" type="void" signature="setHost(const QUrl &amp; hostUrl)">
                 <parameter left="const QUrl &amp;" right="" name="hostUrl" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setName" fullname="QWebService::setName" href="qwebservice.html#setName" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setName(const QString &amp; newWebServiceName)">
+                <parameter left="const QString &amp;" right="" name="newWebServiceName" default="QString()"/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="setWsdl" fullname="QWebService::setWsdl" href="qwebservice.html#setWsdl" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setWsdl(QWsdl * newWsdl)">
                 <parameter left="QWsdl *" right="" name="newWsdl" default=""/>

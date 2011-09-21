@@ -25,6 +25,12 @@ Example arguments for converter:
  - use QLatin1String instead of QString::fromLatin1(“”),
  - fix strings initialisations and handling,
  - move all private and protected members to private headers,
+ - added new methods to QWebService:
+    - name(),
+    - setName(),
+    - method(),
+    - methods(),
+ - updated and expanded documentation,
  - marked v0.4.4.
 
 13.09.2011 12:33 CEST:

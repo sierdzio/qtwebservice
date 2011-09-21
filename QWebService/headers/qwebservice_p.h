@@ -60,6 +60,7 @@ public:
 
     bool errorState;
     QString errorMessage;
+    QString webServiceName;
     QUrl m_hostUrl;
     QWsdl *wsdl;
     // This is general, but should work for custom classes.

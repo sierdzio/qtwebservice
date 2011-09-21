@@ -43,10 +43,18 @@
 
 /*!
     \class QWebService
-    \brief Parent Web Service class.
+    \brief Class providing Web Service functionality.
 
-    Currently acts mostly as QWsdl wrapper. Some functionality might be pushed to
-    QWebServiceReader in the future, to make this class more general.
+    You can supply a WSDl file, which will be parsed (using QWsdl), and web
+    methods will be extracted. You can also specify your own web methods by
+    using addMethod().
+
+    You can use QWebService to gather data about web service (getName(),
+    getHost(), getMethodNames() etc.), or use it's web methods to interact with
+    remote web service (methods(), method()).
+
+    Especially useful is the method(), which returns a pointer to a single web
+    method, which  can be used directly to inreract with QWebMethod object.
   */
 
 /*!
@@ -81,6 +89,7 @@ QWebService::QWebService(QWsdl *_wsdl, QObject *parent)
     d->methods = new QMap<QString, QWebServiceMethod *>();
     d->init();
     d->methods = d->wsdl->methods();
+    setName(d->wsdl->webServiceName());
 }
 
 /*!
@@ -101,8 +110,10 @@ QWebService::QWebService(const QString &_hostname, QObject *parent)
     d->methods = new QMap<QString, QWebServiceMethod *>();
     d->init();
 
-    if (!d->wsdl->isErrorState())
+    if (!d->wsdl->isErrorState()) {
         d->methods = d->wsdl->methods();
+        setName(d->wsdl->webServiceName());
+    }
 }
 
 /*!
@@ -132,6 +143,30 @@ QWebService::~QWebService()
     Singal emitted when WsdlConverter encounters an error.
     Carries \a errMessage for convenience.
   */
+
+/*!
+    Returns name of the web service.
+
+    \sa setName()
+  */
+QString QWebService::name() const
+{
+    Q_D(const QWebService);
+    return d->webServiceName;
+}
+
+/*!
+    Sets web service's name using \a newWebServiceName.
+    This will override any name set before, including that
+    extracted from WSDL file.
+
+    \sa name()
+  */
+void QWebService::setName(const QString &newWebServiceName)
+{
+    Q_D(QWebService);
+    d->webServiceName = newWebServiceName;
+}
 
 /*!
     Returns a list of methods' names.
@@ -180,6 +215,31 @@ QMap<QString, QVariant> QWebService::returnValueNameType(const QString &methodNa
 {
     Q_D(const QWebService);
     return d->methods->value(methodName)->returnValueNameType();
+}
+
+/*!
+    Returns pointers to QWebMethod objects, useful for invoking web methods.
+
+    \sa method()
+  */
+QMap<QString, QWebServiceMethod *> *QWebService::methods()
+{
+    Q_D(QWebService);
+    return d->methods;
+}
+
+/*!
+    Returns a pointer to a single web method object, sceficied by
+    \a methodName. If now method with that name exists,
+    a default-constructed value is returned (see QMap::value() documentation
+    for details).
+
+    \sa methods()
+  */
+QWebServiceMethod *QWebService::method(const QString &methodName)
+{
+    Q_D(QWebService);
+    return d->methods->value(methodName);
 }
 
 /*!
@@ -259,6 +319,7 @@ void QWebService::setWsdl(QWsdl *newWsdl)
     Q_D(QWebService);
 //    delete wsdl;
     d->wsdl = newWsdl;
+    setName(d->wsdl->webServiceName());
     foreach (QString s, d->wsdl->methods()->keys()) {
         d->methods->insert(s, d->wsdl->methods()->value(s));
     }
@@ -279,11 +340,13 @@ void QWebService::resetWsdl(QWsdl *newWsdl)
     if (newWsdl == 0) {
         d->methods->clear();
         d->wsdl = new QWsdl(this);
+        setName();
     } else {
         d->wsdl = newWsdl;
         d->methods->clear();
 //        delete methods;
         d->methods = d->wsdl->methods();
+        setName(d->wsdl->webServiceName());
     }
 }
 

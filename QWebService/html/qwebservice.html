@@ -21,7 +21,7 @@
 </div>
 <h1 class="title">QWebService Class Reference</h1>
 <!-- $$$QWebService-brief -->
-<p>Parent Web Service class. <a href="#details">More...</a></p>
+<p>Class providing Web Service functionality. <a href="#details">More...</a></p>
 <!-- @@@QWebService -->
 <pre class="highlightedCode brush: cpp">    #include &lt;QWebService&gt;</pre><p>Inherited by <a href="qwebservicereader.html">QWebServiceReader</a>.</p>
 <ul>
@@ -40,15 +40,19 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#host">host</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#hostUrl">hostUrl</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#isErrorState">isErrorState</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QWebServiceMethod * </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#method">method</a></b> ( const QString &amp; <i>methodName</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#methodNames">methodNames</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#methodParameters">methodParameters</a></b> ( const QString &amp; <i>methodName</i> ) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#methodReturnValue">methodReturnValue</a></b> ( const QString &amp; <i>methodName</i> ) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QWebServiceMethod *&gt; * </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#methods">methods</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#name">name</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#parameterNamesTypes">parameterNamesTypes</a></b> ( const QString &amp; <i>methodName</i> ) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#removeMethod">removeMethod</a></b> ( const QString &amp; <i>methodName</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#resetWsdl">resetWsdl</a></b> ( QWsdl * <i>newWsdl</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#returnValueNameType">returnValueNameType</a></b> ( const QString &amp; <i>methodName</i> ) const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#setHost">setHost</a></b> ( const QString &amp; <i>hostname</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#setHost-2">setHost</a></b> ( const QUrl &amp; <i>hostUrl</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#setName">setName</a></b> ( const QString &amp; <i>newWebServiceName</i> = QString() )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#setWsdl">setWsdl</a></b> ( QWsdl * <i>newWsdl</i> )</td></tr>
 </table>
 <a name="signals"></a>
@@ -60,8 +64,10 @@
 <!-- $$$QWebService-description -->
 <div class="descr">
 <h2>Detailed Description</h2>
-<p>Parent Web Service class.</p>
-<p>Currently acts mostly as <a href="qwsdl.html">QWsdl</a> wrapper. Some functionality might be pushed to <a href="qwebservicereader.html">QWebServiceReader</a> in the future, to make this class more general.</p>
+<p>Class providing Web Service functionality.</p>
+<p>You can supply a WSDl file, which will be parsed (using <a href="qwsdl.html">QWsdl</a>), and web methods will be extracted. You can also specify your own web methods by using <a href="qwebservice.html#addMethod">addMethod</a>().</p>
+<p>You can use QWebService to gather data about web service (getName(), getHost(), getMethodNames() etc.), or use it's web methods to interact with remote web service (<a href="qwebservice.html#methods">methods</a>(), <a href="qwebservice.html#method">method</a>()).</p>
+<p>Especially useful is the <a href="qwebservice.html#method">method</a>(), which returns a pointer to a single web method, which can be used directly to inreract with <a href="qwebmethod.html">QWebMethod</a> object.</p>
 </div>
 <!-- @@@QWebService -->
 <div class="func">
@@ -118,6 +124,11 @@
 <h3 class="fn"><a name="isErrorState"></a>bool QWebService::isErrorState ()</h3>
 <p>Returns true if object is in error state.</p>
 <!-- @@@isErrorState -->
+<!-- $$$method[overload1]$$$methodconstQString& -->
+<h3 class="fn"><a name="method"></a><a href="qwebservicemethod.html">QWebServiceMethod</a> * QWebService::method ( const QString &amp; <i>methodName</i> )</h3>
+<p>Returns a pointer to a single web method object, sceficied by <i>methodName</i>. If now method with that name exists, a default-constructed value is returned (see QMap::value() documentation for details).</p>
+<p>See also <a href="qwebservice.html#methods">methods</a>().</p>
+<!-- @@@method -->
 <!-- $$$methodNames[overload1]$$$methodNames -->
 <h3 class="fn"><a name="methodNames"></a>QStringList QWebService::methodNames () const</h3>
 <p>Returns a list of methods' names.</p>
@@ -130,6 +141,16 @@
 <h3 class="fn"><a name="methodReturnValue"></a>QStringList QWebService::methodReturnValue ( const QString &amp; <i>methodName</i> ) const</h3>
 <p>Returns names of return values, for a given method (<i>methodName</i>).</p>
 <!-- @@@methodReturnValue -->
+<!-- $$$methods[overload1]$$$methods -->
+<h3 class="fn"><a name="methods"></a>QMap&lt;QString, <a href="qwebservicemethod.html">QWebServiceMethod</a> *&gt; * QWebService::methods ()</h3>
+<p>Returns pointers to <a href="qwebmethod.html">QWebMethod</a> objects, useful for invoking web methods.</p>
+<p>See also <a href="qwebservice.html#method">method</a>().</p>
+<!-- @@@methods -->
+<!-- $$$name[overload1]$$$name -->
+<h3 class="fn"><a name="name"></a>QString QWebService::name () const</h3>
+<p>Returns name of the web service.</p>
+<p>See also <a href="qwebservice.html#setName">setName</a>().</p>
+<!-- @@@name -->
 <!-- $$$parameterNamesTypes[overload1]$$$parameterNamesTypesconstQString& -->
 <h3 class="fn"><a name="parameterNamesTypes"></a>QMap&lt;QString, QVariant&gt; QWebService::parameterNamesTypes ( const QString &amp; <i>methodName</i> ) const</h3>
 <p>For a given <i>methodName</i>, returns a QMap with QString paramater name as a key, and QVariant value. By running QVariant::typeName() you can determine the type of the parameter.</p>
@@ -158,6 +179,11 @@
 <p>This function overloads <a href="qwebservice.html#setHost">setHost</a>().</p>
 <p>Sets new <i>hostUrl</i> URL, resets the WSDL, and reinitialises.</p>
 <!-- @@@setHost -->
+<!-- $$$setName[overload1]$$$setNameconstQString& -->
+<h3 class="fn"><a name="setName"></a>void QWebService::setName ( const QString &amp; <i>newWebServiceName</i> = QString() )</h3>
+<p>Sets web service's name using <i>newWebServiceName</i>. This will override any name set before, including that extracted from WSDL file.</p>
+<p>See also <a href="qwebservice.html#name">name</a>().</p>
+<!-- @@@setName -->
 <!-- $$$setWsdl[overload1]$$$setWsdlQWsdl* -->
 <h3 class="fn"><a name="setWsdl"></a>void QWebService::setWsdl ( <a href="qwsdl.html">QWsdl</a> * <i>newWsdl</i> )</h3>
 <p>Sets the WSDL (<i>newWsdl</i>) file to use. This does not override already present methods. If you want to override them, use <a href="qwebservice.html#resetWsdl">resetWsdl</a>().</p>

@@ -59,17 +59,21 @@ public:
     QWebService(const QString &host, QObject *parent = 0);
     ~QWebService();
 
+    QString name() const;
     QStringList methodNames() const;
     QStringList methodParameters(const QString &methodName) const;
     QStringList methodReturnValue(const QString &methodName) const;
     QMap<QString, QVariant> parameterNamesTypes(const QString &methodName) const;
     QMap<QString, QVariant> returnValueNameType(const QString &methodName) const;
+    QMap<QString, QWebServiceMethod *> *methods();
+    QWebServiceMethod *method(const QString &methodName);
 
     void addMethod(QWebServiceMethod *newMethod);
     void addMethod(const QString &methodName, QWebServiceMethod *newMethod);
     void removeMethod(const QString &methodName);
     void setHost(const QString &host);
     void setHost(const QUrl &hostUrl);
+    void setName(const QString &newWebServiceName = QString());
     void setWsdl(QWsdl *newWsdl);
     void resetWsdl(QWsdl *newWsdl = 0);
     QUrl hostUrl() const;
