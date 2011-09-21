@@ -49,6 +49,8 @@
 #include "qwsdl.h"
 #include "qwebservice.h"
 
+class QWebServiceReaderPrivate;
+
 class QWEBSERVICESHARED_EXPORT QWebServiceReader : public QWebService
 {
     Q_OBJECT
@@ -60,6 +62,13 @@ public:
 
 public slots:
     virtual void methodHandler(const QVariant &param);
+
+protected:
+    QWebServiceReader(QWebServiceReaderPrivate &d,
+                      QObject *parent = 0);
+
+private:
+    Q_DECLARE_PRIVATE(QWebServiceReader)
 };
 
 #endif // QWEBSERVICEREADER_H

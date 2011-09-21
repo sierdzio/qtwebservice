@@ -81,7 +81,7 @@ void TestQWsdl::gettersTest()
 {
     QWsdl wsdl(QString("../../examples/wsdl/band_ws.asmx"), this);
 
-    QCOMPARE(wsdl.host(), QString("/band_ws.asmx"));
+    QCOMPARE(wsdl.host(), QString("http://localhost:1304/band_ws.asmx"));
     QCOMPARE(wsdl.hostUrl(), QUrl("http://localhost:1304/band_ws.asmx"));
     QCOMPARE(wsdl.wsdlFile(), QString("../../examples/wsdl/band_ws.asmx"));
     QCOMPARE(wsdl.webServiceName(), QString("band_ws"));
@@ -151,7 +151,7 @@ void TestQWsdl::settersTest()
 
     wsdl->resetWsdl(QString("../../examples/wsdl/LondonGoldFix.asmx.xml"));
     QCOMPARE(wsdl->isErrorState(), bool(false));
-    QCOMPARE(wsdl->host(), QString("/LondonGoldFix.asmx"));
+    QCOMPARE(wsdl->host(), QString("http://www.webservicex.net/LondonGoldFix.asmx"));
     QCOMPARE(wsdl->hostUrl(), QUrl("http://www.webservicex.net/LondonGoldFix.asmx"));
     QCOMPARE(wsdl->wsdlFile(), QString("../../examples/wsdl/LondonGoldFix.asmx.xml"));
     QCOMPARE(wsdl->webServiceName(), QString("LondonGoldAndSilverFix"));
@@ -161,7 +161,7 @@ void TestQWsdl::settersTest()
 
     wsdl->setWsdlFile(QString("../../examples/wsdl/stockquote.asmx"));
     QCOMPARE(wsdl->isErrorState(), bool(false));
-    QCOMPARE(wsdl->host(), QString("/stockquote.asmx"));
+    QCOMPARE(wsdl->host(), QString("http://www.webservicex.net/stockquote.asmx"));
     QCOMPARE(wsdl->hostUrl(), QUrl("http://www.webservicex.net/stockquote.asmx"));
     QCOMPARE(wsdl->wsdlFile(), QString("../../examples/wsdl/stockquote.asmx"));
     QCOMPARE(wsdl->webServiceName(), QString("StockQuote"));

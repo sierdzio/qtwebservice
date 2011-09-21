@@ -39,56 +39,53 @@
 **
 ****************************************************************************/
 
-#ifndef QWSDL_H
-#define QWSDL_H
+#ifndef QWEBMETHOD_P_H
+#define QWEBMETHOD_P_H
 
-#include <QtCore/QXmlStreamReader>
-#include <QtCore/qfile.h>
-#include <QtCore/qmap.h>
+#include <QtNetwork/qnetworkaccessmanager.h>
+#include <QtNetwork/qnetworkrequest.h>
+#include <QtNetwork/qnetworkreply.h>
+#include <QtNetwork/qauthenticator.h>
 #include <QtCore/qstring.h>
 #include <QtCore/qstringlist.h>
-#include <QtCore/qdatetime.h>
-#include "QWebService_global.h"
-#include "qwebservicemethod.h"
+#include <QtCore/qurl.h>
+#include <QtCore/qvariant.h>
+#include <QtCore/qmap.h>
+#include <QtCore/qbytearray.h>
+#include "qwebmethod.h"
 
-class QWsdlPrivate;
-
-class QWEBSERVICESHARED_EXPORT QWsdl : public QObject
+class QWebMethodPrivate
 {
-    Q_OBJECT
+    Q_DECLARE_PUBLIC(QWebMethod)
 
 public:
-    explicit QWsdl(QObject *parent = 0);
-    QWsdl(const QString &wsdlFile, QObject *parent = 0);
-    ~QWsdl();
+    QWebMethodPrivate() {}
+    QWebMethodPrivate(QWebMethod *q) : q_ptr(q) {}
+    QWebMethod *q_ptr;
 
-    void setWsdlFile(const QString &wsdlFile); // == resetWsdl()
-    void resetWsdl(const QString &newWsdl);
+    void init();
+    void prepareRequestData();
+    QString convertReplyToUtf(const QString &textToConvert);
+    bool enterErrorState(const QString &errMessage = QString());
 
-    QStringList methodNames() const;
-    QMap<QString, QWebServiceMethod *> *methods();
-    QString webServiceName() const;
-    QString host() const;
-    QUrl hostUrl() const;
-    QString wsdlFile() const;
-    QString targetNamespace() const;
-    //QFile getWsdl(); Rethink that.
-    QString errorInfo() const;
-    bool isErrorState() const;
-
-signals:
-    void errorEncountered(const QString &errMessage);
-
-protected slots:
-    void fileReplyFinished(QNetworkReply *rply);
-
-protected:
-    QWsdl(QWsdlPrivate &d, QObject *parent = 0);
-    QWsdlPrivate *d_ptr;
-
-private:
-    Q_DECLARE_PRIVATE(QWsdl)
-
+    bool errorState;
+    bool authenticationPerformed;
+    bool authenticationReplyReceived;
+    bool authenticationError;
+    QString errorMessage;
+    bool replyReceived;
+    QWebMethod::Protocol protocolUsed;
+    QWebMethod::HttpMethod httpMethodUsed;
+    QUrl m_hostUrl;
+    QString m_methodName;
+    QString m_targetNamespace;
+    QString m_username;
+    QString m_password;
+    QByteArray reply;
+    QMap<QString, QVariant> parameters;
+    QMap<QString, QVariant> returnValue;
+    QNetworkAccessManager *manager;
+    QByteArray data;
 };
 
-#endif // QWSDL_H
+#endif // QWEBMETHOD_P_H

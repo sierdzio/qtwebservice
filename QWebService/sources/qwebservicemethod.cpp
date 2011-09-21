@@ -39,29 +39,28 @@
 **
 ****************************************************************************/
 
-#include "../headers/qwebservicemethod.h"
+#include "../headers/qwebservicemethod_p.h"
 
 /*!
     \class QWebServiceMethod
     \brief Extends QWebMethod with some generic constructors and synchronous message sending.
 
 
-    Subclass of QWebMethod, contains many generic methods for sending messages.
+    Subclass of QWebMethod, contains many generic methods for sending messages
+    and various additional convenience constructors.
     Can be used both synchronously (through static sendMessage() method),
     or asynchronously (indicates, when reply is ready by emitting
     a replyReady() signal).
-
-    More description will be added in the future.
   */
 
 /*!
-  Constructs web method object with \a parent.
-  Requires specifying other parameters later.
-  If you use that constructor, you can probably go on
-  and use the base QWebMethod class.
+    Constructs web method object with \a parent.
+    Requires specifying other parameters later.
+    If you use that constructor, you can probably go on
+    and use the base QWebMethod class.
   */
 QWebServiceMethod::QWebServiceMethod(QObject *parent) :
-    QWebMethod(parent)
+    QWebMethod(*new QWebServiceMethodPrivate, Soap12, Post, parent)
 {
 }
 
@@ -73,7 +72,7 @@ QWebServiceMethod::QWebServiceMethod(QObject *parent) :
   */
 QWebServiceMethod::QWebServiceMethod(Protocol protocol, HttpMethod httpMethod,
                                      QObject *parent) :
-    QWebMethod(protocol, httpMethod, parent)
+    QWebMethod(*new QWebServiceMethodPrivate, protocol, httpMethod, parent)
 {
 }
 
@@ -83,15 +82,16 @@ QWebServiceMethod::QWebServiceMethod(Protocol protocol, HttpMethod httpMethod,
     and \a method (which defaults to POST).
     Requires params to be specified later.
 
-    \sa init(), setParameters(), setProtocol(), sendMessage()
+    \sa setParameters(), setProtocol(), sendMessage()
   */
 QWebServiceMethod::QWebServiceMethod(const QUrl &hostUrl, const QString &methodName,
                                      Protocol protocol, HttpMethod method,
                                      QObject *parent) :
-    QWebMethod(protocol, method, parent)
+    QWebMethod(*new QWebServiceMethodPrivate, protocol, method, parent)
 {
-    m_hostUrl = hostUrl;
-    m_methodName = methodName;
+    Q_D(QWebServiceMethod);
+    d->m_hostUrl = hostUrl;
+    d->m_methodName = methodName;
     setProtocol(protocol);
     setHttpMethod(method);
 }
@@ -102,17 +102,18 @@ QWebServiceMethod::QWebServiceMethod(const QUrl &hostUrl, const QString &methodN
     and \a httpMethod (which defaults to POST).
     Requires params to be specified later.
 
-    \sa init(), setParameters(), setProtocol(), sendMessage()
+    \sa setParameters(), setProtocol(), sendMessage()
   */
 QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodName,
                                      Protocol protocol, HttpMethod httpMethod,
                                      QObject *parent) :
-    QWebMethod(protocol, httpMethod, parent)
+    QWebMethod(*new QWebServiceMethodPrivate, protocol, httpMethod, parent)
 {
-    m_methodName = methodName;
+    Q_D(QWebServiceMethod);
+    d->m_methodName = methodName;
     setProtocol(protocol);
     setHttpMethod(httpMethod);
-    m_hostUrl.setUrl(host);
+    d->m_hostUrl.setUrl(host);
 }
 
 /*!
@@ -124,23 +125,33 @@ QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodN
     manually send the message using sendMessage() (without any arguments,
     or else - if you want to change ones specified here).
 
-    \sa init(), sendMessage(), setProtocol()
+    \sa sendMessage(), setProtocol()
   */
 QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodName,
                                      const QString &targetNamespace,
                                      const QMap<QString, QVariant> &params,
                                      Protocol protocol, HttpMethod httpMethod,
                                      QObject *parent) :
-    QWebMethod(protocol, httpMethod, parent)
+    QWebMethod(*new QWebServiceMethodPrivate, protocol, httpMethod, parent)
 {
-    m_methodName = methodName;
-    m_targetNamespace = targetNamespace;
-    parameters = params;
+    Q_D(QWebServiceMethod);
+    d->m_methodName = methodName;
+    d->m_targetNamespace = targetNamespace;
+    d->parameters = params;
     setProtocol(protocol);
     setHttpMethod(httpMethod);
-    m_hostUrl.setUrl(host);
+    d->m_hostUrl.setUrl(host);
 }
 
+/*!
+    \internal
+  */
+QWebServiceMethod::QWebServiceMethod(QWebServiceMethodPrivate &d,
+                                     Protocol protocol, HttpMethod httpMethod,
+                                     QObject *parent) :
+    QWebMethod(d, protocol, httpMethod, parent)
+{
+}
 
 /*!
     \overload sendMessage()
@@ -151,7 +162,7 @@ QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodN
   */
 bool QWebServiceMethod::sendMessage(const QMap<QString, QVariant> &params)
 {
-    parameters = params;
+    setParameters(params);
     sendMessage();
     return true;
 }
@@ -178,8 +189,8 @@ QByteArray QWebServiceMethod::sendMessage(const QUrl &url,
     qsm.sendMessage();
     // TODO: ADD ERROR HANDLING!
     forever {
-        if (qsm.replyReceived) {
-            return qsm.reply;
+        if (qsm.d_func()->replyReceived) {
+            return qsm.d_func()->reply;
         } else {
             qApp->processEvents();
         }

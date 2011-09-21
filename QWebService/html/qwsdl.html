@@ -15,8 +15,8 @@
 <h3><a name="toc">Contents</a></h3>
 <ul>
 <li class="level1"><a href="#public-functions">Public Functions</a></li>
-<li class="level1"><a href="#public-slots">Public Slots</a></li>
 <li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#protected-slots">Protected Slots</a></li>
 <li class="level1"><a href="#details">Detailed Description</a></li>
 </ul>
 </div>
@@ -45,15 +45,15 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#webServiceName">webServiceName</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#wsdlFile">wsdlFile</a></b> () const</td></tr>
 </table>
-<a name="public-slots"></a>
-<h2>Public Slots</h2>
-<table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#fileReplyFinished">fileReplyFinished</a></b> ( QNetworkReply * <i>rply</i> )</td></tr>
-</table>
 <a name="signals"></a>
 <h2>Signals</h2>
 <table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#errorEncountered">errorEncountered</a></b> ( const QString &amp; <i>errMessage</i> )</td></tr>
+</table>
+<a name="protected-slots"></a>
+<h2>Protected Slots</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#fileReplyFinished">fileReplyFinished</a></b> ( QNetworkReply * <i>rply</i> )</td></tr>
 </table>
 <a name="details"></a>
 <!-- $$$QWsdl-description -->
@@ -89,9 +89,8 @@
 <p>See also <a href="qwsdl.html#isErrorState">isErrorState</a>().</p>
 <!-- @@@errorInfo -->
 <!-- $$$fileReplyFinished[overload1]$$$fileReplyFinishedQNetworkReply* -->
-<h3 class="fn"><a name="fileReplyFinished"></a>void QWsdl::fileReplyFinished ( QNetworkReply * <i>rply</i> )<tt> [slot]</tt></h3>
+<h3 class="fn"><a name="fileReplyFinished"></a>void QWsdl::fileReplyFinished ( QNetworkReply * <i>rply</i> )<tt> [protected slot]</tt></h3>
 <p>Asynchronous public return slot. Reads WSDL reply (<i>rply</i>) from server (used in case URL was specified in wsdl file path).</p>
-<p>Not sure why it's public (sierdzio). Maybe it will go private in the future.</p>
 <!-- @@@fileReplyFinished -->
 <!-- $$$host[overload1]$$$host -->
 <h3 class="fn"><a name="host"></a>QString QWsdl::host () const</h3>

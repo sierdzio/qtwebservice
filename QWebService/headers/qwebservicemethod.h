@@ -47,6 +47,8 @@
 #include "QWebService_global.h"
 #include "qwebmethod.h"
 
+class QWebServiceMethodPrivate;
+
 class QWEBSERVICESHARED_EXPORT QWebServiceMethod : public QWebMethod
 {
     Q_OBJECT
@@ -76,6 +78,14 @@ public:
                                   Protocol protocol = Soap12,
                                   HttpMethod httpMethod = Post,
                                   QObject *parent = 0);
+
+protected:
+    QWebServiceMethod(QWebServiceMethodPrivate &d,
+                      Protocol protocol = Soap12, HttpMethod httpMethod = Post,
+                      QObject *parent = 0);
+
+private:
+    Q_DECLARE_PRIVATE(QWebServiceMethod)
 };
 
 #endif // QWEBSERVICEMETHOD_H

@@ -54,6 +54,8 @@
 #include <QtCore/qbytearray.h>
 #include "QWebService_global.h"
 
+class QWebMethodPrivate;
+
 class QWEBSERVICESHARED_EXPORT QWebMethod : public QObject
 {
     Q_OBJECT
@@ -138,28 +140,13 @@ protected slots:
     void authenticationSlot(QNetworkReply *reply, QAuthenticator *authenticator);
 
 protected:
-    void init();
-    void prepareRequestData();
-    QString convertReplyToUtf(const QString &textToConvert);
-    bool enterErrorState(const QString &errMessage = QString());
+    QWebMethod(QWebMethodPrivate &d,
+            Protocol protocol = Soap12, HttpMethod httpMethod = Post,
+            QObject *parent = 0);
+    QWebMethodPrivate *d_ptr;
 
-    bool errorState;
-    bool authReply;
-    bool authenticationError;
-    QString errorMessage;
-    bool replyReceived;
-    Protocol protocolUsed;
-    HttpMethod httpMethodUsed;
-    QUrl m_hostUrl;
-    QString m_methodName;
-    QString m_targetNamespace;
-    QString m_username;
-    QString m_password;
-    QByteArray reply;
-    QMap<QString, QVariant> parameters;
-    QMap<QString, QVariant> returnValue;
-    QNetworkAccessManager *manager;
-    QByteArray data;
+private:
+    Q_DECLARE_PRIVATE(QWebMethod)
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QWebMethod::Protocols)
