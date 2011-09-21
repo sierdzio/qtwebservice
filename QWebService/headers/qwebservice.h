@@ -47,6 +47,7 @@
 #include "qwebmethod.h"
 #include "qwsdl.h"
 
+class QWebServicePrivate;
 
 class QWEBSERVICESHARED_EXPORT QWebService : public QObject
 {
@@ -81,15 +82,11 @@ signals:
     void errorEncountered(const QString &errMessage);
 
 protected:
-    void init();
-    bool enterErrorState(const QString &errMessage = QString());
+    QWebService(QWebServicePrivate &d, QObject *parent = 0);
+    QWebServicePrivate *d_ptr;
 
-    bool errorState;
-    QString errorMessage;
-    QUrl m_hostUrl;
-    QWsdl *wsdl;
-    // This is general, but should work for custom classes.
-    QMap<QString, QWebServiceMethod *> *methods;
+private:
+    Q_DECLARE_PRIVATE(QWebService)
 };
 
 #endif // QWEBSERVICE_H

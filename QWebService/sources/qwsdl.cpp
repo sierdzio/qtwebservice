@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include "../headers/qwsdl.h"
+#include "../headers/qwsdl_p.h"
 
 /*!
     \class QWsdl
@@ -60,10 +60,10 @@
     \sa setWsdlFile(), resetWsdl()
   */
 QWsdl::QWsdl(QObject *parent) :
-    QObject(parent)
+    QObject(parent), d_ptr(new QWsdlPrivate)
 {
-//    wsdlFilePath = QString();
-    init();
+    Q_D(QWsdl);
+    d->init();
 }
 
 /*!
@@ -71,10 +71,22 @@ QWsdl::QWsdl(QObject *parent) :
     specified in \a wsdlFile to parse the WSDL file.
   */
 QWsdl::QWsdl(const QString &wsdlFile, QObject *parent) :
-    QObject(parent), wsdlFilePath(wsdlFile)
+    QObject(parent), d_ptr(new QWsdlPrivate)
 {
-    init();
-    parse();
+    Q_D(QWsdl);
+    d->wsdlFilePath = wsdlFile;
+    d->init();
+    d->parse();
+}
+
+/*!
+  \internal
+  */
+QWsdl::QWsdl(QWsdlPrivate &dd, QObject *parent) :
+    QObject(parent), d_ptr(&dd)
+{
+    Q_D(QWsdl);
+    d->init();
 }
 
 /*!
@@ -82,9 +94,10 @@ QWsdl::QWsdl(const QString &wsdlFile, QObject *parent) :
   */
 QWsdl::~QWsdl()
 {
-    delete methodsMap;
-    delete workMethodList;
-    delete workMethodParameters;
+    Q_D(QWsdl);
+    delete d->methodsMap;
+    delete d->workMethodList;
+    delete d->workMethodParameters;
 }
 
 /*!
@@ -114,20 +127,21 @@ void QWsdl::setWsdlFile(const QString &wsdlFile) // == resetWsdl()
   */
 void QWsdl::resetWsdl(const QString &newWsdl)
 {
-    wsdlFilePath = newWsdl;
+    Q_D(QWsdl);
+    d->wsdlFilePath = newWsdl;
 
-    methodsMap->clear();
-    workMethodList->clear();
-    workMethodParameters->clear();
-    replyReceived = false;
-    errorState = false;
-    errorMessage = QLatin1String("");
-    m_webServiceName = QLatin1String("");
-    m_hostUrl.setUrl(QLatin1String(""));
-    m_targetNamespace = QLatin1String("");
-    xmlReader.clear();
+    d->methodsMap->clear();
+    d->workMethodList->clear();
+    d->workMethodParameters->clear();
+    d->replyReceived = false;
+    d->errorState = false;
+    d->errorMessage = QString();
+    d->m_webServiceName = QString();
+    d->m_hostUrl.setUrl(QString());
+    d->m_targetNamespace = QString();
+    d->xmlReader.clear();
 
-    parse();
+    d->parse();
 }
 
 /*!
@@ -137,7 +151,8 @@ void QWsdl::resetWsdl(const QString &newWsdl)
   */
 QStringList QWsdl::methodNames() const
 {
-    QList<QString> tempMethods = methodsMap->keys();
+    Q_D(const QWsdl);
+    QList<QString> tempMethods = d->methodsMap->keys();
     QStringList result;
     result.append(tempMethods);
 
@@ -154,7 +169,8 @@ QStringList QWsdl::methodNames() const
   */
 QMap<QString, QWebServiceMethod *> *QWsdl::methods()
 {
-    return methodsMap;
+    Q_D(QWsdl);
+    return d->methodsMap;
 }
 
 /*!
@@ -162,7 +178,8 @@ QMap<QString, QWebServiceMethod *> *QWsdl::methods()
   */
 QString QWsdl::webServiceName() const
 {
-    return m_webServiceName;
+    Q_D(const QWsdl);
+    return d->m_webServiceName;
 }
 
 /*!
@@ -173,10 +190,11 @@ QString QWsdl::webServiceName() const
   */
 QString QWsdl::host() const
 {
-    if (!m_hostUrl.isEmpty())
-        return m_hostUrl.path();
+    Q_D(const QWsdl);
+    if (!d->m_hostUrl.isEmpty())
+        return d->m_hostUrl.toString();
     else
-        return wsdlFilePath;
+        return d->wsdlFilePath;
 }
 
 /*!
@@ -187,10 +205,11 @@ QString QWsdl::host() const
   */
 QUrl QWsdl::hostUrl() const
 {
-    if (!m_hostUrl.isEmpty())
-        return m_hostUrl;
+    Q_D(const QWsdl);
+    if (!d->m_hostUrl.isEmpty())
+        return d->m_hostUrl;
     else
-        return QUrl(wsdlFilePath);
+        return QUrl(d->wsdlFilePath);
 }
 
 /*!
@@ -198,7 +217,8 @@ QUrl QWsdl::hostUrl() const
   */
 QString QWsdl::wsdlFile() const
 {
-    return wsdlFilePath;
+    Q_D(const QWsdl);
+    return d->wsdlFilePath;
 }
 
 /*!
@@ -206,7 +226,8 @@ QString QWsdl::wsdlFile() const
   */
 QString QWsdl::targetNamespace() const
 {
-    return m_targetNamespace;
+    Q_D(const QWsdl);
+    return d->m_targetNamespace;
 }
 
 /*!
@@ -217,7 +238,8 @@ QString QWsdl::targetNamespace() const
   */
 QString QWsdl::errorInfo() const
 {
-    return errorMessage;
+    Q_D(const QWsdl);
+    return d->errorMessage;
 }
 
 /*!
@@ -228,25 +250,25 @@ QString QWsdl::errorInfo() const
   */
 bool QWsdl::isErrorState() const
 {
-    return errorState;
+    Q_D(const QWsdl);
+    return d->errorState;
 }
 
 /*!
     Asynchronous public return slot. Reads WSDL reply (\a rply)
     from server (used in case URL was specified in wsdl file path).
-
-    Not sure why it's public (sierdzio). Maybe it will go private in the future.
   */
 void QWsdl::fileReplyFinished(QNetworkReply *rply)
 {
-    QString replyString = convertReplyToUtf(QLatin1String(rply->readAll()));
+    Q_D(QWsdl);
+    QString replyString = d->convertReplyToUtf(QLatin1String(rply->readAll()));
     QFile file(QLatin1String("tempWsdl.asmx~"));
 
     if (file.exists())
         file.remove();
 
     if (!file.open(QFile::WriteOnly)) {
-        enterErrorState(
+        d->enterErrorState(
                     QString("Error: cannot write WSDL file from remote location. Reason: "
                             + file.errorString()));
         return;
@@ -255,7 +277,7 @@ void QWsdl::fileReplyFinished(QNetworkReply *rply)
     }
 
     file.close();
-    replyReceived = true;
+    d->replyReceived = true;
     rply->deleteLater();
 //    emit replyReady(reply);
 }
@@ -265,14 +287,10 @@ void QWsdl::fileReplyFinished(QNetworkReply *rply)
 
     Initialises the object.
   */
-void QWsdl::init()
+void QWsdlPrivate::init()
 {
     replyReceived = false;
     errorState = false;
-    errorMessage = QLatin1String("");
-    m_webServiceName = QLatin1String("");
-    m_hostUrl.setUrl(QLatin1String(""));
-    m_targetNamespace = QLatin1String("");
 
     workMethodList = new QStringList();
     workMethodParameters = new QMap<int, QMap<QString, QVariant> >();
@@ -284,12 +302,13 @@ void QWsdl::init()
 
     Enters into error state with message \a errMessage.
   */
-bool QWsdl::enterErrorState(const QString &errMessage)
+bool QWsdlPrivate::enterErrorState(const QString &errMessage)
 {
+    Q_Q(QWsdl);
     errorState = true;
     errorMessage += QString(errMessage + " ");
 //    qDebug() << errMessage;
-    emit errorEncountered(errMessage);
+    emit q->errorEncountered(errMessage);
     return false;
 }
 
@@ -300,7 +319,7 @@ bool QWsdl::enterErrorState(const QString &errMessage)
     QWebServiceMethods, reads all necessary data,
     like web service's name etc.
   */
-bool QWsdl::parse()
+bool QWsdlPrivate::parse()
 {
     /*
       Algorithm extracts method names from "types" tags,
@@ -358,17 +377,18 @@ bool QWsdl::parse()
     If the host path is not a local file, but URL, QWsdl will download
     it into a temporary file, then read, and delete at exit.
   */
-void QWsdl::prepareFile()
+void QWsdlPrivate::prepareFile()
 {
+    Q_Q(QWsdl);
     QUrl filePath;
     filePath.setUrl(wsdlFilePath);
 
     if (!QFile::exists(wsdlFilePath) && filePath.isValid()) {
         m_hostUrl = filePath;
 
-        QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-        connect(manager, SIGNAL(finished(QNetworkReply*)),
-                this, SLOT(fileReplyFinished(QNetworkReply*)));
+        QNetworkAccessManager *manager = new QNetworkAccessManager();
+        QObject::connect(manager, SIGNAL(finished(QNetworkReply*)),
+                q, SLOT(fileReplyFinished(QNetworkReply*)));
 
         manager->get(QNetworkRequest(filePath));
 
@@ -384,7 +404,7 @@ void QWsdl::prepareFile()
 /*!
     \internal
   */
-void QWsdl::readDefinitions()
+void QWsdlPrivate::readDefinitions()
 {
     //EXPERIMENTAL
     // QMap used to supress multiple "tag not supported yet" messages.
@@ -451,7 +471,7 @@ void QWsdl::readDefinitions()
 /*!
     \internal
   */
-void QWsdl::readTypes()
+void QWsdlPrivate::readTypes()
 {
     xmlReader.readNext();
     xmlReader.readNext();
@@ -491,7 +511,7 @@ void QWsdl::readTypes()
 /*!
     \internal
   */
-void QWsdl::readTypeSchemaElement()
+void QWsdlPrivate::readTypeSchemaElement()
 {
     xmlReader.readNext();
     QMap<QString, QVariant> params;
@@ -583,7 +603,7 @@ void QWsdl::readTypeSchemaElement()
     Analyses both "working" QList and QMap, and extracts methods data,
     which is then put into 'methods' QMap.
  */
-void QWsdl::prepareMethods()
+void QWsdlPrivate::prepareMethods()
 {
     if (errorState)
         return;
@@ -651,7 +671,7 @@ void QWsdl::prepareMethods()
 /*!
     \internal
   */
-void QWsdl::readMessages()
+void QWsdlPrivate::readMessages()
 {
 //    qDebug() << "WSDL :messages tag not supported yet.";
     xmlReader.readNext();
@@ -660,7 +680,7 @@ void QWsdl::readMessages()
 /*!
     \internal
   */
-void QWsdl::readPorts()
+void QWsdlPrivate::readPorts()
 {
 //    qDebug() << "WSDL :portType tag not supported yet.";
     xmlReader.readNext();
@@ -669,7 +689,7 @@ void QWsdl::readPorts()
 /*!
     \internal
   */
-void QWsdl::readBindings()
+void QWsdlPrivate::readBindings()
 {
 //    qDebug() << "WSDL :binding tag not supported yet.";
     xmlReader.readNext();
@@ -678,7 +698,7 @@ void QWsdl::readBindings()
 /*!
     \internal
   */
-void QWsdl::readService()
+void QWsdlPrivate::readService()
 {
     // TODO: add different addresses for different message types.
 //    qDebug() << "WSDL :service tag not supported yet.";
@@ -715,7 +735,7 @@ void QWsdl::readService()
 /*!
     \internal
   */
-void QWsdl::readDocumentation()
+void QWsdlPrivate::readDocumentation()
 {
 //    qDebug() << "WSDL :documentation tag not supported yet.";
     xmlReader.readNext();
@@ -724,7 +744,7 @@ void QWsdl::readDocumentation()
 /*!
     \internal
   */
-QString QWsdl::convertReplyToUtf(const QString &textToConvert)
+QString QWsdlPrivate::convertReplyToUtf(const QString &textToConvert)
 {
     QString result = textToConvert;
 

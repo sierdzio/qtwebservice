@@ -39,8 +39,8 @@
 **
 ****************************************************************************/
 
-#ifndef QWSDL_H
-#define QWSDL_H
+#ifndef QWSDL_P_H
+#define QWSDL_P_H
 
 #include <QtCore/QXmlStreamReader>
 #include <QtCore/qfile.h>
@@ -48,47 +48,46 @@
 #include <QtCore/qstring.h>
 #include <QtCore/qstringlist.h>
 #include <QtCore/qdatetime.h>
-#include "QWebService_global.h"
 #include "qwebservicemethod.h"
+#include "qwsdl.h"
 
-class QWsdlPrivate;
-
-class QWEBSERVICESHARED_EXPORT QWsdl : public QObject
+class QWsdlPrivate
 {
-    Q_OBJECT
+    Q_DECLARE_PUBLIC(QWsdl)
 
 public:
-    explicit QWsdl(QObject *parent = 0);
-    QWsdl(const QString &wsdlFile, QObject *parent = 0);
-    ~QWsdl();
+    QWsdlPrivate() {}
+    QWsdlPrivate(QWsdl *q) : q_ptr(q) {}
+    QWsdl *q_ptr;
 
-    void setWsdlFile(const QString &wsdlFile); // == resetWsdl()
-    void resetWsdl(const QString &newWsdl);
+    void init();
+    bool parse();
+    void prepareFile();
+    void prepareMethods();
+    void readDefinitions();
+    void readTypes();
+    void readTypeSchemaElement();
+    void readPorts();
+    void readMessages();
+    void readBindings();
+    void readService();
+    void readDocumentation();
+    QString convertReplyToUtf(const QString &textToConvert);
+    bool enterErrorState(const QString &errMessage = QString());
 
-    QStringList methodNames() const;
-    QMap<QString, QWebServiceMethod *> *methods();
-    QString webServiceName() const;
-    QString host() const;
-    QUrl hostUrl() const;
-    QString wsdlFile() const;
-    QString targetNamespace() const;
-    //QFile getWsdl(); Rethink that.
-    QString errorInfo() const;
-    bool isErrorState() const;
+    bool errorState;
+    bool replyReceived;
+    QUrl m_hostUrl;
+    QString errorMessage;
+    QString wsdlFilePath;
+    QString m_webServiceName;
+    QString m_targetNamespace;
+    QXmlStreamReader xmlReader;
 
-signals:
-    void errorEncountered(const QString &errMessage);
-
-protected slots:
-    void fileReplyFinished(QNetworkReply *rply);
-
-protected:
-    QWsdl(QWsdlPrivate &d, QObject *parent = 0);
-    QWsdlPrivate *d_ptr;
-
-private:
-    Q_DECLARE_PRIVATE(QWsdl)
-
+    QStringList *workMethodList;
+    // Param if one, QList if many.
+    QMap<int, QMap<QString, QVariant> > *workMethodParameters;
+    QMap<QString, QWebServiceMethod *> *methodsMap;
 };
 
-#endif // QWSDL_H
+#endif // QWSDL_P_H

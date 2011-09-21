@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include "../headers/qwebservicereader.h"
+#include "../headers/qwebservicereader_p.h"
 
 /*!
     \class QWebServiceReader
@@ -54,7 +54,7 @@
     Constructs QWebServiceAbstract with \a parent, defauling to 0.
   */
 QWebServiceReader::QWebServiceReader(QObject *parent) :
-    QWebService(parent)
+    QWebService(*new QWebServiceReaderPrivate, parent)
 {
 }
 
@@ -63,8 +63,9 @@ QWebServiceReader::QWebServiceReader(QObject *parent) :
     (which defaults to 0).
   */
 QWebServiceReader::QWebServiceReader(QWsdl *wsdl, QObject *parent) :
-    QWebService(wsdl, parent)
+    QWebService(*new QWebServiceReaderPrivate, parent)
 {
+    setWsdl(wsdl);
 }
 
 /*!
@@ -72,9 +73,18 @@ QWebServiceReader::QWebServiceReader(QWsdl *wsdl, QObject *parent) :
     (which is used to create a wsdl object).
   */
 QWebServiceReader::QWebServiceReader(const QString &host, QObject *parent) :
-    QWebService(new QWsdl(host, parent), parent)
+    QWebService(*new QWebServiceReaderPrivate, parent)
 {
+    setWsdl(new QWsdl(host, parent));
+}
 
+/*!
+    \internal
+  */
+QWebServiceReader::QWebServiceReader(QWebServiceReaderPrivate &d,
+                                     QObject *parent) :
+    QWebService(d, parent)
+{
 }
 
 /*!

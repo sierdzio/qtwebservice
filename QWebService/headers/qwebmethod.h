@@ -147,7 +147,6 @@ protected:
 
 private:
     Q_DECLARE_PRIVATE(QWebMethod)
-//    friend class QWebMethodPrivate;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QWebMethod::Protocols)

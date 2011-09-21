@@ -38,7 +38,10 @@ HEADERS += headers/QWebService_global.h \
     headers/qwebservice.h \
     headers/qwebservicereader.h \
     headers/qwebmethod_p.h \
-    headers/qwebservicemethod_p.h
+    headers/qwebservicemethod_p.h \
+    headers/qwebservice_p.h \
+    headers/qwebservicereader_p.h \
+    headers/qwsdl_p.h
 
 
 symbian {
@@ -60,5 +63,8 @@ unix:!symbian {
     }
     INSTALLS += target
 }
+
+
+
 
 

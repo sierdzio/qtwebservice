@@ -52,7 +52,6 @@
 #include <QtCore/qvariant.h>
 #include <QtCore/qmap.h>
 #include <QtCore/qbytearray.h>
-//#include "QWebService_global.h"
 #include "qwebmethod.h"
 
 class QWebMethodPrivate

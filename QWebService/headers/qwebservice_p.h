@@ -39,56 +39,31 @@
 **
 ****************************************************************************/
 
-#ifndef QWSDL_H
-#define QWSDL_H
+#ifndef QWEBSERVICE_P_H
+#define QWEBSERVICE_P_H
 
-#include <QtCore/QXmlStreamReader>
-#include <QtCore/qfile.h>
-#include <QtCore/qmap.h>
-#include <QtCore/qstring.h>
-#include <QtCore/qstringlist.h>
-#include <QtCore/qdatetime.h>
-#include "QWebService_global.h"
-#include "qwebservicemethod.h"
+#include "qwebservice.h"
+#include "qwebmethod.h"
+#include "qwsdl.h"
 
-class QWsdlPrivate;
+class QWebServicePrivate {
 
-class QWEBSERVICESHARED_EXPORT QWsdl : public QObject
-{
-    Q_OBJECT
+    Q_DECLARE_PUBLIC(QWebService)
 
 public:
-    explicit QWsdl(QObject *parent = 0);
-    QWsdl(const QString &wsdlFile, QObject *parent = 0);
-    ~QWsdl();
+    QWebServicePrivate() {}
+    QWebServicePrivate(QWebService *q) : q_ptr(q) {}
+    QWebService *q_ptr;
 
-    void setWsdlFile(const QString &wsdlFile); // == resetWsdl()
-    void resetWsdl(const QString &newWsdl);
+    void init();
+    bool enterErrorState(const QString &errMessage = QString());
 
-    QStringList methodNames() const;
-    QMap<QString, QWebServiceMethod *> *methods();
-    QString webServiceName() const;
-    QString host() const;
-    QUrl hostUrl() const;
-    QString wsdlFile() const;
-    QString targetNamespace() const;
-    //QFile getWsdl(); Rethink that.
-    QString errorInfo() const;
-    bool isErrorState() const;
-
-signals:
-    void errorEncountered(const QString &errMessage);
-
-protected slots:
-    void fileReplyFinished(QNetworkReply *rply);
-
-protected:
-    QWsdl(QWsdlPrivate &d, QObject *parent = 0);
-    QWsdlPrivate *d_ptr;
-
-private:
-    Q_DECLARE_PRIVATE(QWsdl)
-
+    bool errorState;
+    QString errorMessage;
+    QUrl m_hostUrl;
+    QWsdl *wsdl;
+    // This is general, but should work for custom classes.
+    QMap<QString, QWebServiceMethod *> *methods;
 };
 
-#endif // QWSDL_H
+#endif // QWEBSERVICE_P_H

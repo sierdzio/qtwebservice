@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include "../headers/qwebservice.h"
+#include "../headers/qwebservice_p.h"
 
 /*!
     \class QWebService
@@ -57,11 +57,12 @@
     \sa setWsdl(), addMethod()
   */
 QWebService::QWebService(QObject *parent)
-    : QObject(parent)
+    : QObject(parent), d_ptr(new QWebServicePrivate)
 {
-    wsdl = new QWsdl(this);
-    methods = new QMap<QString, QWebServiceMethod *>();
-    init();
+    Q_D(QWebService);
+    d->wsdl = new QWsdl(this);
+    d->methods = new QMap<QString, QWebServiceMethod *>();
+    d->init();
 }
 
 /*!
@@ -73,12 +74,13 @@ QWebService::QWebService(QObject *parent)
     \sa resetWsdl(), addMethod()
   */
 QWebService::QWebService(QWsdl *_wsdl, QObject *parent)
-    : QObject(parent)
+    : QObject(parent), d_ptr(new QWebServicePrivate)
 {
-    wsdl = _wsdl;
-    methods = new QMap<QString, QWebServiceMethod *>();
-    init();
-    methods = wsdl->methods();
+    Q_D(QWebService);
+    d->wsdl = _wsdl;
+    d->methods = new QMap<QString, QWebServiceMethod *>();
+    d->init();
+    d->methods = d->wsdl->methods();
 }
 
 /*!
@@ -91,15 +93,28 @@ QWebService::QWebService(QWsdl *_wsdl, QObject *parent)
     \sa setWsdl(), addMethod()
   */
 QWebService::QWebService(const QString &_hostname, QObject *parent)
-    : QObject(parent)
+    : QObject(parent), d_ptr(new QWebServicePrivate)
 {
-    m_hostUrl.setUrl(_hostname);
-    wsdl = new QWsdl(_hostname, this);
-    methods = new QMap<QString, QWebServiceMethod *>();
-    init();
+    Q_D(QWebService);
+    d->m_hostUrl.setUrl(_hostname);
+    d->wsdl = new QWsdl(_hostname, this);
+    d->methods = new QMap<QString, QWebServiceMethod *>();
+    d->init();
 
-    if (!wsdl->isErrorState())
-        methods = wsdl->methods();
+    if (!d->wsdl->isErrorState())
+        d->methods = d->wsdl->methods();
+}
+
+/*!
+  \internal
+  */
+QWebService::QWebService(QWebServicePrivate &dd, QObject *parent) :
+    QObject(parent), d_ptr(&dd)
+{
+    Q_D(QWebService);
+    d->wsdl = new QWsdl(this);
+    d->methods = new QMap<QString, QWebServiceMethod *>();
+    d->init();
 }
 
 /*!
@@ -107,7 +122,8 @@ QWebService::QWebService(const QString &_hostname, QObject *parent)
   */
 QWebService::~QWebService()
 {
-    delete wsdl;
+    Q_D(QWebService);
+    delete d->wsdl;
 }
 
 /*!
@@ -122,7 +138,8 @@ QWebService::~QWebService()
   */
 QStringList QWebService::methodNames() const
 {
-    return (QStringList) methods->keys();
+    Q_D(const QWebService);
+    return (QStringList) d->methods->keys();
 }
 
 /*!
@@ -130,7 +147,8 @@ QStringList QWebService::methodNames() const
   */
 QStringList QWebService::methodParameters(const QString &methodName) const
 {
-    return methods->value(methodName)->parameterNames();
+    Q_D(const QWebService);
+    return d->methods->value(methodName)->parameterNames();
 }
 
 /*!
@@ -138,7 +156,8 @@ QStringList QWebService::methodParameters(const QString &methodName) const
   */
 QStringList QWebService::methodReturnValue(const QString &methodName) const
 {
-    return methods->value(methodName)->returnValueName();
+    Q_D(const QWebService);
+    return d->methods->value(methodName)->returnValueName();
 }
 
 /*!
@@ -148,7 +167,8 @@ QStringList QWebService::methodReturnValue(const QString &methodName) const
   */
 QMap<QString, QVariant> QWebService::parameterNamesTypes(const QString &methodName) const
 {
-    return methods->value(methodName)->parameterNamesTypes();
+    Q_D(const QWebService);
+    return d->methods->value(methodName)->parameterNamesTypes();
 }
 
 /*!
@@ -158,7 +178,8 @@ QMap<QString, QVariant> QWebService::parameterNamesTypes(const QString &methodNa
   */
 QMap<QString, QVariant> QWebService::returnValueNameType(const QString &methodName) const
 {
-    return methods->value(methodName)->returnValueNameType();
+    Q_D(const QWebService);
+    return d->methods->value(methodName)->returnValueNameType();
 }
 
 /*!
@@ -170,7 +191,8 @@ QMap<QString, QVariant> QWebService::returnValueNameType(const QString &methodNa
   */
 void QWebService::addMethod(QWebServiceMethod *newMethod)
 {
-    methods->insert(newMethod->methodName(), newMethod);
+    Q_D(QWebService);
+    d->methods->insert(newMethod->methodName(), newMethod);
 }
 
 /*!
@@ -184,8 +206,9 @@ void QWebService::addMethod(QWebServiceMethod *newMethod)
   */
 void QWebService::addMethod(const QString &methodName, QWebServiceMethod *newMethod)
 {
+    Q_D(QWebService);
 //    newMethod->setMessageName(methodName);
-    methods->insert(methodName, newMethod);
+    d->methods->insert(methodName, newMethod);
 }
 
 /*!
@@ -196,8 +219,9 @@ void QWebService::addMethod(const QString &methodName, QWebServiceMethod *newMet
   */
 void QWebService::removeMethod(const QString &methodName)
 {
-    delete methods->value(methodName);
-    methods->remove(methodName);
+    Q_D(QWebService);
+    delete d->methods->value(methodName);
+    d->methods->remove(methodName);
 }
 
 /*!
@@ -205,9 +229,10 @@ void QWebService::removeMethod(const QString &methodName)
   */
 void QWebService::setHost(const QString &hostname)
 {
-    m_hostUrl.setUrl(hostname);
+    Q_D(QWebService);
+    d->m_hostUrl.setUrl(hostname);
     resetWsdl(new QWsdl(hostname, this));
-    init();
+    d->init();
 }
 
 /*!
@@ -217,9 +242,10 @@ void QWebService::setHost(const QString &hostname)
   */
 void QWebService::setHost(const QUrl &hostUrl)
 {
-    m_hostUrl = hostUrl;
+    Q_D(QWebService);
+    d->m_hostUrl = hostUrl;
     resetWsdl(new QWsdl(hostUrl.host(), this));
-    init();
+    d->init();
 }
 
 /*!
@@ -230,10 +256,11 @@ void QWebService::setHost(const QUrl &hostUrl)
   */
 void QWebService::setWsdl(QWsdl *newWsdl)
 {
+    Q_D(QWebService);
 //    delete wsdl;
-    wsdl = newWsdl;
-    foreach (QString s, wsdl->methods()->keys()) {
-        methods->insert(s, wsdl->methods()->value(s));
+    d->wsdl = newWsdl;
+    foreach (QString s, d->wsdl->methods()->keys()) {
+        d->methods->insert(s, d->wsdl->methods()->value(s));
     }
 }
 
@@ -246,16 +273,17 @@ void QWebService::setWsdl(QWsdl *newWsdl)
   */
 void QWebService::resetWsdl(QWsdl *newWsdl)
 {
+    Q_D(QWebService);
 //    delete wsdl;
 
     if (newWsdl == 0) {
-        methods->clear();
-        wsdl = new QWsdl(this);
+        d->methods->clear();
+        d->wsdl = new QWsdl(this);
     } else {
-        wsdl = newWsdl;
-        methods->clear();
+        d->wsdl = newWsdl;
+        d->methods->clear();
 //        delete methods;
-        methods = wsdl->methods();
+        d->methods = d->wsdl->methods();
     }
 }
 
@@ -264,7 +292,8 @@ void QWebService::resetWsdl(QWsdl *newWsdl)
   */
 QUrl QWebService::hostUrl() const
 {
-    return m_hostUrl;
+    Q_D(const QWebService);
+    return d->m_hostUrl;
 }
 
 /*!
@@ -272,7 +301,8 @@ QUrl QWebService::hostUrl() const
   */
 QString QWebService::host() const
 {
-    return m_hostUrl.path();
+    Q_D(const QWebService);
+    return d->m_hostUrl.path();
 }
 
 /*!
@@ -280,9 +310,10 @@ QString QWebService::host() const
   */
 bool QWebService::isErrorState()
 {
-    if (wsdl->isErrorState())
-        errorState = true;
-    return errorState;
+    Q_D(QWebService);
+    if (d->wsdl->isErrorState())
+        d->errorState = true;
+    return d->errorState;
 }
 
 /*!
@@ -293,7 +324,8 @@ bool QWebService::isErrorState()
   */
 QString QWebService::errorInfo() const
 {
-    return errorMessage;
+    Q_D(const QWebService);
+    return d->errorMessage;
 }
 
 /*!
@@ -301,12 +333,11 @@ QString QWebService::errorInfo() const
 
     Initialises the object, resets error state.
   */
-void QWebService::init()
+void QWebServicePrivate::init()
 {
     errorState = false;
-//    errorMessage = QString();
 
-    if (isErrorState())
+    if (wsdl->isErrorState())
         return;
 }
 
@@ -315,11 +346,12 @@ void QWebService::init()
 
     Enters into error state with message \a errMessage.
   */
-bool QWebService::enterErrorState(const QString &errMessage)
+bool QWebServicePrivate::enterErrorState(const QString &errMessage)
 {
+    Q_Q(QWebService);
     errorState = true;
     errorMessage += QString(errMessage + " ");
 //    qDebug() << errMessage;
-    emit errorEncountered(errMessage);
+    emit q->errorEncountered(errMessage);
     return false;
 }

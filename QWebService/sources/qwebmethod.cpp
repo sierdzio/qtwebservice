@@ -216,7 +216,8 @@ QWebMethod::QWebMethod(const QUrl &url, Protocol protocol, HttpMethod method, QO
 QWebMethod::QWebMethod(QWebMethodPrivate &dd, Protocol protocol, HttpMethod httpMethod, QObject *parent) :
     QObject(parent), d_ptr(&dd)
 {
-    d_ptr->init();
+    Q_D(QWebMethod);
+    d->init();
     setProtocol(protocol);
     setHttpMethod(httpMethod);
 }
@@ -898,7 +899,6 @@ void QWebMethod::authenticationSlot(QNetworkReply *reply,
   */
 void QWebMethodPrivate::init()
 {
-//    Q_Q(QWebMethod);
     replyReceived = false;
     authenticationReplyReceived = false;
     errorState = false;
