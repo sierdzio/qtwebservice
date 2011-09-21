@@ -11,7 +11,7 @@ Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/wsdl/band_ws.asmx
  -af --cmake --scons --json ../examples/wsdl/band_ws.asmx
 
-.09.2011 : CEST:
+21.09.2011 : CEST:
  - make lines in code wrap at around 80 characters,
  - remove \fn declarations from QDoc comments,
  - make the “else” be on the same line as the closing brace of the previous if-branch,
@@ -24,7 +24,8 @@ Example arguments for converter:
  - pass QString / QByteArray / etc. by const-ref,
  - use QLatin1String instead of QString::fromLatin1(“”),
  - fix strings initialisations and handling,
- - move all private and protected members to private headers.
+ - move all private and protected members to private headers,
+ - marked v0.4.4.
 
 13.09.2011 12:33 CEST:
  - added QWebService::removeMethod(), which deletes a web method specified by it's name,

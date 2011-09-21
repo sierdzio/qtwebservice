@@ -118,8 +118,6 @@
         \o connect replyReady() signal to your custom slot (where you can
            parse the reply and return it in a type of your convenience)
     \endlist
-
-    \sa init()
   */
 
 /*!
@@ -166,7 +164,7 @@
   Constructs web method object with \a parent.
   Requires specifying other parameters later.
 
-  \sa init(), setParameters(), setProtocol(), sendMessage()
+  \sa setParameters(), setProtocol(), sendMessage()
   */
 QWebMethod::QWebMethod(QObject *parent) :
     QObject(parent), d_ptr(new QWebMethodPrivate)
@@ -182,7 +180,7 @@ QWebMethod::QWebMethod(QObject *parent) :
     soap12), and \a method (which defaults to POST). Requires specifying
     other params later (setParameters()).
 
-    \sa init(), setParameters(), setProtocol(), sendMessage()
+    \sa setParameters(), setProtocol(), sendMessage()
   */
 QWebMethod::QWebMethod(Protocol protocol, HttpMethod method, QObject *parent) :
     QObject(parent), d_ptr(new QWebMethodPrivate)
@@ -198,7 +196,7 @@ QWebMethod::QWebMethod(Protocol protocol, HttpMethod method, QObject *parent) :
     and \a method (which defaults to POST), and \a url. Especially convenient for
     parameterless methods (like quick GET messages).
 
-    \sa init(), setParameters(), setProtocol(), sendMessage()
+    \sa setParameters(), setProtocol(), sendMessage()
   */
 QWebMethod::QWebMethod(const QUrl &url, Protocol protocol, HttpMethod method, QObject *parent) :
     QObject(parent), d_ptr(new QWebMethodPrivate)
@@ -438,7 +436,7 @@ bool QWebMethod::setHttpMethod(const QString &newMethod)
 
     Returns true on success.
 
-    \sa setParameters(), setProtocol(), setTargetNamespace(), prepareRequestData()
+    \sa setParameters(), setProtocol(), setTargetNamespace()
   */
 bool QWebMethod::sendMessage(const QByteArray &requestData)
 {
@@ -532,9 +530,9 @@ bool QWebMethod::authenticate(const QString &newUsername, const QString &newPass
 
     if (d->m_username != QLatin1String("")) {
         QUrl url;
-        url.addEncodedQueryItem("ACT", QUrl::toPercentEncoding("11"));
-        url.addEncodedQueryItem("RET", QUrl::toPercentEncoding("/"));
-        url.addEncodedQueryItem("site_id", QUrl::toPercentEncoding("1"));
+        url.addEncodedQueryItem("ACT", QUrl::toPercentEncoding(QLatin1String("11")));
+        url.addEncodedQueryItem("RET", QUrl::toPercentEncoding(QLatin1String("/")));
+        url.addEncodedQueryItem("site_id", QUrl::toPercentEncoding(QLatin1String("1")));
         url.addEncodedQueryItem("username", QUrl::toPercentEncoding(d->m_username));
         url.addEncodedQueryItem("password", QUrl::toPercentEncoding(d->m_password));
 
@@ -567,7 +565,9 @@ bool QWebMethod::authenticate(const QUrl &customAuthString)
             this, SLOT(authenticationSlot(QNetworkReply*,QAuthenticator*)));
 
     QNetworkRequest rqst(QUrl::fromUserInput(
-                             QString("http://" + d->m_hostUrl.host() + "/")));
+                             QString(QLatin1String("http://")
+                                     + d->m_hostUrl.host()
+                                     + QLatin1String("/"))));
     rqst.setHeader(QNetworkRequest::ContentTypeHeader,
                    QLatin1String("application/x-www-form-urlencoded"));
 
@@ -607,12 +607,16 @@ QVariant QWebMethod::replyReadParsed()
     // It's not done properly, anyway.
     // Should return type specified in replyValue.
     if (d->protocolUsed & Soap) {
-        QString tempBegin = QString("<" + d->m_methodName + "Result>");
+        QString tempBegin = QString(QLatin1String("<")
+                                    + d->m_methodName
+                                    + QLatin1String("Result>"));
         int replyBeginIndex = replyString.indexOf(tempBegin, 0,
                                                   Qt::CaseSensitive);
         replyBeginIndex += tempBegin.length();
 
-        QString tempFinish = QString("</" + d->m_methodName + "Result>");
+        QString tempFinish = QString(QLatin1String("</")
+                                     + d->m_methodName
+                                     + QLatin1String("Result>"));
         int replyFinishIndex = replyString.indexOf(tempFinish,
                                                    replyBeginIndex,
                                                    Qt::CaseSensitive);
@@ -882,7 +886,8 @@ void QWebMethod::authenticationSlot(QNetworkReply *reply,
     Q_D(QWebMethod);
     if (d->authenticationError)
     {
-        d->enterErrorState(QString("Authentication error! " + reply->readAll()));
+        d->enterErrorState(QString(QLatin1String("Authentication error! ")
+                                   + reply->readAll()));
         return;
     }
 
@@ -921,60 +926,80 @@ void QWebMethodPrivate::prepareRequestData()
 {
     data.clear();
     QString header, body, footer;
-    QString endl("\r\n"); // Replace with something OS-independent, or seriously rethink.
+    // Replace with something OS-independent, or seriously rethink.
+    QString endl = QLatin1String("\r\n");
 
     if (protocolUsed & QWebMethod::Soap) {
         if (protocolUsed & QWebMethod::Soap12) {
-            header = QString("<?xml version=\"1.0\" encoding=\"utf-8\"?> " + endl +
-                     " <soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
-                     "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" " +
-                     "xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\"> " + endl +
-                     " <soap12:Body> " + endl);
+            header = QString(QLatin1String("<?xml version=\"1.0\" encoding=\"utf-8\"?> ")
+                     + endl + QLatin1String(" <soap12:Envelope "
+                     "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
+                     "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" "
+                     "xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\"> ") + endl +
+                     QLatin1String(" <soap12:Body> ") + endl);
 
-            footer = QString("</soap12:Body> " + endl + "</soap12:Envelope>");
+            footer = QString(QLatin1String("</soap12:Body> ")
+                             + endl
+                             + QLatin1String("</soap12:Envelope>"));
         } else if (protocolUsed & QWebMethod::Soap10) {
-            header = QString("<?xml version=\"1.0\" encoding=\"utf-8\"?> " + endl +
-                    " <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
-                    "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" " +
-                    "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"> " + endl +
-                    " <soap:Body> " + endl);
+            header = QString(QLatin1String("<?xml version=\"1.0\" encoding=\"utf-8\"?> ")
+                     + endl + QLatin1String(" <soap:Envelope "
+                     "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
+                     "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" "
+                     "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\"> ") + endl +
+                     QLatin1String(" <soap:Body> ") + endl);
 
-            footer = QString("</soap:Body> " + endl + "</soap:Envelope>");
+            footer = QString(QLatin1String("</soap:Body> ")
+                             + endl
+                             + QLatin1String("</soap:Envelope>"));
         }
 
-        body = QString("\t<" + m_methodName
-                       + " xmlns=\"" + m_targetNamespace + "\"> " + endl);
+        body = QString(QLatin1String("\t<") + m_methodName
+                       + QLatin1String(" xmlns=\"")
+                       + m_targetNamespace
+                       + QLatin1String("\"> ") + endl);
 
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
             // Currently, this does not handle nested lists
-            body += QString("\t\t<" + currentKey + ">" +
-                            qv.toString() + "</" + currentKey + "> " + endl);
+            body += QString(QLatin1String("\t\t<") + currentKey
+                            + QLatin1String(">")
+                            + qv.toString()
+                            + QLatin1String("</") + currentKey
+                            + QLatin1String("> ") + endl);
         }
 
-        body += QString("\t</" + m_methodName + "> " + endl);
+        body += QString(QLatin1String("\t</")
+                        + m_methodName
+                        + QLatin1String("> ") + endl);
     } else if (protocolUsed & QWebMethod::Http) {
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
             // Currently, this does not handle nested lists
-            body += QString(currentKey + "=" + qv.toString() + "&");
+            body += QString(currentKey + QLatin1String("=")
+                            + qv.toString() + QLatin1String("&"));
         }
         body.chop(1);
     } else if (protocolUsed & QWebMethod::Json) {
-        body += "{" + endl;
+        body += QString(QLatin1String("{") + endl);
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
             // Currently, this does not handle nested lists
-            body += QString("{" + endl + "\t\"" + currentKey + "\" : \""
-                            + qv.toString() + "\"" + endl);
+            body += QString(QLatin1String("{") + endl
+                            + QLatin1String("\t\"") + currentKey
+                            + QLatin1String("\" : \"")
+                            + qv.toString()
+                            + QLatin1String("\"") + endl);
         }
         body += QLatin1String("}");
     } else if (protocolUsed & QWebMethod::Xml) {
         foreach (const QString currentKey, parameters.keys()) {
             QVariant qv = parameters.value(currentKey);
             // Currently, this does not handle nested lists
-            body += QString("\t\t<" + currentKey + ">"
-                            + qv.toString() + "</" + currentKey + "> " + endl);
+            body += QString(QLatin1String("\t\t<") + currentKey
+                            + QLatin1String(">") + qv.toString()
+                            + QLatin1String("</") + currentKey
+                            + QLatin1String("> ") + endl);
         }
     }
 
@@ -1005,7 +1030,7 @@ bool QWebMethodPrivate::enterErrorState(const QString &errMessage)
 {
     Q_Q(QWebMethod);
     errorState = true;
-    errorMessage += QString(errMessage + " ");
+    errorMessage += QString(errMessage + QLatin1String(" "));
 //    qDebug() << errMessage;
     emit q->errorEncountered(errMessage);
     return false;

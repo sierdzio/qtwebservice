@@ -269,7 +269,8 @@ void QWsdl::fileReplyFinished(QNetworkReply *rply)
 
     if (!file.open(QFile::WriteOnly)) {
         d->enterErrorState(
-                    QString("Error: cannot write WSDL file from remote location. Reason: "
+                    QString(QLatin1String("Error: cannot write WSDL file from "
+                                          "remote location. Reason: ")
                             + file.errorString()));
         return;
     } else {
@@ -306,7 +307,7 @@ bool QWsdlPrivate::enterErrorState(const QString &errMessage)
 {
     Q_Q(QWsdl);
     errorState = true;
-    errorMessage += QString(errMessage + " ");
+    errorMessage += QString(errMessage + QLatin1String(" "));
 //    qDebug() << errMessage;
     emit q->errorEncountered(errMessage);
     return false;
@@ -337,8 +338,10 @@ bool QWsdlPrivate::parse()
 
     QFile file(wsdlFilePath);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
-        enterErrorState(QString("Error: cannot read WSDL file: "
-                                + wsdlFilePath + ". Reason: " + file.errorString()));
+        enterErrorState(QString(QLatin1String("Error: cannot read WSDL file: ")
+                                + wsdlFilePath
+                                + QLatin1String(". Reason: ")
+                                + file.errorString()));
         return false;
     }
 
@@ -640,7 +643,8 @@ void QWsdlPrivate::prepareMethods()
                 methodMain = i;
 
                 for (int j = 0; j < workMethodList->length(); j++) {
-                    if (workMethodList->at(j) == QString(methodName + "Response")) {
+                    if (workMethodList->at(j) == QString(methodName
+                                                         + QLatin1String("Response"))) {
                         methodReturn = j;
                         methodsDone[j] = true;
                         isMethodAndResponsePresent = true;

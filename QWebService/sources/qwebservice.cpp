@@ -350,7 +350,7 @@ bool QWebServicePrivate::enterErrorState(const QString &errMessage)
 {
     Q_Q(QWebService);
     errorState = true;
-    errorMessage += QString(errMessage + " ");
+    errorMessage += QString(errMessage + QLatin1String(" "));
 //    qDebug() << errMessage;
     emit q->errorEncountered(errMessage);
     return false;

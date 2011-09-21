@@ -46,19 +46,18 @@
     \brief Extends QWebMethod with some generic constructors and synchronous message sending.
 
 
-    Subclass of QWebMethod, contains many generic methods for sending messages.
+    Subclass of QWebMethod, contains many generic methods for sending messages
+    and various additional convenience constructors.
     Can be used both synchronously (through static sendMessage() method),
     or asynchronously (indicates, when reply is ready by emitting
     a replyReady() signal).
-
-    More description will be added in the future.
   */
 
 /*!
-  Constructs web method object with \a parent.
-  Requires specifying other parameters later.
-  If you use that constructor, you can probably go on
-  and use the base QWebMethod class.
+    Constructs web method object with \a parent.
+    Requires specifying other parameters later.
+    If you use that constructor, you can probably go on
+    and use the base QWebMethod class.
   */
 QWebServiceMethod::QWebServiceMethod(QObject *parent) :
     QWebMethod(*new QWebServiceMethodPrivate, Soap12, Post, parent)
@@ -83,7 +82,7 @@ QWebServiceMethod::QWebServiceMethod(Protocol protocol, HttpMethod httpMethod,
     and \a method (which defaults to POST).
     Requires params to be specified later.
 
-    \sa init(), setParameters(), setProtocol(), sendMessage()
+    \sa setParameters(), setProtocol(), sendMessage()
   */
 QWebServiceMethod::QWebServiceMethod(const QUrl &hostUrl, const QString &methodName,
                                      Protocol protocol, HttpMethod method,
@@ -103,7 +102,7 @@ QWebServiceMethod::QWebServiceMethod(const QUrl &hostUrl, const QString &methodN
     and \a httpMethod (which defaults to POST).
     Requires params to be specified later.
 
-    \sa init(), setParameters(), setProtocol(), sendMessage()
+    \sa setParameters(), setProtocol(), sendMessage()
   */
 QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodName,
                                      Protocol protocol, HttpMethod httpMethod,
@@ -126,7 +125,7 @@ QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodN
     manually send the message using sendMessage() (without any arguments,
     or else - if you want to change ones specified here).
 
-    \sa init(), sendMessage(), setProtocol()
+    \sa sendMessage(), setProtocol()
   */
 QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodName,
                                      const QString &targetNamespace,
