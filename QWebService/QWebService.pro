@@ -7,22 +7,20 @@
 
 QT       = core core-private network
 
-QT       -= gui
-
-TARGET = QWebService
+TARGET   = QWebService
 
 TEMPLATE = lib
 
-CONFIG += dll
+CONFIG   += dll
 
-DEFINES += QWEBSERVICE_LIBRARY
+DEFINES  += QWEBSERVICE_LIBRARY
 
-VERSION = 0.5.1
+VERSION  = 0.5.1
 
-DESTDIR = ../lib
+DESTDIR  = ../lib
 OBJECTS_DIR = ../build-QWebService
 
-SOURCES += \
+SOURCES  += \
     sources/qwebmethod.cpp \
     sources/qwebservicemethod.cpp \
     sources/qwsdl.cpp \
@@ -30,7 +28,7 @@ SOURCES += \
     sources/qwebservicereader.cpp \
 
 
-HEADERS += headers/QWebService_global.h \
+HEADERS  += headers/QWebService_global.h \
     headers/QWebService \
     headers/qwebmethod.h \
     headers/qwebservicemethod.h \
