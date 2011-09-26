@@ -48,17 +48,16 @@
 #include <QtCore/qstring.h>
 #include <QtCore/qstringlist.h>
 #include <QtCore/qdatetime.h>
+#include <private/qobject_p.h>
 #include "qwebservicemethod.h"
 #include "qwsdl.h"
 
-class QWsdlPrivate
+class QWsdlPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(QWsdl)
 
 public:
     QWsdlPrivate() {}
-    QWsdlPrivate(QWsdl *q) : q_ptr(q) {}
-    QWsdl *q_ptr;
 
     void init();
     bool parse();

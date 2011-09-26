@@ -42,18 +42,18 @@
 #ifndef QWEBSERVICE_P_H
 #define QWEBSERVICE_P_H
 
+#include <private/qobject_p.h>
 #include "qwebservice.h"
 #include "qwebmethod.h"
 #include "qwsdl.h"
 
-class QWebServicePrivate {
+class QWebServicePrivate : public QObjectPrivate
+{
 
     Q_DECLARE_PUBLIC(QWebService)
 
 public:
     QWebServicePrivate() {}
-    QWebServicePrivate(QWebService *q) : q_ptr(q) {}
-    QWebService *q_ptr;
 
     void init();
     bool enterErrorState(const QString &errMessage = QString());

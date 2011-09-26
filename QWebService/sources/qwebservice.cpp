@@ -68,7 +68,7 @@
     \sa setWsdl(), addMethod()
   */
 QWebService::QWebService(QObject *parent)
-    : QObject(parent), d_ptr(new QWebServicePrivate)
+    : QObject(*new QWebServicePrivate, parent)
 {
     Q_D(QWebService);
     d->wsdl = new QWsdl(this);
@@ -85,7 +85,7 @@ QWebService::QWebService(QObject *parent)
     \sa resetWsdl(), addMethod()
   */
 QWebService::QWebService(QWsdl *_wsdl, QObject *parent)
-    : QObject(parent), d_ptr(new QWebServicePrivate)
+    : QObject(*new QWebServicePrivate, parent)
 {
     Q_D(QWebService);
     d->wsdl = _wsdl;
@@ -105,7 +105,7 @@ QWebService::QWebService(QWsdl *_wsdl, QObject *parent)
     \sa setWsdl(), addMethod()
   */
 QWebService::QWebService(const QString &_hostname, QObject *parent)
-    : QObject(parent), d_ptr(new QWebServicePrivate)
+    : QObject(*new QWebServicePrivate, parent)
 {
     Q_D(QWebService);
     d->m_hostUrl.setUrl(_hostname);
@@ -123,7 +123,7 @@ QWebService::QWebService(const QString &_hostname, QObject *parent)
   \internal
   */
 QWebService::QWebService(QWebServicePrivate &dd, QObject *parent) :
-    QObject(parent), d_ptr(&dd)
+    QObject(dd, parent)
 {
     Q_D(QWebService);
     d->wsdl = new QWsdl(this);

@@ -169,7 +169,7 @@
   \sa setParameters(), setProtocol(), sendMessage()
   */
 QWebMethod::QWebMethod(QObject *parent) :
-    QObject(parent), d_ptr(new QWebMethodPrivate)
+    QObject(*new QWebMethodPrivate, parent)
 {
     Q_D(QWebMethod);
     d->init();
@@ -185,7 +185,7 @@ QWebMethod::QWebMethod(QObject *parent) :
     \sa setParameters(), setProtocol(), sendMessage()
   */
 QWebMethod::QWebMethod(Protocol protocol, HttpMethod method, QObject *parent) :
-    QObject(parent), d_ptr(new QWebMethodPrivate)
+    QObject(*new QWebMethodPrivate, parent)
 {
     Q_D(QWebMethod);
     d->init();
@@ -200,8 +200,9 @@ QWebMethod::QWebMethod(Protocol protocol, HttpMethod method, QObject *parent) :
 
     \sa setParameters(), setProtocol(), sendMessage()
   */
-QWebMethod::QWebMethod(const QUrl &url, Protocol protocol, HttpMethod method, QObject *parent) :
-    QObject(parent), d_ptr(new QWebMethodPrivate)
+QWebMethod::QWebMethod(const QUrl &url, Protocol protocol,
+                       HttpMethod method, QObject *parent) :
+    QObject(*new QWebMethodPrivate, parent)
 {
     Q_D(QWebMethod);
     d->init();
@@ -213,8 +214,9 @@ QWebMethod::QWebMethod(const QUrl &url, Protocol protocol, HttpMethod method, QO
 /*!
   \internal
   */
-QWebMethod::QWebMethod(QWebMethodPrivate &dd, Protocol protocol, HttpMethod httpMethod, QObject *parent) :
-    QObject(parent), d_ptr(&dd)
+QWebMethod::QWebMethod(QWebMethodPrivate &dd, Protocol protocol,
+                       HttpMethod httpMethod, QObject *parent) :
+    QObject(dd, parent)
 {
     Q_D(QWebMethod);
     d->init();
@@ -790,7 +792,7 @@ QVariant QWebMethod::replyReadParsed()
     Q_D(QWebMethod);
     QVariant result;
     QByteArray replyBytes = d->reply;
-    QString replyString = d->convertReplyToUtf(QString(replyBytes));
+    QString replyString = d->convertReplyToUtf(replyBytes);
 
     // This section is SOAP-only and should be fixed for other protocols!
     // It's not done properly, anyway.

@@ -86,7 +86,6 @@ protected slots:
 
 protected:
     QWsdl(QWsdlPrivate &d, QObject *parent = 0);
-    QWsdlPrivate *d_ptr;
 
 private:
     Q_DECLARE_PRIVATE(QWsdl)
