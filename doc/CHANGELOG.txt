@@ -11,7 +11,7 @@ Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/wsdl/band_ws.asmx
  -af --cmake --scons --json ../examples/wsdl/band_ws.asmx
 
-.09.2011 : CEST:
+26.09.2011 10:34 CEST:
  - make private headers inherit from QObjectPrivate, instead of
    relying on a custom structure,
 
