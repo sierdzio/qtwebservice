@@ -56,6 +56,9 @@ WARNING: Remember to first compile QWebService library, and set it's path in run
   2.1.2 Default switches
     --synchronous, --soap12, --standard-structure, --full-mode, --qmake
 
+  2.1.3 Example
+  qtwsdlconverter -af --cmake --scons --json ../examples/wsdl/band_ws.asmx
+
 2.2 Meaning
 All entries in single sections (with an exception of build system related switches, and '--rest') are exclusive - you can use only one at a time (the lates one specified is used). For example, if you use --http and --json, only JSON flag will be set.
 

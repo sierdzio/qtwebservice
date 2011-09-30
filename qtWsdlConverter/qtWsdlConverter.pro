@@ -9,7 +9,7 @@ QT       += core network
 
 QT       -= gui
 
-TARGET   = qtWsdlConverter
+TARGET   = qtwsdlconvert
 CONFIG   += console
 CONFIG   -= app_bundle
 
