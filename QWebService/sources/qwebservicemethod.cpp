@@ -159,10 +159,10 @@ QWebServiceMethod::QWebServiceMethod(QWebServiceMethodPrivate &d,
 
     Returns true on success.
   */
-bool QWebServiceMethod::sendMessage(const QMap<QString, QVariant> &params)
+bool QWebServiceMethod::invokeMethod(const QMap<QString, QVariant> &params)
 {
     setParameters(params);
-    sendMessage();
+    invokeMethod();
     return true;
 }
 
@@ -175,7 +175,7 @@ bool QWebServiceMethod::sendMessage(const QMap<QString, QVariant> &params)
     as well as HTTP \a method (default is POST).
     Returns with web service reply.
   */
-QByteArray QWebServiceMethod::sendMessage(const QUrl &url,
+QByteArray QWebServiceMethod::invokeMethod(const QUrl &url,
                                           const QString &methodName,
                                           const QString &targetNamespace,
                                           const QMap<QString, QVariant> &params,
@@ -185,7 +185,7 @@ QByteArray QWebServiceMethod::sendMessage(const QUrl &url,
     QWebServiceMethod qsm(url.toString(), methodName, targetNamespace, params,
                           protocol, httpMethod, parent);
 
-    qsm.sendMessage();
+    qsm.invokeMethod();
     // TODO: ADD ERROR HANDLING!
     forever {
         if (qsm.d_func()->replyReceived) {

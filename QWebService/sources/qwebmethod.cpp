@@ -691,7 +691,7 @@ bool QWebMethod::setHttpMethod(const QString &newMethod)
 
     \sa setParameters(), setProtocol(), setTargetNamespace()
   */
-bool QWebMethod::sendMessage(const QByteArray &requestData)
+bool QWebMethod::invokeMethod(const QByteArray &requestData)
 {
     Q_D(QWebMethod);
     connect(d->manager, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)),

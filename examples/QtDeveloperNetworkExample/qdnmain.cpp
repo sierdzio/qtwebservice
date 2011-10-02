@@ -78,7 +78,7 @@ void QdnMain::on_buttonLogin_clicked()
 {
     webMethodProfile->authenticate(ui->lineEditLogin->text(),
                                    ui->lineEditPassword->text());
-    webMethodProfile->sendMessage();
+    webMethodProfile->invokeMethod();
 
     QUrl url;
     url.addEncodedQueryItem("ACT", QUrl::toPercentEncoding("11"));
@@ -89,7 +89,7 @@ void QdnMain::on_buttonLogin_clicked()
     url.addEncodedQueryItem("password",
                             QUrl::toPercentEncoding(ui->lineEditPassword->text()));
     webMethodPosts->authenticate(url);
-    webMethodPosts->sendMessage();
+    webMethodPosts->invokeMethod();
 }
 
 void QdnMain::profileReply()

@@ -150,7 +150,7 @@ void TestQWebServiceMethod::asynchronousTest()
                               "getProviderList",
                               QWebMethod::Soap12, QWebMethod::Post, this);
     message->setTargetNamespace("http://www.daenet.de/webservices/CurrencyServer");
-    message->sendMessage(tmpP);
+    message->invokeMethod(tmpP);
 
     QCOMPARE(message->isErrorState(), bool(false));
 
@@ -173,7 +173,7 @@ void TestQWebServiceMethod::synchronousTest()
     QMap<QString, QVariant> tmpP;
     bool result = false;
     QString reply = "pass";
-    reply = QWebServiceMethod::sendMessage(
+    reply = QWebServiceMethod::invokeMethod(
              QUrl("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx"),
              "getProviderList", "http://www.daenet.de/webservices/CurrencyServer",
              tmpP, QWebMethod::Soap12, QWebMethod::Post, this);

@@ -144,7 +144,7 @@ void TestQWebMethod::asynchronousSendingTest()
     message->setHost("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx");
     message->setMethodName("getProviderList");
     message->setTargetNamespace("http://www.daenet.de/webservices/CurrencyServer");
-    message->sendMessage();
+    message->invokeMethod();
     QCOMPARE(message->isErrorState(), bool(false));
 
     bool result = false;

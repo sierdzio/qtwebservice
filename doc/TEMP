@@ -57,13 +57,10 @@ Gravatar retrieval:
 http://www.gravatar.com/avatar/e1eb64c6fbad857512a62c027f102162?s=200
 
 
-
-
-
 Qt5 build:
 Qt is now configured for building. Just run 'make'.
 Once everything is built, Qt is installed.
 You should not run 'make install'.
 
 To reconfigure, run 'make confclean' and 'configure'.
-
+./configure -prefix $PWD/qtbase -opensource -confirm-license -nomake tests -nomake examples -nomake demos

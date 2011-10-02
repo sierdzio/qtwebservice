@@ -69,9 +69,9 @@ public:
                       Protocol protocol = Soap12, HttpMethod httpMethod = Post,
                       QObject *parent = 0);
 
-    using QWebMethod::sendMessage;
-    bool sendMessage(const QMap<QString, QVariant> &params);
-    QByteArray static sendMessage(const QUrl &url,
+    using QWebMethod::invokeMethod;
+    bool invokeMethod(const QMap<QString, QVariant> &params);
+    QByteArray static invokeMethod(const QUrl &url,
                                   const QString &methodName,
                                   const QString &targetNamespace,
                                   const QMap<QString, QVariant> &params,

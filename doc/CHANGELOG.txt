@@ -16,6 +16,7 @@ Example arguments for converter:
  - updated README with example converter's usage,
  - updated converter's web method code generation, to reflect recent changes in QWebService,
  - changed converter's target to qtwsdlconvert (was qtWsdlConvert),
+ - changed QWebMethod::sendMessage() to QWebMethod::invokeMethod().
 
 26.09.2011 10:34 CEST:
  - make private headers inherit from QObjectPrivate, instead of

@@ -127,7 +127,7 @@ public:
     bool setHttpMethod(const QString &newMethod);
 
     // should this be changed to invokeMethod()?
-    bool sendMessage(const QByteArray &requestData = QByteArray());
+    bool invokeMethod(const QByteArray &requestData = QByteArray());
     QVariant replyReadParsed();
     QByteArray replyReadRaw();
     QString replyRead();
