@@ -11,12 +11,13 @@ Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/wsdl/band_ws.asmx
  -af --cmake --scons --json ../examples/wsdl/band_ws.asmx
 
-.10.2011 : CEST:
+06.10.2011 19:14 CEST:
  - updated converter's help message,
  - updated README with example converter's usage,
  - updated converter's web method code generation, to reflect recent changes in QWebService,
  - changed converter's target to qtwsdlconvert (was qtWsdlConvert),
- - changed QWebMethod::sendMessage() to QWebMethod::invokeMethod().
+ - changed QWebMethod::sendMessage() to QWebMethod::invokeMethod(),
+ - reverted private headers back to custom structure, as there were errors raised by Qt4.7 (and release libs in general).
 
 26.09.2011 10:34 CEST:
  - make private headers inherit from QObjectPrivate, instead of

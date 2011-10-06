@@ -72,7 +72,7 @@
     \sa setWsdlFile(), resetWsdl()
   */
 QWsdl::QWsdl(QObject *parent) :
-    QObject(*new QWsdlPrivate, parent)
+    QObject(parent), d_ptr(new QWsdlPrivate)
 {
     Q_D(QWsdl);
     d->init();
@@ -83,7 +83,7 @@ QWsdl::QWsdl(QObject *parent) :
     specified in \a wsdlFile to parse the WSDL file.
   */
 QWsdl::QWsdl(const QString &wsdlFile, QObject *parent) :
-    QObject(*new QWsdlPrivate, parent)
+    QObject(parent), d_ptr(new QWsdlPrivate)
 {
     Q_D(QWsdl);
     d->wsdlFilePath = wsdlFile;
@@ -95,7 +95,7 @@ QWsdl::QWsdl(const QString &wsdlFile, QObject *parent) :
   \internal
   */
 QWsdl::QWsdl(QWsdlPrivate &dd, QObject *parent) :
-    QObject(dd, parent)
+    QObject(parent), d_ptr(&dd)
 {
     Q_D(QWsdl);
     d->init();

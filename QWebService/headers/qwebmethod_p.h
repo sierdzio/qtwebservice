@@ -52,15 +52,16 @@
 #include <QtCore/qvariant.h>
 #include <QtCore/qmap.h>
 #include <QtCore/qbytearray.h>
-#include <private/qobject_p.h>
 #include "qwebmethod.h"
 
-class QWebMethodPrivate : public QObjectPrivate
+class QWebMethodPrivate
 {
     Q_DECLARE_PUBLIC(QWebMethod)
 
 public:
     QWebMethodPrivate() {}
+    QWebMethodPrivate(QWebMethod *q) : q_ptr(q) {}
+    QWebMethod *q_ptr;
 
     void init();
     void prepareRequestData();

@@ -41,6 +41,7 @@
 
 #include <QtCore>
 #if QT_VERSION < 0x050000
+    #include <QtGui/QApplication>
     #include <QtGui/QMainWindow>
 #else
     #include <QtWidgets/QApplication>

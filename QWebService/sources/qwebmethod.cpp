@@ -169,7 +169,7 @@
   \sa setParameters(), setProtocol(), sendMessage()
   */
 QWebMethod::QWebMethod(QObject *parent) :
-    QObject(*new QWebMethodPrivate, parent)
+    QObject(parent), d_ptr(new QWebMethodPrivate)
 {
     Q_D(QWebMethod);
     d->init();
@@ -185,7 +185,7 @@ QWebMethod::QWebMethod(QObject *parent) :
     \sa setParameters(), setProtocol(), sendMessage()
   */
 QWebMethod::QWebMethod(Protocol protocol, HttpMethod method, QObject *parent) :
-    QObject(*new QWebMethodPrivate, parent)
+    QObject(parent), d_ptr(new QWebMethodPrivate)
 {
     Q_D(QWebMethod);
     d->init();
@@ -202,7 +202,7 @@ QWebMethod::QWebMethod(Protocol protocol, HttpMethod method, QObject *parent) :
   */
 QWebMethod::QWebMethod(const QUrl &url, Protocol protocol,
                        HttpMethod method, QObject *parent) :
-    QObject(*new QWebMethodPrivate, parent)
+    QObject(parent), d_ptr(new QWebMethodPrivate)
 {
     Q_D(QWebMethod);
     d->init();
@@ -216,7 +216,7 @@ QWebMethod::QWebMethod(const QUrl &url, Protocol protocol,
   */
 QWebMethod::QWebMethod(QWebMethodPrivate &dd, Protocol protocol,
                        HttpMethod httpMethod, QObject *parent) :
-    QObject(dd, parent)
+    QObject(parent), d_ptr(&dd)
 {
     Q_D(QWebMethod);
     d->init();

@@ -149,6 +149,7 @@ protected:
     QWebMethod(QWebMethodPrivate &d,
             Protocol protocol = Soap12, HttpMethod httpMethod = Post,
             QObject *parent = 0);
+    QWebMethodPrivate *d_ptr;
 
 private:
     Q_DECLARE_PRIVATE(QWebMethod)

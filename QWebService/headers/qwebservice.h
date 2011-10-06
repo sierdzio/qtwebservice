@@ -90,6 +90,7 @@ signals:
 
 protected:
     QWebService(QWebServicePrivate &d, QObject *parent = 0);
+    QWebServicePrivate *d_ptr;
 
 private:
     Q_DECLARE_PRIVATE(QWebService)
