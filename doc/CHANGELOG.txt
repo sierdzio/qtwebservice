@@ -11,6 +11,13 @@ Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/wsdl/band_ws.asmx
  -af --cmake --scons --json ../examples/wsdl/band_ws.asmx
 
+.10.2011 : CEST:
+ - removed QWebServiceReader,
+ - added more robust SOAP reply parsing,
+ - changed license headers in all source files,
+ - changed LICENCE.txt into LICENSE.txt ( :) ),
+
+
 06.10.2011 19:14 CEST:
  - updated converter's help message,
  - updated README with example converter's usage,

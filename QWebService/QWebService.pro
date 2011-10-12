@@ -15,7 +15,7 @@ CONFIG   += dll
 
 DEFINES  += QWEBSERVICE_LIBRARY
 
-VERSION  = 0.5.2
+VERSION  = 0.5.3
 
 DESTDIR  = ../lib
 OBJECTS_DIR = ../build-QWebService
@@ -25,7 +25,6 @@ SOURCES  += \
     sources/qwebservicemethod.cpp \
     sources/qwsdl.cpp \
     sources/qwebservice.cpp \
-    sources/qwebservicereader.cpp \
 
 
 HEADERS  += headers/QWebService_global.h \
@@ -34,11 +33,9 @@ HEADERS  += headers/QWebService_global.h \
     headers/qwebservicemethod.h \
     headers/qwsdl.h \
     headers/qwebservice.h \
-    headers/qwebservicereader.h \
     headers/qwebmethod_p.h \
     headers/qwebservicemethod_p.h \
     headers/qwebservice_p.h \
-    headers/qwebservicereader_p.h \
     headers/qwsdl_p.h
 
 
@@ -61,6 +58,9 @@ unix:!symbian {
     }
     INSTALLS += target
 }
+
+
+
 
 
 

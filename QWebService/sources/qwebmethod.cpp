@@ -4,38 +4,14 @@
 ** All rights reserved.
 ** Contact: Tomasz Siekierda (sierdzio@gmail.com)
 **
-** This file is part of the QWebService library, QtNetwork Module.
+** This file is part of the QWebService library.
 **
-** $QT_BEGIN_LICENSE:LGPL$
-** GNU Lesser General Public License Usage
 ** This file may be used under the terms of the GNU Lesser General Public
 ** License version 2.1 as published by the Free Software Foundation and
-** appearing in the file LICENSE.LGPL included in the packaging of this
+** appearing in the file LICENSE.txt included in the packaging of this
 ** file. Please review the following information to ensure the GNU Lesser
 ** General Public License version 2.1 requirements will be met:
 ** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** In addition, as a special exception, Nokia gives you certain additional
-** rights. These rights are described in the Nokia Qt LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU General
-** Public License version 3.0 as published by the Free Software Foundation
-** and appearing in the file LICENSE.GPL included in the packaging of this
-** file. Please review the following information to ensure the GNU General
-** Public License version 3.0 requirements will be met:
-** http://www.gnu.org/copyleft/gpl.html.
-**
-** Other Usage
-** Alternatively, this file may be used in accordance with the terms and
-** conditions contained in a signed written agreement between you and Nokia.
-**
-**
-**
-**
-**
-** $QT_END_LICENSE$
 **
 ****************************************************************************/
 
@@ -449,7 +425,8 @@ QMap<QString, QVariant> QWebMethod::parameterNamesTypes() const
 }
 
 /*!
-    Sets method's parameters (\a params). This also includes their names.
+    Sets method's parameters (\a params).
+    This also includes their names (as map key).
 
     \sa parameterNamesTypes(), parameterNames()
   */
@@ -768,6 +745,13 @@ bool QWebMethod::invokeMethod(const QByteArray &requestData)
     After making asynchronous call, and getting the replyReady() signal,
     this method can be used to read the reply.
 
+    This method returns QString with complete and exact reply from server.
+    If other data format is needed, other methods can be used:
+    \list
+    \o for parsed reply, stored in QVariant - replyReadParsed()
+    \o for raw, unprocessed reply - replyReadRaw()
+    \endlist
+
     \sa replyReadParsed(), replyReadRaw()
   */
 QString QWebMethod::replyRead()
@@ -783,7 +767,15 @@ QString QWebMethod::replyRead()
     this method can be used to read the reply.
 
     Returns parsed data (with type specified in WSDL or by user, wrapped
-    in QVariant).
+    in QVariant). Tries to parse the reply automatically, but specifying
+    reply name and type using setReturnValue() might help a lot (this is
+    relevant mostly for SOAP).
+
+    Web APIs usually return a lot of data
+    in one go, this method is likely to get lost in it. It expects a simple
+    reply (say, you request 2 + 2, and get JSON-enveloped reply - it will
+    work fine then, but not necessarily if WS returns a lot of additional
+    information).
 
     \sa replyRead(), replyReadRaw()
   */
@@ -797,17 +789,17 @@ QVariant QWebMethod::replyReadParsed()
     // This section is SOAP-only and should be fixed for other protocols!
     // It's not done properly, anyway.
     // Should return type specified in replyValue.
-    if (d->protocolUsed & Soap) {
+    if (d->protocolUsed & Soap || d->protocolUsed & Xml) {
         QString tempBegin = QString(QLatin1String("<")
-                                    + d->m_methodName
-                                    + QLatin1String("Result>"));
+                                    + d->m_methodName);
+//                                    + QLatin1String("Result>"));
         int replyBeginIndex = replyString.indexOf(tempBegin, 0,
                                                   Qt::CaseSensitive);
         replyBeginIndex += tempBegin.length();
 
         QString tempFinish = QString(QLatin1String("</")
-                                     + d->m_methodName
-                                     + QLatin1String("Result>"));
+                                     + d->m_methodName);
+//                                     + QLatin1String("Result>"));
         int replyFinishIndex = replyString.indexOf(tempFinish,
                                                    replyBeginIndex,
                                                    Qt::CaseSensitive);
@@ -817,9 +809,72 @@ QVariant QWebMethod::replyReadParsed()
         if (replyFinishIndex == -1)
             replyFinishIndex = replyString.length();
 
-        result = (QVariant) replyString.mid(replyBeginIndex,
-                                            replyFinishIndex - replyBeginIndex);
-    } else {
+        if (d->returnValue.isEmpty()) {
+            result = (QVariant) replyString.mid(replyBeginIndex,
+                                                replyFinishIndex - replyBeginIndex);
+        } else {
+            // This attempts to prepare a complete list of replies, if enough data is
+            // specified in returnValue QMap.
+            QString replyCore = replyString.mid(replyBeginIndex,
+                                                replyFinishIndex - replyBeginIndex);
+
+            // Need to add replyCore splitting into specific return values.
+            QList<QVariant> parsedReturns;
+            QStringList returnsSplitted;
+            // This is an optimistic algorithm, it assumes that
+            // returnValue QMap is right.
+            foreach (QString s, d->returnValue.keys()) {
+                if (replyCore.contains(s)) {
+                    // Get tag beginning index.
+                    int tempIndex = replyCore.indexOf(s, 0, Qt::CaseSensitive);
+                    // Get tag ending index.
+                    int tempBeginIndex = replyCore.indexOf(">", tempIndex, Qt::CaseSensitive) + 1;
+                    // Get closing tag index.
+                    tempIndex = replyCore.indexOf("</", tempBeginIndex, Qt::CaseSensitive);
+
+                    QString value = replyCore.mid(tempBeginIndex, tempBeginIndex - tempIndex).trimmed();
+                    returnsSplitted.append(value);
+                }
+            }
+
+            int i = 0;
+            foreach (QString s, d->returnValue.keys()) {
+                QString type = d->returnValue.value(s).typeName();
+
+                if (type == QLatin1String("int")) {
+                    parsedReturns.append(QVariant(returnsSplitted.at(i).toInt()));
+                } else if (type == QLatin1String("float")) {
+                    parsedReturns.append(QVariant(returnsSplitted.at(i).toFloat()));
+                } else if (type == QLatin1String("double")) {
+                    parsedReturns.append(QVariant(returnsSplitted.at(i).toDouble()));
+                } else if (type == QLatin1String("bool")) {
+                    if (returnsSplitted.at(i).toLower() == QLatin1String("true"))
+                        parsedReturns.append(QVariant(true));
+                    else if (returnsSplitted.at(i).toLower() == QLatin1String("false"))
+                        parsedReturns.append(QVariant(true));
+                } else if (type == QLatin1String("QDateTime")) {
+                    ;
+                } else if ((type == QLatin1String("QString"))
+                           || (type == QLatin1String("QChar"))) {
+                    parsedReturns.append(QVariant(returnsSplitted.at(i)));
+                } else if (type == QLatin1String("QStringList")) {
+                    // Prepare QStringLists
+                } else {
+                    parsedReturns.append(returnsSplitted.at(i));
+                }
+
+                i++;
+            }
+
+            if (parsedReturns.size() > 1)
+                result = parsedReturns;
+            else
+                result = parsedReturns.first();
+        }
+    } else if (d->protocolUsed & Json) {
+        // Parse JSON if you dare. Qt5 will have JSON parser, I could implement that then.. maybe.
+        // Writing own parser right now seems pointless.
+    } else { // Fallback - return QString. Will also be used for HTTP, which is bad.
         result = replyString;
     }
 

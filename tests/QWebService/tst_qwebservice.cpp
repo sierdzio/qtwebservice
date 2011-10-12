@@ -6,44 +6,20 @@
 **
 ** This file is part of the QWebService test suite.
 **
-** $QT_BEGIN_LICENSE:LGPL$
-** GNU Lesser General Public License Usage
 ** This file may be used under the terms of the GNU Lesser General Public
 ** License version 2.1 as published by the Free Software Foundation and
-** appearing in the file LICENSE.LGPL included in the packaging of this
+** appearing in the file LICENSE.txt included in the packaging of this
 ** file. Please review the following information to ensure the GNU Lesser
 ** General Public License version 2.1 requirements will be met:
 ** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** In addition, as a special exception, Nokia gives you certain additional
-** rights. These rights are described in the Nokia Qt LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU General
-** Public License version 3.0 as published by the Free Software Foundation
-** and appearing in the file LICENSE.GPL included in the packaging of this
-** file. Please review the following information to ensure the GNU General
-** Public License version 3.0 requirements will be met:
-** http://www.gnu.org/copyleft/gpl.html.
-**
-** Other Usage
-** Alternatively, this file may be used in accordance with the terms and
-** conditions contained in a signed written agreement between you and Nokia.
-**
-**
-**
-**
-**
-** $QT_END_LICENSE$
-**
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <qwebservicereader.h>
+#include <qwebservice.h>
 
 /**
-  This test case checks both QWebService (and QWebServiceReader) functionality.
+  This test case checks both QWebService (and QWebService) functionality.
   */
 
 class TestQWebService : public QObject
@@ -62,17 +38,17 @@ private slots:
   */
 void TestQWebService::initialTest()
 {
-    QWebServiceReader *reader1;
-    reader1 = new QWebServiceReader(this);
+    QWebService *reader1;
+    reader1 = new QWebService(this);
     QCOMPARE(reader1->isErrorState(), bool(false));
 
-    QWebServiceReader *reader2;
-    reader2 = new QWebServiceReader(QString("../../examples/wsdl/band_ws.asmx"), this);
+    QWebService *reader2;
+    reader2 = new QWebService(QString("../../examples/wsdl/band_ws.asmx"), this);
     QCOMPARE(reader2->isErrorState(), bool(false));
 
-    QWebServiceReader *reader3;
+    QWebService *reader3;
     QWsdl *wsdl = new QWsdl(QString("../../examples/wsdl/band_ws.asmx"), this);
-    reader3 = new QWebServiceReader(wsdl, this);
+    reader3 = new QWebService(wsdl, this);
     QCOMPARE(reader3->isErrorState(), bool(false));
 
     delete reader1;
@@ -85,10 +61,10 @@ void TestQWebService::initialTest()
   */
 void TestQWebService::gettersTest()
 {
-    QWebServiceReader reader(QString("../../examples/wsdl/band_ws.asmx"), this);
+    QWebService reader(QString("../../examples/wsdl/band_ws.asmx"), this);
 
-    QCOMPARE(reader.host(), QString(""));
-    QCOMPARE(reader.hostUrl(), QUrl(""));
+    QCOMPARE(reader.host(), QString("../../examples/wsdl/band_ws.asmx"));
+    QCOMPARE(reader.hostUrl(), QUrl("../../examples/wsdl/band_ws.asmx"));
     QCOMPARE(reader.isErrorState(), bool(false));
     QCOMPARE(reader.errorInfo(), QString(""));
     QCOMPARE(reader.methodNames().size(), int(13));
@@ -147,8 +123,8 @@ void TestQWebService::gettersTest()
   */
 void TestQWebService::settersTest()
 {
-    QWebServiceReader *reader;
-    reader = new QWebServiceReader(QString("../../examples/wsdl/band_ws.asmx"), this);
+    QWebService *reader;
+    reader = new QWebService(QString("../../examples/wsdl/band_ws.asmx"), this);
     QCOMPARE(reader->isErrorState(), bool(false));
 
     reader->setHost(QString("../../examples/wsdl/LondonGoldFix.asmx.xml"));
@@ -173,8 +149,8 @@ void TestQWebService::settersTest()
   */
 void TestQWebService::methodManagementTest()
 {
-    QWebServiceReader *reader;
-    reader = new QWebServiceReader(this);
+    QWebService *reader;
+    reader = new QWebService(this);
     QCOMPARE(reader->isErrorState(), bool(false));
 
     reader->setWsdl(new QWsdl("../../examples/wsdl/band_ws.asmx", reader));
