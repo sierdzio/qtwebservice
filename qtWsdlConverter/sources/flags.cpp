@@ -129,6 +129,8 @@ Flags::Flags(Options options_, HttpMethod method_, bool forced, QObject *parent)
 
     msgSuffix = QLatin1String("Send");
     objSuffix = QLatin1String("Msg");
+    endLn = QLatin1String("\r\n");
+    tabulation = "    ";
 }
 
 /*!
@@ -324,6 +326,39 @@ QString Flags::objectSuffix() const
 void Flags::setObjectSuffix(const QString &newObjSuffix)
 {
     objSuffix = newObjSuffix;
+}
+
+/*!
+    Returns the end line character in use.
+  */
+QString Flags::endLine() const
+{
+    return endLn;
+}
+
+/*!
+    Sets the end line character to be used.
+  */
+void Flags::setEndLine(const QString &newEndLine)
+{
+    endLn = newEndLine;
+}
+
+/*!
+    Returns the end line character in use.
+  */
+QString Flags::tab() const
+{
+    return tabulation;
+}
+
+/*!
+    Sets the end line character to be used.
+  */
+void Flags::setTab(int numberOfSpaces)
+{
+    for (int i = 0; i < numberOfSpaces; i++)
+        tabulation += " ";
 }
 
 /*!

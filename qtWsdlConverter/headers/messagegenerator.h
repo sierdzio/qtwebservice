@@ -23,7 +23,6 @@
 #include <QtCore/qmap.h>
 #include <QtCore/qdir.h>
 #include <QtCore/qtextstream.h>
-//#include <QWebService>
 #include <qwebservicemethod.h>
 #include "flags.h"
 
@@ -31,6 +30,12 @@ class MessageGenerator : public QObject
 {
     Q_OBJECT
 public:
+    enum FileType {
+        Header        = 0,
+        PrivateHeader = 1,
+        Source        = 2
+    };
+
     explicit MessageGenerator(QMap<QString, QWebServiceMethod *> *methods,
                               const QDir &workingDir, Flags *flgs, QObject *parent = 0);
     QString errorMessage();
@@ -45,6 +50,10 @@ private:
     bool createMainCpp();
 
     void assignAllParameters(QWebServiceMethod *msg, QTextStream &out);
+    QString assignAllParameters(QWebServiceMethod *msg);
+    QString readFile(QString path);
+    QString mergeHeaders(QString headerPath, QString privateHeaderPath);
+    QString stripFile(QString fileData, FileType type = Header);
 
     QMap<QString, QWebServiceMethod *> *methods;
     QDir workingDir;

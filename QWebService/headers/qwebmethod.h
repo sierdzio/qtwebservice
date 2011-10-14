@@ -102,7 +102,6 @@ public:
     void setHttpMethod(HttpMethod method);
     bool setHttpMethod(const QString &newMethod);
 
-    // should this be changed to invokeMethod()?
     bool invokeMethod(const QByteArray &requestData = QByteArray());
     QVariant replyReadParsed();
     QByteArray replyReadRaw();
@@ -123,8 +122,8 @@ protected slots:
 
 protected:
     QWebMethod(QWebMethodPrivate &d,
-            Protocol protocol = Soap12, HttpMethod httpMethod = Post,
-            QObject *parent = 0);
+               Protocol protocol = Soap12, HttpMethod httpMethod = Post,
+               QObject *parent = 0);
     QWebMethodPrivate *d_ptr;
 
 private:

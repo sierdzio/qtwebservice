@@ -92,6 +92,12 @@ public:
     QString objectSuffix() const;
     void setObjectSuffix(const QString &newObjSuffix);
 
+    QString endLine() const;
+    void setEndLine(const QString &newEndLine);
+
+    QString tab() const;
+    void setTab(int numberOfSpaces);
+
     Flags & operator=(const Flags &flag);
 
 private:
@@ -100,6 +106,8 @@ private:
     bool force;
     QString msgSuffix;
     QString objSuffix;
+    QString endLn;
+    QString tabulation;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Flags::Options)

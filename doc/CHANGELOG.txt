@@ -13,10 +13,12 @@ Example arguments for converter:
 
 .10.2011 : CEST:
  - removed QWebServiceReader,
- - added more robust SOAP reply parsing,
+ - added more robust SOAP, XML reply parsing,
  - changed license headers in all source files,
  - changed LICENCE.txt into LICENSE.txt ( :) ),
-
+ - experimental overhaul of message creation in converter,
+ - added end line character choice for converter (temporarily internal, will make a flag soon),
+ - added tabulation length choice for converter (temporarily internal, will make a flag soon).
 
 06.10.2011 19:14 CEST:
  - updated converter's help message,
