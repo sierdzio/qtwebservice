@@ -1,0 +1,38 @@
+%include%
+
+%service%::%service%(QObject *parent)
+    : QObject(parent)
+{
+%connect%
+%constructorSetters%
+}
+
+%service%::~%service%()
+{
+}
+
+QStringList %service%::getMethodNames()
+{
+    QStringList result;
+%methodNames%
+    return result;
+}
+
+%methodSend% 
+%methodReplyRead%
+%methodReply%
+
+QUrl %service%::getHostUrl()
+{
+    return hostUrl;
+}
+
+QString %service%::getHost()
+{
+    return hostUrl.host();
+}
+
+bool %service%::isErrorState()
+{
+    return errorState;
+}

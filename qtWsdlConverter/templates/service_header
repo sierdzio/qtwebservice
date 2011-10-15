@@ -1,0 +1,33 @@
+#ifndef %headerIfndef%
+#define %headerIfndef%
+
+#include <QtCore>
+#include <QUrl>
+%include%
+
+class %service% : public QObject
+{
+    Q_OBJECT
+
+public:
+    %service%(QObject *parent = 0);
+    ~%service%();
+
+    QStringList getMethodNames();
+%methodSend%
+    QUrl getHostUrl();
+    QString getHost();
+    bool isErrorState();
+ 
+%methodReplyRead%
+%methodReply%
+
+protected:
+    bool errorState;
+    QUrl hostUrl;
+
+%methodResult%
+%methodMsg%
+};
+
+#endif // %headerIfndef%

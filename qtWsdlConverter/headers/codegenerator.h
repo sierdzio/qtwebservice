@@ -25,6 +25,7 @@
 #include <qwebservicemethod.h>
 #include <qwsdl.h>
 #include "flags.h"
+#include "templatelogic.h"
 #include "messagegenerator.h"
 
 class CodeGenerator : public QObject
@@ -60,6 +61,7 @@ private:
     bool errorState;
     QString errorMessage;
     QString baseClassName;
+    TemplateLogic logic;
 };
 
 #endif // CODEGENERATOR_H

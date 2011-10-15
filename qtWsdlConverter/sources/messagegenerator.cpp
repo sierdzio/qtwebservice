@@ -35,6 +35,7 @@ MessageGenerator::MessageGenerator(QMap<QString, QWebServiceMethod *> *mthds,
     QObject(parent), methods(mthds), workingDir(wrkDir), flags(flgs)
 {
     errorState = false;
+    logic = TemplateLogic(flags);
 }
 
 /*!
@@ -157,65 +158,48 @@ bool MessageGenerator::createSubclassedMessageHeader(QWebServiceMethod *msg)
         msgParameters.chop(2);
     }
 
-    // ---------------------------------
-    // Begin writing:
-    QTextStream out(&file);
-    out.setCodec("UTF-8");
-    // Might break on curious names
-    out << "#ifndef " << msgName.toUpper() << "_H" << endl;
-    out << "#define " << msgName.toUpper() << "_H" << endl;
-    out << endl;
-    // Should be <QWebService/QWebServiceMethod.h>
-    out << "#include <QWebService>" << endl;
-    out << endl;
-    out << "class " << msgName << " : public QWebServiceMethod" << endl;
-    out << "{" << endl;
-    out << "    Q_OBJECT" << endl;
-    out << endl;
-    out << "public:" << endl;
+    QString messageHeader = logic.readFile("../qtWsdlConverter/templates/method_header");
+    int beginIndex = 0;
 
-    out << "    " << msgName << "(QObject *parent = 0);" << endl;
-    if (msgParameters != "")
-    out << "    " << msgName << "(" << msgParameters
-        << ", QObject *parent = 0);" << endl;
+    messageHeader.replace("%headerIfndef%", msgName.toUpper() + "_H");
+    messageHeader.replace("%method%", msgName);
+    messageHeader.replace("%params%", msgParameters);
 
-    out << endl;
-    out << "    void setParameters(" << msgParameters << ");" << endl;
-    out << endl;
+    // Create custom constructor.
+    if (msgParameters != QString()) {
+        beginIndex = logic.removeTag(messageHeader, "%methodConstructor%");
 
-    out << "    using QWebServiceMethod::sendMessage;" << endl;
-    if ((msgParameters != "") && !((flags->flags() & Flags::CompactMode)
-                                   && (flags->flags() & Flags::Synchronous)))
-        out << "    bool sendMessage(" << msgParameters << ");" << endl;
-
-    if (!((flags->flags() & Flags::CompactMode)
-          && (flags->flags() & Flags::Asynchronous)))
-    {
-        out << "    QString static sendMessage(QObject *parent";
-        if (msgParameters != QString()) {
-            out << ", " << msgParameters << ");" << endl;
-        } else {
-            out << ");" << endl;
-        }
+        QString toInsert = flags->tab() + msgName + "(" + msgParameters
+                + ", QObject *parent = 0);" + flags->tab();
+        messageHeader.insert(beginIndex, toInsert);
+        beginIndex += toInsert.length();
     }
 
-    out << "private:" << endl;
-    out << "    void configure();" << endl;
     { // Create parameters list in declarative form.
-        out << "    // -------------------------" << endl
-            << "    // Parameters:" << endl;
+        beginIndex = logic.removeTag(messageHeader, "%paramsDeclaration%");
+
+        QString toInsert = flags->tab() + "// -------------------------"
+                + flags->endLine() + flags->tab()
+                + "// Parameters:" +flags->endLine();
 
         QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
 
         foreach (QString s, tempMap.keys()) {
-            out << "    " << tempMap.value(s).typeName() << " " << s << ";" << endl;
+            toInsert += flags->tab() + tempMap.value(s).typeName()
+                    + " " + s + ";" + flags->endLine();
         }
-        out << "    // End of parameters." << endl
-            << "    // -------------------------" << endl;
+       toInsert += flags->tab() + "// End of parameters." + flags->endLine()
+               + flags->tab() + "// -------------------------" + flags->endLine();
+
+        messageHeader.insert(beginIndex, toInsert);
+        beginIndex += toInsert.length();
     }
-    out << "};" << endl;
-    out << endl;
-    out << "#endif // " << msgName.toUpper() << "_H" << endl;
+
+    // ---------------------------------
+    // Begin writing:
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << messageHeader;
     // EOF (SOAP message)
     // ---------------------------------
 
@@ -260,66 +244,44 @@ bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
         msgParameters.chop(2);
     }
 
-    // ---------------------------------
-    // Begin writing:
-    QTextStream out(&file);
-    out.setCodec("UTF-8");
-    out << "#include \"";
+    QString messageSource = logic.readFile("../qtWsdlConverter/templates/method_source");
+    int beginIndex = 0;
+
+    messageSource.replace("%method%", msgName);
+    messageSource.replace("%params%", msgParameters);
+    messageSource.replace("%assignParams%", assignAllParameters(msg));
+
+    beginIndex = logic.removeTag(messageSource, "%include%");
+    QString toInsert = "#include \"";
     if (!(flags->flags() & Flags::AllInOneDirStructure))
-        out << "../headers/";
-    out << msgName << ".h\"" << endl;
-    out << endl;
+        toInsert += "../headers/";
+    toInsert += msgName + ".h\"";
+    messageSource.insert(beginIndex, toInsert);
 
-    out << msgName << "::" << msgName << "(QObject *parent) : " << endl;
-    out << "    QWebServiceMethod(parent)" << endl;
-    out << "{" << endl;
-    out << "    configure();" << endl;
-    out << "}" << endl;
-    out << endl;
-    if (msgParameters != "") {
-        out << msgName << "::" << msgName << "(" << msgParameters
-            << ", QObject *parent) :" << endl;
-        out << "    QWebServiceMethod(parent)" << endl;
-        out << "{" << endl;
+    beginIndex = logic.removeTag(messageSource, "%methodConstructor%");
+    if (msgParameters != QString()) {
+        toInsert = msgName + "::" + msgName + "(" + msgParameters
+                + ", QObject *parent) :" + flags->endLine()
+                + flags->tab() + "QWebServiceMethod(parent)" +  flags->endLine()
+                + "{" +  flags->endLine()
+                + assignAllParameters(msg) +  flags->tab()
+                + "configure();" +  flags->endLine()
+                + "}";
 
-        assignAllParameters(msg, out);
-        out << "    configure();" << endl;
-
-        out << "}" << endl;
-        out << endl;
+        messageSource.insert(beginIndex, toInsert);
     }
-    out << "void " << msgName << "::setParameters(" << msgParameters << ")" << endl;
-    out << "{" << endl;
 
-
-    assignAllParameters(msg, out);
-
-    out << "}" << endl;
-    out << endl;
-
-    if ((msgParameters != QString()) && !((flags->flags() & Flags::CompactMode)
-                                   && (flags->flags() & Flags::Synchronous))) {
-        out << "bool " << msgName << "::sendMessage(" << msgParameters << ")" << endl;
-        out << "{" << endl;
-
-        assignAllParameters(msg, out);
-
-        out << "    sendMessage();" << endl;
-        out << "    return true;" << endl;
-        out << "}" << endl;
-        out << endl;
-    }
+    beginIndex = logic.removeTag(messageSource, "%staticInvoke%");
     if (!((flags->flags() & Flags::CompactMode)
           && (flags->flags() & Flags::Asynchronous))) {
-        out << "/* STATIC */" << endl;
-        out << "QString " << msgName << "::sendMessage(QObject *parent";
+        toInsert = "/* STATIC */" + flags->endLine()
+                + "QString " + msgName + "::sendMessage(QObject *parent";
         if (msgParameters != QString())
-            out << ", " << msgParameters;
-        out << ")" << endl;
-        out << "{" << endl;
-        out << "    " << msgName << " qsm(";
+            toInsert += ", " + msgParameters;
+        toInsert += ")" + flags->endLine()
+                + "{" + flags->endLine()
+                + flags->tab() + msgName + " qsm(";
         { // Assign all parameters.
-//            out << "    qsm.setParameters(";
             QString tempS;
             QMap<QString, QVariant> tempMap = msg->parameterNamesTypes();
 
@@ -327,31 +289,43 @@ bool MessageGenerator::createSubclassedMessageSource(QWebServiceMethod *msg)
                 tempS += s + ", ";
             }
 //            tempS.chop(2);
-            out << tempS << "parent);" << endl;
+            toInsert += tempS + "parent);" + flags->endLine();
         }
-        out << endl;
-        out << "    qsm.sendMessage();" << endl;
-        out << "    // TODO: ADD ERROR HANDLING!" << endl;
-        out << "    forever" << endl;
-        out << "    {" << endl;
-        out << "        if (qsm.replyReceived)" << endl;
-        out << "            return qsm.reply.toString();" << endl;
-        out << "        else" << endl;
-        out << "        {" << endl;
-        out << "            qApp->processEvents();" << endl;
-        out << "        }" << endl;
-        out << "    }" << endl;
-        out << "}" << endl;
-        out << endl;
+        toInsert += flags->endLine() + flags->tab()
+                + "qsm.sendMessage();" + flags->endLine()
+                + flags->tab() + "// TODO: ADD ERROR HANDLING!" + flags->endLine()
+                + flags->tab() + "forever" + flags->endLine()
+                + flags->tab() + "{" + flags->endLine()
+                + flags->tab() + flags->tab() + "if (qsm.replyReceived)" + flags->endLine()
+                + flags->tab() + flags->tab() + flags->tab() + "return qsm.reply.toString();"
+                + flags->endLine()
+                + flags->tab() + flags->tab() + "else" + flags->endLine()
+                + flags->tab() + flags->tab() + "{" + flags->endLine()
+                + flags->tab() + flags->tab() + flags->tab() + "qApp->processEvents();"
+                + flags->endLine()
+                + flags->tab() + flags->tab() + "}" + flags->endLine()
+                + flags->tab() + "}" + flags->endLine()
+                + "}";
+
+        messageSource.insert(beginIndex, toInsert);
     }
-    out << "void " << msgName << "::" << "configure()" << endl;
-    out << "{" << endl;
-    out << "    m_hostUrl = QUrl(\"" << msg->host() << "\");" << endl;
-    out << "    protocolUsed = " << flags->protocolString(false) << ";" << endl;
-    out << "    httpMethodUsed = " << flags->httpMethodString() << ";" << endl;
-    out << "    m_messageName = \"" << msg->methodName() << "\";" << endl;
-    out << "    m_targetNamespace = \"" << msg->targetNamespace() << "\";" << endl;
-    out << "}" << endl;
+    beginIndex = logic.removeTag(messageSource, "%configure%");
+    toInsert = flags->tab() + "m_hostUrl = QUrl(\"" + msg->host() + "\");"
+            + flags->endLine()
+            + flags->tab() + "protocolUsed = " + flags->protocolString(false) + ";"
+            + flags->endLine()
+            + flags->tab() + "httpMethodUsed = " + flags->httpMethodString() + ";"
+            + flags->endLine()
+            + flags->tab() + "m_messageName = \"" + msg->methodName() + "\";"
+            + flags->endLine()
+            + flags->tab() + "m_targetNamespace = \"" + msg->targetNamespace() + "\";";
+    messageSource.insert(beginIndex, toInsert);
+
+    // ---------------------------------
+    // Begin writing:
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << messageSource;
     // EOF (SOAP message)
     // ---------------------------------
 
@@ -395,7 +369,7 @@ bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
         msgParameters.chop(2);
     }
 
-    QString messageHeader = mergeHeaders("../QWebService/headers/qwebmethod.h",
+    QString messageHeader = logic.mergeHeaders("../QWebService/headers/qwebmethod.h",
                                          "../QWebService/headers/qwebmethod_p.h");
 
     int beginIndex = 0;
@@ -407,7 +381,7 @@ bool MessageGenerator::createMessageHeader(QWebServiceMethod *msg)
     if (msgParameters != QString()) {
         beginIndex = messageHeader.indexOf("~") - 4;
         messageHeader.insert(beginIndex,
-                             "    " + msgName + "(QObject *parent, "
+                             flags->tab() + msgName + "(QObject *parent, "
                              + msgParameters + ");"
                              + flags->endLine());
     }
@@ -514,8 +488,9 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
         msgParameters.chop(2);
     }
 
-    QString messageSource = stripFile(readFile("../QWebService/sources/qwebmethod.cpp"),
-                                      Source);
+    QString messageSource = logic.stripFile(
+                logic.readFile("../QWebService/sources/qwebmethod.cpp"),
+                logic.Source);
 
     int beginIndex = 0;
     int endIndex = 0;
@@ -555,32 +530,9 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
         messageSource.insert(beginIndex, tmp);
     }
 
-    // Add host info to all constructors. VERY BAD IMPLEMENTATION - OPTIMISE!
-    beginIndex = messageSource.indexOf("QObject(", beginIndex) + 15;
-    beginIndex = messageSource.indexOf("}", beginIndex) - 1;
-    {
-        QString tmp = flags->endLine()
-                + flags->tab() + "hostUrlUsed.setHost(\"";
-        if (msg->host() != QString())
-            tmp += msg->host();
-        else
-            tmp+= msg->targetNamespace();
-        tmp += "\");" + flags->endLine();
-
-        messageSource.insert(beginIndex, tmp);
-    }beginIndex = messageSource.indexOf("QObject(",beginIndex) + 15;
-    beginIndex = messageSource.indexOf("}", beginIndex) - 1;
-    {
-        QString tmp = flags->endLine()
-                + flags->tab() + "hostUrlUsed.setHost(\"";
-        if (msg->host() != QString())
-            tmp += msg->host();
-        else
-            tmp+= msg->targetNamespace();
-        tmp += "\");" + flags->endLine();
-
-        messageSource.insert(beginIndex, tmp);
-    }
+    // Add host info to all constructors.
+    addCustomCodeToConstructor(messageSource, msg, beginIndex);
+    addCustomCodeToConstructor(messageSource, msg, beginIndex);
 
     // Add specialised constructor.
     if (msgParameters != QString()) {
@@ -605,14 +557,16 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
         messageSource.insert(beginIndex, tmp);
     }
 
+    // Create setParameters() method.
     beginIndex = messageSource.indexOf("::setParameters(") + 16;
-    endIndex = messageSource.indexOf("}", beginIndex);
+    endIndex = messageSource.indexOf("}", beginIndex) + 1;
     messageSource.remove(beginIndex, endIndex - beginIndex);
     messageSource.insert(beginIndex, msgParameters + ")" + flags->endLine()
                          + "{" + flags->endLine()
                          + assignAllParameters(msg)
                          + "}" + flags->endLine() + flags->endLine());
 
+    // Create invokeMethod(), which uses all parameters of a web method.
     if ((msgParameters != QString())
             && !((flags->flags() & Flags::CompactMode)
                  && (flags->flags() & Flags::Synchronous))) {
@@ -626,6 +580,7 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
                              + "}" + flags->endLine());
     }
 
+    // Create static invokeMethod().
     if (!((flags->flags() & Flags::CompactMode)
           && (flags->flags() & Flags::Asynchronous))) {
         // Finding end of a method just after last invokeMethod.
@@ -647,6 +602,7 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
         }
         tempS.chop(2);
 
+        // Add waiting loop.
         body += tempS + ");" + flags->endLine()
                 + flags->tab() + "qsm.sendMessage();" + flags->endLine()
                 + flags->tab() + "forever {" + flags->endLine()
@@ -660,6 +616,7 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
         messageSource.insert(beginIndex, body);
     }
 
+    // Add parameterNames() method.
     beginIndex = messageSource.indexOf("::parameterNames() const") + 24;
     endIndex = messageSource.indexOf("}", beginIndex);
     messageSource.remove(beginIndex, endIndex - beginIndex);
@@ -680,6 +637,7 @@ bool MessageGenerator::createMessageSource(QWebServiceMethod *msg)
         messageSource.insert(beginIndex, tmp);
     }
 
+    // Add parameterNamesTypes() method.
     beginIndex = messageSource.indexOf("::parameterNamesTypes() const") + 29;
     endIndex = messageSource.indexOf("}", beginIndex);
     messageSource.remove(beginIndex, endIndex - beginIndex);
@@ -782,115 +740,23 @@ QString MessageGenerator::assignAllParameters(QWebServiceMethod *msg)
 /*!
   \internal
 
-  Reads file contents and puts it into a QString. A crude, but
-  effective way of helping in message creation.
+  Inserts custom data to constructor. Used in create sources.
   */
-QString MessageGenerator::readFile(QString path)
+void MessageGenerator::addCustomCodeToConstructor(QString &sourceCode,
+                                                  QWebServiceMethod *msg,
+                                                  int &beginIndex)
 {
-    QFile file(path);
-    if (!file.open(QFile::ReadOnly | QFile::Text)) {
-        enterErrorState(QLatin1String("Error: could not open "
-                                      "file for reading."));
-        return QString();
-    }
-
-    return file.readAll();
-}
-
-/*!
-  \internal
-
-  Merges a private and public header into one file.
-  */
-QString MessageGenerator::mergeHeaders(QString headerPath, QString privateHeaderPath)
-{
-    QString header = stripFile(readFile(headerPath), Header);
-    QString privateHeader = stripFile(readFile(privateHeaderPath), PrivateHeader);
-
-    int beginIndex = 0;
-
-    beginIndex = header.indexOf("private:") + 8;
-    header.insert(beginIndex, flags->endLine() + "    " + privateHeader);
-
-    return header;
-}
-
-/*!
-  \internal
-
-  Strips file data from license headers, includes etc.
-  */
-QString MessageGenerator::stripFile(QString fileData, FileType type)
-{
-    int beginIndex = 0;
-    int endIndex = 0;
-
-    if (type == PrivateHeader)
-        endIndex = fileData.indexOf("class");
-    else if (type == Header)
-        endIndex = fileData.indexOf("#include");
-    else if (type == Source)
-        endIndex = fileData.indexOf("QWebMethod::QWebMethod");
-
-    fileData.remove(beginIndex, endIndex - beginIndex);
-
-    if (type == PrivateHeader || type == Header) {
-        beginIndex = fileData.indexOf("class");
-
-        if (type == Header)
-            endIndex = fileData.indexOf("class", beginIndex + 2);
+    beginIndex = sourceCode.indexOf("QObject(", beginIndex) + 15;
+    beginIndex = sourceCode.indexOf("}", beginIndex) - 1;
+    {
+        QString tmp = flags->endLine()
+                + flags->tab() + "hostUrlUsed.setHost(\"";
+        if (msg->host() != QString())
+            tmp += msg->host();
         else
-            endIndex = fileData.indexOf("void init();");
+            tmp+= msg->targetNamespace();
+        tmp += "\");" + flags->endLine();
 
-        fileData.remove(beginIndex, endIndex - beginIndex);
-
-        if (type == Header) {
-            fileData.remove("QWEBSERVICESHARED_EXPORT");
-
-            beginIndex = fileData.indexOf("QWebMethod(QWebMethodPrivate");
-            endIndex = fileData.indexOf("private:");
-        } else {
-            beginIndex = fileData.indexOf("};");
-            endIndex = fileData.length() - 1;
-        }
-
-        fileData.remove(beginIndex, endIndex - beginIndex);
-        fileData.insert(beginIndex, flags->endLine());
-
-        if (type == Header) {
-            beginIndex = fileData.indexOf("#include \"QWebService_global.h\"");
-            endIndex = fileData.indexOf("h\"", beginIndex) + 3;
-
-            fileData.remove(beginIndex, endIndex - beginIndex);
-
-            beginIndex = fileData.indexOf("Q_DECLARE_P");
-            endIndex = fileData.indexOf("};", beginIndex);
-
-            fileData.remove(beginIndex, endIndex - beginIndex);
-
-            beginIndex = fileData.indexOf("#endif");
-            endIndex = fileData.length() - 1;
-            fileData.remove(beginIndex, endIndex - beginIndex);
-        }
-    } else {
-        beginIndex = 0;
-        endIndex = 0;
-
-        // Remove QDoc.
-        for (int i = 0; ; i++) {
-            // Remember to break!
-            beginIndex = fileData.indexOf("/*!");
-            if (beginIndex == -1)
-                break;
-
-            endIndex = fileData.indexOf("*/", beginIndex);
-            if (endIndex == -1)
-                break;
-
-            endIndex += 2;
-            fileData.remove(beginIndex, endIndex - beginIndex);
-        }
+        sourceCode.insert(beginIndex, tmp);
     }
-
-    return fileData;
 }

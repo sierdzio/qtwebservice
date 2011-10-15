@@ -1,0 +1,28 @@
+%include%
+
+%method%::%method%(QObject *parent) : 
+    QWebServiceMethod(parent)
+{
+    configure();
+}
+
+%methodConstructor%
+
+void %method%::setParameters(%params%)
+{
+%assignParams%
+}
+
+bool %method%::invokeMethod(%params%)
+{
+%assignParams%
+    sendMessage();
+    return true;
+}
+
+%staticInvoke%
+
+void %method%::configure()
+{
+%configure%
+}

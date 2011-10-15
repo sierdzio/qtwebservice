@@ -1,0 +1,31 @@
+Here's some basic explanation on meaning of different tags.
+Please note, that what is important here is what code does :)
+This is just a quick reference, and might miss some points or be
+not up-to-date.
+
+For service source:
+%connect% - where all connect statements should go
+%service% - class name
+%include% - include statements
+%constructorSetters%
+%methodNames% - appends method names to list named 'result'
+%methodSend% - where method senders should go
+%msgParams% - message parameters, with types, for use in method declarations
+
+For service header:
+%headerIfndef% - where capitalised header name should go
+%methodReplyRead% - readers
+%methodReply% - slots
+%methodResult% - variables holding results
+%methodMsg% - web method objects
+
+For subclassed method source and header:
+%method% - method name for subclassed methods
+%methodConstructor% - creates a method-specific constructor, if applicable
+%staticInvoke% - creates static invoke method
+%params% - lists parameters with types
+%paramsNoTypes% - lists parameters without types
+%setParams% - creates a setter for parameters
+%paramsDeclaration% - creates a list of parameters' declarations
+%assignParams% - creates a list of parameters' assignments (in constructor and setParameters)
+%configure% - creates body of configure method

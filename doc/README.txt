@@ -51,10 +51,12 @@ WARNING: Remember to first compile QWebService library, and set it's path in run
     --standard-structure, --no-messages-structure, --all-in-one-dir-structure, ('structure' can be omitted)
     --qmake, --cmake, --scons, --no-build-system (-n),
     --objSuffix=, --msgSuffix=,
+    --endLine={unix, windows},
+    --tabulation=, (number of spaces),
     --force (-f).
 
   2.1.2 Default switches
-    --synchronous, --soap12, --standard-structure, --full-mode, --qmake
+    --synchronous, --soap12, --standard-structure, --full-mode, --qmake, --endLine=windows, --tabulation=4
 
   2.1.3 Example
   qtwsdlconverter -af --cmake --scons --json ../examples/wsdl/band_ws.asmx
@@ -106,5 +108,7 @@ All entries in single sections (with an exception of build system related switch
   --msgSuffix=<var>	- appends <var> to sending methods' names created in asynchronous mode (default "Send").
 
   2.2.7 Miscellaneous
+    --endLine={unix, windows} - specifies end line character to use (\n or \r\n),
+    --tabulation=<int> - specifies number of spaces to use as tabulation,
     --force - if the <wsName> dir already exists, converter will delete and recreate it,
     --help  - displays a simple help message and information. Does not proceed with any other action.

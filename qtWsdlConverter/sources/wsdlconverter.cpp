@@ -354,6 +354,12 @@ bool WsdlConverter::parseArguments(const QStringList &arguments)
                 flags->setMessageSuffix(s.mid(12));
             } else if (s.startsWith(QLatin1String("--objSuffix="))) {
                 flags->setObjectSuffix(s.mid(12));
+            } else if (s.startsWith(QLatin1String("--endLine="))) {
+                // End line:
+                flags->setEndLine(s.mid(10));
+            } else if (s.startsWith(QLatin1String("--tabulation="))) {
+                // Tabulation:
+                flags->setTab(s.mid(13).toInt());
             } else if (s == QLatin1String("--force")) { // Force:
                 flags->setForced(true);
             } else {
@@ -445,9 +451,12 @@ void WsdlConverter::displayHelp()
     "('structure' can be omitted)\n"
     "    --qmake, --cmake, --scons, --no-build-system (-n),\n"
     "    --objSuffix=, --msgSuffix=,\n"
+    "    --endLine={unix, windows},\n"
+    "    --tabulation=, (number of spaces),\n"
     "    --force (-f).\n\n"
     "Default switches are: \n"
-    "--synchronous, --soap12, --standard-structure, --full-mode, --qmake.\n"
+    "--synchronous, --soap12, --standard-structure, --full-mode, --qmake, "
+    "--endLine=windows, --tabulation=4.\n"
     "Example use: qtwsdlconverter -af --cmake --scons --json ../webService.asmx\n\n"
     "For detailed description, see README file or \n"
     "https://gitorious.org/qwebservice/qwebservice/blobs/master/doc/README.txt\n\n"

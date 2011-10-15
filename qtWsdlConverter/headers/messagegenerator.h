@@ -25,17 +25,12 @@
 #include <QtCore/qtextstream.h>
 #include <qwebservicemethod.h>
 #include "flags.h"
+#include "templatelogic.h"
 
 class MessageGenerator : public QObject
 {
     Q_OBJECT
 public:
-    enum FileType {
-        Header        = 0,
-        PrivateHeader = 1,
-        Source        = 2
-    };
-
     explicit MessageGenerator(QMap<QString, QWebServiceMethod *> *methods,
                               const QDir &workingDir, Flags *flgs, QObject *parent = 0);
     QString errorMessage();
@@ -51,15 +46,14 @@ private:
 
     void assignAllParameters(QWebServiceMethod *msg, QTextStream &out);
     QString assignAllParameters(QWebServiceMethod *msg);
-    QString readFile(QString path);
-    QString mergeHeaders(QString headerPath, QString privateHeaderPath);
-    QString stripFile(QString fileData, FileType type = Header);
+    void addCustomCodeToConstructor(QString &sourceCode, QWebServiceMethod *msg, int &beginIndex);
 
     QMap<QString, QWebServiceMethod *> *methods;
     QDir workingDir;
     Flags *flags;
     bool errorState;
     QString m_errorMessage;
+    TemplateLogic logic;
 };
 
 #endif // MESSAGEGENERATOR_H

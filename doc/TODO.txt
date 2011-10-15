@@ -4,7 +4,6 @@ TODO'S (done marked with *):
  - update and expand unit tests:
    - read details of code creation from WSDL converter
    - update getters and setters tests of QWebService, QWsdl, QWebMethod, QWebServiceMethod
- - update converter
  - add support for multiple replies (think SOAP ComplexType)
  - parse JSON replies
  - (optional) provide QWsdl parsing based on QtXmlPatterns
@@ -17,3 +16,4 @@ Done:
  - parse XML replies
  - update SOAP message parsing
  - remove QWebServiceReader
+ - update converter

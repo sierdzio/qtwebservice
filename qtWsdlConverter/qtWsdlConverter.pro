@@ -29,15 +29,19 @@ SOURCES += sources/main.cpp \
     sources/wsdlconverter.cpp \
     sources/flags.cpp \
     sources/codegenerator.cpp \
-    sources/messagegenerator.cpp
+    sources/messagegenerator.cpp \
+    sources/templatelogic.cpp
 
 HEADERS += headers/wsdlconverter.h \
     headers/flags.h \
     headers/codegenerator.h \
-    headers/messagegenerator.h
+    headers/messagegenerator.h \
+    headers/templatelogic.h
 
 OTHER_FILES += \
     examples/band_ws.asmx \
     examples/stockquote.asmx \
     examples/example_URLs_and_commands.txt \
     doc/futureFeatures.txt
+
+

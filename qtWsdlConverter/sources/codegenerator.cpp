@@ -36,7 +36,6 @@ CodeGenerator::CodeGenerator(QObject *parent) :
     QObject(parent)
 {
     errorState = false;
-//    errorMessage = "";
 }
 
 /*!
@@ -95,6 +94,7 @@ bool CodeGenerator::create(QWsdl *wsdl, const QDir &workingDir, Flags *flags,
     obj.flags = flags;
     obj.workingDir = workingDir;
     obj.wsdl = wsdl;
+    obj.logic = TemplateLogic(obj.flags);
     obj.prepare();
 
     if (!obj.createMessages())
@@ -150,38 +150,30 @@ bool CodeGenerator::createServiceHeader()
         return enterErrorState(QLatin1String("Error: could not open Web Service"
                                              "header file for writing."));
 
-    // ---------------------------------
-    // Begin writing:
-    QTextStream out(&file);
-    out.setCodec("UTF-8");
-    out << "#ifndef " << wsName.toUpper() << "_H" << endl;
-    out << "#define " << wsName.toUpper() << "_H" << endl;
-    out << endl;
-    out << "#include <QtCore>" << endl;
-    out << "#include <QUrl>" << endl;
+    QString serviceHeader = logic.readFile("../qtWsdlConverter/templates/service_header");
+    int beginIndex = 0;
+
+    serviceHeader.replace("%headerIfndef%", wsName.toUpper() + "_H");
+    serviceHeader.replace("%service%", wsName);
+
+    // Includes.
     if (!(flags->flags() & Flags::NoMessagesStructure)) {
         // Include all messages.
         QStringList tempMp = wsdl->methodNames();
+        beginIndex = logic.removeTag(serviceHeader, "%include%");
 
         foreach (QString s, tempMp) {
-            out << "#include \"" << s << ".h\"" << endl;
+            QString toInsert = "#include \"" + s + ".h\"";
+            serviceHeader.insert(beginIndex, toInsert);
+            beginIndex += toInsert.length();
         }
     } else
     {
-//        out << "#include <QWebService/QWebServiceMethod.h>" << endl;
-        out << "#include <QWebService>" << endl;
+        serviceHeader.replace("%include%", "#include <QWebService>");
     }
-    out << endl;
-    out << "class " << wsName << " : public QObject" << endl;
-    out << "{" << endl;
-    out << "    Q_OBJECT" << endl;
-    out << endl;
-    out << "public:" << endl;
-    out << "    " << wsName << "(QObject *parent = 0);" << endl;
-    out << "    ~" << wsName << "();" << endl;
-    out << endl;
-    out << "    QStringList getMethodNames();" << endl;
+
     { // Declare all messages (as wrappers for message classes).
+        beginIndex = logic.removeTag(serviceHeader, "%methodSend%");
         foreach (QString s, tempMap->keys()) {
             QString tmpReturn, tmpP;
             QWebServiceMethod *m = tempMap->value(s);
@@ -198,21 +190,25 @@ bool CodeGenerator::createServiceHeader()
                         + param + ", ";
             }
             tmpP.chop(2);
+
+            QString toInsert;
             // Temporarily, all messages will return QString!
             if (flags->flags() & Flags::Synchronous)
-                out << "    QString ";
+                toInsert = flags->tab() + QLatin1String("QString ");
             else
-                out << "    void ";
-            out << s << flags->messageSuffix() << "(" << tmpP << ");" << endl;
+                toInsert = flags->tab() + QLatin1String("void ");
+            toInsert += s + flags->messageSuffix() + "(" + tmpP + ");" + flags->endLine();
+            serviceHeader.insert(beginIndex, toInsert);
+            beginIndex += toInsert.length();
         }
     }
-    out << endl;
-    out << "    QUrl getHostUrl();" << endl;
-    out << "    QString getHost();" << endl;
-    out << "    bool isErrorState();" << endl;
+
+    beginIndex = logic.removeTag(serviceHeader, "%methodReplyRead%");
     if (flags->flags() & Flags::Asynchronous) {
         // Declare getters of methods' replies.
-        out << "    // Method reply getters: " << endl;
+        QString toInsert = flags->tab() + "// Method reply getters: " + flags->endLine();
+        serviceHeader.insert(beginIndex, toInsert);
+        beginIndex += toInsert.length();
 
         foreach (QString s, tempMap->keys()) {
             /* Code not ready for compact mode checking.
@@ -229,14 +225,20 @@ bool CodeGenerator::createServiceHeader()
                     tmpReturn = m->returnValueNameType().value(ret).typeName();
                     break; // This does not support multiple return values!
                 }
-                out << "    " << tmpReturn << " " << s << "ReplyRead();" << endl;
+                toInsert = flags->tab() + tmpReturn + " " + s
+                        + "ReplyRead();" + flags->endLine();
+                serviceHeader.insert(beginIndex, toInsert);
+                beginIndex += toInsert.length();
             }
         }
-        out << endl;
     }
-    out << endl;
-    out << "protected slots:" << endl;
+
+    beginIndex = logic.removeTag(serviceHeader, "%methodReply%");
     if (flags->flags() & Flags::Asynchronous) {
+        QString toInsert = "protected slots:" + flags->endLine();
+        serviceHeader.insert(beginIndex, toInsert);
+        beginIndex += toInsert.length();
+
         // Declare methods for processing asynchronous replies.
         foreach (QString s, tempMap->keys()) {
             /* Code not ready for compact mode checking.
@@ -247,18 +249,21 @@ bool CodeGenerator::createServiceHeader()
             else if (flags->flags() & Flags::fullMode || flags->flags() & Flags::debugMode)
             */
             {
-                out << "    void " << s << "Reply(QString result);" << endl;
+                toInsert = flags->tab() + "void " + s + "Reply(QString result);"
+                        + flags->endLine();
+                serviceHeader.insert(beginIndex, toInsert);
+                beginIndex += toInsert.length();
             }
         }
-        out << endl;
     }
-    out << "protected:" << endl;
-    out << "    bool errorState;" << endl;
-    out << "    QUrl hostUrl;" << endl;
 
+    beginIndex = logic.removeTag(serviceHeader, "%methodResult%");
+    logic.removeTag(serviceHeader, "%methodMsg%");
     if (flags->flags() & Flags::Asynchronous) {
         // Declare reply variables for asynchronous mode.
-        out << "    // Message replies:" << endl;
+        QString toInsert = flags->tab() + "// Method replies:" + flags->endLine();
+        serviceHeader.insert(beginIndex, toInsert);
+        beginIndex += toInsert.length();
 
         foreach (QString s, tempMap->keys()) {
             QString tmpReturn;
@@ -268,22 +273,30 @@ bool CodeGenerator::createServiceHeader()
                 tmpReturn = m->returnValueNameType().value(ret).typeName();
                 break; // This does not support multiple return values!
             }
-            out << "    " << tmpReturn << " " << s << "Result;" << endl;
+            toInsert = flags->tab() + tmpReturn + " " + s + "Result;"
+                    + flags->endLine();
+            serviceHeader.insert(beginIndex, toInsert);
+            beginIndex += toInsert.length();
         }
 
-        out << "    // Messages:" << endl;
+        toInsert = flags->tab() + "// Methods:" + flags->endLine();
         foreach (QString s, tempMap->keys()) {
             if (!(flags->flags() & Flags::NoMessagesStructure))
-                out << "    " << s << " ";
+                toInsert = flags->tab() + s + " ";
             else // sierdzio I don't particurarly like this implementation, will rethink it later.
-                out << "    QWebServiceMethod ";
+                toInsert = flags->tab() + "QWebServiceMethod ";
 
-            out << s.toLower() << flags->objectSuffix() << ";" << endl;
+            toInsert += s.toLower() + flags->objectSuffix() + ";" + flags->endLine();
+            serviceHeader.insert(beginIndex, toInsert);
+            beginIndex += toInsert.length();
         }
     }
-    out << "};" << endl;
-    out << endl;
-    out << "#endif // " << wsName.toUpper() << "_H" << endl;
+
+    // ---------------------------------
+    // Begin writing:
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << serviceHeader;
     // EOF (Web Service header)
     // ---------------------------------
 
@@ -309,25 +322,23 @@ bool CodeGenerator::createServiceSource()
         return enterErrorState(QLatin1String("Error: could not open Web Service"
                                              "source file for writing."));
 
-    // ---------------------------------
-    // Begin writing:
-    QTextStream out(&file);
-    out.setCodec("UTF-8");
-    out << "#include \"";
-    if (!(flags->flags() & Flags::AllInOneDirStructure))
-        out << "../headers/";
-    out << wsName << ".h\"" << endl;
-    out << endl;
-    out << "" << wsName << "::" << wsName << "(QObject *parent)" << endl;
-    out << "    : QObject(parent)" << endl;
-    out << "{" << endl;
+    QString serviceSource = logic.readFile("../qtWsdlConverter/templates/service_source");
+    int beginIndex = 0;
 
+    serviceSource.replace("%service%", wsName);
+
+    QString toInsert = "#include \"";
+    if (!(flags->flags() & Flags::AllInOneDirStructure))
+        toInsert += "../headers/";
+    toInsert += wsName + ".h\"";
+    serviceSource.replace("%include%", toInsert);
+
+    beginIndex = logic.removeTag(serviceSource, "%connect%");
     if (flags->flags() & Flags::Asynchronous) {
         // Connect signals and slots for asynchronous mode.
-
         foreach (QString s, tempMap->keys()) {
-            out << "    connect(&" << s.toLower() << flags->objectSuffix()
-                << ", SIGNAL(replyReady(QString)), this, SLOT(";
+            toInsert = flags->tab() + "connect(&" + s.toLower() + flags->objectSuffix()
+                    + ", SIGNAL(replyReady(QString)), this, SLOT(";
             /* Code not ready for compact mode checking.
             if (flags->flags() & Flags::compactMode)
             {
@@ -336,34 +347,34 @@ bool CodeGenerator::createServiceSource()
             else if (flags->flags() & Flags::fullMode || flags->flags() & Flags::debugMode)
             */
             {
-                out << s << "Reply(QString)";
+                toInsert += s + "Reply(QString)";
             }
+            toInsert += "));" + flags->endLine();
 
-            out << "));" << endl;
+            serviceSource.insert(beginIndex, toInsert);
+            beginIndex += toInsert.length();
         }
     }
-    out << "    hostUrl.setHost(\"" << wsdl->host() << "\");" << endl;
-    out << "    errorState = false;" << endl;
-    out << "    isErrorState();" << endl;
-    out << "}" << endl;
-    out << endl;
-    out << "" << wsName << "::~" << wsName << "()" << endl;
-    out << "{" << endl;
-    out << "}" << endl;
-    out << endl;
-    out << "QStringList " << wsName << "::getMethodNames()" << endl;
-    out << "{" << endl;
-    { // Create and return the QStringList containing method names:
-        out << "    QStringList result;" << endl;
 
-        foreach (QString s, tempMap->keys()) {
-            QWebServiceMethod *m = tempMap->value(s);
-            out << "    result.append(\"" << m->methodName() << "\");" << endl;
-        }
-        out << "    return result;" << endl;
-    }
-    out << "}" << endl;
-    out << endl;
+    // Add constructor setters:
+    beginIndex = logic.removeTag(serviceSource, "%constructorSetters%");
+    toInsert = flags->tab() + "hostUrl.setHost(\"" + wsdl->host() + "\");" + flags->endLine()
+            + flags->tab() + "errorState = false;" + flags->endLine()
+            + flags->tab() + "isErrorState();";
+    serviceSource.insert(beginIndex, toInsert);
+    beginIndex += toInsert.length();
+
+    // Create and return the QStringList containing method names:
+    beginIndex = logic.removeTag(serviceSource, "%methodNames%");
+    foreach (QString s, tempMap->keys()) {
+        QWebServiceMethod *m = tempMap->value(s);
+        toInsert = flags->tab() + "result.append(\"" + m->methodName()
+                + "\");" + flags->endLine();
+        serviceSource.insert(beginIndex, toInsert);
+        beginIndex += toInsert.length();
+    };
+
+    beginIndex = logic.removeTag(serviceSource, "%methodSend%");
     { // Define all messages (as wrappers for message classes).
         foreach (QString s, tempMap->keys()) {
             QString tmpReturn, tmpP, tmpPN;
@@ -389,27 +400,26 @@ bool CodeGenerator::createServiceSource()
 
 
             if (flags->flags() & Flags::Synchronous) {
-                // Temporarily, all messages will return QString!
-                // out << tmpReturn << " " << wsName << "::" << s << "(" << tmpP << ")" << endl;
-                out << "QString " << wsName << "::" << s << flags->messageSuffix()
-                    << "(" << tmpP << ")" << endl;
-                out << "{" << endl;
-                out << "    // TODO: You can add your own data handling here, "
-                    << "and make the whole method return" << endl;
-                out << "    //       proper type." << endl;
+                toInsert = "QString " + wsName + "::" + s + flags->messageSuffix()
+                           + "(" + tmpP + ")" + flags->endLine()
+                           + "{" + flags->endLine() + flags->tab()
+                           + "// TODO: You can add your own data handling here, "
+                           + "and make the whole method return" + flags->endLine()
+                           + flags->tab() + "//       proper type." + flags->endLine();
 
                 if (flags->flags() & Flags::NoMessagesStructure) {
-                    out << "    QMap<QString, QVariant> parameters;" << endl;
+                    toInsert += flags->tab() + "QMap<QString, QVariant> parameters;"
+                            + flags->endLine();
 
                     foreach (QString param, tempParam.keys()) {
-                        out << "    parameters.insert(\"" << param;
-                        out << "\", QVariant(" << param << "));" << endl;
+                        toInsert += flags->tab() + "parameters.insert(\"" + param
+                                + "\", QVariant(" + param + "));" + flags->endLine();
                     }
 
-                    out << endl;
-                    out << "    return QWebServiceMethod::sendMessage(this";
-                    out << ", QUrl(\"" << m->host() << "\"), \""
-                        << m->methodName() << "\", parameters";
+                    toInsert += flags->endLine() + flags->tab()
+                            + "return QWebServiceMethod::sendMessage(this"
+                            + ", QUrl(\"" + m->host() + "\"), \""
+                            + m->methodName() + "\", parameters";
 
                     QString protocols = "QWebServiceMethod::"
                             + flags->protocolString(false);
@@ -425,64 +435,67 @@ bool CodeGenerator::createServiceSource()
                     if (protocols != "")
                         protocols.prepend(", ");
 
-                    out << protocols << ").toString();" << endl;
+                    toInsert += protocols + ").toString();" + flags->endLine();
                 } else {
-                    out << "    return " << m->methodName()
-                        << "::sendMessage(this";
+                    toInsert += flags->tab() + "return " + m->methodName()
+                        + "::sendMessage(this";
 
                     if (tmpPN != "")
-                        out << ", " << tmpPN << ");" << endl;
+                        toInsert += ", " + tmpPN + ");" + flags->endLine();
                     else
-                        out << ");" << endl;
+                        toInsert += ");" + flags->endLine();
                 }
-                out << "}" << endl;
-                out << endl;
+                toInsert += "}" + flags->endLine();
+                serviceSource.insert(beginIndex, toInsert);
+                beginIndex += toInsert.length();
             } else if (flags->flags() & Flags::Asynchronous) {
                 // Name of the message object.
                 QString objName = s.toLower() + flags->objectSuffix();
-                out << "void " << wsName << "::" << s << flags->messageSuffix()
-                    << "(" << tmpP << ")" << endl;
-                out << "{" << endl;
+                toInsert = "void " + wsName + "::" + s + flags->messageSuffix()
+                        + "(" + tmpP + ")" + flags->endLine()
+                        + "{" + flags->endLine();
 
                 if (flags->flags() & Flags::NoMessagesStructure) {
-                    out << "    QMap<QString, QVariant> parameters;" << endl;
+                    toInsert += flags->tab() + "QMap<QString, QVariant> parameters;"
+                            + flags->endLine();
 
                     foreach (QString param, tempParam.keys()) {
-                        out << "    parameters.insert(\"" << param;
-                        out << "\", QVariant(" << param << "));" << endl;
+                        toInsert += flags->tab() + "parameters.insert(\"" + param
+                                + "\", QVariant(" + param + "));" + flags->endLine();
                     }
 
-                    out << endl;
-                    out << "    " << objName << ".setHost(\"" << m->host()
-                        << "\");" << endl;
-                    out << "    " << objName << ".setTargetNamespace(\""
-                        << m->targetNamespace() << "\");" << endl;
-                    out << "    " << objName << ".setMessageName(\""
-                        << m->methodName() << "\");" << endl;
+                    toInsert += flags->endLine()
+                            + flags->tab() + objName + ".setHost(\"" + m->host()
+                            + "\");" + flags->endLine()
+                            + flags->tab() + objName + ".setTargetNamespace(\""
+                            + m->targetNamespace() + "\");" + flags->endLine()
+                            + flags->tab() + objName + ".setMessageName(\""
+                            + m->methodName() + "\");" + flags->endLine();
 
                     QString protocols = "QWebServiceMethod::"
                             + flags->protocolString(false);
 
-                    out << "    " << objName << ".setProtocol("
-                        << protocols << ");" << endl;
+                    toInsert += flags->tab() + objName + ".setProtocol("
+                            + protocols + ");" + flags->endLine();
                     // Add REST handling!
 
-                    out << "    " << objName << ".sendMessage(parameters);" << endl;
+                    toInsert += flags->tab() + objName + ".sendMessage(parameters);"
+                            + flags->endLine();
                 } else {
-                    out << "    " << objName << ".sendMessage(" << tmpPN
-                        << ");" << endl;
+                    toInsert += flags->tab() + objName + ".sendMessage(" + tmpPN
+                            + ");" + flags->endLine();
                 }
-
-                out << "}" << endl;
-                out << endl;
+                toInsert += "}" + flags->endLine();
+                serviceSource.insert(beginIndex, toInsert);
+                beginIndex += toInsert.length();
             }
         }
     }
 
+    beginIndex = logic.removeTag(serviceSource, "%methodReplyRead%");
     if (flags->flags() & Flags::Asynchronous) {
         // Define getters of methods' replies.
-        out << "    // Method reply getters: " << endl;
-
+        toInsert = flags->tab() + "// Method reply getters: " + flags->endLine();
         foreach (QString s, tempMap->keys()) {
             /* Code not ready for compact mode checking.
             if (flags->flags() & Flags::compactMode)
@@ -499,20 +512,20 @@ bool CodeGenerator::createServiceSource()
                     tmpReturn = m->returnValueNameType().value(ret).typeName();
                     break; // This does not support multiple return values!
                 }
-                out << tmpReturn << " " << wsName << "::" << s
-                    << "ReplyRead()" << endl;
-                out << "{" << endl;
-                out << "    return " << s << "Result;" << endl;
-                out << "}" << endl;
-                out << endl;
+                toInsert += tmpReturn + " " + wsName + "::" + s
+                        + "ReplyRead()" + flags->endLine() + "{"
+                        + flags->endLine() + flags->tab()
+                        + "return " + s + "Result;" + flags->endLine()
+                        + "}" + flags->endLine() + flags->endLine();
             }
         }
-        out << endl;
+        serviceSource.insert(beginIndex, toInsert);
+        beginIndex += toInsert.length();
     }
 
+    beginIndex = logic.removeTag(serviceSource, "%methodReply%");
     if (flags->flags() & Flags::Asynchronous) {
         // Define all slots for asynchronous mode.
-
         foreach (QString s, tempMap->keys()) {
             /*
             if (flags->mode == Flags::compactMode)
@@ -529,29 +542,21 @@ bool CodeGenerator::createServiceSource()
                 tmpReturn = m->returnValueNameType().value(ret).typeName();
                 break; // This does not support multiple return values!
             }
-            out << "void " << wsName << "::" << s << "Reply(QString result)" << endl;
-            out << "{" << endl;
-            out << "    // TODO: Add your own data handling here!" << endl;
-            out << "    //" << s << "Result = your_new_value;" << endl;
-            out << "}" << endl;
-            out << endl;
+            toInsert = "void " + wsName + "::" + s + "Reply(QString result)" + flags->endLine()
+                    + "{" + flags->endLine()
+                    + flags->tab() + "// TODO: Add your own data handling here!" + flags->endLine()
+                    + flags->tab() + "//" + s + "Result = your_new_value;" + flags->endLine()
+                    + "}" + flags->endLine();
+            serviceSource.insert(beginIndex, toInsert);
+            beginIndex += toInsert.length();
         }
     }
-    out << "QUrl " << wsName << "::getHostUrl()" << endl;
-    out << "{" << endl;
-    out << "    return hostUrl;" << endl;
-    out << "}" << endl;
-    out << endl;
-    out << "QString " << wsName << "::getHost()" << endl;
-    out << "{" << endl;
-    out << "    return hostUrl.host();" << endl;
-    out << "}" << endl;
-    out << endl;
-    out << "bool " << wsName << "::isErrorState()" << endl;
-    out << "{" << endl;
-    out << "    return errorState;" << endl;
-    out << "}" << endl;
-    out << endl;
+
+    // ---------------------------------
+    // Begin writing:
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << serviceSource;
     // EOF (Web Service source)
     // ---------------------------------
 

@@ -1,0 +1,22 @@
+#ifndef %headerIfndef%
+#define %headerIfndef%
+
+#include <QWebService>
+
+class %method% : public QWebServiceMethod
+{
+    Q_OBJECT
+
+public:
+    %method%(QObject *parent = 0);
+%methodConstructor%
+
+    void setParameters(%params%);
+    using QWebServiceMethod::sendMessage;
+    bool sendMessage(%params%);
+private:
+    void configure();
+    %paramsDeclaration%
+};
+
+#endif // %headerIfndef%
