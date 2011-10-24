@@ -351,7 +351,7 @@ bool WsdlConverter::parseArguments(const QStringList &arguments)
                 flags->setFlags(Flags::NoBuildSystem);
             } else if (s.startsWith(QLatin1String("--msgSuffix="))) {
                 // Suffixes:
-                flags->setMessageSuffix(s.mid(12));
+                flags->setMethodSuffix(s.mid(12));
             } else if (s.startsWith(QLatin1String("--objSuffix="))) {
                 flags->setObjectSuffix(s.mid(12));
             } else if (s.startsWith(QLatin1String("--endLine="))) {
@@ -441,19 +441,19 @@ void WsdlConverter::displayHelp()
     "qtwsdlconvert [options] <WSDL file or URL> [output directory] "
     "[base output class name, defaults to web service name]\n\n"
     "Possible options:\n"
-    "    --help (-h),\n"
-    "    --soap10, --soap12, --http, --json, --xml, "
+    + flags->tab().toLatin1() + "--help (-h),\n"
+    + flags->tab().toLatin1() + "--soap10, --soap12, --http, --json, --xml, "
     "--rest={POST, GET, PUT, DELETE, post, get, put, delete}\n"
-    "    --synchronous, --asynchronous (-a),\n"
-    "    --subclass (-s), --full-mode, *--debug-mode, *(partial)--compact-mode, "
+    + flags->tab().toLatin1() + "--synchronous, --asynchronous (-a),\n"
+    + flags->tab().toLatin1() + "--subclass (-s), --full-mode, *--debug-mode, *(partial)--compact-mode, "
     "('mode' can be omitted)\n"
-    "    --standard-structure, --no-messages-structure, --all-in-one-dir-structure, "
+    + flags->tab().toLatin1() + "--standard-structure, --no-messages-structure, --all-in-one-dir-structure, "
     "('structure' can be omitted)\n"
-    "    --qmake, --cmake, --scons, --no-build-system (-n),\n"
-    "    --objSuffix=, --msgSuffix=,\n"
-    "    --endLine={unix, windows},\n"
-    "    --tabulation=, (number of spaces),\n"
-    "    --force (-f).\n\n"
+    + flags->tab().toLatin1() + "--qmake, --cmake, --scons, --no-build-system (-n),\n"
+    + flags->tab().toLatin1() + "--objSuffix=, --msgSuffix=,\n"
+    + flags->tab().toLatin1() + "--endLine={unix, windows},\n"
+    + flags->tab().toLatin1() + "--tabulation=, (number of spaces),\n"
+    + flags->tab().toLatin1() + "--force (-f).\n\n"
     "Default switches are: \n"
     "--synchronous, --soap12, --standard-structure, --full-mode, --qmake, "
     "--endLine=windows, --tabulation=4.\n"

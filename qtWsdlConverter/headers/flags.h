@@ -86,8 +86,8 @@ public:
     bool isForced() const;
     void setForced(bool forced);
 
-    QString messageSuffix() const;
-    void setMessageSuffix(const QString &newMsgSuffix);
+    QString methodSuffix() const;
+    void setMethodSuffix(const QString &newMsgSuffix);
 
     QString objectSuffix() const;
     void setObjectSuffix(const QString &newObjSuffix);

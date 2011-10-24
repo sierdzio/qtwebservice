@@ -20,7 +20,9 @@ Example arguments for converter:
    are now generated from templates and real QWebService code. Templates are stored
    in (surprise!) 'templates' folder in project's directory,
  - added end line character choice for converter,
- - added tabulation length choice for converter.
+ - added tabulation length choice for converter,
+ - changed remaining "message" and "msg" calls into
+   "method" and "mtd", so that it is consistent throughout the project.
 
 06.10.2011 19:14 CEST:
  - updated converter's help message,

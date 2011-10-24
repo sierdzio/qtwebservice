@@ -8,8 +8,8 @@ TODO'S (done marked with *):
  - parse JSON replies
  - (optional) provide QWsdl parsing based on QtXmlPatterns
  - update and expand QDoc
- - add video and text tutorials, how-tos etc,
- - change 'message' to 'method' in converter.
+ - add video and text tutorials, how-tos etc
+ - make the code (QWsdl, converter) be based on QWebMethod, not QWebServiceMethod
 
 Done:
  - clean licence statements off unecessary things
@@ -17,3 +17,4 @@ Done:
  - update SOAP message parsing
  - remove QWebServiceReader
  - update converter
+ - change 'message' to 'method' in converter

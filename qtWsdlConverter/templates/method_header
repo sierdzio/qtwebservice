@@ -10,10 +10,10 @@ class %method% : public QWebServiceMethod
 public:
     %method%(QObject *parent = 0);
 %methodConstructor%
-
     void setParameters(%params%);
-    using QWebServiceMethod::sendMessage;
-    bool sendMessage(%params%);
+    using QWebServiceMethod::invokeMethod;
+%methodInvoke%
+%staticInvoke%
 private:
     void configure();
     %paramsDeclaration%

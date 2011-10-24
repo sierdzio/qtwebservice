@@ -22,6 +22,7 @@ For service header:
 For subclassed method source and header:
 %method% - method name for subclassed methods
 %methodConstructor% - creates a method-specific constructor, if applicable
+%methodInvoke% - creates custom invokeMethod function with parameters
 %staticInvoke% - creates static invoke method
 %params% - lists parameters with types
 %paramsNoTypes% - lists parameters without types

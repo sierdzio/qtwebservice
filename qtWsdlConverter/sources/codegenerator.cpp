@@ -97,7 +97,7 @@ bool CodeGenerator::create(QWsdl *wsdl, const QDir &workingDir, Flags *flags,
     obj.logic = TemplateLogic(obj.flags);
     obj.prepare();
 
-    if (!obj.createMessages())
+    if (!obj.createWebMethods())
         return false;
     if (!obj.createService())
         return false;
@@ -158,12 +158,12 @@ bool CodeGenerator::createServiceHeader()
 
     // Includes.
     if (!(flags->flags() & Flags::NoMessagesStructure)) {
-        // Include all messages.
+        // Include all methods.
         QStringList tempMp = wsdl->methodNames();
         beginIndex = logic.removeTag(serviceHeader, "%include%");
 
         foreach (QString s, tempMp) {
-            QString toInsert = "#include \"" + s + ".h\"";
+            QString toInsert = "#include \"" + s + ".h\"" + flags->endLine();
             serviceHeader.insert(beginIndex, toInsert);
             beginIndex += toInsert.length();
         }
@@ -172,7 +172,7 @@ bool CodeGenerator::createServiceHeader()
         serviceHeader.replace("%include%", "#include <QWebService>");
     }
 
-    { // Declare all messages (as wrappers for message classes).
+    { // Declare all methods (as wrappers for method classes).
         beginIndex = logic.removeTag(serviceHeader, "%methodSend%");
         foreach (QString s, tempMap->keys()) {
             QString tmpReturn, tmpP;
@@ -184,7 +184,7 @@ bool CodeGenerator::createServiceHeader()
             }
 
             QMap<QString, QVariant> tempParam = m->parameterNamesTypes();
-            // Create msgParameters (comma separated list)
+            // Create mtdParameters (comma separated list)
             foreach (QString param, tempParam.keys()) {
                 tmpP += QString(tempParam.value(param).typeName()) + " "
                         + param + ", ";
@@ -192,12 +192,12 @@ bool CodeGenerator::createServiceHeader()
             tmpP.chop(2);
 
             QString toInsert;
-            // Temporarily, all messages will return QString!
+            // Temporarily, all methods will return QString!
             if (flags->flags() & Flags::Synchronous)
                 toInsert = flags->tab() + QLatin1String("QString ");
             else
                 toInsert = flags->tab() + QLatin1String("void ");
-            toInsert += s + flags->messageSuffix() + "(" + tmpP + ");" + flags->endLine();
+            toInsert += s + flags->methodSuffix() + "(" + tmpP + ");" + flags->endLine();
             serviceHeader.insert(beginIndex, toInsert);
             beginIndex += toInsert.length();
         }
@@ -375,7 +375,7 @@ bool CodeGenerator::createServiceSource()
     };
 
     beginIndex = logic.removeTag(serviceSource, "%methodSend%");
-    { // Define all messages (as wrappers for message classes).
+    { // Define all methods (as wrappers for method classes).
         foreach (QString s, tempMap->keys()) {
             QString tmpReturn, tmpP, tmpPN;
             QWebServiceMethod *m = tempMap->value(s);
@@ -387,7 +387,7 @@ bool CodeGenerator::createServiceSource()
 
             QMap<QString, QVariant> tempParam = m->parameterNamesTypes();
 
-            // Create msgParameters (comma separated list)
+            // Create mtdParameters (comma separated list)
             foreach (QString param, tempParam.keys()) {
                 tmpP += QLatin1String(tempParam.value(param).typeName())
                         + QLatin1String(" ")
@@ -400,7 +400,7 @@ bool CodeGenerator::createServiceSource()
 
 
             if (flags->flags() & Flags::Synchronous) {
-                toInsert = "QString " + wsName + "::" + s + flags->messageSuffix()
+                toInsert = "QString " + wsName + "::" + s + flags->methodSuffix()
                            + "(" + tmpP + ")" + flags->endLine()
                            + "{" + flags->endLine() + flags->tab()
                            + "// TODO: You can add your own data handling here, "
@@ -417,7 +417,7 @@ bool CodeGenerator::createServiceSource()
                     }
 
                     toInsert += flags->endLine() + flags->tab()
-                            + "return QWebServiceMethod::sendMessage(this"
+                            + "return QWebServiceMethod::invokeMethod(this"
                             + ", QUrl(\"" + m->host() + "\"), \""
                             + m->methodName() + "\", parameters";
 
@@ -438,7 +438,7 @@ bool CodeGenerator::createServiceSource()
                     toInsert += protocols + ").toString();" + flags->endLine();
                 } else {
                     toInsert += flags->tab() + "return " + m->methodName()
-                        + "::sendMessage(this";
+                        + "::invokeMethod(this";
 
                     if (tmpPN != "")
                         toInsert += ", " + tmpPN + ");" + flags->endLine();
@@ -449,9 +449,9 @@ bool CodeGenerator::createServiceSource()
                 serviceSource.insert(beginIndex, toInsert);
                 beginIndex += toInsert.length();
             } else if (flags->flags() & Flags::Asynchronous) {
-                // Name of the message object.
+                // Name of the method object.
                 QString objName = s.toLower() + flags->objectSuffix();
-                toInsert = "void " + wsName + "::" + s + flags->messageSuffix()
+                toInsert = "void " + wsName + "::" + s + flags->methodSuffix()
                         + "(" + tmpP + ")" + flags->endLine()
                         + "{" + flags->endLine();
 
@@ -469,7 +469,7 @@ bool CodeGenerator::createServiceSource()
                             + "\");" + flags->endLine()
                             + flags->tab() + objName + ".setTargetNamespace(\""
                             + m->targetNamespace() + "\");" + flags->endLine()
-                            + flags->tab() + objName + ".setMessageName(\""
+                            + flags->tab() + objName + ".setmethodName(\""
                             + m->methodName() + "\");" + flags->endLine();
 
                     QString protocols = "QWebServiceMethod::"
@@ -479,10 +479,10 @@ bool CodeGenerator::createServiceSource()
                             + protocols + ");" + flags->endLine();
                     // Add REST handling!
 
-                    toInsert += flags->tab() + objName + ".sendMessage(parameters);"
+                    toInsert += flags->tab() + objName + ".invokeMethod(parameters);"
                             + flags->endLine();
                 } else {
-                    toInsert += flags->tab() + objName + ".sendMessage(" + tmpPN
+                    toInsert += flags->tab() + objName + ".invokeMethod(" + tmpPN
                             + ");" + flags->endLine();
                 }
                 toInsert += "}" + flags->endLine();
@@ -567,12 +567,12 @@ bool CodeGenerator::createServiceSource()
 /*!
     \internal
   */
-bool CodeGenerator::createMessages()
+bool CodeGenerator::createWebMethods()
 {
-    MessageGenerator msgGen(methods, workingDir, flags, this);
+    MethodGenerator mtdGen(methods, workingDir, flags, this);
 
-    if (!msgGen.createMessages())
-        return enterErrorState(msgGen.errorMessage());
+    if (!mtdGen.createMethods())
+        return enterErrorState(mtdGen.errorMessage());
     else
         return true;
 }
@@ -619,26 +619,26 @@ bool CodeGenerator::createQMakeProject()
     // Begin writing:
     QTextStream out(&file);
     out.setCodec("UTF-8");
-    out << "#-------------------------------------------------" << endl;
-    out << "#" << endl;
+    out << "#-------------------------------------------------" << flags->endLine();
+    out << "#" << flags->endLine();
     out << "# Project generated from WSDL by qtWsdlConverter ";
-    out << QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss") << endl;
-//    out << "# Tomasz 'sierdzio' Siekierda" << endl;
-//    out << "# sierdzio@gmail.com" << endl;
-    out << "#-------------------------------------------------" << endl;
-    out << endl;
-    out << "QT += core network" << endl;
-    out << "QT -= gui" << endl;
-    out << endl;
-    out << "TARGET = " << wsName << endl;
-    out << endl;
-    out << "TEMPLATE = app" << endl;
-    out << endl;
+    out << QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss") << flags->endLine();
+//    out << "# Tomasz 'sierdzio' Siekierda" << flags->endLine();
+//    out << "# sierdzio@gmail.com" << flags->endLine();
+    out << "#-------------------------------------------------" << flags->endLine();
+    out << flags->endLine();
+    out << "QT += core network" << flags->endLine();
+    out << "QT -= gui" << flags->endLine();
+    out << flags->endLine();
+    out << "TARGET = " << wsName << flags->endLine();
+    out << flags->endLine();
+    out << "TEMPLATE = app" << flags->endLine();
+    out << flags->endLine();
     out << "SOURCES += ";
     // Create main.cpp to prevent compile errors. This file is NOT NEEDED in any other sense.
     if (!(flags->flags() & Flags::AllInOneDirStructure))
         out << "sources/";
-    out << "main.cpp \\" << endl;
+    out << "main.cpp \\" << flags->endLine();
     if (!(flags->flags() & Flags::NoMessagesStructure)) {
         // Include all sources.
         QStringList tempMap = wsdl->methodNames();
@@ -646,15 +646,15 @@ bool CodeGenerator::createQMakeProject()
         foreach (QString s, tempMap) {
             if (!(flags->flags() & Flags::AllInOneDirStructure))
                 out << "sources/";
-            out << s << ".cpp \\" << endl;
-            out << "    ";
+            out << s << ".cpp \\" << flags->endLine();
+            out << flags->tab();
         }
     }
     if (!(flags->flags() & Flags::AllInOneDirStructure))
         out << "sources/";
-    out << wsName << ".cpp" << endl;
-    out << endl;
-    out << endl;
+    out << wsName << ".cpp" << flags->endLine();
+    out << flags->endLine();
+    out << flags->endLine();
     out << "HEADERS += ";
     if (!(flags->flags() & Flags::NoMessagesStructure))
     { // Include all headers.
@@ -663,8 +663,8 @@ bool CodeGenerator::createQMakeProject()
         foreach (QString s, tempMap) {            
             if (!(flags->flags() & Flags::AllInOneDirStructure))
                 out << "headers/";
-            out << s << ".h \\" << endl;
-            out << "    ";
+            out << s << ".h \\" << flags->endLine();
+            out << flags->tab();
         }
     }
     if (!(flags->flags() & Flags::AllInOneDirStructure))
@@ -697,18 +697,18 @@ bool CodeGenerator::createCMakeProject()
     // Begin writing:
     QTextStream out(&file);
     out.setCodec("UTF-8");
-    out << "project(" << wsName << ")" << endl;
-    out << "cmake_minimum_required(VERSION 2.4.0)" << endl;
-    out << "find_package(Qt4 REQUIRED)" << endl;
-    out << "include(${QT_USE_FILE})" << endl;
+    out << "project(" << wsName << ")" << flags->endLine();
+    out << "cmake_minimum_required(VERSION 2.4.0)" << flags->endLine();
+    out << "find_package(Qt4 REQUIRED)" << flags->endLine();
+    out << "include(${QT_USE_FILE})" << flags->endLine();
     // --------------------
     // Include sources:
-    out << "set(" << wsName << "_SRCS" << endl;
+    out << "set(" << wsName << "_SRCS" << flags->endLine();
     // Create main.cpp to prevent compile errors. This file is NOT NEEDED in any other sense.
-    out << "    ";
+    out << flags->tab();
     if (!(flags->flags() & Flags::AllInOneDirStructure))
         out << "sources/";
-    out << "main.cpp" << endl;
+    out << "main.cpp" << flags->endLine();
 
     if (!(flags->flags() & Flags::NoMessagesStructure)) {
         // Include all sources.
@@ -717,17 +717,17 @@ bool CodeGenerator::createCMakeProject()
         foreach (QString s, tempMap) {
             if (!(flags->flags() & Flags::AllInOneDirStructure))
                 out << "sources/";
-            out << s << ".cpp" << endl;
-            out << "    ";
+            out << s << ".cpp" << flags->endLine();
+            out << flags->tab();
         }
     }
     if (!(flags->flags() & Flags::AllInOneDirStructure))
         out << "sources/";
-    out << wsName << ".cpp" << endl;
-    out << ")" << endl;
+    out << wsName << ".cpp" << flags->endLine();
+    out << ")" << flags->endLine();
     // --------------------
     // Include MOC:
-    out << "set(" << wsName << "_MOC_SRCS" << endl;
+    out << "set(" << wsName << "_MOC_SRCS" << flags->endLine();
     if (!(flags->flags() & Flags::NoMessagesStructure))
     { // Include all MOC headers.
         QStringList tempMap = wsdl->methodNames();
@@ -735,22 +735,22 @@ bool CodeGenerator::createCMakeProject()
         foreach (QString s, tempMap) {
             if (!(flags->flags() & Flags::AllInOneDirStructure))
                 out << "headers/";
-            out << s << ".h" << endl;
-            out << "    ";
+            out << s << ".h" << flags->endLine();
+            out << flags->tab();
         }
     }
-    out << "    ";
+    out << flags->tab();
     if (!(flags->flags() & Flags::AllInOneDirStructure))
         out << "headers/";
-    out << wsName << ".h" << endl;
-    out << ")" << endl;
+    out << wsName << ".h" << flags->endLine();
+    out << ")" << flags->endLine();
     // Add compilation instructions:
-    out << "qt4_wrap_cpp(" << wsName << "_MOCS ${" << wsName << "_MOC_SRCS})" << endl;
-    out << "add_definitions(-DQT_NO_DEBUG)" << endl;
-    out << "add_executable(" << wsName << endl;
-    out << "    ${" << wsName << "_SRCS}" << endl;
-    out << "    ${" << wsName << "_MOCS})" << endl;
-    out << "target_link_libraries(" << wsName << " ${QT_LIBRARIES})" << endl;
+    out << "qt4_wrap_cpp(" << wsName << "_MOCS ${" << wsName << "_MOC_SRCS})" << flags->endLine();
+    out << "add_definitions(-DQT_NO_DEBUG)" << flags->endLine();
+    out << "add_executable(" << wsName << flags->endLine();
+    out << flags->tab() + "${" << wsName << "_SRCS}" << flags->endLine();
+    out << flags->tab() + "${" << wsName << "_MOCS})" << flags->endLine();
+    out << "target_link_libraries(" << wsName << " ${QT_LIBRARIES})" << flags->endLine();
     // EOF (CMake CMakeLists.txt file)
     // ---------------------------------
 
@@ -779,55 +779,55 @@ bool CodeGenerator::createSconsProject()
     // Begin writing:
     QTextStream out(&file);
     out.setCodec("UTF-8");
-    out << "#!/usr/bin/env python" << endl;
-    out << endl;
-    out << "import os" << endl;
-    out << endl;
-    out << "QT4_PY_PATH = \".\" # Probably not needed!" << endl;
+    out << "#!/usr/bin/env python" << flags->endLine();
+    out << flags->endLine();
+    out << "import os" << flags->endLine();
+    out << flags->endLine();
+    out << "QT4_PY_PATH = \".\" # Probably not needed!" << flags->endLine();
     // WARNING! QTDIR has to be set on end machine!
-    out << "QTDIR = \".\" # WARNING! Set QTDIR properly!" << endl;
-    out << endl;
-    out << "pkgpath = os.environ.get(\"PKG_CONFIG_PATH\", \"\")" << endl;
-    out << "pkgpath += \":%s/lib/pkgconfig\" % QTDIR" << endl;
-    out << "os.environ[\"PKG_CONFIG_PATH\"] = pkgpath" << endl;
-    out << "os.environ[\"QTDIR\"] = QTDIR # WARNING! As above." << endl;
-    out << endl;
+    out << "QTDIR = \".\" # WARNING! Set QTDIR properly!" << flags->endLine();
+    out << flags->endLine();
+    out << "pkgpath = os.environ.get(\"PKG_CONFIG_PATH\", \"\")" << flags->endLine();
+    out << "pkgpath += \":%s/lib/pkgconfig\" % QTDIR" << flags->endLine();
+    out << "os.environ[\"PKG_CONFIG_PATH\"] = pkgpath" << flags->endLine();
+    out << "os.environ[\"QTDIR\"] = QTDIR # WARNING! As above." << flags->endLine();
+    out << flags->endLine();
     out << "env = Environment(tools=[\"default\", \"qt4\"], toolpath=[QT4_PY_PATH])"
-        << endl;
-    out << "env[\"CXXFILESUFFIX\"] = \".cpp\"" << endl;
-    out << endl;
-    out << "env.EnableQt4Modules([\"QtCore\", \"QtNetwork\"])" << endl;
+        << flags->endLine();
+    out << "env[\"CXXFILESUFFIX\"] = \".cpp\"" << flags->endLine();
+    out << flags->endLine();
+    out << "env.EnableQt4Modules([\"QtCore\", \"QtNetwork\"])" << flags->endLine();
     // --------------------
     // Include sources:
-    out << "sources = [" << endl;
+    out << "sources = [" << flags->endLine();
     // Create main.cpp to prevent compile errors. This file is NOT NEEDED in any other sense.
-    out << "    ";
+    out << flags->tab();
     if (!(flags->flags() & Flags::AllInOneDirStructure))
         out << "\"sources/";
-    out << "main.cpp\"," << endl;
+    out << "main.cpp\"," << flags->endLine();
 
     if (!(flags->flags() & Flags::NoMessagesStructure)) {
         // Include all sources.
         QStringList tempMap = wsdl->methodNames();
 
-        out << "    ";
+        out << flags->tab();
         foreach (QString s, tempMap) {
             if (!(flags->flags() & Flags::AllInOneDirStructure))
                 out << "\"sources/";
-            out << s << ".cpp\"," << endl;
-            out << "    ";
+            out << s << ".cpp\"," << flags->endLine();
+            out << flags->tab();
         }
         if (!(flags->flags() & Flags::AllInOneDirStructure))
             out << "\"sources/";
-        out << wsName << ".cpp\"" << endl;
+        out << wsName << ".cpp\"" << flags->endLine();
     } else {
-        out << "    ";
+        out << flags->tab();
         if (!(flags->flags() & Flags::AllInOneDirStructure))
             out << "\"sources/";
-        out << wsName << ".cpp\"" << endl;
-        out << "]" << endl;
+        out << wsName << ".cpp\"" << flags->endLine();
+        out << "]" << flags->endLine();
     }
-    out << "env.Program(target=\"" << wsName << "\", source=[sources])" << endl;
+    out << "env.Program(target=\"" << wsName << "\", source=[sources])" << flags->endLine();
     // EOF (SCons SConstruct file)
     // ---------------------------------
 

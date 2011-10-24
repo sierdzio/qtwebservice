@@ -26,10 +26,10 @@ This project provides a set of classes (compilable into a library, if you prefer
   1.1.3 QWebService (formerly QWebServiceAbstract)
   In it's current shape, this is mostly a QWsdl wrapper class which hides the WSDL parsing machinery and exposes useful stuff only.
 
-  1.1.4 QWebServiceReader (formerly QWebServiceReaderAbstract) (*)
+  1.1.4 QWebServiceReader (formerly QWebServiceReaderAbstract. Removed in v0.5.3) (*)
   A derivative of QWebService, more focused on "reading" a web service (that is, sending messages and receiving replies). Currently not very innovative, it does nothing more that QWebService. Possible updates in the future, bringing new functionality.
 
-  1.1.5 QwebServiceServer (or QWebServiceWriter) (*)
+  1.1.5 QWebServiceServer (or QWebServiceWriter) (*)
   Currently does not exist. A proposed class, derived from QWebService, aimed at providing web service server functionality.
 
   1.1.6 QWebServiceMethod
@@ -52,7 +52,7 @@ WARNING: Remember to first compile QWebService library, and set it's path in run
     --qmake, --cmake, --scons, --no-build-system (-n),
     --objSuffix=, --msgSuffix=,
     --endLine={unix, windows},
-    --tabulation=, (number of spaces),
+    --tabulation=(number of spaces),
     --force (-f).
 
   2.1.2 Default switches

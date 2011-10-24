@@ -164,7 +164,7 @@ QByteArray QWebServiceMethod::invokeMethod(const QUrl &url,
     qsm.invokeMethod();
     // TODO: ADD ERROR HANDLING!
     forever {
-        if (qsm.d_func()->replyReceived) {
+        if (qsm.isReplyReady()) {
             return qsm.d_func()->reply;
         } else {
             qApp->processEvents();

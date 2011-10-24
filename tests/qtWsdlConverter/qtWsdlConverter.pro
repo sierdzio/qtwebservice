@@ -13,11 +13,11 @@ SOURCES += tst_qtwsdlconverter.cpp \
     ../../qtWsdlConverter/sources/flags.cpp \
     ../../qtWsdlConverter/sources/templatelogic.cpp \
     ../../qtWsdlConverter/sources/wsdlconverter.cpp \
-    ../../qtWsdlConverter/sources/messagegenerator.cpp \
+    ../../qtWsdlConverter/sources/methodgenerator.cpp \
     ../../qtWsdlConverter/sources/codegenerator.cpp
 
 HEADERS += ../../qtWsdlConverter/headers/flags.h \
     ../../qtWsdlConverter/headers/templatelogic.h \
     ../../qtWsdlConverter/headers/wsdlconverter.h \
-    ../../qtWsdlConverter/headers/messagegenerator.h \
+    ../../qtWsdlConverter/headers/methodgenerator.h \
     ../../qtWsdlConverter/headers/codegenerator.h

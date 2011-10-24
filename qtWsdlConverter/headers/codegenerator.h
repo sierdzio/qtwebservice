@@ -26,7 +26,7 @@
 #include <qwsdl.h>
 #include "flags.h"
 #include "templatelogic.h"
-#include "messagegenerator.h"
+#include "methodgenerator.h"
 
 class CodeGenerator : public QObject
 {
@@ -45,7 +45,7 @@ public slots:
 private:
     bool enterErrorState(const QString &errMessage = QString());
     void prepare();
-    bool createMessages();
+    bool createWebMethods();
     bool createService();
     bool createServiceHeader();
     bool createServiceSource();

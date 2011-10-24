@@ -28,6 +28,8 @@
 #include <QtCore/qvariant.h>
 #include <QtCore/qmap.h>
 #include <QtCore/qbytearray.h>
+#include <QtCore/qdatetime.h>
+#include <QtCore/qcoreapplication.h>
 #include "QWebService_global.h"
 
 class QWebMethodPrivate;
@@ -59,10 +61,12 @@ public:
         Delete  = 0x8
     };
 
-    explicit QWebMethod(QObject *parent = 0);
-    QWebMethod(Protocol protocol = Soap12, HttpMethod httpMethod = Post,
-               QObject *parent = 0);
-    QWebMethod(const QUrl &url, Protocol protocol = Soap12, HttpMethod httpMethod = Post,
+    explicit QWebMethod(QObject *parent = 0,
+                        Protocol protocol = Soap12,
+                        HttpMethod httpMethod = Post);
+    QWebMethod(const QUrl &url,
+               Protocol protocol = Soap12,
+               HttpMethod httpMethod = Post,
                QObject *parent = 0);
     ~QWebMethod();
 

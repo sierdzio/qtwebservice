@@ -13,15 +13,8 @@ void %method%::setParameters(%params%)
 %assignParams%
 }
 
-bool %method%::invokeMethod(%params%)
-{
-%assignParams%
-    sendMessage();
-    return true;
-}
-
+%methodInvoke%
 %staticInvoke%
-
 void %method%::configure()
 {
 %configure%

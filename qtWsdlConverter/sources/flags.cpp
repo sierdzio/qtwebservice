@@ -45,7 +45,7 @@
            (mode) Only most needed methods, variables and enums are preserved.
            Code is as small, as possible, at the expense of loosing flexibility.
     \value Subclass
-           converter creates messages by subclassing QWebMethod (this option
+           converter creates web methods by subclassing QWebMethod (this option
            requires QWebService library to be present).
     \value Synchronous
            (synchronousness) Web methods will wait for reply and return with data.
@@ -56,7 +56,7 @@
            (structure) Headers will be placed in <dir>/headers,
            sources in <dir>/sources, build system and .pro files in <dir>/.
     \value NoMessagesStructure
-           (structure) Converter will not create messages as separate classes,
+           (structure) Converter will not create web methods as separate classes,
            but use QWebMethod (this option requires QWebService library to be present).
     \value AllInOneDirStructure
            (structure) All generated files will be stored in one folder.
@@ -181,15 +181,15 @@ QString Flags::protocolString(bool includeRest) const
     QString result;
 
     if (options & Http)
-        result = QLatin1String("http");
+        result = QLatin1String("Http");
     else if (options & Soap10)
-        result = QLatin1String("soap10");
+        result = QLatin1String("Soap10");
     else if (options & Soap12)
-        result = QLatin1String("soap12");
+        result = QLatin1String("Soap12");
     else if (options & Json)
-        result = QLatin1String("json");
+        result = QLatin1String("Json");
     else if (options & Xml)
-        result = QLatin1String("xml");
+        result = QLatin1String("Xml");
 
     if (includeRest && (options & Rest))
         result += QLatin1String(",rest");
@@ -217,13 +217,13 @@ QString Flags::httpMethodString() const
     QString result;
 
     if (method == Post)
-        result = QLatin1String("POST");
+        result = QLatin1String("Post");
     else if (method == Get)
-        result = QLatin1String("GET");
+        result = QLatin1String("Get");
     else if (method == Put)
-        result = QLatin1String("PUT");
+        result = QLatin1String("Put");
     else if (method == Delete)
-        result = QLatin1String("DELETE");
+        result = QLatin1String("Delete");
 
     return result;
 }
@@ -295,18 +295,18 @@ void Flags::setForced(bool forced)
 }
 
 /*!
-    Returns message suffix, which is appended to methods (ones that send
-    the message) in generated code.
+    Returns method suffix, which is appended to methods (ones that send
+    the method) in generated code.
   */
-QString Flags::messageSuffix() const
+QString Flags::methodSuffix() const
 {
     return msgSuffix;
 }
 
 /*!
-    Sets the message suffix using \a newMsgSuffix.
+    Sets the method suffix using \a newMsgSuffix.
     */
-void Flags::setMessageSuffix(const QString &newMsgSuffix)
+void Flags::setMethodSuffix(const QString &newMsgSuffix)
 {
     msgSuffix = newMsgSuffix;
 }

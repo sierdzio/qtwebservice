@@ -7,7 +7,7 @@ TemplateLogic::TemplateLogic(Flags *flgs) :
 
 /*!
   Reads file contents and puts it into a QString. A crude, but
-  effective way of helping in message creation.
+  effective way of helping in method creation.
   */
 QString TemplateLogic::readFile(QString path)
 {

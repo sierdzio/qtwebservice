@@ -139,28 +139,13 @@
   */
 
 /*!
-  Constructs web method object with \a parent.
-  Requires specifying other parameters later.
-
-  \sa setParameters(), setProtocol(), sendMessage()
-  */
-QWebMethod::QWebMethod(QObject *parent) :
-    QObject(parent), d_ptr(new QWebMethodPrivate)
-{
-    Q_D(QWebMethod);
-    d->init();
-    setProtocol(Soap12);
-    setHttpMethod(Post);
-}
-
-/*!
     Constructs web method usign \a parent, \a protocol (which defaults to
     soap12), and \a method (which defaults to POST). Requires specifying
     other params later (setParameters()).
 
     \sa setParameters(), setProtocol(), sendMessage()
   */
-QWebMethod::QWebMethod(Protocol protocol, HttpMethod method, QObject *parent) :
+QWebMethod::QWebMethod(QObject *parent, Protocol protocol, HttpMethod method) :
     QObject(parent), d_ptr(new QWebMethodPrivate)
 {
     Q_D(QWebMethod);
@@ -517,15 +502,15 @@ QString QWebMethod::protocolString(bool includeRest) const
     QString result;
 
     if (d->protocolUsed & Http)
-        result = QLatin1String("http");
+        result = QLatin1String("Http");
     else if (d->protocolUsed & Soap10)
-        result = QLatin1String("soap10");
+        result = QLatin1String("Soap10");
     else if (d->protocolUsed & Soap12)
-        result = QLatin1String("soap12");
+        result = QLatin1String("Soap12");
     else if (d->protocolUsed & Json)
-        result = QLatin1String("json");
+        result = QLatin1String("Json");
     else if (d->protocolUsed & Xml)
-        result = QLatin1String("xml");
+        result = QLatin1String("Xml");
 
     if (includeRest && (d->protocolUsed & Rest))
         result += QLatin1String(",rest");
@@ -587,13 +572,13 @@ QString QWebMethod::httpMethodString() const
     QString result;
 
     if (d->httpMethodUsed == Post)
-        result = QLatin1String("POST");
+        result = QLatin1String("Post");
     else if (d->httpMethodUsed == Get)
-        result = QLatin1String("GET");
+        result = QLatin1String("Get");
     else if (d->httpMethodUsed == Put)
-        result = QLatin1String("PUT");
+        result = QLatin1String("Put");
     else if (d->httpMethodUsed == Delete)
-        result = QLatin1String("DELETE");
+        result = QLatin1String("Delete");
 
     return result;
 }
@@ -682,7 +667,7 @@ bool QWebMethod::invokeMethod(const QByteArray &requestData)
                            this, SLOT(authReplyFinished(QNetworkReply*)));
                 break;
             } else {
-                qApp->processEvents();
+                QCoreApplication::instance()->processEvents();
             }
         }
     } else if ((d->authenticationPerformed == true)
