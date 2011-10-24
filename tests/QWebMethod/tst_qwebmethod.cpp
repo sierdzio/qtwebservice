@@ -40,7 +40,7 @@ private:
   */
 void TestQWebMethod::initialTest()
 {
-    QWebMethod *message = new QWebMethod(QWebMethod::Soap12, QWebMethod::Post, 0);
+    QWebMethod *message = new QWebMethod(0, QWebMethod::Soap12, QWebMethod::Post);
     QCOMPARE(message->isErrorState(), bool(false));
     delete message;
 }
@@ -50,7 +50,7 @@ void TestQWebMethod::initialTest()
   */
 void TestQWebMethod::gettersTest()
 {
-    QWebMethod *message = new QWebMethod(QWebMethod::Soap12, QWebMethod::Post, 0);
+    QWebMethod *message = new QWebMethod(0, QWebMethod::Soap12, QWebMethod::Post);
     defaultGettersTest(message);
     delete message;
 }
@@ -60,7 +60,7 @@ void TestQWebMethod::gettersTest()
   */
 void TestQWebMethod::settersTest()
 {
-    QWebMethod *message = new QWebMethod(QWebMethod::Soap12, QWebMethod::Post, 0);
+    QWebMethod *message = new QWebMethod(0, QWebMethod::Soap12, QWebMethod::Post);
     defaultGettersTest(message);
 
     QUrl tempUrl(QString("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx"));
@@ -116,7 +116,7 @@ void TestQWebMethod::settersTest()
   */
 void TestQWebMethod::asynchronousSendingTest()
 {
-    QWebMethod *message = new QWebMethod(QWebMethod::Soap12, QWebMethod::Post, 0);
+    QWebMethod *message = new QWebMethod(0, QWebMethod::Soap12, QWebMethod::Post);
     message->setHost("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx");
     message->setMethodName("getProviderList");
     message->setTargetNamespace("http://www.daenet.de/webservices/CurrencyServer");

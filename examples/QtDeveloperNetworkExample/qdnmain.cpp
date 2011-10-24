@@ -28,7 +28,7 @@ QdnMain::QdnMain(QWidget *parent) :
     ui->tabPosts->setLayout(ui->layoutPosts);
     ui->lineEditPassword->setEchoMode(QLineEdit::Password);
 
-    webMethodProfile = new QWebMethod(QWebMethod::Json, QWebMethod::Get, this);
+    webMethodProfile = new QWebMethod(this, QWebMethod::Json, QWebMethod::Get);
     webMethodProfile->setHost(QUrl::fromUserInput(
                               QString("http://developer.qt.nokia.com/qtapi/1/member/profile")));
     connect(webMethodProfile, SIGNAL(replyReady(QByteArray)), this, SLOT(profileReply()));
