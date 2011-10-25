@@ -38,15 +38,15 @@ public:
     QString name() const;
     void setName(const QString &newWebServiceName = QString());
 
-    QMap<QString, QWebServiceMethod *> *methods();
-    QWebServiceMethod *method(const QString &methodName);
+    QMap<QString, QWebMethod *> *methods();
+    QWebMethod *method(const QString &methodName);
     QStringList methodNames() const;
     QStringList methodParameters(const QString &methodName) const;
     QStringList methodReturnValue(const QString &methodName) const;
     QMap<QString, QVariant> parameterNamesTypes(const QString &methodName) const;
     QMap<QString, QVariant> returnValueNameType(const QString &methodName) const;
-    void addMethod(QWebServiceMethod *newMethod);
-    void addMethod(const QString &methodName, QWebServiceMethod *newMethod);
+    void addMethod(QWebMethod *newMethod);
+    void addMethod(const QString &methodName, QWebMethod *newMethod);
     void removeMethod(const QString &methodName);
 
     QUrl hostUrl() const;

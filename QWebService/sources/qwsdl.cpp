@@ -149,7 +149,7 @@ void QWsdl::resetWsdl(const QString &newWsdl)
 
     \sa methodNames()
   */
-QMap<QString, QWebServiceMethod *> *QWsdl::methods()
+QMap<QString, QWebMethod *> *QWsdl::methods()
 {
     Q_D(QWsdl);
     return d->methodsMap;
@@ -283,7 +283,7 @@ void QWsdlPrivate::init()
 
     workMethodList = new QStringList();
     workMethodParameters = new QMap<int, QMap<QString, QVariant> >();
-    methodsMap = new QMap<QString, QWebServiceMethod *>;
+    methodsMap = new QMap<QString, QWebMethod *>();
 }
 
 /*!
@@ -648,13 +648,12 @@ void QWsdlPrivate::prepareMethods()
                 else
                     methodPath = m_hostUrl.path();
 
-                methodsMap->insert(methodName,
-                                   new QWebServiceMethod(methodPath,
-                                                         methodName,
-                                                         m_targetNamespace,
-                                                         workMethodParameters->value(methodMain)));
-                methodsMap->value(methodName)->setReturnValue(
-                            workMethodParameters->value(methodReturn));
+                QWebMethod *m = new QWebMethod(methodPath);
+                m->setMethodName(methodName);
+                m->setTargetNamespace(m_targetNamespace);
+                m->setParameters(workMethodParameters->value(methodMain));
+                m->setReturnValue(workMethodParameters->value(methodReturn));
+                methodsMap->insert(methodName, m);
             }
         }
     }

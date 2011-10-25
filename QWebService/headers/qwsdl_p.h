@@ -63,7 +63,7 @@ public:
     QStringList *workMethodList;
     // Param if one, QList if many.
     QMap<int, QMap<QString, QVariant> > *workMethodParameters;
-    QMap<QString, QWebServiceMethod *> *methodsMap;
+    QMap<QString, QWebMethod *> *methodsMap;
 };
 
 #endif // QWSDL_P_H

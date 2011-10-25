@@ -48,7 +48,7 @@ QWebService::QWebService(QObject *parent)
 {
     Q_D(QWebService);
     d->wsdl = new QWsdl(this);
-    d->methods = new QMap<QString, QWebServiceMethod *>();
+    d->methods = new QMap<QString, QWebMethod *>();
     d->init();
 }
 
@@ -65,7 +65,7 @@ QWebService::QWebService(QWsdl *_wsdl, QObject *parent)
 {
     Q_D(QWebService);
     d->wsdl = _wsdl;
-    d->methods = new QMap<QString, QWebServiceMethod *>();
+    d->methods = new QMap<QString, QWebMethod *>();
     d->init();
     d->methods = d->wsdl->methods();
     setName(d->wsdl->webServiceName());
@@ -86,7 +86,7 @@ QWebService::QWebService(const QString &_hostname, QObject *parent)
     Q_D(QWebService);
     d->m_hostUrl.setUrl(_hostname);
     d->wsdl = new QWsdl(_hostname, this);
-    d->methods = new QMap<QString, QWebServiceMethod *>();
+    d->methods = new QMap<QString, QWebMethod *>();
     d->init();
 
     if (!d->wsdl->isErrorState()) {
@@ -103,7 +103,7 @@ QWebService::QWebService(QWebServicePrivate &dd, QObject *parent) :
 {
     Q_D(QWebService);
     d->wsdl = new QWsdl(this);
-    d->methods = new QMap<QString, QWebServiceMethod *>();
+    d->methods = new QMap<QString, QWebMethod *>();
     d->init();
 }
 
@@ -152,7 +152,7 @@ void QWebService::setName(const QString &newWebServiceName)
 
     \sa method()
   */
-QMap<QString, QWebServiceMethod *> *QWebService::methods()
+QMap<QString, QWebMethod *> *QWebService::methods()
 {
     Q_D(QWebService);
     return d->methods;
@@ -166,7 +166,7 @@ QMap<QString, QWebServiceMethod *> *QWebService::methods()
 
     \sa methods()
   */
-QWebServiceMethod *QWebService::method(const QString &methodName)
+QWebMethod *QWebService::method(const QString &methodName)
 {
     Q_D(QWebService);
     return d->methods->value(methodName);
@@ -228,7 +228,7 @@ QMap<QString, QVariant> QWebService::returnValueNameType(const QString &methodNa
 
     \sa removeMethod()
   */
-void QWebService::addMethod(QWebServiceMethod *newMethod)
+void QWebService::addMethod(QWebMethod *newMethod)
 {
     Q_D(QWebService);
     d->methods->insert(newMethod->methodName(), newMethod);
@@ -239,11 +239,11 @@ void QWebService::addMethod(QWebServiceMethod *newMethod)
 
     Adds the specified web method (\a newMethod) to the web service.
     Method name (\a methodName) is used for reference (it does not set name
-    inside the QWebServiceMethod object).
+    inside the QWebMethod object).
 
     \sa removeMethod()
   */
-void QWebService::addMethod(const QString &methodName, QWebServiceMethod *newMethod)
+void QWebService::addMethod(const QString &methodName, QWebMethod *newMethod)
 {
     Q_D(QWebService);
 //    newMethod->setMessageName(methodName);

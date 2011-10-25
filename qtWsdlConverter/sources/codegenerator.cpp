@@ -137,7 +137,7 @@ bool CodeGenerator::createService()
 bool CodeGenerator::createServiceHeader()
 {
     QString wsName;
-    QMap<QString, QWebServiceMethod *> *tempMap = wsdl->methods();
+    QMap<QString, QWebMethod *> *tempMap = wsdl->methods();
 
     if (baseClassName != QString())
         wsName = baseClassName;
@@ -176,7 +176,7 @@ bool CodeGenerator::createServiceHeader()
         beginIndex = logic.removeTag(serviceHeader, "%methodSend%");
         foreach (QString s, tempMap->keys()) {
             QString tmpReturn, tmpP;
-            QWebServiceMethod *m = tempMap->value(s);
+            QWebMethod *m = tempMap->value(s);
 
             foreach (QString ret, m->returnValueNameType().keys()) {
                 tmpReturn = m->returnValueNameType().value(ret).typeName();
@@ -220,7 +220,7 @@ bool CodeGenerator::createServiceHeader()
             */
             {
                 QString tmpReturn;
-                QWebServiceMethod *m = tempMap->value(s);
+                QWebMethod *m = tempMap->value(s);
                 foreach (QString ret, m->returnValueNameType().keys()) {
                     tmpReturn = m->returnValueNameType().value(ret).typeName();
                     break; // This does not support multiple return values!
@@ -267,7 +267,7 @@ bool CodeGenerator::createServiceHeader()
 
         foreach (QString s, tempMap->keys()) {
             QString tmpReturn;
-            QWebServiceMethod *m = tempMap->value(s);
+            QWebMethod *m = tempMap->value(s);
 
             foreach (QString ret, m->returnValueNameType().keys()) {
                 tmpReturn = m->returnValueNameType().value(ret).typeName();
@@ -310,7 +310,7 @@ bool CodeGenerator::createServiceHeader()
 bool CodeGenerator::createServiceSource()
 {
     QString wsName;
-    QMap<QString, QWebServiceMethod *> *tempMap = wsdl->methods();
+    QMap<QString, QWebMethod *> *tempMap = wsdl->methods();
     if (baseClassName != QString())
         wsName = baseClassName;
     else
@@ -367,7 +367,7 @@ bool CodeGenerator::createServiceSource()
     // Create and return the QStringList containing method names:
     beginIndex = logic.removeTag(serviceSource, "%methodNames%");
     foreach (QString s, tempMap->keys()) {
-        QWebServiceMethod *m = tempMap->value(s);
+        QWebMethod *m = tempMap->value(s);
         toInsert = flags->tab() + "result.append(\"" + m->methodName()
                 + "\");" + flags->endLine();
         serviceSource.insert(beginIndex, toInsert);
@@ -378,7 +378,7 @@ bool CodeGenerator::createServiceSource()
     { // Define all methods (as wrappers for method classes).
         foreach (QString s, tempMap->keys()) {
             QString tmpReturn, tmpP, tmpPN;
-            QWebServiceMethod *m = tempMap->value(s);
+            QWebMethod *m = tempMap->value(s);
 
             foreach (QString ret, m->returnValueNameType().keys()) {
                 tmpReturn = m->returnValueNameType().value(ret).typeName();
@@ -506,7 +506,7 @@ bool CodeGenerator::createServiceSource()
             */
             {
                 QString tmpReturn;
-                QWebServiceMethod *m = tempMap->value(s);
+                QWebMethod *m = tempMap->value(s);
 
                 foreach (QString ret, m->returnValueNameType().keys()) {
                     tmpReturn = m->returnValueNameType().value(ret).typeName();
@@ -536,7 +536,7 @@ bool CodeGenerator::createServiceSource()
             */
 
             QString tmpReturn;
-            QWebServiceMethod *m = tempMap->value(s);
+            QWebMethod *m = tempMap->value(s);
 
             foreach (QString ret, m->returnValueNameType().keys()) {
                 tmpReturn = m->returnValueNameType().value(ret).typeName();

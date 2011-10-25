@@ -22,7 +22,7 @@
 #include <QtCore/qstring.h>
 #include <QtCore/qmap.h>
 #include <QtCore/qdir.h>
-#include <qwebservicemethod.h>
+#include <qwebmethod.h>
 #include <qwsdl.h>
 #include "flags.h"
 #include "templatelogic.h"
@@ -54,7 +54,7 @@ private:
     bool createCMakeProject();
     bool createSconsProject();
 
-    QMap<QString, QWebServiceMethod *> *methods;
+    QMap<QString, QWebMethod *> *methods;
     QDir workingDir;
     QWsdl *wsdl;
     Flags *flags;

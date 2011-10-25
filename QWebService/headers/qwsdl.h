@@ -43,7 +43,7 @@ public:
     void setWsdlFile(const QString &wsdlFile); // == resetWsdl()
     void resetWsdl(const QString &newWsdl);
 
-    QMap<QString, QWebServiceMethod *> *methods();
+    QMap<QString, QWebMethod *> *methods();
     QStringList methodNames() const;
 
     QString webServiceName() const;

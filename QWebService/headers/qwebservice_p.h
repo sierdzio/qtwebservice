@@ -41,7 +41,7 @@ public:
     QUrl m_hostUrl;
     QWsdl *wsdl;
     // This is general, but should work for custom classes.
-    QMap<QString, QWebServiceMethod *> *methods;
+    QMap<QString, QWebMethod *> *methods;
 };
 
 #endif // QWEBSERVICE_P_H

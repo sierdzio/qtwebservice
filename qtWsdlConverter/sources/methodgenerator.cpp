@@ -29,7 +29,7 @@
     Constructs QObject using \a parent, initialises MethodGenerator
     with methods (\a mthds), working directory (\a wrkDir), and flags (\a flgs).
   */
-MethodGenerator::MethodGenerator(QMap<QString, QWebServiceMethod *> *mthds,
+MethodGenerator::MethodGenerator(QMap<QString, QWebMethod *> *mthds,
                                    const QDir &wrkDir,
                                    Flags *flgs, QObject *parent) :
     QObject(parent), methods(mthds), workingDir(wrkDir), flags(flgs)
@@ -79,7 +79,7 @@ bool MethodGenerator::createMethods()
         workingDir.cd(QLatin1String("headers"));
 
     foreach (QString s, methods->keys()) {
-        QWebServiceMethod *m = methods->value(s);
+        QWebMethod *m = methods->value(s);
 
         if (flags->flags() & Flags::Subclass) {
             if (!createSubclassedMethodHeader(m))
@@ -98,7 +98,7 @@ bool MethodGenerator::createMethods()
     }
 
     foreach (QString s, methods->keys()) {
-        QWebServiceMethod *n = methods->value(s);
+        QWebMethod *n = methods->value(s);
 
         if (flags->flags() & Flags::Subclass) {
             if (!createSubclassedMethodSource(n))
@@ -124,7 +124,7 @@ bool MethodGenerator::createMethods()
 
     Creates a subclassed web method header.
   */
-bool MethodGenerator::createSubclassedMethodHeader(QWebServiceMethod *mtd)
+bool MethodGenerator::createSubclassedMethodHeader(QWebMethod *mtd)
 {
     QString mtdName = mtd->methodName();
     QFile file(QString(workingDir.path() + QLatin1String("/")
@@ -230,7 +230,7 @@ bool MethodGenerator::createSubclassedMethodHeader(QWebServiceMethod *mtd)
 
     Creates a subclassed web method source file.
   */
-bool MethodGenerator::createSubclassedMethodSource(QWebServiceMethod *mtd)
+bool MethodGenerator::createSubclassedMethodSource(QWebMethod *mtd)
 {
     QString mtdName = mtd->methodName();
     QFile file(QString(workingDir.path() + QLatin1String("/")
@@ -368,7 +368,7 @@ bool MethodGenerator::createSubclassedMethodSource(QWebServiceMethod *mtd)
 /*!
     \internal
   */
-bool MethodGenerator::createMethodHeader(QWebServiceMethod *mtd)
+bool MethodGenerator::createMethodHeader(QWebMethod *mtd)
 {
     QString mtdName = mtd->methodName();
     QFile file(QString(workingDir.path() + QLatin1String("/")
@@ -488,7 +488,7 @@ bool MethodGenerator::createMethodHeader(QWebServiceMethod *mtd)
 /*!
     \internal
   */
-bool MethodGenerator::createMethodSource(QWebServiceMethod *mtd)
+bool MethodGenerator::createMethodSource(QWebMethod *mtd)
 {
     QString mtdName = mtd->methodName();
     QFile file(QString(workingDir.path() + QLatin1String("/")
@@ -747,7 +747,7 @@ bool MethodGenerator::createMainCpp()
 
   Assigns all method parameters to this-><paramName>.
   */
-void MethodGenerator::assignAllParameters(QWebServiceMethod *mtd, QTextStream &out)
+void MethodGenerator::assignAllParameters(QWebMethod *mtd, QTextStream &out)
 {
     QMap<QString, QVariant> tempMap = mtd->parameterNamesTypes();
 
@@ -761,7 +761,7 @@ void MethodGenerator::assignAllParameters(QWebServiceMethod *mtd, QTextStream &o
 
   Assigns all method parameters to this-><paramName>.
   */
-QString MethodGenerator::assignAllParameters(QWebServiceMethod *mtd)
+QString MethodGenerator::assignAllParameters(QWebMethod *mtd)
 {
     QString result;
     QMap<QString, QVariant> tempMap = mtd->parameterNamesTypes();
@@ -779,7 +779,7 @@ QString MethodGenerator::assignAllParameters(QWebServiceMethod *mtd)
   Inserts custom data to constructor. Used in create sources.
   */
 void MethodGenerator::addCustomCodeToConstructor(QString &sourceCode,
-                                                  QWebServiceMethod *mtd,
+                                                  QWebMethod *mtd,
                                                   int &beginIndex)
 {
     beginIndex = sourceCode.indexOf("QObject(", beginIndex) + 15;

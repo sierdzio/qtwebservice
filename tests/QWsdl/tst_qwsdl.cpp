@@ -67,7 +67,7 @@ void TestQWsdl::gettersTest()
     QCOMPARE(wsdl.methodNames().size(), int(13));
 
     QStringList tempList = wsdl.methodNames();
-    QMap<QString, QWebServiceMethod *> *methods = wsdl.methods();
+    QMap<QString, QWebMethod *> *methods = wsdl.methods();
 
     foreach (QString s, tempList) {
         QMap<QString, QVariant> tempParams = methods->value(s)->parameterNamesTypes();

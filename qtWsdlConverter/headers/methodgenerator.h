@@ -23,7 +23,7 @@
 #include <QtCore/qmap.h>
 #include <QtCore/qdir.h>
 #include <QtCore/qtextstream.h>
-#include <qwebservicemethod.h>
+#include <qwebmethod.h>
 #include "flags.h"
 #include "templatelogic.h"
 
@@ -31,24 +31,24 @@ class MethodGenerator : public QObject
 {
     Q_OBJECT
 public:
-    explicit MethodGenerator(QMap<QString, QWebServiceMethod *> *methods,
+    explicit MethodGenerator(QMap<QString, QWebMethod *> *methods,
                               const QDir &workingDir, Flags *flgs, QObject *parent = 0);
     QString errorMessage();
     bool createMethods();
 
 private:
     bool enterErrorState(const QString errMessage = QString());
-    bool createSubclassedMethodHeader(QWebServiceMethod *mtd);
-    bool createSubclassedMethodSource(QWebServiceMethod *mtd);
-    bool createMethodHeader(QWebServiceMethod *mtd);
-    bool createMethodSource(QWebServiceMethod *mtd);
+    bool createSubclassedMethodHeader(QWebMethod *mtd);
+    bool createSubclassedMethodSource(QWebMethod *mtd);
+    bool createMethodHeader(QWebMethod *mtd);
+    bool createMethodSource(QWebMethod *mtd);
     bool createMainCpp();
 
-    void assignAllParameters(QWebServiceMethod *mtd, QTextStream &out);
-    QString assignAllParameters(QWebServiceMethod *mtd);
-    void addCustomCodeToConstructor(QString &sourceCode, QWebServiceMethod *mtd, int &beginIndex);
+    void assignAllParameters(QWebMethod *mtd, QTextStream &out);
+    QString assignAllParameters(QWebMethod *mtd);
+    void addCustomCodeToConstructor(QString &sourceCode, QWebMethod *mtd, int &beginIndex);
 
-    QMap<QString, QWebServiceMethod *> *methods;
+    QMap<QString, QWebMethod *> *methods;
     QDir workingDir;
     Flags *flags;
     bool errorState;

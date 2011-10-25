@@ -77,24 +77,24 @@ void TestQWebMethod::settersTest()
 
     message->setProtocol(QWebMethod::Json);
     QCOMPARE(message->protocol(), QWebMethod::Json);
-    QCOMPARE(message->protocolString(), QString("json"));
-    QCOMPARE(message->protocolString(true), QString("json"));
+    QCOMPARE(message->protocolString(), QString("Json"));
+    QCOMPARE(message->protocolString(true), QString("Json"));
 
     message->setHttpMethod(QWebMethod::Delete);
     QCOMPARE(message->httpMethod(), QWebMethod::Delete);
-    QCOMPARE(message->httpMethodString(), QString("DELETE"));
+    QCOMPARE(message->httpMethodString(), QString("Delete"));
 
-    message->setHttpMethod("get");
+    message->setHttpMethod("Get");
     QCOMPARE(message->httpMethod(), QWebMethod::Get);
-    QCOMPARE(message->httpMethodString(), QString("GET"));
+    QCOMPARE(message->httpMethodString(), QString("Get"));
 
     message->setHttpMethod("pUT");
     QCOMPARE(message->httpMethod(), QWebMethod::Put);
-    QCOMPARE(message->httpMethodString(), QString("PUT"));
+    QCOMPARE(message->httpMethodString(), QString("Put"));
 
     message->setHttpMethod("POST");
     QCOMPARE(message->httpMethod(), QWebMethod::Post);
-    QCOMPARE(message->httpMethodString(), QString("POST"));
+    QCOMPARE(message->httpMethodString(), QString("Post"));
 
     QMap<QString, QVariant> tmpP;
     tmpP.insert("symbol", QVariant("NOK"));
@@ -139,10 +139,10 @@ void TestQWebMethod::defaultGettersTest(QWebMethod *message)
     QCOMPARE(message->isErrorState(), bool(false));
     QCOMPARE(message->isReplyReady(), bool(false));
     QCOMPARE(message->errorInfo(), QString(""));
-    QCOMPARE(message->httpMethodString(), QString("POST"));
+    QCOMPARE(message->httpMethodString(), QString("Post"));
     QCOMPARE(message->httpMethod(), QWebMethod::Post);
-    QCOMPARE(message->protocolString(false), QString("soap12"));
-    QCOMPARE(message->protocolString(true), QString("soap12"));
+    QCOMPARE(message->protocolString(false), QString("Soap12"));
+    QCOMPARE(message->protocolString(true), QString("Soap12"));
     QCOMPARE(message->protocol(), QWebMethod::Soap12);
     QCOMPARE(message->hostUrl(), QUrl(""));
     QCOMPARE(message->host(), QString(""));
