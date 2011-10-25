@@ -62,7 +62,7 @@ QWsdl::QWsdl(const QString &wsdlFile, QObject *parent) :
     QObject(parent), d_ptr(new QWsdlPrivate)
 {
     Q_D(QWsdl);
-    d->wsdlFilePath = wsdlFile;
+    d->m_wsdlFilePath = wsdlFile;
     d->init();
     d->parse();
 }
@@ -101,7 +101,7 @@ QWsdl::~QWsdl()
 QString QWsdl::wsdlFile() const
 {
     Q_D(const QWsdl);
-    return d->wsdlFilePath;
+    return d->m_wsdlFilePath;
 }
 
 /*!
@@ -125,7 +125,7 @@ void QWsdl::setWsdlFile(const QString &wsdlFile) // == resetWsdl()
 void QWsdl::resetWsdl(const QString &newWsdl)
 {
     Q_D(QWsdl);
-    d->wsdlFilePath = newWsdl;
+    d->m_wsdlFilePath = newWsdl;
 
     d->methodsMap->clear();
     d->workMethodList->clear();
@@ -191,7 +191,7 @@ QString QWsdl::host() const
     if (!d->m_hostUrl.isEmpty())
         return d->m_hostUrl.toString();
     else
-        return d->wsdlFilePath;
+        return d->m_wsdlFilePath;
 }
 
 /*!
@@ -206,7 +206,7 @@ QUrl QWsdl::hostUrl() const
     if (!d->m_hostUrl.isEmpty())
         return d->m_hostUrl;
     else
-        return QUrl(d->wsdlFilePath);
+        return QUrl(d->m_wsdlFilePath);
 }
 
 /*!
@@ -324,10 +324,10 @@ bool QWsdlPrivate::parse()
 
     prepareFile();
 
-    QFile file(wsdlFilePath);
+    QFile file(m_wsdlFilePath);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         enterErrorState(QString(QLatin1String("Error: cannot read WSDL file: ")
-                                + wsdlFilePath
+                                + m_wsdlFilePath
                                 + QLatin1String(". Reason: ")
                                 + file.errorString()));
         return false;
@@ -372,9 +372,9 @@ void QWsdlPrivate::prepareFile()
 {
     Q_Q(QWsdl);
     QUrl filePath;
-    filePath.setUrl(wsdlFilePath);
+    filePath.setUrl(m_wsdlFilePath);
 
-    if (!QFile::exists(wsdlFilePath) && filePath.isValid()) {
+    if (!QFile::exists(m_wsdlFilePath) && filePath.isValid()) {
         m_hostUrl = filePath;
 
         QNetworkAccessManager *manager = new QNetworkAccessManager();
@@ -644,7 +644,7 @@ void QWsdlPrivate::prepareMethods()
             if (isMethodAndResponsePresent == true) {
                 QString methodPath;
                 if (m_hostUrl.isEmpty())
-                    methodPath = wsdlFilePath;
+                    methodPath = m_wsdlFilePath;
                 else
                     methodPath = m_hostUrl.path();
 

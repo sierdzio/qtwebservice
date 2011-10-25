@@ -55,7 +55,7 @@ public:
     bool replyReceived;
     QUrl m_hostUrl;
     QString errorMessage;
-    QString wsdlFilePath;
+    QString m_wsdlFilePath;
     QString m_webServiceName;
     QString m_targetNamespace;
     QXmlStreamReader xmlReader;

@@ -64,11 +64,9 @@ QWebService::QWebService(QWsdl *_wsdl, QObject *parent)
     : QObject(parent), d_ptr(new QWebServicePrivate)
 {
     Q_D(QWebService);
-    d->wsdl = _wsdl;
     d->methods = new QMap<QString, QWebMethod *>();
+    setWsdl(_wsdl);
     d->init();
-    d->methods = d->wsdl->methods();
-    setName(d->wsdl->webServiceName());
 }
 
 /*!
@@ -85,12 +83,11 @@ QWebService::QWebService(const QString &_hostname, QObject *parent)
 {
     Q_D(QWebService);
     d->m_hostUrl.setUrl(_hostname);
-    d->wsdl = new QWsdl(_hostname, this);
     d->methods = new QMap<QString, QWebMethod *>();
+    setWsdl(new QWsdl(_hostname, this));
     d->init();
 
     if (!d->wsdl->isErrorState()) {
-        d->methods = d->wsdl->methods();
         setName(d->wsdl->webServiceName());
     }
 }
@@ -314,7 +311,6 @@ void QWebService::setHost(const QUrl &hostUrl)
 void QWebService::setWsdl(QWsdl *newWsdl)
 {
     Q_D(QWebService);
-//    delete wsdl;
     d->wsdl = newWsdl;
     setName(d->wsdl->webServiceName());
     foreach (QString s, d->wsdl->methods()->keys()) {

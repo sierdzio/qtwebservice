@@ -42,10 +42,10 @@ private:
   */
 void TestQWebServiceMethod::initialTest()
 {
-    QWebServiceMethod *message = new QWebServiceMethod(QWebMethod::Soap12, QWebMethod::Post, 0);
-    QCOMPARE(message->isErrorState(), bool(false));
+    QWebServiceMethod *method = new QWebServiceMethod(QWebMethod::Soap12, QWebMethod::Post, 0);
+    QCOMPARE(method->isErrorState(), bool(false));
 
-    delete message;
+    delete method;
 }
 
 /*
@@ -53,9 +53,9 @@ void TestQWebServiceMethod::initialTest()
   */
 void TestQWebServiceMethod::gettersTest()
 {
-    QWebServiceMethod *message = new QWebServiceMethod(QWebMethod::Soap12, QWebMethod::Post, 0);
-    defaultGettersTest(message);
-    delete message;
+    QWebServiceMethod *method = new QWebServiceMethod(QWebMethod::Soap12, QWebMethod::Post, 0);
+    defaultGettersTest(method);
+    delete method;
 }
 
 /*
@@ -63,55 +63,55 @@ void TestQWebServiceMethod::gettersTest()
   */
 void TestQWebServiceMethod::settersTest()
 {
-    QWebServiceMethod *message = new QWebServiceMethod(QWebMethod::Soap12, QWebMethod::Post, 0);
-    defaultGettersTest(message);
+    QWebServiceMethod *method = new QWebServiceMethod(QWebMethod::Soap12, QWebMethod::Post, 0);
+    defaultGettersTest(method);
 
     QUrl tempUrl("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx");
-    message->setHost(tempUrl);
-    QCOMPARE(message->hostUrl(), tempUrl);
+    method->setHost(tempUrl);
+    QCOMPARE(method->hostUrl(), tempUrl);
 
     QString tempName = "getProviderList";
-    message->setMethodName(tempName);
-    QCOMPARE(message->methodName(), tempName);
+    method->setMethodName(tempName);
+    QCOMPARE(method->methodName(), tempName);
 
     QString tempTargetNmspc = "http://www.daenet.de/webservices/CurrencyServer";
-    message->setTargetNamespace(tempTargetNmspc);
-    QCOMPARE(message->targetNamespace(), tempTargetNmspc);
+    method->setTargetNamespace(tempTargetNmspc);
+    QCOMPARE(method->targetNamespace(), tempTargetNmspc);
 
-    message->setProtocol(QWebMethod::Json);
-    QCOMPARE(message->protocol(), QWebMethod::Json);
-    QCOMPARE(message->protocolString(), QString("Json"));
-    QCOMPARE(message->protocolString(true), QString("Json"));
+    method->setProtocol(QWebMethod::Json);
+    QCOMPARE(method->protocol(), QWebMethod::Json);
+    QCOMPARE(method->protocolString(), QString("Json"));
+    QCOMPARE(method->protocolString(true), QString("Json"));
 
-    message->setHttpMethod(QWebMethod::Delete);
-    QCOMPARE(message->httpMethod(), QWebMethod::Delete);
-    QCOMPARE(message->httpMethodString(), QString("Delete"));
+    method->setHttpMethod(QWebMethod::Delete);
+    QCOMPARE(method->httpMethod(), QWebMethod::Delete);
+    QCOMPARE(method->httpMethodString(), QString("Delete"));
 
-    message->setHttpMethod("get");
-    QCOMPARE(message->httpMethod(), QWebMethod::Get);
-    QCOMPARE(message->httpMethodString(), QString("Get"));
+    method->setHttpMethod("get");
+    QCOMPARE(method->httpMethod(), QWebMethod::Get);
+    QCOMPARE(method->httpMethodString(), QString("Get"));
 
-    message->setHttpMethod("pUT");
-    QCOMPARE(message->httpMethod(), QWebMethod::Put);
-    QCOMPARE(message->httpMethodString(), QString("Put"));
+    method->setHttpMethod("pUT");
+    QCOMPARE(method->httpMethod(), QWebMethod::Put);
+    QCOMPARE(method->httpMethodString(), QString("Put"));
 
-    message->setHttpMethod("POST");
-    QCOMPARE(message->httpMethod(), QWebMethod::Post);
-    QCOMPARE(message->httpMethodString(), QString("Post"));
+    method->setHttpMethod("POST");
+    QCOMPARE(method->httpMethod(), QWebMethod::Post);
+    QCOMPARE(method->httpMethodString(), QString("Post"));
 
     QMap<QString, QVariant> tmpP;
     tmpP.insert("symbol", QVariant("NOK"));
-    message->setParameters(tmpP);
-    QCOMPARE(message->parameterNames().size(), int(1));
-    QCOMPARE(message->parameterNames().first(), QString("symbol"));
-    QCOMPARE(message->parameterNamesTypes().value("symbol"), QVariant("NOK"));
+    method->setParameters(tmpP);
+    QCOMPARE(method->parameterNames().size(), int(1));
+    QCOMPARE(method->parameterNames().first(), QString("symbol"));
+    QCOMPARE(method->parameterNamesTypes().value("symbol"), QVariant("NOK"));
 
-    message->setReturnValue(tmpP);
-    QCOMPARE(message->returnValueName().size(), int(1));
-    QCOMPARE(message->returnValueName().first(), QString("symbol"));
-    QCOMPARE(message->returnValueNameType().value("symbol"), QVariant("NOK"));
+    method->setReturnValue(tmpP);
+    QCOMPARE(method->returnValueName().size(), int(1));
+    QCOMPARE(method->returnValueName().first(), QString("symbol"));
+    QCOMPARE(method->returnValueNameType().value("symbol"), QVariant("NOK"));
 
-    delete message;
+    delete method;
 }
 
 /*
@@ -119,25 +119,25 @@ void TestQWebServiceMethod::settersTest()
   */
 void TestQWebServiceMethod::asynchronousTest()
 {
-    // Message parameters are specified here.
+    // method parameters are specified here.
     QMap<QString, QVariant> tmpP;
-    QWebServiceMethod *message = new
+    QWebServiceMethod *method = new
             QWebServiceMethod("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx",
                               "getProviderList",
                               QWebMethod::Soap12, QWebMethod::Post, this);
-    message->setTargetNamespace("http://www.daenet.de/webservices/CurrencyServer");
-    message->invokeMethod(tmpP);
+    method->setTargetNamespace("http://www.daenet.de/webservices/CurrencyServer");
+    method->invokeMethod(tmpP);
 
-    QCOMPARE(message->isErrorState(), bool(false));
+    QCOMPARE(method->isErrorState(), bool(false));
 
     bool result = false;
-    for (int i = 0; (i < 50) && (!message->isReplyReady()); i++)
+    for (int i = 0; (i < 50) && (!method->isReplyReady()); i++)
         QTest::qWait(250);
 
-    result = message->isReplyReady();
+    result = method->isReplyReady();
 
     QCOMPARE(result, bool(true));
-    delete message;
+    delete method;
 }
 
 /*
@@ -145,7 +145,7 @@ void TestQWebServiceMethod::asynchronousTest()
   */
 void TestQWebServiceMethod::synchronousTest()
 {
-    // Message parameters are specified here.
+    // method parameters are specified here.
     QMap<QString, QVariant> tmpP;
     bool result = false;
     QString reply = "pass";
@@ -162,24 +162,24 @@ void TestQWebServiceMethod::synchronousTest()
     QCOMPARE(result, bool(true));
 }
 
-void TestQWebServiceMethod::defaultGettersTest(QWebServiceMethod *message)
+void TestQWebServiceMethod::defaultGettersTest(QWebServiceMethod *method)
 {
-    QCOMPARE(message->isErrorState(), bool(false));
-    QCOMPARE(message->isReplyReady(), bool(false));
-    QCOMPARE(message->errorInfo(), QString(""));
-    QCOMPARE(message->httpMethodString(), QString("Post"));
-    QCOMPARE(message->httpMethod(), QWebMethod::Post);
-    QCOMPARE(message->protocolString(false), QString("Soap12"));
-    QCOMPARE(message->protocolString(true), QString("Soap12"));
-    QCOMPARE(message->protocol(), QWebMethod::Soap12);
-    QCOMPARE(message->hostUrl(), QUrl(""));
-    QCOMPARE(message->host(), QString(""));
-    QCOMPARE(message->targetNamespace(), QString(""));
-    QCOMPARE(message->methodName(), QString(""));
-    QCOMPARE(message->returnValueNameType().size(), int(0));
-    QCOMPARE(message->returnValueName().size(), int(0));
-    QCOMPARE(message->parameterNamesTypes().size(), int(0));
-    QCOMPARE(message->parameterNames().size(), int(0));
+    QCOMPARE(method->isErrorState(), bool(false));
+    QCOMPARE(method->isReplyReady(), bool(false));
+    QCOMPARE(method->errorInfo(), QString(""));
+    QCOMPARE(method->httpMethodString(), QString("Post"));
+    QCOMPARE(method->httpMethod(), QWebMethod::Post);
+    QCOMPARE(method->protocolString(false), QString("Soap12"));
+    QCOMPARE(method->protocolString(true), QString("Soap12"));
+    QCOMPARE(method->protocol(), QWebMethod::Soap12);
+    QCOMPARE(method->hostUrl(), QUrl(""));
+    QCOMPARE(method->host(), QString(""));
+    QCOMPARE(method->targetNamespace(), QString(""));
+    QCOMPARE(method->methodName(), QString(""));
+    QCOMPARE(method->returnValueNameType().size(), int(0));
+    QCOMPARE(method->returnValueName().size(), int(0));
+    QCOMPARE(method->parameterNamesTypes().size(), int(0));
+    QCOMPARE(method->parameterNames().size(), int(0));
 }
 
 QTEST_MAIN(TestQWebServiceMethod)

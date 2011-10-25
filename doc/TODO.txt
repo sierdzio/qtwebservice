@@ -3,7 +3,11 @@ Remote Features and TODO's list can be found at: http://goo.gl/L1C6X
 TODO'S (done marked with *):
  - update and expand unit tests:
    - read details of code creation from WSDL converter
-   - update getters and setters tests of QWebService, QWsdl, QWebMethod, QWebServiceMethod
+   - update getters and setters tests, add property tests for:
+     - QWebService,
+     - QWsdl,
+     - QWebMethod,
+     - QWebServiceMethod
  - add support for multiple replies (think SOAP ComplexType)
  - make use in QML easy (this has to be researched, maybe it is easy already - I simply don’t know yet)
  - parse JSON replies

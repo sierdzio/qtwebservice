@@ -32,6 +32,7 @@ private slots:
     void initialTest();
     void gettersTest();
     void settersTest();
+    void qpropertyTest();
 };
 
 /*
@@ -144,6 +145,28 @@ void TestQWsdl::settersTest()
     QCOMPARE(wsdl->targetNamespace(), QString("http://www.webserviceX.NET/"));
     QCOMPARE(wsdl->errorInfo(), QString(""));
     QCOMPARE(wsdl->methodNames().size(), int(1));;
+
+    delete wsdl;
+}
+
+/*
+  Checks whether qproperties are working as intended.
+  */
+void TestQWsdl::qpropertyTest()
+{
+    QWsdl *wsdl;
+    wsdl = new QWsdl(QString("../../examples/wsdl/band_ws.asmx"), this);
+    QCOMPARE(wsdl->isErrorState(), bool(false));
+
+    QCOMPARE(wsdl->property("webServiceName").toString(), QString("band_ws"));
+    QCOMPARE(wsdl->property("host").toString(), QString("http://localhost:1304/band_ws.asmx"));
+    QCOMPARE(QUrl(wsdl->property("hostUrl").toString()), QUrl("http://localhost:1304/band_ws.asmx"));
+    QCOMPARE(wsdl->property("targetNamespace").toString(), QString("http://tempuri.org/"));
+
+    QCOMPARE(wsdl->property("wsdlFile").toString(), QString("../../examples/wsdl/band_ws.asmx"));
+    wsdl->setProperty("wsdlFile", QVariant("../../examples/wsdl/LondonGoldFix.asmx.xml"));
+    QCOMPARE(wsdl->property("host").toString(), QString("http://www.webservicex.net/LondonGoldFix.asmx"));
+    QCOMPARE(wsdl->property("targetNamespace").toString(), QString("http://www.webservicex.net"));
 
     delete wsdl;
 }

@@ -37,6 +37,7 @@ class QWEBSERVICESHARED_EXPORT QWsdl : public QObject
     Q_PROPERTY(QString host READ host)
     Q_PROPERTY(QUrl hostUrl READ hostUrl)
     Q_PROPERTY(QString targetNamespace READ targetNamespace)
+    Q_PROPERTY(QString wsdlFile READ wsdlFile WRITE setWsdlFile)
 
 public:
     explicit QWsdl(QObject *parent = 0);

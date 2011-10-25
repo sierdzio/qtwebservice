@@ -30,6 +30,7 @@ private slots:
     void initialTest();
     void gettersTest();
     void settersTest();
+    void qpropertyTest();
     void methodManagementTest();
 };
 
@@ -140,6 +141,21 @@ void TestQWebService::settersTest()
     QCOMPARE(reader->hostUrl(), QUrl("../../examples/wsdl/stockquote.asmx"));
     QCOMPARE(reader->errorInfo(), QString(""));
     QCOMPARE(reader->methodNames().size(), int(1));;
+
+    delete reader;
+}
+
+/*
+  Checks whether qproperties are working as intended.
+  */
+void TestQWebService::qpropertyTest()
+{
+    QWebService *reader = new QWebService(QString("../../examples/wsdl/band_ws.asmx"), this);
+
+    QCOMPARE(reader->property("name").toString(), QString("band_ws"));
+    QCOMPARE(reader->property("host").toString(), QString("../../examples/wsdl/band_ws.asmx"));
+    QCOMPARE(QUrl(reader->property("hostUrl").toString()), QUrl("../../examples/wsdl/band_ws.asmx"));
+    QCOMPARE(reader->property("methodNames").toStringList().length(), int(13));
 
     delete reader;
 }
