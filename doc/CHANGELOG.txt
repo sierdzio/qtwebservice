@@ -22,7 +22,8 @@ Example arguments for converter:
  - added end line character choice for converter,
  - added tabulation length choice for converter,
  - changed remaining "message" and "msg" calls into
-   "method" and "mtd", so that it is consistent throughout the project.
+   "method" and "mtd", so that it is consistent throughout the project,
+ - parametrized classes in QWebMethod, so that it is properly "Qt" :)
 
 06.10.2011 19:14 CEST:
  - updated converter's help message,

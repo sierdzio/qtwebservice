@@ -29,6 +29,11 @@ class QWEBSERVICESHARED_EXPORT QWebService : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString name READ name WRITE setName)
+    Q_PROPERTY(QString host READ host WRITE setHost)
+    Q_PROPERTY(QUrl hostUrl READ hostUrl WRITE setHost)
+    Q_PROPERTY(QStringList methodNames READ methodNames)
+
 public:
     QWebService(QObject *parent = 0);
     QWebService(QWsdl *wsdl, QObject *parent = 0);

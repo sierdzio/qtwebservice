@@ -40,6 +40,12 @@ class QWEBSERVICESHARED_EXPORT QWebMethod : public QObject
     Q_FLAGS(Protocols)
     Q_ENUMS(HttpMethod)
 
+    Q_PROPERTY(QString host READ host WRITE setHost)
+    Q_PROPERTY(QUrl hostUrl READ hostUrl WRITE setHost)
+    Q_PROPERTY(QString name READ methodName WRITE setMethodName)
+    Q_PROPERTY(QString targetNamespace READ targetNamespace WRITE setTargetNamespace)
+    Q_PROPERTY(QStringList parameterNames READ parameterNames)
+
 public:
     enum Protocol
     {

@@ -5,7 +5,6 @@ TODO'S (done marked with *):
    - read details of code creation from WSDL converter
    - update getters and setters tests of QWebService, QWsdl, QWebMethod, QWebServiceMethod
  - add support for multiple replies (think SOAP ComplexType)
- - add QObject properties to QWebService classes, so that it is “properly” Qt
  - make use in QML easy (this has to be researched, maybe it is easy already - I simply don’t know yet)
  - parse JSON replies
  - (optional) provide QWsdl parsing based on QtXmlPatterns
@@ -20,3 +19,4 @@ Done:
  - update converter
  - change 'message' to 'method' in converter
  - make the code (QWsdl, converter) be based on QWebMethod, not QWebServiceMethod
+ - add QObject properties to QWebService classes, so that it is “properly” Qt

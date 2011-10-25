@@ -33,6 +33,11 @@ class QWEBSERVICESHARED_EXPORT QWsdl : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString webServiceName READ webServiceName)
+    Q_PROPERTY(QString host READ host)
+    Q_PROPERTY(QUrl hostUrl READ hostUrl)
+    Q_PROPERTY(QString targetNamespace READ targetNamespace)
+
 public:
     explicit QWsdl(QObject *parent = 0);
     QWsdl(const QString &wsdlFile, QObject *parent = 0);
