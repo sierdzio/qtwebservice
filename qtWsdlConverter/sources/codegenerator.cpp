@@ -22,6 +22,8 @@
     \brief Creates code for communicating with web services.
 
     Generates code, based on WSDL information and user defined flags.
+    This class does not generate web methods' code itself - it is delegated
+    to MethodGenerator class.
 
     Note:
     Generator also creates a dummy main.cpp file. It's needed only for
@@ -108,6 +110,9 @@ bool CodeGenerator::create(QWsdl *wsdl, const QDir &workingDir, Flags *flags,
 
 /*!
     \internal
+
+    Manages creation of web service main files - they keep info
+    about all web methods, host addresses etc.
   */
 bool CodeGenerator::createService()
 {
@@ -133,6 +138,9 @@ bool CodeGenerator::createService()
 
 /*!
     \internal
+
+    Generates header of the web service file, based on template located in
+    ./qtwsdlconverter/templates/service_header
   */
 bool CodeGenerator::createServiceHeader()
 {
@@ -306,6 +314,9 @@ bool CodeGenerator::createServiceHeader()
 
 /*!
     \internal
+
+    Creates web service main file's source, based on tamplate located in
+    ./qtWsdlConverter/templates/service_source
   */
 bool CodeGenerator::createServiceSource()
 {
@@ -566,6 +577,8 @@ bool CodeGenerator::createServiceSource()
 
 /*!
     \internal
+
+    Orchestrator for method generation.
   */
 bool CodeGenerator::createWebMethods()
 {
@@ -578,6 +591,8 @@ bool CodeGenerator::createWebMethods()
 }
 /*!
     \internal
+
+    Manages generation of various build system files (depending on flags set).
   */
 bool CodeGenerator::createBuildSystemFile()
 {
@@ -600,6 +615,8 @@ bool CodeGenerator::createBuildSystemFile()
 
 /*!
     \internal
+
+    Generates QMake .pro file.
   */
 bool CodeGenerator::createQMakeProject()
 {
@@ -679,6 +696,8 @@ bool CodeGenerator::createQMakeProject()
 
 /*!
     \internal
+
+    Generates CMake's CMakeLists.txt file.
   */
 bool CodeGenerator::createCMakeProject()
 {
@@ -761,6 +780,8 @@ bool CodeGenerator::createCMakeProject()
 
 /*!
     \internal
+
+    Generates SCons' SConstruct file.
   */
 bool CodeGenerator::createSconsProject()
 {

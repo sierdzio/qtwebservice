@@ -1,13 +1,27 @@
 #include "../headers/templatelogic.h"
 
+/*!
+    \class TemplateLogic
+    \brief Used to prepare QWebMethod code for template processing.
+
+    Provides some basic methods used in preparing QWebMethod code, as well as
+    process template tags, etc.
+
+    Generation is based on templates located in ./qtwsdlconverter/templates (for
+    subclassed methods) and on real QWebMethod code (for non-subclassed methods).
+  */
+
+/*!
+    Constructor, takes in the Flags object.
+  */
 TemplateLogic::TemplateLogic(Flags *flgs) :
     flags(flgs)
 {
 }
 
 /*!
-  Reads file contents and puts it into a QString. A crude, but
-  effective way of helping in method creation.
+    Reads file contents and puts it into a QString. A crude, but
+    effective way of helping in method creation.
   */
 QString TemplateLogic::readFile(QString path)
 {

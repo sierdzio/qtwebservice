@@ -585,7 +585,7 @@ QString QWebMethod::httpMethodString() const
 
 /*!
     Sets the httpMethod flag (\a method, a value of QWebMethod::HttpMethod).
-    Default method is QWebMethod::POST.
+    Default method is QWebMethod::Post.
   */
 void QWebMethod::setHttpMethod(HttpMethod method)
 {
@@ -758,7 +758,7 @@ QString QWebMethod::replyRead()
 
     Web APIs usually return a lot of data
     in one go, this method is likely to get lost in it. It expects a simple
-    reply (say, you request 2 + 2, and get JSON-enveloped reply - it will
+    reply (say, you request 2 + 2, and get SOAP-enveloped reply - it will
     work fine then, but not necessarily if WS returns a lot of additional
     information).
 
@@ -905,7 +905,8 @@ bool QWebMethod::isErrorState() const
 }
 
 /*!
-    Returns true if reply was received.
+    Returns true if reply was received,
+    and is ready to be read.
   */
 bool QWebMethod::isReplyReady() const
 {

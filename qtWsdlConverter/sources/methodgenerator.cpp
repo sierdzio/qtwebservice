@@ -23,6 +23,9 @@
 
     Creates methods (both headers and sources) by generating the entire code
     or subclassing QWebServiceMethod (depending on whether --subclass flag is set).
+
+    Generation is based on templates located in ./qtwsdlconverter/templates (for
+    subclassed methods) and on real QWebMethod code (for non-subclassed methods).
   */
 
 /*!
@@ -367,6 +370,8 @@ bool MethodGenerator::createSubclassedMethodSource(QWebMethod *mtd)
 
 /*!
     \internal
+
+    Creates a non-subclassed method header.
   */
 bool MethodGenerator::createMethodHeader(QWebMethod *mtd)
 {
@@ -487,6 +492,8 @@ bool MethodGenerator::createMethodHeader(QWebMethod *mtd)
 
 /*!
     \internal
+
+    Creates a non-subclassed method source.
   */
 bool MethodGenerator::createMethodSource(QWebMethod *mtd)
 {
@@ -543,27 +550,6 @@ bool MethodGenerator::createMethodSource(QWebMethod *mtd)
     // Replace QWebMethod with mtdName.
     methodSource.replace("QWebMethod", mtdName, Qt::CaseSensitive);
 
-    /*
-    // Default constructor.
-    beginIndex = methodSource.indexOf("QObject(") + 15;
-    beginIndex = methodSource.indexOf("set", beginIndex) - 5;
-    endIndex = methodSource.indexOf("}", beginIndex);
-    methodSource.remove(beginIndex, endIndex - beginIndex);
-    { // Set flags as default params.
-        QString tmp = flags->endLine() + flags->tab()
-                + "setProtocol(" + flags->protocolString() + ");" + flags->endLine()
-                + flags->tab() + "setHttpMethod("
-                + flags->httpMethodString() + ");" + flags->endLine()
-                + flags->tab() + "m_hostUrl.setHost(\"";
-        if (mtd->host() != QString())
-            tmp += mtd->host();
-        else
-            tmp+= mtd->targetNamespace();
-        tmp += "\");" + flags->endLine();
-
-        methodSource.insert(beginIndex, tmp);
-    }
-*/
     // Add host info to all constructors.
     addCustomCodeToConstructor(methodSource, mtd, beginIndex);
     addCustomCodeToConstructor(methodSource, mtd, beginIndex);

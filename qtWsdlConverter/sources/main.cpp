@@ -19,7 +19,7 @@
 #include "../headers/wsdlconverter.h"
 
 /**
-  *
+  * qtwsdlconverter's main routine.
   */
 int main(int argc, char *argv[])
 {    
