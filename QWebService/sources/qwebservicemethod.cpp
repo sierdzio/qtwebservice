@@ -57,7 +57,7 @@ QWebServiceMethod::QWebServiceMethod(Protocol protocol, HttpMethod httpMethod,
     and \a method (which defaults to POST).
     Requires params to be specified later.
 
-    \sa setParameters(), setProtocol(), sendMessage()
+    \sa setParameters(), setProtocol(), invokeMethod()
   */
 QWebServiceMethod::QWebServiceMethod(const QUrl &hostUrl, const QString &methodName,
                                      Protocol protocol, HttpMethod method,
@@ -77,7 +77,7 @@ QWebServiceMethod::QWebServiceMethod(const QUrl &hostUrl, const QString &methodN
     and \a httpMethod (which defaults to POST).
     Requires params to be specified later.
 
-    \sa setParameters(), setProtocol(), sendMessage()
+    \sa setParameters(), setProtocol(), invokeMethod()
   */
 QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodName,
                                      Protocol protocol, HttpMethod httpMethod,
@@ -100,7 +100,7 @@ QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodN
     manually send the message using sendMessage() (without any arguments,
     or else - if you want to change ones specified here).
 
-    \sa sendMessage(), setProtocol()
+    \sa invokeMethod(), setProtocol()
   */
 QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodName,
                                      const QString &targetNamespace,
@@ -129,7 +129,7 @@ QWebServiceMethod::QWebServiceMethod(QWebServiceMethodPrivate &d,
 }
 
 /*!
-    \overload sendMessage()
+    \overload invokeMethod()
 
     Sends the message asynchronously using parameters specified in \a params.
 
@@ -143,7 +143,7 @@ bool QWebServiceMethod::invokeMethod(const QMap<QString, QVariant> &params)
 }
 
 /*!
-    \overload sendMessage()
+    \overload invokeMethod()
 
     STATIC method. Sends the message synchronously, using \a url, \a msgName,
     \a tNamespace, \a params and \a parent.

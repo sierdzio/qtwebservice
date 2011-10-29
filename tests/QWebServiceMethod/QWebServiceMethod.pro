@@ -1,12 +1,12 @@
-QT = core network qtestlib
+include(../../buildInfo.pri)
+
+QT += qtestlib
 CONFIG += qtestlib
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../lib/ -lQWebService
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../lib/ -lQWebServiced
-else:symbian: LIBS += -lQWebService
-else:unix: LIBS += -L$$PWD/../../lib/ -lQWebService
+include(../../libraryIncludes.pri)
 
-INCLUDEPATH += $$PWD/../../QWebService/headers
-DEPENDPATH += $$PWD/../../QWebService/headers
+DESTDIR = $${BUILD_DIRECTORY}/tests/QWebServiceMethod
+OBJECTS_DIR = $${BUILD_DIRECTORY}/tests/QWebServiceMethod
+MOC_DIR = $${BUILD_DIRECTORY}/tests/QWebServiceMethod
 
 SOURCES += tst_qwebservicemethod.cpp

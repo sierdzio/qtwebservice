@@ -19,7 +19,7 @@
 #define QDNMAIN_H
 
 #if QT_VERSION < 0x050000
-    #include <QMainWindow>
+    #include <QtGui/QMainWindow>
 #else
     #include <QtWidgets/QMainWindow>
 #endif

@@ -39,6 +39,37 @@
   */
 
 /*!
+    \property QWsdl::webServiceName
+    \brief Holds web service name
+
+    This property's default is empty string.
+*/
+/*!
+    \property QWsdl::host
+    \brief Holds web service's host Url as QString
+
+    This property's default is empty string.
+*/
+/*!
+    \property QWsdl::hostUrl
+    \brief Holds web service's host Url as QUrl
+
+    This property's default is empty QUrl.
+*/
+/*!
+    \property QWsdl::targetNamespace
+    \brief Holds web service's targetNamespace
+
+    This property's default is empty string.
+*/
+/*!
+    \property QWsdl::wsdlFile
+    \brief Holds path to web service file
+
+    This property's default is empty string.
+*/
+
+/*!
     Simple constructor, requires \a parent only, but needs other information
     to be specified later in order to run.
     You need to run setWsdlFile(), which automatically parses the file.
@@ -302,8 +333,6 @@ bool QWsdlPrivate::enterErrorState(const QString &errMessage)
 }
 
 /*!
-    \internal
-
     Central method of this class. Parses the WSDL file, creates all
     QWebServiceMethods, reads all necessary data,
     like web service's name etc.

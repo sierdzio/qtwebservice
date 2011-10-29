@@ -3,19 +3,18 @@
 # Project created by QtCreator 2011-09-03T14:28:37
 #
 #-------------------------------------------------
+include(../../buildInfo.pri)
 
-QT       += core widgets network
+QT       += gui widgets
 
 TARGET = QtDeveloperNetworkExample
 TEMPLATE = app
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../lib/ -lQWebService
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../lib/ -lQWebServiced
-else:symbian: LIBS += -lQWebService
-else:unix: LIBS += -L$$PWD/../../lib/ -lQWebService
+include(../../libraryIncludes.pri)
 
-INCLUDEPATH += $$PWD/../../QWebService/headers
-DEPENDPATH += $$PWD/../../QWebService/headers
+DESTDIR = $${BUILD_DIRECTORY}/QtDeveloperNetworkExample
+OBJECTS_DIR = $${BUILD_DIRECTORY}/QtDeveloperNetworkExample
+MOC_DIR = $${BUILD_DIRECTORY}/QtDeveloperNetworkExample
 
 SOURCES += main.cpp\
         qdnmain.cpp

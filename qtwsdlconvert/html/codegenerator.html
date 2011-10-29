@@ -4,13 +4,9 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- codegenerator.cpp -->
-  <title>CodeGenerator Class Reference</title>
-  <link rel="stylesheet" type="text/css" href="style/style.css" />
-  <script src="scripts/jquery.js" type="text/javascript"></script>
-  <script src="scripts/functions.js" type="text/javascript"></script>
-</head>
-<body class="offline narrow creator">
-              <li><a href="modules.html">Modules</a></li>              <li>CodeGenerator</li>
+  <title>qtwsdlconvert : CodeGenerator Class Reference</title>
+<li>Modules</li>
+<li>CodeGenerator</li>
 <div class="toc">
 <h3><a name="toc">Contents</a></h3>
 <ul>
@@ -24,7 +20,7 @@
 <!-- $$$CodeGenerator-brief -->
 <p>Creates code for communicating with web services. <a href="#details">More...</a></p>
 <!-- @@@CodeGenerator -->
-<pre class="highlightedCode brush: cpp">    #include &lt;CodeGenerator&gt;</pre><ul>
+<pre class="cpp">    <span class="preprocessor">#include &lt;CodeGenerator&gt;</span></pre><ul>
 <li><a href="codegenerator-members.html">List of all members, including inherited members</a></li>
 </ul>
 <a name="public-functions"></a>
@@ -48,27 +44,27 @@
 <div class="descr">
 <h2>Detailed Description</h2>
 <p>Creates code for communicating with web services.</p>
-<p>Generates code, based on WSDL information and user defined flags.</p>
+<p>Generates code, based on WSDL information and user defined flags. This class does not generate web methods' code itself - it is delegated to <a href="methodgenerator.html">MethodGenerator</a> class.</p>
 <p>Note: Generator also creates a dummy main.cpp file. It's needed only for successful compilation of freshly generated code. It is NOT NEEDED for any other reason. You can safely delete it in your project.</p>
 </div>
 <!-- @@@CodeGenerator -->
 <div class="func">
 <h2>Member Function Documentation</h2>
 <!-- $$$CodeGenerator[overload1]$$$CodeGeneratorQObject* -->
-<h3 class="fn"><a name="CodeGenerator"></a>CodeGenerator::CodeGenerator ( QObject * <i>parent</i> = 0 )</h3>
+<h3 class="fn"><a name="CodeGenerator"></a>CodeGenerator::<span class="name">CodeGenerator</span> ( <span class="type">QObject</span> * <i>parent</i> = 0 )</h3>
 <p>Constructs QObject using <i>parent</i>, initialises <a href="codegenerator.html">CodeGenerator</a>.</p>
 <!-- @@@CodeGenerator -->
 <!-- $$$create[overload1]$$$createQWsdl*constQDir&Flags*constQString&QObject* -->
-<h3 class="fn"><a name="create"></a>bool CodeGenerator::create ( QWsdl * <i>wsdl</i>, const QDir &amp; <i>workingDir</i>, <a href="flags.html">Flags</a> * <i>flags</i>, const QString &amp; <i>baseClassName</i> = 0, QObject * <i>parent</i> = 0 )<tt> [static]</tt></h3>
+<h3 class="fn"><a name="create"></a><span class="type">bool</span> CodeGenerator::<span class="name">create</span> ( <span class="type">QWsdl</span> * <i>wsdl</i>, const <span class="type">QDir</span> &amp; <i>workingDir</i>, <span class="type"><a href="flags.html">Flags</a></span> * <i>flags</i>, const <span class="type">QString</span> &amp; <i>baseClassName</i> = 0, <span class="type">QObject</span> * <i>parent</i> = 0 )<tt> [static]</tt></h3>
 <p>Performs the conversion in <a href="codegenerator.html">CodeGenerator</a>. Data from WSDL (<i>wsdl</i>) is combined with options specified in flags (<i>flags</i>), and base class name (<i>baseClassName</i>) to create a complete set of classes in given directory (<i>workingDir</i>). For Qt reasons, <i>parent</i> is also needed, although it defaults to 0.</p>
 <p>Returns true if successful.</p>
 <!-- @@@create -->
 <!-- $$$errorEncountered[overload1]$$$errorEncounteredconstQString& -->
-<h3 class="fn"><a name="errorEncountered"></a>void CodeGenerator::errorEncountered ( const QString &amp; <i>errMessage</i> )<tt> [signal]</tt></h3>
+<h3 class="fn"><a name="errorEncountered"></a><span class="type">void</span> CodeGenerator::<span class="name">errorEncountered</span> ( const <span class="type">QString</span> &amp; <i>errMessage</i> )<tt> [signal]</tt></h3>
 <p>Singal emitted when <a href="codegenerator.html">CodeGenerator</a> encounters an error. Carries <i>errMessage</i> for convenience.</p>
 <!-- @@@errorEncountered -->
 <!-- $$$isErrorState[overload1]$$$isErrorState -->
-<h3 class="fn"><a name="isErrorState"></a>bool CodeGenerator::isErrorState ()</h3>
+<h3 class="fn"><a name="isErrorState"></a><span class="type">bool</span> CodeGenerator::<span class="name">isErrorState</span> ()</h3>
 <p>Returns true if object is in error state.</p>
 <!-- @@@isErrorState -->
 </div>

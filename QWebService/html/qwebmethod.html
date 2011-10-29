@@ -4,13 +4,9 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- qwebmethod.cpp -->
-  <title>QWebMethod Class Reference</title>
-  <link rel="stylesheet" type="text/css" href="style/style.css" />
-  <script src="scripts/jquery.js" type="text/javascript"></script>
-  <script src="scripts/functions.js" type="text/javascript"></script>
-</head>
-<body class="offline narrow creator">
-              <li><a href="modules.html">Modules</a></li>              <li>QWebMethod</li>
+  <title>QWebService : QWebMethod Class Reference</title>
+<li>Modules</li>
+<li>QWebMethod</li>
 <div class="toc">
 <h3><a name="toc">Contents</a></h3>
 <ul>
@@ -25,7 +21,7 @@
 <!-- $$$QWebMethod-brief -->
 <p>Class that can be used to asnchronously and synchronously send HTTP, SOAP 1.0, SOAP 1.2, JSON, XMLand REST messages to web services. <a href="#details">More...</a></p>
 <!-- @@@QWebMethod -->
-<pre class="highlightedCode brush: cpp">    #include &lt;QWebMethod&gt;</pre><p>Inherited by <a href="qwebservicemethod.html">QWebServiceMethod</a>.</p>
+<pre class="cpp">    <span class="preprocessor">#include &lt;QWebMethod&gt;</span></pre><p><b>Inherited by: </b><a href="qwebservicemethod.html">QWebServiceMethod</a>.</p>
 <ul>
 <li><a href="qwebmethod-members.html">List of all members, including inherited members</a></li>
 </ul>
@@ -39,9 +35,8 @@
 <a name="public-functions"></a>
 <h2>Public Functions</h2>
 <table class="alignedsummary">
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod">QWebMethod</a></b> ( QObject * <i>parent</i> = 0 )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-2">QWebMethod</a></b> ( Protocol <i>protocol</i> = Soap12, HttpMethod <i>method</i> = Post, QObject * <i>parent</i> = 0 )</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-3">QWebMethod</a></b> ( const QUrl &amp; <i>url</i>, Protocol <i>protocol</i> = Soap12, HttpMethod <i>method</i> = Post, QObject * <i>parent</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod">QWebMethod</a></b> ( QObject * <i>parent</i> = 0, Protocol <i>protocol</i> = Soap12, HttpMethod <i>method</i> = Post )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#QWebMethod-2">QWebMethod</a></b> ( const QUrl &amp; <i>url</i>, Protocol <i>protocol</i> = Soap12, HttpMethod <i>method</i> = Post, QObject * <i>parent</i> = 0 )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#dtor.QWebMethod">~QWebMethod</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#authenticate">authenticate</a></b> ( const QString &amp; <i>newUsername</i> = QString(), const QString &amp; <i>newPassword</i> = QString() )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#authenticate-2">authenticate</a></b> ( const QUrl &amp; <i>customAuthString</i> )</td></tr>
@@ -50,6 +45,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QUrl </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#hostUrl">hostUrl</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> HttpMethod </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#httpMethod">httpMethod</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#httpMethodString">httpMethodString</a></b> () const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#invokeMethod">invokeMethod</a></b> ( const QByteArray &amp; <i>requestData</i> = QByteArray() )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#isErrorState">isErrorState</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#isReplyReady">isReplyReady</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#methodName">methodName</a></b> () const</td></tr>
@@ -62,7 +58,6 @@
 <tr><td class="memItemLeft rightAlign topAlign"> QByteArray </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#replyReadRaw">replyReadRaw</a></b> ()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QStringList </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#returnValueName">returnValueName</a></b> () const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, QVariant&gt; </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#returnValueNameType">returnValueNameType</a></b> () const</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#sendMessage">sendMessage</a></b> ( const QByteArray &amp; <i>requestData</i> = QByteArray() )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setCredentials">setCredentials</a></b> ( const QString &amp; <i>newUsername</i>, const QString &amp; <i>newPassword</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setHost">setHost</a></b> ( const QString &amp; <i>newHost</i> )</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebmethod.html#setHost-2">setHost</a></b> ( const QUrl &amp; <i>newHost</i> )</td></tr>
@@ -98,30 +93,30 @@
 <p>Class that can be used to asnchronously and synchronously send HTTP, SOAP 1.0, SOAP 1.2, JSON, XMLand REST messages to web services.</p>
 <p>QWebMethod class is acting as web method. You can use it to send and retrieve data from web services. There are many helper classes. <a href="qwsdl.html">QWsdl</a> can be used to read a WSDL file - it will automatically create a QMap of QWebMethods, all already set up and ready to be invoked. <a href="qwebservice.html">QWebService</a> can be used similarily as it is a high-level wrapper to <a href="qwsdl.html">QWsdl</a>. Additionally, qtWsdlConverter console application can automatically generate custom classes for any WSDL file.</p>
 <p>If you need to authenticate on the server, use <a href="qwebmethod.html#authenticate">authenticate</a>() method. You can specify username and password right there, or before, using <a href="qwebmethod.html#setCredentials">setCredentials</a>(), <a href="qwebmethod.html#setUsername">setUsername</a>() and/ or <a href="qwebmethod.html#setPassword">setPassword</a>().</p>
-<p>Typically, to send a message, you will need to set the URL, message name, target namespace (when using SOAP), parameters list (when invoking a method that has parameters), and then use the parameterless <a href="qwebmethod.html#sendMessage">sendMessage</a>() method. Here is a snippet for that:</p>
-<pre class="highlightedCode brush: cpp">    QWebMethod *message = new QWebMethod(0, QWebMethod::soap12, QWebMethod::POST);
-    message-&gt;setHost(&quot;http://www.currencyserver.de/webservice/currencyserverwebservice.asmx&quot;);
-    message-&gt;setMessageName(&quot;getProviderList&quot;);
-    message-&gt;setTargetNamespace(&quot;http://www.daenet.de/webservices/CurrencyServer&quot;);
-    message-&gt;sendMessage();</pre>
+<p>Typically, to send a message, you will need to set the URL, message name, target namespace (when using SOAP), parameters list (when invoking a method that has parameters), and then use the parameterless sendMessage() method. Here is a snippet for that:</p>
+<pre class="cpp">    <span class="type">QWebMethod</span> <span class="operator">*</span>message <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QWebMethod</span>(<span class="number">0</span><span class="operator">,</span> <span class="type">QWebMethod</span><span class="operator">::</span>soap12<span class="operator">,</span> <span class="type">QWebMethod</span><span class="operator">::</span>POST);
+    message<span class="operator">-</span><span class="operator">&gt;</span><a href="qwebmethod.html#setHost">setHost</a>(<span class="string">&quot;http://www.currencyserver.de/webservice/currencyserverwebservice.asmx&quot;</span>);
+    message<span class="operator">-</span><span class="operator">&gt;</span>setMessageName(<span class="string">&quot;getProviderList&quot;</span>);
+    message<span class="operator">-</span><span class="operator">&gt;</span><a href="qwebmethod.html#setTargetNamespace">setTargetNamespace</a>(<span class="string">&quot;http://www.daenet.de/webservices/CurrencyServer&quot;</span>);
+    message<span class="operator">-</span><span class="operator">&gt;</span>sendMessage();</pre>
 <p>You then have to wait for replyReady(QVariant) signal, or check for reply using <a href="qwebmethod.html#isReplyReady">isReplyReady</a>() convenience method.</p>
 <p>To send a REST message with (for example) JSON body, pass (QWebMethod::rest | QWebMethod::json) as protocol flag. Additionally, specify HTTP method to be used (POST, GET, PUT, DELETE). When sending a REST message, <i>messageName</i> is used as request URI, and <i>parameters</i> specify additioanl data to be sent in message body.</p>
-<p>This class provides asynchronous <a href="qwebmethod.html#sendMessage">sendMessage</a>() only. If synchronous operation is needed, you can:</p>
+<p>This class provides asynchronous sendMessage() only. If synchronous operation is needed, you can:</p>
 <ul>
-<li>use <a href="qwebservicemethod.html">QWebServiceMethod</a>, which provides some additional, useful constructors and methods, including a synchronous static <a href="qwebmethod.html#sendMessage">sendMessage</a>() method</li>
-<li>use static <a href="qwebservicemethod.html#sendMessage">QWebServiceMethod::sendMessage</a>()</li>
-<li>subclass QWebMethod, and add a static <a href="qwebmethod.html#sendMessage">sendMessage</a>() method with a &quot;waiting loop&quot;</li>
+<li>use <a href="qwebservicemethod.html">QWebServiceMethod</a>, which provides some additional, useful constructors and methods, including a synchronous static sendMessage() method</li>
+<li>use static QWebServiceMethod::sendMessage()</li>
+<li>subclass QWebMethod, and add a static sendMessage() method with a &quot;waiting loop&quot;</li>
 <li>wait for <a href="qwebmethod.html#replyReady">replyReady</a>() signal in a &quot;waiting loop&quot;. You can use <a href="qwebmethod.html#isReplyReady">isReplyReady</a>() for that</li>
 </ul>
 <p>Here's a waiting loop snippet:</p>
-<pre class="highlightedCode brush: cpp">    QWebMethod qsm;
-    ...
-    qsm.sendMessage();
+<pre class="cpp">    <span class="type">QWebMethod</span> qsm;
+    <span class="operator">.</span><span class="operator">.</span><span class="operator">.</span>
+    qsm<span class="operator">.</span>sendMessage();
     forever {
-        if (qsm.replyReceived) {
-            return qsm.reply;
-        } else {
-            qApp-&gt;processEvents(); <span class="comment">// Ensures that application remains responive</span>
+        <span class="keyword">if</span> (qsm<span class="operator">.</span>replyReceived) {
+            <span class="keyword">return</span> qsm<span class="operator">.</span>reply;
+        } <span class="keyword">else</span> {
+            qApp<span class="operator">-</span><span class="operator">&gt;</span>processEvents(); <span class="comment">// Ensures that application remains responive</span>
                                    <span class="comment">// to events (prevents freezing).</span>
         }
     }</pre>
@@ -139,268 +134,269 @@
 <div class="types">
 <h2>Member Type Documentation</h2>
 <!-- $$$HttpMethod$$$Post$$$Get$$$Put$$$Delete -->
-<h3 class="fn"><a name="HttpMethod-enum"></a>enum QWebMethod::HttpMethod</h3>
+<h3 class="fn"><a name="HttpMethod-enum"></a>enum QWebMethod::<span class="name">HttpMethod</span></h3>
 <p>Defines HTTP method to use when sending the message. Using more than 1 at the same time is forbidden (will not work).</p>
-<table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::Post</tt></td><td class=" topAlign"><tt>0x1</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use POST.</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::Get</tt></td><td class=" topAlign"><tt>0x2</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use GET.</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::Put</tt></td><td class=" topAlign"><tt>0x4</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use PUT.</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::Delete</tt></td><td class=" topAlign"><tt>0x8</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use DELETE.</td></tr>
+<table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><tt>QWebMethod::Post</tt></td><td class="topAlign"><tt>0x1</tt></td><td class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use POST.</td></tr>
+<tr><td class="topAlign"><tt>QWebMethod::Get</tt></td><td class="topAlign"><tt>0x2</tt></td><td class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use GET.</td></tr>
+<tr><td class="topAlign"><tt>QWebMethod::Put</tt></td><td class="topAlign"><tt>0x4</tt></td><td class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use PUT.</td></tr>
+<tr><td class="topAlign"><tt>QWebMethod::Delete</tt></td><td class="topAlign"><tt>0x8</tt></td><td class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use DELETE.</td></tr>
 </table>
 <!-- @@@HttpMethod -->
 <!-- $$$Protocol$$$Http$$$Soap10$$$Soap12$$$Soap$$$Json$$$Xml$$$Rest -->
-<h3 class="flags"><a name="Protocol-enum"></a>enum QWebMethod::Protocol<br/>flags QWebMethod::Protocols</h3>
+<h3 class="flags"><a name="Protocol-enum"></a>enum QWebMethod::<span class="name">Protocol</span><br/>flags QWebMethod::<span class="name">Protocols</span></h3>
 <p>This enum type specifies the protocol that <a href="qwebmethod.html">QWebMethod</a> will use in communicating with the server:</p>
-<table class="valuelist"><tr class="odd"><tr><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::Http</tt></td><td class=" topAlign"><tt>0x01</tt></td><td  class="topAlign">HTTP protocol will be used.</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::Soap10</tt></td><td class=" topAlign"><tt>0x02</tt></td><td  class="topAlign">SOAP 1.0 will be used.</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::Soap12</tt></td><td class=" topAlign"><tt>0x04</tt></td><td  class="topAlign">SOAP 1.2 will be used.</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::Soap</tt></td><td class=" topAlign"><tt>0x06</tt></td><td  class="topAlign">Convenience SOAP aggregator, used internally. If passed to <a href="qwebmethod.html#setProtocol">setProtocol</a>(), SOAP 1.2 will be used instead.</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::Json</tt></td><td class=" topAlign"><tt>0x08</tt></td><td  class="topAlign">JSON message will be used.</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::Xml</tt></td><td class=" topAlign"><tt>0x10</tt></td><td  class="topAlign">Message will be sent using plain XML (much simpler than SOAP).</td></tr>
-<tr><td  class="topAlign"><tt>QWebMethod::Rest</tt></td><td class=" topAlign"><tt>0x20</tt></td><td  class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will switch into REST mode. This can be combined with any other Protocol flag to define, what message body should look like.</td></tr>
+<table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><tt>QWebMethod::Http</tt></td><td class="topAlign"><tt>0x01</tt></td><td class="topAlign">HTTP protocol will be used.</td></tr>
+<tr><td class="topAlign"><tt>QWebMethod::Soap10</tt></td><td class="topAlign"><tt>0x02</tt></td><td class="topAlign">SOAP 1.0 will be used.</td></tr>
+<tr><td class="topAlign"><tt>QWebMethod::Soap12</tt></td><td class="topAlign"><tt>0x04</tt></td><td class="topAlign">SOAP 1.2 will be used.</td></tr>
+<tr><td class="topAlign"><tt>QWebMethod::Soap</tt></td><td class="topAlign"><tt>0x06</tt></td><td class="topAlign">Convenience SOAP aggregator, used internally. If passed to <a href="qwebmethod.html#setProtocol">setProtocol</a>(), SOAP 1.2 will be used instead.</td></tr>
+<tr><td class="topAlign"><tt>QWebMethod::Json</tt></td><td class="topAlign"><tt>0x08</tt></td><td class="topAlign">JSON message will be used.</td></tr>
+<tr><td class="topAlign"><tt>QWebMethod::Xml</tt></td><td class="topAlign"><tt>0x10</tt></td><td class="topAlign">Message will be sent using plain XML (much simpler than SOAP).</td></tr>
+<tr><td class="topAlign"><tt>QWebMethod::Rest</tt></td><td class="topAlign"><tt>0x20</tt></td><td class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will switch into REST mode. This can be combined with any other Protocol flag to define, what message body should look like.</td></tr>
 </table>
 <p>The Protocols type is a typedef for <a href="qflags.html">QFlags</a>&lt;Protocol&gt;. It stores an OR combination of Protocol values.</p>
 <!-- @@@Protocol -->
 </div>
 <div class="func">
 <h2>Member Function Documentation</h2>
-<!-- $$$QWebMethod[overload1]$$$QWebMethodQObject* -->
-<h3 class="fn"><a name="QWebMethod"></a>QWebMethod::QWebMethod ( QObject * <i>parent</i> = 0 )</h3>
-<p>Constructs web method object with <i>parent</i>. Requires specifying other parameters later.</p>
-<p>See also <a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#sendMessage">sendMessage</a>().</p>
-<!-- @@@QWebMethod -->
-<!-- $$$QWebMethod$$$QWebMethodProtocolHttpMethodQObject* -->
-<h3 class="fn"><a name="QWebMethod-2"></a>QWebMethod::QWebMethod ( <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = Soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = Post, QObject * <i>parent</i> = 0 )</h3>
+<!-- $$$QWebMethod[overload1]$$$QWebMethodQObject*ProtocolHttpMethod -->
+<h3 class="fn"><a name="QWebMethod"></a>QWebMethod::<span class="name">QWebMethod</span> ( <span class="type">QObject</span> * <i>parent</i> = 0, <span class="type"><a href="qwebmethod.html#Protocol-enum">Protocol</a></span> <i>protocol</i> = Soap12, <span class="type"><a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a></span> <i>method</i> = Post )</h3>
 <p>Constructs web method usign <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST). Requires specifying other params later (<a href="qwebmethod.html#setParameters">setParameters</a>()).</p>
-<p>See also <a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#sendMessage">sendMessage</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#invokeMethod">invokeMethod</a>().</p>
 <!-- @@@QWebMethod -->
 <!-- $$$QWebMethod$$$QWebMethodconstQUrl&ProtocolHttpMethodQObject* -->
-<h3 class="fn"><a name="QWebMethod-3"></a>QWebMethod::QWebMethod ( const QUrl &amp; <i>url</i>, <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>protocol</i> = Soap12, <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> = Post, QObject * <i>parent</i> = 0 )</h3>
+<h3 class="fn"><a name="QWebMethod-2"></a>QWebMethod::<span class="name">QWebMethod</span> ( const <span class="type">QUrl</span> &amp; <i>url</i>, <span class="type"><a href="qwebmethod.html#Protocol-enum">Protocol</a></span> <i>protocol</i> = Soap12, <span class="type"><a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a></span> <i>method</i> = Post, <span class="type">QObject</span> * <i>parent</i> = 0 )</h3>
 <p>Constructs web method usign <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST), and <i>url</i>. Especially convenient for parameterless methods (like quick GET messages).</p>
-<p>See also <a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#sendMessage">sendMessage</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#invokeMethod">invokeMethod</a>().</p>
 <!-- @@@QWebMethod -->
 <!-- $$$~QWebMethod[overload1]$$$~QWebMethod -->
-<h3 class="fn"><a name="dtor.QWebMethod"></a>QWebMethod::~QWebMethod ()</h3>
+<h3 class="fn"><a name="dtor.QWebMethod"></a>QWebMethod::<span class="name">~QWebMethod</span> ()</h3>
 <p>Deletes internal pointers.</p>
 <!-- @@@~QWebMethod -->
 <!-- $$$authReplyFinished[overload1]$$$authReplyFinishedQNetworkReply* -->
-<h3 class="fn"><a name="authReplyFinished"></a>void QWebMethod::authReplyFinished ( QNetworkReply * <i>reply</i> )<tt> [protected slot]</tt></h3>
+<h3 class="fn"><a name="authReplyFinished"></a><span class="type">void</span> QWebMethod::<span class="name">authReplyFinished</span> ( <span class="type">QNetworkReply</span> * <i>reply</i> )<tt> [protected slot]</tt></h3>
 <p>TEMP Auth METHOD. HIGHLY EXPERIMENTAL. Checks for body of <i>reply</i> to determine correctness of authentication.</p>
 <!-- @@@authReplyFinished -->
 <!-- $$$authenticate[overload1]$$$authenticateconstQString&constQString& -->
-<h3 class="fn"><a name="authenticate"></a>bool QWebMethod::authenticate ( const QString &amp; <i>newUsername</i> = QString(), const QString &amp; <i>newPassword</i> = QString() )</h3>
+<h3 class="fn"><a name="authenticate"></a><span class="type">bool</span> QWebMethod::<span class="name">authenticate</span> ( const <span class="type">QString</span> &amp; <i>newUsername</i> = QString(), const <span class="type">QString</span> &amp; <i>newPassword</i> = QString() )</h3>
 <p>Performs authentication using <i>newUsername</i> and <i>newPassword</i>, if specified. If not, and they were given using <a href="qwebmethod.html#setCredentials">setCredentials</a>(), <a href="qwebmethod.html#setUsername">setUsername</a>() or <a href="qwebmethod.html#setPassword">setPassword</a>(), it uses the existing values.</p>
 <p>If no data is specified, it does nothing. Returns true on success.</p>
-<p>See also <a href="qwebmethod.html#setCredentials">setCredentials</a>(), <a href="qwebmethod.html#setUsername">setUsername</a>(), <a href="qwebmethod.html#setPassword">setPassword</a>(), and <a href="qwebmethod.html#username">username</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#setCredentials">setCredentials</a>(), <a href="qwebmethod.html#setUsername">setUsername</a>(), <a href="qwebmethod.html#setPassword">setPassword</a>(), and <a href="qwebmethod.html#username">username</a>().</p>
 <!-- @@@authenticate -->
 <!-- $$$authenticate$$$authenticateconstQUrl& -->
-<h3 class="fn"><a name="authenticate-2"></a>bool QWebMethod::authenticate ( const QUrl &amp; <i>customAuthString</i> )</h3>
+<h3 class="fn"><a name="authenticate-2"></a><span class="type">bool</span> QWebMethod::<span class="name">authenticate</span> ( const <span class="type">QUrl</span> &amp; <i>customAuthString</i> )</h3>
 <p>Performs authentication using <i>customAuthString</i>. Credentials specified by <a href="qwebmethod.html#setCredentials">setCredentials</a>(), <a href="qwebmethod.html#setUsername">setUsername</a>() or <a href="qwebmethod.html#setPassword">setPassword</a>() are NOT used.</p>
 <p>If empty data is specified, it does nothing (and returns false). Returns true on success.</p>
-<p>See also <a href="qwebmethod.html#setCredentials">setCredentials</a>(), <a href="qwebmethod.html#setUsername">setUsername</a>(), <a href="qwebmethod.html#setPassword">setPassword</a>(), and <a href="qwebmethod.html#username">username</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#setCredentials">setCredentials</a>(), <a href="qwebmethod.html#setUsername">setUsername</a>(), <a href="qwebmethod.html#setPassword">setPassword</a>(), and <a href="qwebmethod.html#username">username</a>().</p>
 <!-- @@@authenticate -->
 <!-- $$$authenticationSlot[overload1]$$$authenticationSlotQNetworkReply*QAuthenticator* -->
-<h3 class="fn"><a name="authenticationSlot"></a>void QWebMethod::authenticationSlot ( QNetworkReply * <i>reply</i>, QAuthenticator * <i>authenticator</i> )<tt> [protected slot]</tt></h3>
+<h3 class="fn"><a name="authenticationSlot"></a><span class="type">void</span> QWebMethod::<span class="name">authenticationSlot</span> ( <span class="type">QNetworkReply</span> * <i>reply</i>, <span class="type">QAuthenticator</span> * <i>authenticator</i> )<tt> [protected slot]</tt></h3>
 <p>Internal method used to authenticate the communication. Use <a href="qwebmethod.html#setCredentials">setCredentials</a>() or <a href="qwebmethod.html#setUsername">setUsername</a>() and <a href="qwebmethod.html#setPassword">setPassword</a>() to specify the data.</p>
 <p>This is a fallback method of QNAM. Typically, <a href="qwebmethod.html#authenticate">authenticate</a>() should be used.</p>
 <p>Fills the <i>authenticator</i> object. Does not use <i>reply</i>.</p>
 <!-- @@@authenticationSlot -->
 <!-- $$$errorEncountered[overload1]$$$errorEncounteredconstQString& -->
-<h3 class="fn"><a name="errorEncountered"></a>void QWebMethod::errorEncountered ( const QString &amp; <i>errMessage</i> )<tt> [signal]</tt></h3>
+<h3 class="fn"><a name="errorEncountered"></a><span class="type">void</span> QWebMethod::<span class="name">errorEncountered</span> ( const <span class="type">QString</span> &amp; <i>errMessage</i> )<tt> [signal]</tt></h3>
 <p>Singal emitted when WsdlConverter encounters an error. Carries <i>errMessage</i> for convenience.</p>
 <!-- @@@errorEncountered -->
 <!-- $$$errorInfo[overload1]$$$errorInfo -->
-<h3 class="fn"><a name="errorInfo"></a>QString QWebMethod::errorInfo () const</h3>
+<h3 class="fn"><a name="errorInfo"></a><span class="type">QString</span> QWebMethod::<span class="name">errorInfo</span> () const</h3>
 <p>Returns QString with error message in case an error occured. Otherwise, returns empty string.</p>
-<p>See also <a href="qwebmethod.html#isErrorState">isErrorState</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#isErrorState">isErrorState</a>().</p>
 <!-- @@@errorInfo -->
 <!-- $$$host[overload1]$$$host -->
-<h3 class="fn"><a name="host"></a>QString QWebMethod::host () const</h3>
+<h3 class="fn"><a name="host"></a><span class="type">QString</span> QWebMethod::<span class="name">host</span> () const</h3>
 <p>Returns host's URL (in QString). If you want a QUrl, call getHostUrl(), or QUrl(QWebMethod::getHost());</p>
-<p>See also <a href="qwebmethod.html#hostUrl">hostUrl</a>() and <a href="qwebmethod.html#setHost">setHost</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#hostUrl">hostUrl</a>() and <a href="qwebmethod.html#setHost">setHost</a>().</p>
 <!-- @@@host -->
 <!-- $$$hostUrl[overload1]$$$hostUrl -->
-<h3 class="fn"><a name="hostUrl"></a>QUrl QWebMethod::hostUrl () const</h3>
+<h3 class="fn"><a name="hostUrl"></a><span class="type">QUrl</span> QWebMethod::<span class="name">hostUrl</span> () const</h3>
 <p>Returns host's URL. If you want a QString, call getHost() or getHostUrl().<a href="qwebmethod.html#host">host</a>();</p>
-<p>See also <a href="qwebmethod.html#host">host</a>() and <a href="qwebmethod.html#setHost">setHost</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#host">host</a>() and <a href="qwebmethod.html#setHost">setHost</a>().</p>
 <!-- @@@hostUrl -->
 <!-- $$$httpMethod[overload1]$$$httpMethod -->
-<h3 class="fn"><a name="httpMethod"></a><a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> QWebMethod::httpMethod () const</h3>
+<h3 class="fn"><a name="httpMethod"></a><span class="type"><a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a></span> QWebMethod::<span class="name">httpMethod</span> () const</h3>
 <p>Returns currently set HTTP method.</p>
-<p>See also <a href="qwebmethod.html#setHttpMethod">setHttpMethod</a>(), <a href="qwebmethod.html#httpMethodString">httpMethodString</a>(), and <a href="qwebmethod.html#protocol">protocol</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#setHttpMethod">setHttpMethod</a>(), <a href="qwebmethod.html#httpMethodString">httpMethodString</a>(), and <a href="qwebmethod.html#protocol">protocol</a>().</p>
 <!-- @@@httpMethod -->
 <!-- $$$httpMethodString[overload1]$$$httpMethodString -->
-<h3 class="fn"><a name="httpMethodString"></a>QString QWebMethod::httpMethodString () const</h3>
+<h3 class="fn"><a name="httpMethodString"></a><span class="type">QString</span> QWebMethod::<span class="name">httpMethodString</span> () const</h3>
 <p>Returns the HTTP method used, in form of a QString.</p>
-<p>See also <a href="qwebmethod.html#httpMethod">httpMethod</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#httpMethod">httpMethod</a>().</p>
 <!-- @@@httpMethodString -->
-<!-- $$$isErrorState[overload1]$$$isErrorState -->
-<h3 class="fn"><a name="isErrorState"></a>bool QWebMethod::isErrorState () const</h3>
-<p>Returns true if there was an error, false otherwise. Details about an error can be read with getErrorInfo().</p>
-<p>See also <a href="qwebmethod.html#errorInfo">errorInfo</a>().</p>
-<!-- @@@isErrorState -->
-<!-- $$$isReplyReady[overload1]$$$isReplyReady -->
-<h3 class="fn"><a name="isReplyReady"></a>bool QWebMethod::isReplyReady () const</h3>
-<p>Returns true if reply was received.</p>
-<!-- @@@isReplyReady -->
-<!-- $$$methodName[overload1]$$$methodName -->
-<h3 class="fn"><a name="methodName"></a>QString QWebMethod::methodName () const</h3>
-<p>Returns message's name.</p>
-<p>See also <a href="qwebmethod.html#setMethodName">setMethodName</a>().</p>
-<!-- @@@methodName -->
-<!-- $$$parameterNames[overload1]$$$parameterNames -->
-<h3 class="fn"><a name="parameterNames"></a>QStringList QWebMethod::parameterNames () const</h3>
-<p>Returns list of parameters' names.</p>
-<p>See also <a href="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</a>() and <a href="qwebmethod.html#setParameters">setParameters</a>().</p>
-<!-- @@@parameterNames -->
-<!-- $$$parameterNamesTypes[overload1]$$$parameterNamesTypes -->
-<h3 class="fn"><a name="parameterNamesTypes"></a>QMap&lt;QString, QVariant&gt; QWebMethod::parameterNamesTypes () const</h3>
-<p>Returns whole parameter information (name and type).</p>
-<p>See also <a href="qwebmethod.html#parameterNames">parameterNames</a>() and <a href="qwebmethod.html#setParameters">setParameters</a>().</p>
-<!-- @@@parameterNamesTypes -->
-<!-- $$$protocol[overload1]$$$protocol -->
-<h3 class="fn"><a name="protocol"></a><a href="qwebmethod.html#Protocol-enum">Protocol</a> QWebMethod::protocol () const</h3>
-<p>Returns currently set protocol.</p>
-<p>See also <a href="qwebmethod.html#setProtocol">setProtocol</a>(), <a href="qwebmethod.html#protocolString">protocolString</a>(), and <a href="qwebmethod.html#httpMethod">httpMethod</a>().</p>
-<!-- @@@protocol -->
-<!-- $$$protocolString[overload1]$$$protocolStringbool -->
-<h3 class="fn"><a name="protocolString"></a>QString QWebMethod::protocolString ( bool <i>includeRest</i> = false ) const</h3>
-<p>Returns protocol used in form of a QString. If <i>includeRest</i> is true, and --rest flag was specified, it appends &quot;,rest&quot; to the result.</p>
-<p>See also <a href="qwebmethod.html#protocol">protocol</a>().</p>
-<!-- @@@protocolString -->
-<!-- $$$replyFinished[overload1]$$$replyFinishedQNetworkReply* -->
-<h3 class="fn"><a name="replyFinished"></a>void QWebMethod::replyFinished ( QNetworkReply * <i>netReply</i> )<tt> [protected slot]</tt></h3>
-<p>Protected slot, which processes the reply (<i>netReply</i>) from the server. Emits the <a href="qwebmethod.html#replyReady">replyReady</a>() signal.</p>
-<!-- @@@replyFinished -->
-<!-- $$$replyRead[overload1]$$$replyRead -->
-<h3 class="fn"><a name="replyRead"></a>QString QWebMethod::replyRead ()</h3>
-<p>After making asynchronous call, and getting the <a href="qwebmethod.html#replyReady">replyReady</a>() signal, this method can be used to read the reply.</p>
-<p>See also <a href="qwebmethod.html#replyReadParsed">replyReadParsed</a>() and <a href="qwebmethod.html#replyReadRaw">replyReadRaw</a>().</p>
-<!-- @@@replyRead -->
-<!-- $$$replyReadParsed[overload1]$$$replyReadParsed -->
-<h3 class="fn"><a name="replyReadParsed"></a>QVariant QWebMethod::replyReadParsed ()</h3>
-<p>After making asynchronous call, and getting the <a href="qwebmethod.html#replyReady">replyReady</a>() signal, this method can be used to read the reply.</p>
-<p>Returns parsed data (with type specified in WSDL or by user, wrapped in QVariant).</p>
-<p>See also <a href="qwebmethod.html#replyRead">replyRead</a>() and <a href="qwebmethod.html#replyReadRaw">replyReadRaw</a>().</p>
-<!-- @@@replyReadParsed -->
-<!-- $$$replyReadRaw[overload1]$$$replyReadRaw -->
-<h3 class="fn"><a name="replyReadRaw"></a>QByteArray QWebMethod::replyReadRaw ()</h3>
-<p>After making asynchronous call, and getting the <a href="qwebmethod.html#replyReady">replyReady</a>() signal, this method can be used to read the reply.</p>
-<p>Returns the raw data acquired from server.</p>
-<p>See also <a href="qwebmethod.html#replyRead">replyRead</a>() and <a href="qwebmethod.html#replyReadParsed">replyReadParsed</a>().</p>
-<!-- @@@replyReadRaw -->
-<!-- $$$replyReady[overload1]$$$replyReadyconstQByteArray& -->
-<h3 class="fn"><a name="replyReady"></a>void QWebMethod::replyReady ( const QByteArray &amp; <i>rply</i> )<tt> [signal]</tt></h3>
-<p>Signal invoked when the reply (<i>rply</i>) from web service's server is ready for reading.</p>
-<!-- @@@replyReady -->
-<!-- $$$returnValueName[overload1]$$$returnValueName -->
-<h3 class="fn"><a name="returnValueName"></a>QStringList QWebMethod::returnValueName () const</h3>
-<p>Returns return value's name.</p>
-<p>See also <a href="qwebmethod.html#returnValueNameType">returnValueNameType</a>() and <a href="qwebmethod.html#setReturnValue">setReturnValue</a>().</p>
-<!-- @@@returnValueName -->
-<!-- $$$returnValueNameType[overload1]$$$returnValueNameType -->
-<h3 class="fn"><a name="returnValueNameType"></a>QMap&lt;QString, QVariant&gt; QWebMethod::returnValueNameType () const</h3>
-<p>Returns whole return value information (name and type).</p>
-<p>See also <a href="qwebmethod.html#returnValueName">returnValueName</a>() and <a href="qwebmethod.html#setReturnValue">setReturnValue</a>().</p>
-<!-- @@@returnValueNameType -->
-<!-- $$$sendMessage[overload1]$$$sendMessageconstQByteArray& -->
-<h3 class="fn"><a name="sendMessage"></a>bool QWebMethod::sendMessage ( const QByteArray &amp; <i>requestData</i> = QByteArray() )</h3>
+<!-- $$$invokeMethod[overload1]$$$invokeMethodconstQByteArray& -->
+<h3 class="fn"><a name="invokeMethod"></a><span class="type">bool</span> QWebMethod::<span class="name">invokeMethod</span> ( const <span class="type">QByteArray</span> &amp; <i>requestData</i> = QByteArray() )</h3>
 <p>Sends the message asynchronously, assuming that all neccessary data was specified earlier. Optionally, a QByteArray (<i>requestData</i>) can be specified - it will override standard data encapsulation (preparation, see prepareRequestData()), and send the byte array without any changes.</p>
 <p>If synchronous operation is needed, you can:</p>
 <ul>
-<li>use static <a href="qwebservicemethod.html#sendMessage">QWebServiceMethod::sendMessage</a>()</li>
+<li>use static QWebServiceMethod::sendMessage()</li>
 <li>subclass <a href="qwebmethod.html">QWebMethod</a>, and add a static sendMessage() method with a &quot;waiting loop&quot;</li>
 <li>wait for <a href="qwebmethod.html#replyReady">replyReady</a>() signal in a &quot;waiting loop&quot;</li>
 </ul>
 <p>Here's a waiting loop snippet:</p>
-<pre class="highlightedCode brush: cpp">    QWebMethod qsm;
-    ...
-    qsm.sendMessage();
+<pre class="cpp">    <span class="type"><a href="qwebmethod.html">QWebMethod</a></span> qsm;
+    <span class="operator">.</span><span class="operator">.</span><span class="operator">.</span>
+    qsm<span class="operator">.</span>sendMessage();
     forever {
-        if (qsm.replyReceived) {
-            return qsm.reply;
-        } else {
+        <span class="keyword">if</span> (qsm<span class="operator">.</span>replyReceived) {
+            <span class="keyword">return</span> qsm<span class="operator">.</span>reply;
+        } <span class="keyword">else</span> {
             <span class="comment">// Ensures that application remains responive to events (prevents freezing).</span>
-            qApp-&gt;processEvents();
+            qApp<span class="operator">-</span><span class="operator">&gt;</span>processEvents();
         }
     }</pre>
 <p>Returns true on success.</p>
-<p>See also <a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#setTargetNamespace">setTargetNamespace</a>().</p>
-<!-- @@@sendMessage -->
+<p><b>See also </b><a href="qwebmethod.html#setParameters">setParameters</a>(), <a href="qwebmethod.html#setProtocol">setProtocol</a>(), and <a href="qwebmethod.html#setTargetNamespace">setTargetNamespace</a>().</p>
+<!-- @@@invokeMethod -->
+<!-- $$$isErrorState[overload1]$$$isErrorState -->
+<h3 class="fn"><a name="isErrorState"></a><span class="type">bool</span> QWebMethod::<span class="name">isErrorState</span> () const</h3>
+<p>Returns true if there was an error, false otherwise. Details about an error can be read with getErrorInfo().</p>
+<p><b>See also </b><a href="qwebmethod.html#errorInfo">errorInfo</a>().</p>
+<!-- @@@isErrorState -->
+<!-- $$$isReplyReady[overload1]$$$isReplyReady -->
+<h3 class="fn"><a name="isReplyReady"></a><span class="type">bool</span> QWebMethod::<span class="name">isReplyReady</span> () const</h3>
+<p>Returns true if reply was received, and is ready to be read.</p>
+<!-- @@@isReplyReady -->
+<!-- $$$methodName[overload1]$$$methodName -->
+<h3 class="fn"><a name="methodName"></a><span class="type">QString</span> QWebMethod::<span class="name">methodName</span> () const</h3>
+<p>Returns message's name.</p>
+<p><b>See also </b><a href="qwebmethod.html#setMethodName">setMethodName</a>().</p>
+<!-- @@@methodName -->
+<!-- $$$parameterNames[overload1]$$$parameterNames -->
+<h3 class="fn"><a name="parameterNames"></a><span class="type">QStringList</span> QWebMethod::<span class="name">parameterNames</span> () const</h3>
+<p>Returns list of parameters' names.</p>
+<p><b>See also </b><a href="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</a>() and <a href="qwebmethod.html#setParameters">setParameters</a>().</p>
+<!-- @@@parameterNames -->
+<!-- $$$parameterNamesTypes[overload1]$$$parameterNamesTypes -->
+<h3 class="fn"><a name="parameterNamesTypes"></a><span class="type">QMap</span>&lt;<span class="type">QString</span>, <span class="type">QVariant</span>&gt; QWebMethod::<span class="name">parameterNamesTypes</span> () const</h3>
+<p>Returns whole parameter information (name and type).</p>
+<p><b>See also </b><a href="qwebmethod.html#parameterNames">parameterNames</a>() and <a href="qwebmethod.html#setParameters">setParameters</a>().</p>
+<!-- @@@parameterNamesTypes -->
+<!-- $$$protocol[overload1]$$$protocol -->
+<h3 class="fn"><a name="protocol"></a><span class="type"><a href="qwebmethod.html#Protocol-enum">Protocol</a></span> QWebMethod::<span class="name">protocol</span> () const</h3>
+<p>Returns currently set protocol.</p>
+<p><b>See also </b><a href="qwebmethod.html#setProtocol">setProtocol</a>(), <a href="qwebmethod.html#protocolString">protocolString</a>(), and <a href="qwebmethod.html#httpMethod">httpMethod</a>().</p>
+<!-- @@@protocol -->
+<!-- $$$protocolString[overload1]$$$protocolStringbool -->
+<h3 class="fn"><a name="protocolString"></a><span class="type">QString</span> QWebMethod::<span class="name">protocolString</span> ( <span class="type">bool</span> <i>includeRest</i> = false ) const</h3>
+<p>Returns protocol used in form of a QString. If <i>includeRest</i> is true, and --rest flag was specified, it appends &quot;,rest&quot; to the result.</p>
+<p><b>See also </b><a href="qwebmethod.html#protocol">protocol</a>().</p>
+<!-- @@@protocolString -->
+<!-- $$$replyFinished[overload1]$$$replyFinishedQNetworkReply* -->
+<h3 class="fn"><a name="replyFinished"></a><span class="type">void</span> QWebMethod::<span class="name">replyFinished</span> ( <span class="type">QNetworkReply</span> * <i>netReply</i> )<tt> [protected slot]</tt></h3>
+<p>Protected slot, which processes the reply (<i>netReply</i>) from the server. Emits the <a href="qwebmethod.html#replyReady">replyReady</a>() signal.</p>
+<!-- @@@replyFinished -->
+<!-- $$$replyRead[overload1]$$$replyRead -->
+<h3 class="fn"><a name="replyRead"></a><span class="type">QString</span> QWebMethod::<span class="name">replyRead</span> ()</h3>
+<p>After making asynchronous call, and getting the <a href="qwebmethod.html#replyReady">replyReady</a>() signal, this method can be used to read the reply.</p>
+<p>This method returns QString with complete and exact reply from server. If other data format is needed, other methods can be used:</p>
+<ul>
+<li>for parsed reply, stored in QVariant - <a href="qwebmethod.html#replyReadParsed">replyReadParsed</a>()</li>
+<li>for raw, unprocessed reply - <a href="qwebmethod.html#replyReadRaw">replyReadRaw</a>()</li>
+</ul>
+<p><b>See also </b><a href="qwebmethod.html#replyReadParsed">replyReadParsed</a>() and <a href="qwebmethod.html#replyReadRaw">replyReadRaw</a>().</p>
+<!-- @@@replyRead -->
+<!-- $$$replyReadParsed[overload1]$$$replyReadParsed -->
+<h3 class="fn"><a name="replyReadParsed"></a><span class="type">QVariant</span> QWebMethod::<span class="name">replyReadParsed</span> ()</h3>
+<p>After making asynchronous call, and getting the <a href="qwebmethod.html#replyReady">replyReady</a>() signal, this method can be used to read the reply.</p>
+<p>Returns parsed data (with type specified in WSDL or by user, wrapped in QVariant). Tries to parse the reply automatically, but specifying reply name and type using <a href="qwebmethod.html#setReturnValue">setReturnValue</a>() might help a lot (this is relevant mostly for SOAP).</p>
+<p>Web APIs usually return a lot of data in one go, this method is likely to get lost in it. It expects a simple reply (say, you request 2 + 2, and get SOAP-enveloped reply - it will work fine then, but not necessarily if WS returns a lot of additional information).</p>
+<p><b>See also </b><a href="qwebmethod.html#replyRead">replyRead</a>() and <a href="qwebmethod.html#replyReadRaw">replyReadRaw</a>().</p>
+<!-- @@@replyReadParsed -->
+<!-- $$$replyReadRaw[overload1]$$$replyReadRaw -->
+<h3 class="fn"><a name="replyReadRaw"></a><span class="type">QByteArray</span> QWebMethod::<span class="name">replyReadRaw</span> ()</h3>
+<p>After making asynchronous call, and getting the <a href="qwebmethod.html#replyReady">replyReady</a>() signal, this method can be used to read the reply.</p>
+<p>Returns the raw data acquired from server.</p>
+<p><b>See also </b><a href="qwebmethod.html#replyRead">replyRead</a>() and <a href="qwebmethod.html#replyReadParsed">replyReadParsed</a>().</p>
+<!-- @@@replyReadRaw -->
+<!-- $$$replyReady[overload1]$$$replyReadyconstQByteArray& -->
+<h3 class="fn"><a name="replyReady"></a><span class="type">void</span> QWebMethod::<span class="name">replyReady</span> ( const <span class="type">QByteArray</span> &amp; <i>rply</i> )<tt> [signal]</tt></h3>
+<p>Signal invoked when the reply (<i>rply</i>) from web service's server is ready for reading.</p>
+<!-- @@@replyReady -->
+<!-- $$$returnValueName[overload1]$$$returnValueName -->
+<h3 class="fn"><a name="returnValueName"></a><span class="type">QStringList</span> QWebMethod::<span class="name">returnValueName</span> () const</h3>
+<p>Returns return value's name.</p>
+<p><b>See also </b><a href="qwebmethod.html#returnValueNameType">returnValueNameType</a>() and <a href="qwebmethod.html#setReturnValue">setReturnValue</a>().</p>
+<!-- @@@returnValueName -->
+<!-- $$$returnValueNameType[overload1]$$$returnValueNameType -->
+<h3 class="fn"><a name="returnValueNameType"></a><span class="type">QMap</span>&lt;<span class="type">QString</span>, <span class="type">QVariant</span>&gt; QWebMethod::<span class="name">returnValueNameType</span> () const</h3>
+<p>Returns whole return value information (name and type).</p>
+<p><b>See also </b><a href="qwebmethod.html#returnValueName">returnValueName</a>() and <a href="qwebmethod.html#setReturnValue">setReturnValue</a>().</p>
+<!-- @@@returnValueNameType -->
 <!-- $$$setCredentials[overload1]$$$setCredentialsconstQString&constQString& -->
-<h3 class="fn"><a name="setCredentials"></a>void QWebMethod::setCredentials ( const QString &amp; <i>newUsername</i>, const QString &amp; <i>newPassword</i> )</h3>
+<h3 class="fn"><a name="setCredentials"></a><span class="type">void</span> QWebMethod::<span class="name">setCredentials</span> ( const <span class="type">QString</span> &amp; <i>newUsername</i>, const <span class="type">QString</span> &amp; <i>newPassword</i> )</h3>
 <p>Used for authentication. Sets username (<i>newUsername</i>) and password (<i>newPassword</i>). To authenticate, call <a href="qwebmethod.html#authenticate">authenticate</a>().</p>
-<p>See also <a href="qwebmethod.html#setUsername">setUsername</a>(), <a href="qwebmethod.html#setPassword">setPassword</a>(), <a href="qwebmethod.html#authenticate">authenticate</a>(), and <a href="qwebmethod.html#username">username</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#setUsername">setUsername</a>(), <a href="qwebmethod.html#setPassword">setPassword</a>(), <a href="qwebmethod.html#authenticate">authenticate</a>(), and <a href="qwebmethod.html#username">username</a>().</p>
 <!-- @@@setCredentials -->
 <!-- $$$setHost[overload1]$$$setHostconstQString& -->
-<h3 class="fn"><a name="setHost"></a>void QWebMethod::setHost ( const QString &amp; <i>newHost</i> )</h3>
+<h3 class="fn"><a name="setHost"></a><span class="type">void</span> QWebMethod::<span class="name">setHost</span> ( const <span class="type">QString</span> &amp; <i>newHost</i> )</h3>
 <p>Sets message's host to <i>newHost</i>.</p>
-<p>See also <a href="qwebmethod.html#host">host</a>() and <a href="qwebmethod.html#hostUrl">hostUrl</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#host">host</a>() and <a href="qwebmethod.html#hostUrl">hostUrl</a>().</p>
 <!-- @@@setHost -->
 <!-- $$$setHost$$$setHostconstQUrl& -->
-<h3 class="fn"><a name="setHost-2"></a>void QWebMethod::setHost ( const QUrl &amp; <i>newHost</i> )</h3>
+<h3 class="fn"><a name="setHost-2"></a><span class="type">void</span> QWebMethod::<span class="name">setHost</span> ( const <span class="type">QUrl</span> &amp; <i>newHost</i> )</h3>
 <p>This is an overloaded function.</p>
 <p>Sets message's host to <i>newHost</i>.</p>
-<p>See also <a href="qwebmethod.html#host">host</a>() and <a href="qwebmethod.html#hostUrl">hostUrl</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#host">host</a>() and <a href="qwebmethod.html#hostUrl">hostUrl</a>().</p>
 <!-- @@@setHost -->
 <!-- $$$setHttpMethod[overload1]$$$setHttpMethodHttpMethod -->
-<h3 class="fn"><a name="setHttpMethod"></a>void QWebMethod::setHttpMethod ( <a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a> <i>method</i> )</h3>
-<p>Sets the httpMethod flag (<i>method</i>, a value of <a href="qwebmethod.html#HttpMethod-enum">QWebMethod::HttpMethod</a>). Default method is QWebMethod::POST.</p>
-<p>See also <a href="qwebmethod.html#httpMethod">httpMethod</a>().</p>
+<h3 class="fn"><a name="setHttpMethod"></a><span class="type">void</span> QWebMethod::<span class="name">setHttpMethod</span> ( <span class="type"><a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a></span> <i>method</i> )</h3>
+<p>Sets the httpMethod flag (<i>method</i>, a value of <a href="qwebmethod.html#HttpMethod-enum">QWebMethod::HttpMethod</a>). Default method is <a href="qwebmethod.html#HttpMethod-enum">QWebMethod::Post</a>.</p>
+<p><b>See also </b><a href="qwebmethod.html#httpMethod">httpMethod</a>().</p>
 <!-- @@@setHttpMethod -->
 <!-- $$$setHttpMethod$$$setHttpMethodconstQString& -->
-<h3 class="fn"><a name="setHttpMethod-2"></a>bool QWebMethod::setHttpMethod ( const QString &amp; <i>newMethod</i> )</h3>
+<h3 class="fn"><a name="setHttpMethod-2"></a><span class="type">bool</span> QWebMethod::<span class="name">setHttpMethod</span> ( const <span class="type">QString</span> &amp; <i>newMethod</i> )</h3>
 <p>This is an overloaded function.</p>
 <p>Sets the httpMethod flag (<i>newMethod</i>, using QString representation of HTTP method (post, get, put, or delete)). Setting is NOT case sensitive. Default method is POST.</p>
 <p>Returns true if successful.</p>
 <!-- @@@setHttpMethod -->
 <!-- $$$setMethodName[overload1]$$$setMethodNameconstQString& -->
-<h3 class="fn"><a name="setMethodName"></a>void QWebMethod::setMethodName ( const QString &amp; <i>newName</i> )</h3>
+<h3 class="fn"><a name="setMethodName"></a><span class="type">void</span> QWebMethod::<span class="name">setMethodName</span> ( const <span class="type">QString</span> &amp; <i>newName</i> )</h3>
 <p>Sets message's name to <i>newName</i>.</p>
-<p>See also <a href="qwebmethod.html#methodName">methodName</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#methodName">methodName</a>().</p>
 <!-- @@@setMethodName -->
 <!-- $$$setParameters[overload1]$$$setParametersconstQMap<QString,QVariant>& -->
-<h3 class="fn"><a name="setParameters"></a>void QWebMethod::setParameters ( const QMap&lt;QString, QVariant&gt; &amp; <i>params</i> )</h3>
-<p>Sets method's parameters (<i>params</i>). This also includes their names.</p>
-<p>See also <a href="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</a>() and <a href="qwebmethod.html#parameterNames">parameterNames</a>().</p>
+<h3 class="fn"><a name="setParameters"></a><span class="type">void</span> QWebMethod::<span class="name">setParameters</span> ( const <span class="type">QMap</span>&lt;<span class="type">QString</span>, <span class="type">QVariant</span>&gt; &amp; <i>params</i> )</h3>
+<p>Sets method's parameters (<i>params</i>). This also includes their names (as map key).</p>
+<p><b>See also </b><a href="qwebmethod.html#parameterNamesTypes">parameterNamesTypes</a>() and <a href="qwebmethod.html#parameterNames">parameterNames</a>().</p>
 <!-- @@@setParameters -->
 <!-- $$$setPassword[overload1]$$$setPasswordconstQString& -->
-<h3 class="fn"><a name="setPassword"></a>void QWebMethod::setPassword ( const QString &amp; <i>newPassword</i> )</h3>
+<h3 class="fn"><a name="setPassword"></a><span class="type">void</span> QWebMethod::<span class="name">setPassword</span> ( const <span class="type">QString</span> &amp; <i>newPassword</i> )</h3>
 <p>Used for authentication. Sets password using <i>newPassword</i>. To authenticate, call <a href="qwebmethod.html#authenticate">authenticate</a>().</p>
-<p>See also <a href="qwebmethod.html#setUsername">setUsername</a>(), <a href="qwebmethod.html#setCredentials">setCredentials</a>(), and <a href="qwebmethod.html#authenticate">authenticate</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#setUsername">setUsername</a>(), <a href="qwebmethod.html#setCredentials">setCredentials</a>(), and <a href="qwebmethod.html#authenticate">authenticate</a>().</p>
 <!-- @@@setPassword -->
 <!-- $$$setProtocol[overload1]$$$setProtocolProtocol -->
-<h3 class="fn"><a name="setProtocol"></a>void QWebMethod::setProtocol ( <a href="qwebmethod.html#Protocol-enum">Protocol</a> <i>prot</i> )</h3>
+<h3 class="fn"><a name="setProtocol"></a><span class="type">void</span> QWebMethod::<span class="name">setProtocol</span> ( <span class="type"><a href="qwebmethod.html#Protocol-enum">Protocol</a></span> <i>prot</i> )</h3>
 <p>Sets the protocol flag (<i>prot</i>, being one of the values of <a href="qwebmethod.html#Protocol-enum">QWebMethod::Protocol</a>). This determines the protocol used later, when sending request. Defaults to SOAP1.2&#x2e;</p>
 <p>WARNING: This method also checks for disallowed combinations. If such combination is encountered, it discards the set protocol, and sets SOAP 1.2&#x2e; An example of dissalowed combination is setting JSON and SOAP simultaneously.</p>
-<p>See also <a href="qwebmethod.html#protocol">protocol</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#protocol">protocol</a>().</p>
 <!-- @@@setProtocol -->
 <!-- $$$setReturnValue[overload1]$$$setReturnValueconstQMap<QString,QVariant>& -->
-<h3 class="fn"><a name="setReturnValue"></a>void QWebMethod::setReturnValue ( const QMap&lt;QString, QVariant&gt; &amp; <i>returnVal</i> )</h3>
+<h3 class="fn"><a name="setReturnValue"></a><span class="type">void</span> QWebMethod::<span class="name">setReturnValue</span> ( const <span class="type">QMap</span>&lt;<span class="type">QString</span>, <span class="type">QVariant</span>&gt; &amp; <i>returnVal</i> )</h3>
 <p>Sets method's return value (<i>returnVal</i>). This also includes their names.</p>
-<p>See also <a href="qwebmethod.html#returnValueNameType">returnValueNameType</a>() and <a href="qwebmethod.html#returnValueName">returnValueName</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#returnValueNameType">returnValueNameType</a>() and <a href="qwebmethod.html#returnValueName">returnValueName</a>().</p>
 <!-- @@@setReturnValue -->
 <!-- $$$setTargetNamespace[overload1]$$$setTargetNamespaceconstQString& -->
-<h3 class="fn"><a name="setTargetNamespace"></a>void QWebMethod::setTargetNamespace ( const QString &amp; <i>tNamespace</i> )</h3>
+<h3 class="fn"><a name="setTargetNamespace"></a><span class="type">void</span> QWebMethod::<span class="name">setTargetNamespace</span> ( const <span class="type">QString</span> &amp; <i>tNamespace</i> )</h3>
 <p>Sets message's target namespace (<i>tNamespace</i>), which is needed in SOAP messaging.</p>
-<p>See also <a href="qwebmethod.html#targetNamespace">targetNamespace</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#targetNamespace">targetNamespace</a>().</p>
 <!-- @@@setTargetNamespace -->
 <!-- $$$setUsername[overload1]$$$setUsernameconstQString& -->
-<h3 class="fn"><a name="setUsername"></a>void QWebMethod::setUsername ( const QString &amp; <i>newUsername</i> )</h3>
+<h3 class="fn"><a name="setUsername"></a><span class="type">void</span> QWebMethod::<span class="name">setUsername</span> ( const <span class="type">QString</span> &amp; <i>newUsername</i> )</h3>
 <p>Used for authentication. Sets username using <i>newUsername</i>. To authenticate, call <a href="qwebmethod.html#authenticate">authenticate</a>().</p>
-<p>See also <a href="qwebmethod.html#setPassword">setPassword</a>(), <a href="qwebmethod.html#setCredentials">setCredentials</a>(), <a href="qwebmethod.html#authenticate">authenticate</a>(), and <a href="qwebmethod.html#username">username</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#setPassword">setPassword</a>(), <a href="qwebmethod.html#setCredentials">setCredentials</a>(), <a href="qwebmethod.html#authenticate">authenticate</a>(), and <a href="qwebmethod.html#username">username</a>().</p>
 <!-- @@@setUsername -->
 <!-- $$$targetNamespace[overload1]$$$targetNamespace -->
-<h3 class="fn"><a name="targetNamespace"></a>QString QWebMethod::targetNamespace () const</h3>
+<h3 class="fn"><a name="targetNamespace"></a><span class="type">QString</span> QWebMethod::<span class="name">targetNamespace</span> () const</h3>
 <p>Returns target namespace.</p>
 <p>Target namespace is used in SOAP messaging.</p>
-<p>See also <a href="qwebmethod.html#setTargetNamespace">setTargetNamespace</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#setTargetNamespace">setTargetNamespace</a>().</p>
 <!-- @@@targetNamespace -->
 <!-- $$$username[overload1]$$$username -->
-<h3 class="fn"><a name="username"></a>QString QWebMethod::username () const</h3>
+<h3 class="fn"><a name="username"></a><span class="type">QString</span> QWebMethod::<span class="name">username</span> () const</h3>
 <p>Returns username, which is used for authentication.</p>
-<p>See also <a href="qwebmethod.html#authenticate">authenticate</a>(), <a href="qwebmethod.html#setUsername">setUsername</a>(), and <a href="qwebmethod.html#setCredentials">setCredentials</a>().</p>
+<p><b>See also </b><a href="qwebmethod.html#authenticate">authenticate</a>(), <a href="qwebmethod.html#setUsername">setUsername</a>(), and <a href="qwebmethod.html#setCredentials">setCredentials</a>().</p>
 <!-- @@@username -->
 </div>
 </body>

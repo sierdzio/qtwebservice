@@ -37,6 +37,31 @@
   */
 
 /*!
+    \property QWebService::name
+    \brief Holds web service name
+
+    This property's default is empty string.
+*/
+/*!
+    \property QWebService::host
+    \brief Holds web service host Url as QString
+
+    This property's default is empty string.
+*/
+/*!
+    \property QWebService::hostUrl
+    \brief Holds web service url as QUrl
+
+    This property's default is empty QUrl.
+*/
+/*!
+    \property QWebService::methodNames
+    \brief Holds names of methods available in this web service
+
+    This property's default is empty QStringList.
+*/
+
+/*!
     Constructs the object with empty QWsdl and using \a parent (defaults to 0).
     You can set a WSDL file later using setWsdl(), or add custom web methods
     using addMethod().

@@ -44,11 +44,11 @@ void TestQWebService::initialTest()
     QCOMPARE(reader1->isErrorState(), bool(false));
 
     QWebService *reader2;
-    reader2 = new QWebService(QString("../../examples/wsdl/band_ws.asmx"), this);
+    reader2 = new QWebService(QString("../../../examples/wsdl/band_ws.asmx"), this);
     QCOMPARE(reader2->isErrorState(), bool(false));
 
     QWebService *reader3;
-    QWsdl *wsdl = new QWsdl(QString("../../examples/wsdl/band_ws.asmx"), this);
+    QWsdl *wsdl = new QWsdl(QString("../../../examples/wsdl/band_ws.asmx"), this);
     reader3 = new QWebService(wsdl, this);
     QCOMPARE(reader3->isErrorState(), bool(false));
 
@@ -62,10 +62,10 @@ void TestQWebService::initialTest()
   */
 void TestQWebService::gettersTest()
 {
-    QWebService reader(QString("../../examples/wsdl/band_ws.asmx"), this);
+    QWebService reader(QString("../../../examples/wsdl/band_ws.asmx"), this);
 
-    QCOMPARE(reader.host(), QString("../../examples/wsdl/band_ws.asmx"));
-    QCOMPARE(reader.hostUrl(), QUrl("../../examples/wsdl/band_ws.asmx"));
+    QCOMPARE(reader.host(), QString("../../../examples/wsdl/band_ws.asmx"));
+    QCOMPARE(reader.hostUrl(), QUrl("../../../examples/wsdl/band_ws.asmx"));
     QCOMPARE(reader.isErrorState(), bool(false));
     QCOMPARE(reader.errorInfo(), QString(""));
     QCOMPARE(reader.methodNames().size(), int(13));
@@ -125,20 +125,20 @@ void TestQWebService::gettersTest()
 void TestQWebService::settersTest()
 {
     QWebService *reader;
-    reader = new QWebService(QString("../../examples/wsdl/band_ws.asmx"), this);
+    reader = new QWebService(QString("../../../examples/wsdl/band_ws.asmx"), this);
     QCOMPARE(reader->isErrorState(), bool(false));
 
-    reader->setHost(QString("../../examples/wsdl/LondonGoldFix.asmx.xml"));
+    reader->setHost(QString("../../../examples/wsdl/LondonGoldFix.asmx.xml"));
     QCOMPARE(reader->isErrorState(), bool(false));
-    QCOMPARE(reader->host(), QString("../../examples/wsdl/LondonGoldFix.asmx.xml"));
-    QCOMPARE(reader->hostUrl(), QUrl("../../examples/wsdl/LondonGoldFix.asmx.xml"));
+    QCOMPARE(reader->host(), QString("../../../examples/wsdl/LondonGoldFix.asmx.xml"));
+    QCOMPARE(reader->hostUrl(), QUrl("../../../examples/wsdl/LondonGoldFix.asmx.xml"));
     QCOMPARE(reader->errorInfo(), QString(""));
     QCOMPARE(reader->methodNames().size(), int(1));
 
-    reader->setHost(QString("../../examples/wsdl/stockquote.asmx"));
+    reader->setHost(QString("../../../examples/wsdl/stockquote.asmx"));
     QCOMPARE(reader->isErrorState(), bool(false));
-    QCOMPARE(reader->host(), QString("../../examples/wsdl/stockquote.asmx"));
-    QCOMPARE(reader->hostUrl(), QUrl("../../examples/wsdl/stockquote.asmx"));
+    QCOMPARE(reader->host(), QString("../../../examples/wsdl/stockquote.asmx"));
+    QCOMPARE(reader->hostUrl(), QUrl("../../../examples/wsdl/stockquote.asmx"));
     QCOMPARE(reader->errorInfo(), QString(""));
     QCOMPARE(reader->methodNames().size(), int(1));;
 
@@ -150,11 +150,11 @@ void TestQWebService::settersTest()
   */
 void TestQWebService::qpropertyTest()
 {
-    QWebService *reader = new QWebService(QString("../../examples/wsdl/band_ws.asmx"), this);
+    QWebService *reader = new QWebService(QString("../../../examples/wsdl/band_ws.asmx"), this);
 
     QCOMPARE(reader->property("name").toString(), QString("band_ws"));
-    QCOMPARE(reader->property("host").toString(), QString("../../examples/wsdl/band_ws.asmx"));
-    QCOMPARE(QUrl(reader->property("hostUrl").toString()), QUrl("../../examples/wsdl/band_ws.asmx"));
+    QCOMPARE(reader->property("host").toString(), QString("../../../examples/wsdl/band_ws.asmx"));
+    QCOMPARE(QUrl(reader->property("hostUrl").toString()), QUrl("../../../examples/wsdl/band_ws.asmx"));
     QCOMPARE(reader->property("methodNames").toStringList().length(), int(13));
 
     delete reader;
@@ -169,7 +169,7 @@ void TestQWebService::methodManagementTest()
     reader = new QWebService(this);
     QCOMPARE(reader->isErrorState(), bool(false));
 
-    reader->setWsdl(new QWsdl("../../examples/wsdl/band_ws.asmx", reader));
+    reader->setWsdl(new QWsdl("../../../examples/wsdl/band_ws.asmx", reader));
     QCOMPARE(reader->isErrorState(), bool(false));
     QCOMPARE(reader->methodNames().size(), int(13));
     reader->resetWsdl();

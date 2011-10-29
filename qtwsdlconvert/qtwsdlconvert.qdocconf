@@ -4,13 +4,13 @@
 # include compat.qdocconf.
 
 #
-# To run from project's root: ~/QtSDK/Desktop/Qt/474/gcc/bin/qdoc3 ./qwebservice.qdocconf
+# To run from project's root: ~/QtSDK/Desktop/Qt/474/gcc/bin/qdoc3 ./qtwsdlconvert.qdocconf
 #
 
 #include(compat.qdocconf)
 
-project = QWebService
-descritpion = web service interaction library
+project = qtwsdlconvert
+description = an app for converting WSDL files into Qt classes
 
 # The outputdir variable specifies the directory
 # where QDoc will put the generated documentation.
@@ -37,7 +37,7 @@ sourcedirs  = ./sources
 # The imagedirs variable specifies the
 # directories containing the images used in the documentation.
 
-# imagedirs   = ./images 
+# imagedirs   = ./images
 
 sources.fileextensions = "*.cpp *.qdoc *.mm *.qml"
 headers.fileextensions = "*.h *.ch *.h++ *.hh *.hpp *.hxx"

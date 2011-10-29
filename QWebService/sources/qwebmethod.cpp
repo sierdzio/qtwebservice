@@ -138,12 +138,43 @@
            QWebMethod will use DELETE.
   */
 
+/* //!
+    \property QWebMethod::name
+    \brief Holds method name
+
+    This property's default is empty string.
+*/
+/* //!
+    \property QWebMethod::host
+    \brief Holds method's host Url as QString
+
+    This property's default is empty string.
+*/
+/* //!
+    \property QWebMethod::hostUrl
+    \brief Holds method's host Url as QUrl
+
+    This property's default is empty QUrl.
+*/
+/* //!
+    \property QWebMethod::targetNamespace
+    \brief Holds method's targetNamespace
+
+    This property's default is empty string.
+*/
+/* //!
+    \property QWebMethod::parameterNames
+    \brief Holds names of parametrs of this web method
+
+    This property's default is empty QStringList.
+*/
+
 /*!
     Constructs web method usign \a parent, \a protocol (which defaults to
     soap12), and \a method (which defaults to POST). Requires specifying
     other params later (setParameters()).
 
-    \sa setParameters(), setProtocol(), sendMessage()
+    \sa setParameters(), setProtocol(), invokeMethod()
   */
 QWebMethod::QWebMethod(QObject *parent, Protocol protocol, HttpMethod method) :
     QObject(parent), d_ptr(new QWebMethodPrivate)
@@ -159,7 +190,7 @@ QWebMethod::QWebMethod(QObject *parent, Protocol protocol, HttpMethod method) :
     and \a method (which defaults to POST), and \a url. Especially convenient for
     parameterless methods (like quick GET messages).
 
-    \sa setParameters(), setProtocol(), sendMessage()
+    \sa setParameters(), setProtocol(), invokeMethod()
   */
 QWebMethod::QWebMethod(const QUrl &url, Protocol protocol,
                        HttpMethod method, QObject *parent) :

@@ -62,17 +62,61 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="setForced" fullname="Flags::setForced" href="flags.html#setForced" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setForced(bool forced)">
                 <parameter left="bool" right="" name="forced" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="messageSuffix" fullname="Flags::messageSuffix" href="flags.html#messageSuffix" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="messageSuffix() const"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setMessageSuffix" fullname="Flags::setMessageSuffix" href="flags.html#setMessageSuffix" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setMessageSuffix(const QString &amp; newMsgSuffix)">
+            <function access="public" threadsafety="unspecified" status="commendable" name="methodSuffix" fullname="Flags::methodSuffix" href="flags.html#methodSuffix" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="methodSuffix() const"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setMethodSuffix" fullname="Flags::setMethodSuffix" href="flags.html#setMethodSuffix" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setMethodSuffix(const QString &amp; newMsgSuffix)">
                 <parameter left="const QString &amp;" right="" name="newMsgSuffix" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="objectSuffix" fullname="Flags::objectSuffix" href="flags.html#objectSuffix" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="objectSuffix() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="setObjectSuffix" fullname="Flags::setObjectSuffix" href="flags.html#setObjectSuffix" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setObjectSuffix(const QString &amp; newObjSuffix)">
                 <parameter left="const QString &amp;" right="" name="newObjSuffix" default=""/>
             </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="endLine" fullname="Flags::endLine" href="flags.html#endLine" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="endLine() const"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setEndLine" fullname="Flags::setEndLine" href="flags.html#setEndLine" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setEndLine(const QString &amp; newEndLine)">
+                <parameter left="const QString &amp;" right="" name="newEndLine" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="tab" fullname="Flags::tab" href="flags.html#tab" location="flags.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="tab() const"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setTab" fullname="Flags::setTab" href="flags.html#setTab" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setTab(int numberOfSpaces)">
+                <parameter left="int" right="" name="numberOfSpaces" default=""/>
+            </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="operator=" fullname="Flags::operator=" href="flags.html#operator=" location="flags.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="Flags &amp;" signature="operator=(const Flags &amp; flag)">
                 <parameter left="const Flags &amp;" right="" name="flag" default=""/>
             </function>
+        </class>
+        <class access="public" threadsafety="unspecified" status="commendable" name="TemplateLogic" href="templatelogic.html" location="templatelogic.h" bases="" module="">
+            <function access="public" threadsafety="unspecified" status="commendable" name="TemplateLogic" fullname="TemplateLogic::TemplateLogic" href="templatelogic.html#TemplateLogic" location="templatelogic.h" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="TemplateLogic(Flags * flgs)">
+                <parameter left="Flags *" right="" name="flgs" default="0"/>
+            </function>
+            <enum access="public" threadsafety="unspecified" status="commendable" name="FileType" fullname="TemplateLogic::FileType" href="templatelogic.html#FileType-enum" location="templatelogic.h">
+                <value name="Header" value="0"/>
+                <value name="PrivateHeader" value="1"/>
+                <value name="Source" value="2"/>
+            </enum>
+            <function access="public" threadsafety="unspecified" status="commendable" name="readFile" fullname="TemplateLogic::readFile" href="templatelogic.html#readFile" location="templatelogic.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="QString" signature="readFile(QString path)">
+                <parameter left="QString" right="" name="path" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="removeTag" fullname="TemplateLogic::removeTag" href="templatelogic.html#removeTag" location="templatelogic.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="int" signature="removeTag(QString &amp; templateCode, QString tag, int beginIndex)">
+                <parameter left="QString &amp;" right="" name="templateCode" default=""/>
+                <parameter left="QString" right="" name="tag" default=""/>
+                <parameter left="int" right="" name="beginIndex" default="0"/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="mergeHeaders" fullname="TemplateLogic::mergeHeaders" href="templatelogic.html#mergeHeaders" location="templatelogic.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="QString" signature="mergeHeaders(QString headerPath, QString privateHeaderPath)">
+                <parameter left="QString" right="" name="headerPath" default=""/>
+                <parameter left="QString" right="" name="privateHeaderPath" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="stripFile" fullname="TemplateLogic::stripFile" href="templatelogic.html#stripFile" location="templatelogic.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="QString" signature="stripFile(QString fileData, FileType type)">
+                <parameter left="QString" right="" name="fileData" default=""/>
+                <parameter left="FileType" right="" name="type" default="Header"/>
+            </function>
+        </class>
+        <class access="public" threadsafety="unspecified" status="commendable" name="MethodGenerator" href="methodgenerator.html" location="methodgenerator.h" bases="" module="">
+            <function access="public" threadsafety="unspecified" status="commendable" name="MethodGenerator" fullname="MethodGenerator::MethodGenerator" href="methodgenerator.html#MethodGenerator" location="methodgenerator.h" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="MethodGenerator(QMap&lt;QString, QWebMethod *&gt; * mthds, const QDir &amp; wrkDir, Flags * flgs, QObject * parent)">
+                <parameter left="QMap&lt;QString, QWebMethod *&gt; *" right="" name="mthds" default=""/>
+                <parameter left="const QDir &amp;" right="" name="wrkDir" default=""/>
+                <parameter left="Flags *" right="" name="flgs" default=""/>
+                <parameter left="QObject *" right="" name="parent" default="0"/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="errorMessage" fullname="MethodGenerator::errorMessage" href="methodgenerator.html#errorMessage" location="methodgenerator.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="QString" signature="errorMessage()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="createMethods" fullname="MethodGenerator::createMethods" href="methodgenerator.html#createMethods" location="methodgenerator.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="createMethods()"/>
         </class>
         <class access="public" threadsafety="unspecified" status="commendable" name="WsdlConverter" href="wsdlconverter.html" location="wsdlconverter.h" bases="" module="">
             <enum access="public" threadsafety="unspecified" status="commendable" name="ArgumentDescriptionFlag" fullname="WsdlConverter::ArgumentDescriptionFlag" href="wsdlconverter.html#ArgumentDescriptionFlag-enum" location="wsdlconverter.h" typedef="WsdlConverter::ArgumentDescription">
@@ -115,16 +159,6 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="errorEncountered" fullname="CodeGenerator::errorEncountered" href="codegenerator.html#errorEncountered" location="codegenerator.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="errorEncountered(const QString &amp; errMessage)">
                 <parameter left="const QString &amp;" right="" name="errMessage" default=""/>
             </function>
-        </class>
-        <class access="public" threadsafety="unspecified" status="commendable" name="MessageGenerator" href="messagegenerator.html" location="messagegenerator.h" bases="" module="">
-            <function access="public" threadsafety="unspecified" status="commendable" name="MessageGenerator" fullname="MessageGenerator::MessageGenerator" href="messagegenerator.html#MessageGenerator" location="messagegenerator.h" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="MessageGenerator(QMap&lt;QString, QWebServiceMethod *&gt; * mthds, const QDir &amp; wrkDir, Flags * flgs, QObject * parent)">
-                <parameter left="QMap&lt;QString, QWebServiceMethod *&gt; *" right="" name="mthds" default=""/>
-                <parameter left="const QDir &amp;" right="" name="wrkDir" default=""/>
-                <parameter left="Flags *" right="" name="flgs" default=""/>
-                <parameter left="QObject *" right="" name="parent" default="0"/>
-            </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="errorMessage" fullname="MessageGenerator::errorMessage" href="messagegenerator.html#errorMessage" location="messagegenerator.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="QString" signature="errorMessage()"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="createMessages" fullname="MessageGenerator::createMessages" href="messagegenerator.html#createMessages" location="messagegenerator.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="bool" signature="createMessages()"/>
         </class>
     </namespace>
 </INDEX>

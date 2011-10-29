@@ -4,8 +4,8 @@ Part of the initial development is not expressed here. Refer to git logs or ask 
 Remote Features and TODO's list can be found at: http://goo.gl/L1C6X
 
 Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link if needed):
- - QWebService: run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./QWebService/qwebservice.qdocconf
- - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/471/gcc/bin/qdoc3 ./qtWsdlConverter/qtwsdlconverter.qdocconf
+ - QWebService: run from project's root: ~/QtSDK/Desktop/Qt/474/gcc/bin/qdoc3 ./QWebService/qwebservice.qdocconf
+ - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/474/gcc/bin/qdoc3 ./qtwsdlconvert/qtwsdlconvert.qdocconf
 
 Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/wsdl/band_ws.asmx
@@ -26,7 +26,12 @@ Example arguments for converter:
  - parametrized classes in QWebMethod, so that it is properly "Qt" :)
  - optimized QWebService constructors,
  - added tests for QProperties, where applicable,
- - improved QDoc for converter, library, and example app.
+ - improved QDoc for converter, library, and example app,
+ - created a global .pro file, and made the whole project be based on one .pro/subdirs
+   scheme,
+ - adjusted .pro settings so that by default the project compiles as intended,
+ - changed converter's name to lowercase and stripped of "er" at the end. New name
+   is "qtwsdlconvert".
 
 06.10.2011 19:14 CEST:
  - updated converter's help message,

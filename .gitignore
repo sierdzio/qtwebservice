@@ -6,3 +6,4 @@ lib/
 *.pro.user*
 *.kate-swp
 *~
+Makefile

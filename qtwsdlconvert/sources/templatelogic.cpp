@@ -10,9 +10,21 @@
     Generation is based on templates located in ./qtwsdlconverter/templates (for
     subclassed methods) and on real QWebMethod code (for non-subclassed methods).
   */
+/*!
+    \enum TemplateLogic::FileType
+
+    This enum type specifies what type of file is being processed.
+
+    \value Header
+           The file is a header.
+    \value PrivateHeader
+           The file is a private header.
+    \value Source
+           The file is a source file.
+  */
 
 /*!
-    Constructor, takes in the Flags object.
+    Constructor, takes in the Flags object (\a flgs).
   */
 TemplateLogic::TemplateLogic(Flags *flgs) :
     flags(flgs)
@@ -21,7 +33,7 @@ TemplateLogic::TemplateLogic(Flags *flgs) :
 
 /*!
     Reads file contents and puts it into a QString. A crude, but
-    effective way of helping in method creation.
+    effective way of helping in method creation. Needs \a path to operate on.
   */
 QString TemplateLogic::readFile(QString path)
 {
@@ -36,6 +48,10 @@ QString TemplateLogic::readFile(QString path)
 /*!
     Removes a given tag and returns it's begin index,
     which can be used to insert new data.
+
+    Takes in \a templateCode string, which is the text of the file,
+    \a tag, which is the tag to look for, and optionally \a beginIndex, which
+    can be used to optimise the search a bit (by specifying where to start).
   */
 int TemplateLogic::removeTag(QString &templateCode, QString tag, int beginIndex)
 {
@@ -51,6 +67,7 @@ int TemplateLogic::removeTag(QString &templateCode, QString tag, int beginIndex)
 
 /*!
     Merges a private and public header into one file.
+    Both \a headerPath and \a privateHeaderPath are needed.
   */
 QString TemplateLogic::mergeHeaders(QString headerPath, QString privateHeaderPath)
 {
@@ -67,6 +84,8 @@ QString TemplateLogic::mergeHeaders(QString headerPath, QString privateHeaderPat
 
 /*!
     Strips file data from license headers, includes etc.
+    Takes in \a fileData in for of a QString, and \a type (it
+    tells the algorithm what to do with the data).
   */
 QString TemplateLogic::stripFile(QString fileData, FileType type)
 {

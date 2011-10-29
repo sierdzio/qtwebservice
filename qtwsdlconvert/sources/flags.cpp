@@ -338,6 +338,7 @@ QString Flags::endLine() const
 
 /*!
     Sets the end line character to be used.
+    Character can be set using \a newEndLine.
   */
 void Flags::setEndLine(const QString &newEndLine)
 {
@@ -353,7 +354,8 @@ QString Flags::tab() const
 }
 
 /*!
-    Sets the end line character to be used.
+    Sets number of spaces (specified as \a numberOfSpaces),
+    that are to be inserted in code as tabulation characters.
   */
 void Flags::setTab(int numberOfSpaces)
 {

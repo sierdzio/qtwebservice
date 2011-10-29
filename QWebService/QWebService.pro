@@ -4,8 +4,7 @@
 # Tomasz 'sierdzio' Siekierda
 # sierdzio@gmail.com
 #-------------------------------------------------
-
-QT       = core network
+include(../buildInfo.pri)
 
 TARGET   = QWebService
 
@@ -18,14 +17,14 @@ DEFINES  += QWEBSERVICE_LIBRARY
 VERSION  = 0.6.0
 
 DESTDIR  = ../lib
-OBJECTS_DIR = ../build-QWebService
+OBJECTS_DIR = $${BUILD_DIRECTORY}/QWebService
+MOC_DIR = $${BUILD_DIRECTORY}/QWebService
 
 SOURCES  += \
     sources/qwebmethod.cpp \
     sources/qwebservicemethod.cpp \
     sources/qwsdl.cpp \
     sources/qwebservice.cpp \
-
 
 HEADERS  += headers/QWebService_global.h \
     headers/QWebService \
@@ -37,7 +36,6 @@ HEADERS  += headers/QWebService_global.h \
     headers/qwebservicemethod_p.h \
     headers/qwebservice_p.h \
     headers/qwsdl_p.h
-
 
 symbian {
     #Symbian specific definitions

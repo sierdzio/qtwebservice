@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- templatelogic.cpp -->
+  <title>qtwsdlconvert : TemplateLogic Class Reference</title>
+<li>Modules</li>
+<li>TemplateLogic</li>
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<h1 class="title">TemplateLogic Class Reference</h1>
+<!-- $$$TemplateLogic-brief -->
+<p>Used to prepare QWebMethod code for template processing. <a href="#details">More...</a></p>
+<!-- @@@TemplateLogic -->
+<pre class="cpp">    <span class="preprocessor">#include &lt;TemplateLogic&gt;</span></pre><ul>
+<li><a href="templatelogic-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-types"></a>
+<h2>Public Types</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> enum </td><td class="memItemRight bottomAlign"><b><a href="templatelogic.html#FileType-enum">FileType</a></b> { Header, PrivateHeader, Source }</td></tr>
+</table>
+<a name="public-functions"></a>
+<h2>Public Functions</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="templatelogic.html#TemplateLogic">TemplateLogic</a></b> ( Flags * <i>flgs</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="templatelogic.html#mergeHeaders">mergeHeaders</a></b> ( QString <i>headerPath</i>, QString <i>privateHeaderPath</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="templatelogic.html#readFile">readFile</a></b> ( QString <i>path</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="templatelogic.html#removeTag">removeTag</a></b> ( QString &amp; <i>templateCode</i>, QString <i>tag</i>, int <i>beginIndex</i> = 0 )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="templatelogic.html#stripFile">stripFile</a></b> ( QString <i>fileData</i>, FileType <i>type</i> = Header )</td></tr>
+</table>
+<a name="details"></a>
+<!-- $$$TemplateLogic-description -->
+<div class="descr">
+<h2>Detailed Description</h2>
+<p>Used to prepare QWebMethod code for template processing.</p>
+<p>Provides some basic methods used in preparing QWebMethod code, as well as process template tags, etc.</p>
+<p>Generation is based on templates located in ./qtwsdlconverter/templates (for subclassed methods) and on real QWebMethod code (for non-subclassed methods).</p>
+</div>
+<!-- @@@TemplateLogic -->
+<div class="types">
+<h2>Member Type Documentation</h2>
+<!-- $$$FileType$$$Header$$$PrivateHeader$$$Source -->
+<h3 class="fn"><a name="FileType-enum"></a>enum TemplateLogic::<span class="name">FileType</span></h3>
+<p>This enum type specifies what type of file is being processed.</p>
+<table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
+<tr><td class="topAlign"><tt>TemplateLogic::Header</tt></td><td class="topAlign"><tt>0</tt></td><td class="topAlign">The file is a header.</td></tr>
+<tr><td class="topAlign"><tt>TemplateLogic::PrivateHeader</tt></td><td class="topAlign"><tt>1</tt></td><td class="topAlign">The file is a private header.</td></tr>
+<tr><td class="topAlign"><tt>TemplateLogic::Source</tt></td><td class="topAlign"><tt>2</tt></td><td class="topAlign">The file is a source file.</td></tr>
+</table>
+<!-- @@@FileType -->
+</div>
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$TemplateLogic[overload1]$$$TemplateLogicFlags* -->
+<h3 class="fn"><a name="TemplateLogic"></a>TemplateLogic::<span class="name">TemplateLogic</span> ( <span class="type"><a href="flags.html">Flags</a></span> * <i>flgs</i> = 0 )</h3>
+<p>Constructor, takes in the Flags object (<i>flgs</i>).</p>
+<!-- @@@TemplateLogic -->
+<!-- $$$mergeHeaders[overload1]$$$mergeHeadersQStringQString -->
+<h3 class="fn"><a name="mergeHeaders"></a><span class="type">QString</span> TemplateLogic::<span class="name">mergeHeaders</span> ( <span class="type">QString</span> <i>headerPath</i>, <span class="type">QString</span> <i>privateHeaderPath</i> )</h3>
+<p>Merges a private and public header into one file. Both <i>headerPath</i> and <i>privateHeaderPath</i> are needed.</p>
+<!-- @@@mergeHeaders -->
+<!-- $$$readFile[overload1]$$$readFileQString -->
+<h3 class="fn"><a name="readFile"></a><span class="type">QString</span> TemplateLogic::<span class="name">readFile</span> ( <span class="type">QString</span> <i>path</i> )</h3>
+<p>Reads file contents and puts it into a QString. A crude, but effective way of helping in method creation. Needs <i>path</i> to operate on.</p>
+<!-- @@@readFile -->
+<!-- $$$removeTag[overload1]$$$removeTagQString&QStringint -->
+<h3 class="fn"><a name="removeTag"></a><span class="type">int</span> TemplateLogic::<span class="name">removeTag</span> ( <span class="type">QString</span> &amp; <i>templateCode</i>, <span class="type">QString</span> <i>tag</i>, <span class="type">int</span> <i>beginIndex</i> = 0 )</h3>
+<p>Removes a given tag and returns it's begin index, which can be used to insert new data.</p>
+<p>Takes in <i>templateCode</i> string, which is the text of the file, <i>tag</i>, which is the tag to look for, and optionally <i>beginIndex</i>, which can be used to optimise the search a bit (by specifying where to start).</p>
+<!-- @@@removeTag -->
+<!-- $$$stripFile[overload1]$$$stripFileQStringFileType -->
+<h3 class="fn"><a name="stripFile"></a><span class="type">QString</span> TemplateLogic::<span class="name">stripFile</span> ( <span class="type">QString</span> <i>fileData</i>, <span class="type"><a href="templatelogic.html#FileType-enum">FileType</a></span> <i>type</i> = Header )</h3>
+<p>Strips file data from license headers, includes etc. Takes in <i>fileData</i> in for of a QString, and <i>type</i> (it tells the algorithm what to do with the data).</p>
+<!-- @@@stripFile -->
+</div>
+</body>
+</html>
