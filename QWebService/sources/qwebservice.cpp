@@ -21,8 +21,9 @@
     \class QWebService
     \brief Class providing Web Service functionality.
 
-    This class serves as central point for multi-web method uses. You can store
-    all relevant information about a web service in a single class.
+    This class serves as central point for use cases where multiple web methods are needed,
+    that share certain similarities.
+    You can store all relevant information about a web service in a single class.
 
     You can supply a WSDl file, which will be parsed (using QWsdl), and web
     methods will be extracted. You can also specify your own web methods by
@@ -33,7 +34,7 @@
     remote web service (methods(), method()).
 
     Especially useful is the method(), which returns a pointer to a single web
-    method, which  can be used directly to inreract with QWebMethod object.
+    method, which  can be used directly to interact with QWebMethod object.
   */
 
 /*!
@@ -62,7 +63,7 @@
 */
 
 /*!
-    Constructs the object with empty QWsdl and using \a parent (defaults to 0).
+    Constructs the object using \a parent (defaults to 0).
     You can set a WSDL file later using setWsdl(), or add custom web methods
     using addMethod().
 
@@ -118,7 +119,9 @@ QWebService::QWebService(const QString &_hostname, QObject *parent)
 }
 
 /*!
-  \internal
+    \internal
+
+    Internal constuctor needed by private headers implementation.
   */
 QWebService::QWebService(QWebServicePrivate &dd, QObject *parent) :
     QObject(parent), d_ptr(&dd)
@@ -146,7 +149,8 @@ QWebService::~QWebService()
   */
 
 /*!
-    Returns name of the web service.
+    Returns name of the web service, as taken from QWsdl
+    or set by setName().
 
     \sa setName()
   */
@@ -170,7 +174,8 @@ void QWebService::setName(const QString &newWebServiceName)
 }
 
 /*!
-    Returns pointers to QWebMethod objects, useful for invoking web methods.
+    Returns pointers to all QWebMethod objects held in QWebService,
+    useful for invoking web methods.
 
     \sa method()
   */
@@ -181,8 +186,8 @@ QMap<QString, QWebMethod *> *QWebService::methods()
 }
 
 /*!
-    Returns a pointer to a single web method object, sceficied by
-    \a methodName. If now method with that name exists,
+    Returns a pointer to a single web method object, specified by
+    \a methodName. If no method with that name exists,
     a default-constructed value is returned (see QMap::value() documentation
     for details).
 
@@ -353,7 +358,6 @@ void QWebService::setWsdl(QWsdl *newWsdl)
 void QWebService::resetWsdl(QWsdl *newWsdl)
 {
     Q_D(QWebService);
-//    delete wsdl;
 
     if (newWsdl == 0) {
         d->methods->clear();
@@ -362,7 +366,6 @@ void QWebService::resetWsdl(QWsdl *newWsdl)
     } else {
         d->wsdl = newWsdl;
         d->methods->clear();
-//        delete methods;
         d->methods = d->wsdl->methods();
         setName(d->wsdl->webServiceName());
     }
@@ -414,7 +417,6 @@ bool QWebServicePrivate::enterErrorState(const QString &errMessage)
     Q_Q(QWebService);
     errorState = true;
     errorMessage += QString(errMessage + QLatin1String(" "));
-//    qDebug() << errMessage;
     emit q->errorEncountered(errMessage);
     return false;
 }

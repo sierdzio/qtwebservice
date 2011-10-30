@@ -23,8 +23,9 @@
            Currently read-only.
 
     Reads web service data (message names, parameters, return values,
-    ws name etc) from a WSDL file. The file can be on a local filesystem,
-    or a remote one (specified by URL).
+    web service name etc.) from a WSDL file. The file can be located on a local
+    filesystem, or on a remote one (specified by URL). QWsdl automatically detects
+    the nature of this localisation, and downloads the file, if it is not local.
 
     To get started, you have to:
     \list
@@ -36,6 +37,15 @@
            available from numerous getter methods (webServiceName(),
            targetNamespace() etc.)
     \endlist
+
+    Example snippet for that may be:
+    \code
+        QWsdl wsdl("../../../examples/wsdl/band_ws.asmx", this);
+        if (!wsdl.isErrorState()) {
+            QMap<QString, QWebMethod *> *methods = wsdl.methods();
+            QStringList list = wsdl.methodNames();
+        }
+    \endcode
   */
 
 /*!
@@ -100,6 +110,8 @@ QWsdl::QWsdl(const QString &wsdlFile, QObject *parent) :
 
 /*!
   \internal
+
+  COnstructor needed in private header implementation.
   */
 QWsdl::QWsdl(QWsdlPrivate &dd, QObject *parent) :
     QObject(parent), d_ptr(&dd)
@@ -109,7 +121,7 @@ QWsdl::QWsdl(QWsdlPrivate &dd, QObject *parent) :
 }
 
 /*!
-    Destructor - cleans some internal variables.
+    Destructor - cleans some internal variables (private ones).
   */
 QWsdl::~QWsdl()
 {

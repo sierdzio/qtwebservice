@@ -98,23 +98,23 @@
     message<span class="operator">-</span><span class="operator">&gt;</span><a href="qwebmethod.html#setHost">setHost</a>(<span class="string">&quot;http://www.currencyserver.de/webservice/currencyserverwebservice.asmx&quot;</span>);
     message<span class="operator">-</span><span class="operator">&gt;</span>setMessageName(<span class="string">&quot;getProviderList&quot;</span>);
     message<span class="operator">-</span><span class="operator">&gt;</span><a href="qwebmethod.html#setTargetNamespace">setTargetNamespace</a>(<span class="string">&quot;http://www.daenet.de/webservices/CurrencyServer&quot;</span>);
-    message<span class="operator">-</span><span class="operator">&gt;</span>sendMessage();</pre>
+    message<span class="operator">-</span><span class="operator">&gt;</span><a href="qwebmethod.html#invokeMethod">invokeMethod</a>();</pre>
 <p>You then have to wait for replyReady(QVariant) signal, or check for reply using <a href="qwebmethod.html#isReplyReady">isReplyReady</a>() convenience method.</p>
-<p>To send a REST message with (for example) JSON body, pass (QWebMethod::rest | QWebMethod::json) as protocol flag. Additionally, specify HTTP method to be used (POST, GET, PUT, DELETE). When sending a REST message, <i>messageName</i> is used as request URI, and <i>parameters</i> specify additioanl data to be sent in message body.</p>
+<p>To send a REST message with (for example) JSON body, pass (QWebMethod::rest | QWebMethod::json) as protocol flag. Additionally, specify HTTP method to be used (POST, GET, PUT, DELETE). When invoking a REST method, <i>methodName</i> is used as request URI, and <i>parameters</i> specify additioanl data to be sent in message body.</p>
 <p>This class provides asynchronous sendMessage() only. If synchronous operation is needed, you can:</p>
 <ul>
 <li>use <a href="qwebservicemethod.html">QWebServiceMethod</a>, which provides some additional, useful constructors and methods, including a synchronous static sendMessage() method</li>
-<li>use static QWebServiceMethod::sendMessage()</li>
-<li>subclass QWebMethod, and add a static sendMessage() method with a &quot;waiting loop&quot;</li>
+<li>use static <a href="qwebservicemethod.html#invokeMethod">QWebServiceMethod::invokeMethod</a>()</li>
+<li>subclass QWebMethod, and add a static <a href="qwebmethod.html#invokeMethod">invokeMethod</a>() method with a &quot;waiting loop&quot;</li>
 <li>wait for <a href="qwebmethod.html#replyReady">replyReady</a>() signal in a &quot;waiting loop&quot;. You can use <a href="qwebmethod.html#isReplyReady">isReplyReady</a>() for that</li>
 </ul>
 <p>Here's a waiting loop snippet:</p>
 <pre class="cpp">    <span class="type">QWebMethod</span> qsm;
     <span class="operator">.</span><span class="operator">.</span><span class="operator">.</span>
-    qsm<span class="operator">.</span>sendMessage();
+    qsm<span class="operator">.</span><a href="qwebmethod.html#invokeMethod">invokeMethod</a>();
     forever {
-        <span class="keyword">if</span> (qsm<span class="operator">.</span>replyReceived) {
-            <span class="keyword">return</span> qsm<span class="operator">.</span>reply;
+        <span class="keyword">if</span> (qsm<span class="operator">.</span>isReplyReady()) {
+            <span class="keyword">return</span> qsm<span class="operator">.</span>replyRead();
         } <span class="keyword">else</span> {
             qApp<span class="operator">-</span><span class="operator">&gt;</span>processEvents(); <span class="comment">// Ensures that application remains responive</span>
                                    <span class="comment">// to events (prevents freezing).</span>
@@ -125,7 +125,7 @@
 <ul>
 <li>set host Url</li>
 <li>set protocol</li>
-<li>set message name</li>
+<li>set method name</li>
 <li>set target namespace</li>
 <li>connect <a href="qwebmethod.html#replyReady">replyReady</a>() signal to your custom slot (where you can parse the reply and return it in a type of your convenience)</li>
 </ul>
@@ -135,7 +135,7 @@
 <h2>Member Type Documentation</h2>
 <!-- $$$HttpMethod$$$Post$$$Get$$$Put$$$Delete -->
 <h3 class="fn"><a name="HttpMethod-enum"></a>enum QWebMethod::<span class="name">HttpMethod</span></h3>
-<p>Defines HTTP method to use when sending the message. Using more than 1 at the same time is forbidden (will not work).</p>
+<p>Defines HTTP method to use when invoking the method. Using more than 1 at the same time is forbidden (will not work).</p>
 <table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
 <tr><td class="topAlign"><tt>QWebMethod::Post</tt></td><td class="topAlign"><tt>0x1</tt></td><td class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use POST.</td></tr>
 <tr><td class="topAlign"><tt>QWebMethod::Get</tt></td><td class="topAlign"><tt>0x2</tt></td><td class="topAlign"><a href="qwebmethod.html">QWebMethod</a> will use GET.</td></tr>
@@ -227,20 +227,20 @@
 <!-- @@@httpMethodString -->
 <!-- $$$invokeMethod[overload1]$$$invokeMethodconstQByteArray& -->
 <h3 class="fn"><a name="invokeMethod"></a><span class="type">bool</span> QWebMethod::<span class="name">invokeMethod</span> ( const <span class="type">QByteArray</span> &amp; <i>requestData</i> = QByteArray() )</h3>
-<p>Sends the message asynchronously, assuming that all neccessary data was specified earlier. Optionally, a QByteArray (<i>requestData</i>) can be specified - it will override standard data encapsulation (preparation, see prepareRequestData()), and send the byte array without any changes.</p>
+<p>Invokes the method asynchronously, assuming that all neccessary data was specified earlier. Optionally, a QByteArray (<i>requestData</i>) can be specified - it will override standard data encapsulation (preparation, see prepareRequestData()), and send the byte array without any changes.</p>
 <p>If synchronous operation is needed, you can:</p>
 <ul>
-<li>use static QWebServiceMethod::sendMessage()</li>
-<li>subclass <a href="qwebmethod.html">QWebMethod</a>, and add a static sendMessage() method with a &quot;waiting loop&quot;</li>
+<li>use static <a href="qwebservicemethod.html#invokeMethod">QWebServiceMethod::invokeMethod</a>()</li>
+<li>subclass <a href="qwebmethod.html">QWebMethod</a>, and add a static invokeMethod() method with a &quot;waiting loop&quot;</li>
 <li>wait for <a href="qwebmethod.html#replyReady">replyReady</a>() signal in a &quot;waiting loop&quot;</li>
 </ul>
 <p>Here's a waiting loop snippet:</p>
 <pre class="cpp">    <span class="type"><a href="qwebmethod.html">QWebMethod</a></span> qsm;
     <span class="operator">.</span><span class="operator">.</span><span class="operator">.</span>
-    qsm<span class="operator">.</span>sendMessage();
+    qsm<span class="operator">.</span>invokeMethod();
     forever {
-        <span class="keyword">if</span> (qsm<span class="operator">.</span>replyReceived) {
-            <span class="keyword">return</span> qsm<span class="operator">.</span>reply;
+        <span class="keyword">if</span> (qsm<span class="operator">.</span>isReplyReady()) {
+            <span class="keyword">return</span> qsm<span class="operator">.</span>replyRead();
         } <span class="keyword">else</span> {
             <span class="comment">// Ensures that application remains responive to events (prevents freezing).</span>
             qApp<span class="operator">-</span><span class="operator">&gt;</span>processEvents();
@@ -260,7 +260,7 @@
 <!-- @@@isReplyReady -->
 <!-- $$$methodName[overload1]$$$methodName -->
 <h3 class="fn"><a name="methodName"></a><span class="type">QString</span> QWebMethod::<span class="name">methodName</span> () const</h3>
-<p>Returns message's name.</p>
+<p>Returns method's name.</p>
 <p><b>See also </b><a href="qwebmethod.html#setMethodName">setMethodName</a>().</p>
 <!-- @@@methodName -->
 <!-- $$$parameterNames[overload1]$$$parameterNames -->
@@ -348,12 +348,12 @@
 <!-- $$$setHttpMethod$$$setHttpMethodconstQString& -->
 <h3 class="fn"><a name="setHttpMethod-2"></a><span class="type">bool</span> QWebMethod::<span class="name">setHttpMethod</span> ( const <span class="type">QString</span> &amp; <i>newMethod</i> )</h3>
 <p>This is an overloaded function.</p>
-<p>Sets the httpMethod flag (<i>newMethod</i>, using QString representation of HTTP method (post, get, put, or delete)). Setting is NOT case sensitive. Default method is POST.</p>
+<p>Sets the httpMethod flag (<i>newMethod</i>, using QString representation of HTTP method (post, get, put, or delete)). Setting is NOT case sensitive, so you can pass &quot;pOSt&quot;, and it will be recognised as POST method. Default method is POST.</p>
 <p>Returns true if successful.</p>
 <!-- @@@setHttpMethod -->
 <!-- $$$setMethodName[overload1]$$$setMethodNameconstQString& -->
 <h3 class="fn"><a name="setMethodName"></a><span class="type">void</span> QWebMethod::<span class="name">setMethodName</span> ( const <span class="type">QString</span> &amp; <i>newName</i> )</h3>
-<p>Sets message's name to <i>newName</i>.</p>
+<p>Sets method's name to <i>newName</i>.</p>
 <p><b>See also </b><a href="qwebmethod.html#methodName">methodName</a>().</p>
 <!-- @@@setMethodName -->
 <!-- $$$setParameters[overload1]$$$setParametersconstQMap<QString,QVariant>& -->
@@ -379,7 +379,7 @@
 <!-- @@@setReturnValue -->
 <!-- $$$setTargetNamespace[overload1]$$$setTargetNamespaceconstQString& -->
 <h3 class="fn"><a name="setTargetNamespace"></a><span class="type">void</span> QWebMethod::<span class="name">setTargetNamespace</span> ( const <span class="type">QString</span> &amp; <i>tNamespace</i> )</h3>
-<p>Sets message's target namespace (<i>tNamespace</i>), which is needed in SOAP messaging.</p>
+<p>Sets method's target namespace (<i>tNamespace</i>), which is needed in SOAP messaging.</p>
 <p><b>See also </b><a href="qwebmethod.html#targetNamespace">targetNamespace</a>().</p>
 <!-- @@@setTargetNamespace -->
 <!-- $$$setUsername[overload1]$$$setUsernameconstQString& -->

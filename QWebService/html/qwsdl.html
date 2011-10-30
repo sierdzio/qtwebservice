@@ -70,7 +70,7 @@
 <div class="descr">
 <h2>Detailed Description</h2>
 <p>Class for interaction with local and remote WSDL files. Currently read-only.</p>
-<p>Reads web service data (message names, parameters, return values, ws name etc) from a WSDL file. The file can be on a local filesystem, or a remote one (specified by URL).</p>
+<p>Reads web service data (message names, parameters, return values, web service name etc.) from a WSDL file. The file can be located on a local filesystem, or on a remote one (specified by URL). QWsdl automatically detects the nature of this localisation, and downloads the file, if it is not local.</p>
 <p>To get started, you have to:</p>
 <ul>
 <li>construct QWsdl object</li>
@@ -78,6 +78,12 @@
 <li>check for errors using <a href="qwsdl.html#isErrorState">isErrorState</a>(),</li>
 <li>web methods are ready to read using <a href="qwsdl.html#methods">methods</a>(). Other info available from numerous getter methods (<a href="qwsdl.html#webServiceName-prop">webServiceName</a>(), <a href="qwsdl.html#targetNamespace-prop">targetNamespace</a>() etc.)</li>
 </ul>
+<p>Example snippet for that may be:</p>
+<pre class="cpp">    <span class="type">QWsdl</span> wsdl(<span class="string">&quot;../../../examples/wsdl/band_ws.asmx&quot;</span><span class="operator">,</span> <span class="keyword">this</span>);
+    <span class="keyword">if</span> (<span class="operator">!</span>wsdl<span class="operator">.</span>isErrorState()) {
+        <span class="type">QMap</span><span class="operator">&lt;</span><span class="type">QString</span><span class="operator">,</span> <span class="type"><a href="qwebmethod.html">QWebMethod</a></span> <span class="operator">*</span><span class="operator">&gt;</span> <span class="operator">*</span>methods <span class="operator">=</span> wsdl<span class="operator">.</span>methods();
+        <span class="type">QStringList</span> list <span class="operator">=</span> wsdl<span class="operator">.</span>methodNames();
+    }</pre>
 </div>
 <!-- @@@QWsdl -->
 <div class="prop">
@@ -143,7 +149,7 @@
 <!-- @@@QWsdl -->
 <!-- $$$~QWsdl[overload1]$$$~QWsdl -->
 <h3 class="fn"><a name="dtor.QWsdl"></a>QWsdl::<span class="name">~QWsdl</span> ()</h3>
-<p>Destructor - cleans some internal variables.</p>
+<p>Destructor - cleans some internal variables (private ones).</p>
 <!-- @@@~QWsdl -->
 <!-- $$$errorEncountered[overload1]$$$errorEncounteredconstQString& -->
 <h3 class="fn"><a name="errorEncountered"></a><span class="type">void</span> QWsdl::<span class="name">errorEncountered</span> ( const <span class="type">QString</span> &amp; <i>errMessage</i> )<tt> [signal]</tt></h3>

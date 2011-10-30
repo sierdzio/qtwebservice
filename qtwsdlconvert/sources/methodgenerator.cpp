@@ -690,7 +690,7 @@ bool MethodGenerator::createMethodSource(QWebMethod *mtd)
     out << mtdName << ".h\"" << flags->endLine();
     out << flags->endLine();
     out << methodSource;
-    // EOF (method)
+    // EOF (method source)
     // ---------------------------------
 
     file.close();

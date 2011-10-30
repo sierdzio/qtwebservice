@@ -43,7 +43,7 @@
     message->setHost("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx");
     message->setMessageName("getProviderList");
     message->setTargetNamespace("http://www.daenet.de/webservices/CurrencyServer");
-    message->sendMessage();
+    message->invokeMethod();
     \endcode
     You then have to wait for replyReady(QVariant) signal, or check for reply
     using isReplyReady() convenience method.
@@ -51,7 +51,7 @@
     To send a REST message with (for example) JSON body, pass
     (QWebMethod::rest | QWebMethod::json) as protocol flag. Additionally,
     specify HTTP method to be used (POST, GET, PUT, DELETE).
-    When sending a REST message, \a messageName is used as request URI,
+    When invoking a REST method, \a methodName is used as request URI,
     and \a parameters specify additioanl data to be sent in message body.
 
     This class provides asynchronous sendMessage() only.
@@ -60,8 +60,8 @@
         \o use QWebServiceMethod, which provides some additional,
            useful constructors and methods, including a synchronous static
            sendMessage() method
-        \o use static QWebServiceMethod::sendMessage()
-        \o subclass QWebMethod, and add a static sendMessage() method with
+        \o use static QWebServiceMethod::invokeMethod()
+        \o subclass QWebMethod, and add a static invokeMethod() method with
            a "waiting loop"
         \o wait for replyReady() signal in a "waiting loop". You can use isReplyReady()
            for that
@@ -71,10 +71,10 @@
     \code
     QWebMethod qsm;
     ...
-    qsm.sendMessage();
+    qsm.invokeMethod();
     forever {
-        if (qsm.replyReceived) {
-            return qsm.reply;
+        if (qsm.isReplyReady()) {
+            return qsm.replyRead();
         } else {
             qApp->processEvents(); // Ensures that application remains responive
                                    // to events (prevents freezing).
@@ -91,7 +91,7 @@
     \list
         \o set host Url
         \o set protocol
-        \o set message name
+        \o set method name
         \o set target namespace
         \o connect replyReady() signal to your custom slot (where you can
            parse the reply and return it in a type of your convenience)
@@ -125,7 +125,7 @@
 /*!
     \enum QWebMethod::HttpMethod
 
-    Defines HTTP method to use when sending the message. Using more than 1 at
+    Defines HTTP method to use when invoking the method. Using more than 1 at
     the same time is forbidden (will not work).
 
     \value Post
@@ -401,7 +401,7 @@ bool QWebMethod::authenticate(const QUrl &customAuthString)
 }
 
 /*!
-    Returns message's name.
+    Returns method's name.
   */
 QString QWebMethod::methodName() const
 {
@@ -410,7 +410,7 @@ QString QWebMethod::methodName() const
 }
 
 /*!
-    Sets message's name to \a newName.
+    Sets method's name to \a newName.
   */
 void QWebMethod::setMethodName(const QString &newName)
 {
@@ -499,7 +499,7 @@ QString QWebMethod::targetNamespace() const
 }
 
 /*!
-    Sets message's target namespace (\a tNamespace),
+    Sets method's target namespace (\a tNamespace),
     which is needed in SOAP messaging.
 
     \sa targetNamespace()
@@ -628,7 +628,8 @@ void QWebMethod::setHttpMethod(HttpMethod method)
     \overload
 
     Sets the httpMethod flag (\a newMethod, using QString representation
-    of HTTP method (post, get, put, or delete)). Setting is NOT case sensitive.
+    of HTTP method (post, get, put, or delete)). Setting is NOT case sensitive,
+    so you can pass "pOSt", and it will be recognised as POST method.
     Default method is POST.
 
     Returns true if successful.
@@ -652,15 +653,15 @@ bool QWebMethod::setHttpMethod(const QString &newMethod)
 }
 
 /*!
-    Sends the message asynchronously, assuming that all neccessary data was
+    Invokes the method asynchronously, assuming that all neccessary data was
     specified earlier. Optionally, a QByteArray (\a requestData) can be
     specified - it will override standard data encapsulation (preparation,
     see prepareRequestData()), and send the byte array without any changes.
 
     If synchronous operation is needed, you can:
     \list
-        \o use static QWebServiceMethod::sendMessage()
-        \o subclass QWebMethod, and add a static sendMessage() method with
+        \o use static QWebServiceMethod::invokeMethod()
+        \o subclass QWebMethod, and add a static invokeMethod() method with
            a "waiting loop"
         \o wait for replyReady() signal in a "waiting loop"
     \endlist
@@ -669,10 +670,10 @@ bool QWebMethod::setHttpMethod(const QString &newMethod)
     \code
     QWebMethod qsm;
     ...
-    qsm.sendMessage();
+    qsm.invokeMethod();
     forever {
-        if (qsm.replyReceived) {
-            return qsm.reply;
+        if (qsm.isReplyReady()) {
+            return qsm.replyRead();
         } else {
             // Ensures that application remains responive to events (prevents freezing).
             qApp->processEvents();
@@ -802,7 +803,6 @@ QVariant QWebMethod::replyReadParsed()
     QByteArray replyBytes = d->reply;
     QString replyString = d->convertReplyToUtf(replyBytes);
 
-    // This section is SOAP-only and should be fixed for other protocols!
     // It's not done properly, anyway.
     // Should return type specified in replyValue.
     if (d->protocolUsed & Soap || d->protocolUsed & Xml) {
@@ -1020,13 +1020,13 @@ void QWebMethodPrivate::init()
 }
 
 /*!
-    Protected function, invoked by sendMessage(). Modifies QByteArray data,
+    Private function, invoked by invokeMethod(). Modifies QByteArray data,
     so that it is consistent with protocol and HTTP method specification.
     It uses QMap<QString, QVariant> parameters to fill data object's body.
     Can be overriden by creating custom QByteArray and passing it to
     sendMessage().
 
-    \sa sendMessage()
+    \sa invokeMethod()
   */
 void QWebMethodPrivate::prepareRequestData()
 {
@@ -1137,7 +1137,6 @@ bool QWebMethodPrivate::enterErrorState(const QString &errMessage)
     Q_Q(QWebMethod);
     errorState = true;
     errorMessage += QString(errMessage + QLatin1String(" "));
-//    qDebug() << errMessage;
     emit q->errorEncountered(errMessage);
     return false;
 }

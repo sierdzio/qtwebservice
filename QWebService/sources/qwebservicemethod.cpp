@@ -22,8 +22,11 @@
     \brief Extends QWebMethod with some generic constructors and synchronous message sending.
 
     Subclass of QWebMethod, contains some generic methods for sending messages
-    and various additional convenience constructors.
-    Can be used both synchronously (through static sendMessage() method),
+    and various additional convenience constructors. It can save some lines of
+    code, when compared with QWebMethod, at the expense of producing
+    less readable code.
+
+    Can be used both synchronously (through static invokeMethod() method),
     or asynchronously (indicates, when reply is ready by emitting
     a replyReady() signal).
   */
@@ -32,7 +35,7 @@
     Constructs web method object with \a parent.
     Requires specifying other parameters later.
     If you use that constructor, you can probably go on
-    and use the base QWebMethod class.
+    and use the base QWebMethod class instead of this one.
   */
 QWebServiceMethod::QWebServiceMethod(QObject *parent) :
     QWebMethod(*new QWebServiceMethodPrivate, Soap12, Post, parent)
@@ -43,7 +46,9 @@ QWebServiceMethod::QWebServiceMethod(QObject *parent) :
     A constructor that takes in \a protocol information,
     \a httpMethod to use, and \a parent
     to satisfy QObject requirements. All other data has to
-    be set using setter methods.
+    be set later using setter methods.
+
+    \sa setParameters(), invokeMethod()
   */
 QWebServiceMethod::QWebServiceMethod(Protocol protocol, HttpMethod httpMethod,
                                      QObject *parent) :
@@ -52,12 +57,12 @@ QWebServiceMethod::QWebServiceMethod(Protocol protocol, HttpMethod httpMethod,
 }
 
 /*!
-    Constructs the message using \a hostUrl, \a methodName, \a parent,
+    Constructs the message using \a hostUrl (QUrl), \a methodName, \a parent,
     \a protocol (which defaults to soap12),
     and \a method (which defaults to POST).
     Requires params to be specified later.
 
-    \sa setParameters(), setProtocol(), invokeMethod()
+    \sa setParameters(), invokeMethod()
   */
 QWebServiceMethod::QWebServiceMethod(const QUrl &hostUrl, const QString &methodName,
                                      Protocol protocol, HttpMethod method,
@@ -72,12 +77,12 @@ QWebServiceMethod::QWebServiceMethod(const QUrl &hostUrl, const QString &methodN
 }
 
 /*!
-    Constructs the message using \a host, \a methodName, \a parent,
+    Constructs the message using \a host (QString), \a methodName, \a parent,
     \a protocol (which defaults to soap12),
     and \a httpMethod (which defaults to POST).
     Requires params to be specified later.
 
-    \sa setParameters(), setProtocol(), invokeMethod()
+    \sa setParameters(), invokeMethod()
   */
 QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodName,
                                      Protocol protocol, HttpMethod httpMethod,
@@ -100,7 +105,7 @@ QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodN
     manually send the message using sendMessage() (without any arguments,
     or else - if you want to change ones specified here).
 
-    \sa invokeMethod(), setProtocol()
+    \sa invokeMethod()
   */
 QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodName,
                                      const QString &targetNamespace,
@@ -120,6 +125,8 @@ QWebServiceMethod::QWebServiceMethod(const QString &host, const QString &methodN
 
 /*!
     \internal
+
+    Constructor needed for private headers implementation.
   */
 QWebServiceMethod::QWebServiceMethod(QWebServiceMethodPrivate &d,
                                      Protocol protocol, HttpMethod httpMethod,
@@ -131,25 +138,30 @@ QWebServiceMethod::QWebServiceMethod(QWebServiceMethodPrivate &d,
 /*!
     \overload invokeMethod()
 
-    Sends the message asynchronously using parameters specified in \a params.
+    Convenience method - sends the method asynchronously using parameters
+    specified in \a params. With QWebMethod, you would have to specify parameters
+    by setParameters() first, this method can save one line of code.
+    This method returns immediately. When reply is ready, replyReady() signal is
+    being emitted. Presence of the reply can also be checked by isReplyReady()
+    method.
 
     Returns true on success.
   */
 bool QWebServiceMethod::invokeMethod(const QMap<QString, QVariant> &params)
 {
-    setParameters(params);
-    invokeMethod();
-    return true;
+    setParameters(params);    
+    return invokeMethod();
 }
 
 /*!
     \overload invokeMethod()
 
-    STATIC method. Sends the message synchronously, using \a url, \a msgName,
+    Static synchronous method. Sends the message synchronously, using \a url, \a msgName,
     \a tNamespace, \a params and \a parent.
     Protocol can optionally be specified by \a protocol (default is SOAP 1.2),
     as well as HTTP \a method (default is POST).
-    Returns with web service reply.
+
+    Returns with web service reply, once it is received. This is a blocking method.
   */
 QByteArray QWebServiceMethod::invokeMethod(const QUrl &url,
                                           const QString &methodName,

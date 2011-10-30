@@ -69,10 +69,10 @@
 <div class="descr">
 <h2>Detailed Description</h2>
 <p>Class providing Web Service functionality.</p>
-<p>This class serves as central point for multi-web method uses. You can store all relevant information about a web service in a single class.</p>
+<p>This class serves as central point for use cases where multiple web methods are needed, that share certain similarities. You can store all relevant information about a web service in a single class.</p>
 <p>You can supply a WSDl file, which will be parsed (using <a href="qwsdl.html">QWsdl</a>), and web methods will be extracted. You can also specify your own web methods by using <a href="qwebservice.html#addMethod">addMethod</a>().</p>
 <p>You can use QWebService to gather data about web service (getName(), getHost(), getMethodNames() etc.), or use it's web methods to interact with remote web service (<a href="qwebservice.html#methods">methods</a>(), <a href="qwebservice.html#method">method</a>()).</p>
-<p>Especially useful is the <a href="qwebservice.html#method">method</a>(), which returns a pointer to a single web method, which can be used directly to inreract with <a href="qwebmethod.html">QWebMethod</a> object.</p>
+<p>Especially useful is the <a href="qwebservice.html#method">method</a>(), which returns a pointer to a single web method, which can be used directly to interact with <a href="qwebmethod.html">QWebMethod</a> object.</p>
 </div>
 <!-- @@@QWebService -->
 <div class="prop">
@@ -123,7 +123,7 @@
 <h2>Member Function Documentation</h2>
 <!-- $$$QWebService[overload1]$$$QWebServiceQObject* -->
 <h3 class="fn"><a name="QWebService"></a>QWebService::<span class="name">QWebService</span> ( <span class="type">QObject</span> * <i>parent</i> = 0 )</h3>
-<p>Constructs the object with empty <a href="qwsdl.html">QWsdl</a> and using <i>parent</i> (defaults to 0). You can set a WSDL file later using <a href="qwebservice.html#setWsdl">setWsdl</a>(), or add custom web methods using <a href="qwebservice.html#addMethod">addMethod</a>().</p>
+<p>Constructs the object using <i>parent</i> (defaults to 0). You can set a WSDL file later using <a href="qwebservice.html#setWsdl">setWsdl</a>(), or add custom web methods using <a href="qwebservice.html#addMethod">addMethod</a>().</p>
 <p><b>See also </b><a href="qwebservice.html#setWsdl">setWsdl</a>() and <a href="qwebservice.html#addMethod">addMethod</a>().</p>
 <!-- @@@QWebService -->
 <!-- $$$QWebService$$$QWebServiceQWsdl*QObject* -->
@@ -166,7 +166,7 @@
 <!-- @@@isErrorState -->
 <!-- $$$method[overload1]$$$methodconstQString& -->
 <h3 class="fn"><a name="method"></a><span class="type"><a href="qwebmethod.html">QWebMethod</a></span> * QWebService::<span class="name">method</span> ( const <span class="type">QString</span> &amp; <i>methodName</i> )</h3>
-<p>Returns a pointer to a single web method object, sceficied by <i>methodName</i>. If now method with that name exists, a default-constructed value is returned (see QMap::value() documentation for details).</p>
+<p>Returns a pointer to a single web method object, specified by <i>methodName</i>. If no method with that name exists, a default-constructed value is returned (see QMap::value() documentation for details).</p>
 <p><b>See also </b><a href="qwebservice.html#methods">methods</a>().</p>
 <!-- @@@method -->
 <!-- $$$methodParameters[overload1]$$$methodParametersconstQString& -->
@@ -179,7 +179,7 @@
 <!-- @@@methodReturnValue -->
 <!-- $$$methods[overload1]$$$methods -->
 <h3 class="fn"><a name="methods"></a><span class="type">QMap</span>&lt;<span class="type">QString</span>, <span class="type"><a href="qwebmethod.html">QWebMethod</a></span> *&gt; * QWebService::<span class="name">methods</span> ()</h3>
-<p>Returns pointers to <a href="qwebmethod.html">QWebMethod</a> objects, useful for invoking web methods.</p>
+<p>Returns pointers to all <a href="qwebmethod.html">QWebMethod</a> objects held in <a href="qwebservice.html">QWebService</a>, useful for invoking web methods.</p>
 <p><b>See also </b><a href="qwebservice.html#method">method</a>().</p>
 <!-- @@@methods -->
 <!-- $$$parameterNamesTypes[overload1]$$$parameterNamesTypesconstQString& -->

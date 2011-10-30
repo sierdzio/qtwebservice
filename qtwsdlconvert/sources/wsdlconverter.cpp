@@ -88,7 +88,7 @@ WsdlConverter::WsdlConverter(const QStringList &appArguments, QObject *parent) :
 }
 
 /*!
-    Deletes the wsdl pointer.
+    Deletes the wsdl pointer and some other internal variables.
   */
 WsdlConverter::~WsdlConverter()
 {
@@ -431,6 +431,8 @@ bool WsdlConverter::parseArguments(const QStringList &arguments)
 /*!
     \internal
 
+    Displays help messages.
+
     Current implementation is not very nice.
     It simply throws out all the info into successive lines.
     No formatting is used.
@@ -470,7 +472,6 @@ void WsdlConverter::displayHelp()
 /*!
     \internal
 
-    Current implementation is not very nice.
     Shows intro, before convertion commences.
 */
 void WsdlConverter::displayIntro()
@@ -482,10 +483,9 @@ void WsdlConverter::displayIntro()
 }
 
 /*!
-  \internal
+    \internal
 
-  Current implementation is not very nice.
-  Displays outro, after convertion finishes.
+    Displays outro, after convertion finishes.
 */
 void WsdlConverter::displayOutro()
 {

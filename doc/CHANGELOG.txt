@@ -26,7 +26,7 @@ Example arguments for converter:
  - parametrized classes in QWebMethod, so that it is properly "Qt" :)
  - optimized QWebService constructors,
  - added tests for QProperties, where applicable,
- - improved QDoc for converter, library, and example app,
+ - improved QDocs for converter, library, and example app,
  - created a global .pro file, and made the whole project be based on one .pro/subdirs
    scheme,
  - adjusted .pro settings so that by default the project compiles as intended,
