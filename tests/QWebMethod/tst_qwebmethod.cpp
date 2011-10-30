@@ -131,6 +131,12 @@ void TestQWebMethod::qpropertyTest()
     QCOMPARE(method->property("host").toString(), QString(temp));
     QCOMPARE(QUrl(method->property("hostUrl").toString()), QUrl(temp));
 
+    method->setProperty("protocol", QVariant("json"));
+    QCOMPARE(method->property("protocol").toString(), QString("Json"));
+
+    method->setProperty("httpMethod", QVariant("get"));
+    QCOMPARE(method->property("httpMethod").toString(), QString("Get"));
+
     temp = "getProviderList";
     method->setProperty("name", QVariant(temp));
     QCOMPARE(method->property("name").toString(), QString(temp));

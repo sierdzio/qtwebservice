@@ -8,16 +8,25 @@ Rectangle {
     WebMethod {
         id: webMethod
         host: "http://developer.qt.nokia.com/qtapi/1/member/profile"
+        httpMethod: "Get"
+        protocol: "Json"
 
-//        Component.onCompleted: {
-//            webMethod.setHttpMethod("Get");
-//            webMethod.setProtocol("Json");
+//        onReplyReady: {
+//            readMtdReply("a");
 //        }
+
+        Component.onCompleted: {
+            webMethod.authenticate("login", "password");
+            webMethod.replyReady.connect(readMtdReply);
+            console.log("invoking method");
+            webMethod.invokeMethod();
+        }
     }
 
     Text {
+        id: result
         text: webMethod.hostUrl
-        anchors.centerIn: parent
+        anchors.fill: parent
     }
 
     MouseArea {
@@ -25,5 +34,11 @@ Rectangle {
         onClicked: {
             Qt.quit();
         }
+    }
+
+    function readMtdReply(whatever) {
+        var reply = webMethod.replyRead();
+        console.log("reading the reply: " + reply);
+        result.text = reply;
     }
 }

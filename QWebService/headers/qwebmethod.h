@@ -45,8 +45,8 @@ class QWEBSERVICESHARED_EXPORT QWebMethod : public QObject
     Q_PROPERTY(QString name READ methodName WRITE setMethodName NOTIFY nameChanged)
     Q_PROPERTY(QString targetNamespace READ targetNamespace WRITE setTargetNamespace NOTIFY targetNamespaceChanged)
     Q_PROPERTY(QStringList parameterNames READ parameterNames NOTIFY parameterNamesChanged)
-    Q_PROPERTY(QString protocol READ protocol WRITE setProtocol NOTIFY protocolChanged)
-    Q_PROPERTY(QString httpMethod READ httpMethod WRITE setHttpMethod NOTIFY httpMethodChanged)
+    Q_PROPERTY(QString protocol READ protocolString WRITE setProtocol NOTIFY protocolChanged)
+    Q_PROPERTY(QString httpMethod READ httpMethodString WRITE setHttpMethod NOTIFY httpMethodChanged)
 
 public:
     enum Protocol
@@ -87,7 +87,7 @@ public:
     void setUsername(const QString &newUsername);
     void setPassword(const QString &newPassword);
     void setCredentials(const QString &newUsername, const QString &newPassword);
-    bool authenticate(const QString &newUsername = QString(),
+    Q_INVOKABLE bool authenticate(const QString &newUsername = QString(),
                       const QString &newPassword = QString());
     bool authenticate(const QUrl &customAuthString);
 
@@ -96,7 +96,7 @@ public:
 
     QStringList parameterNames() const;
     QMap<QString, QVariant> parameterNamesTypes() const;
-    void setParameters(const QMap<QString, QVariant> &params);
+    Q_INVOKABLE void setParameters(const QMap<QString, QVariant> &params);
 
     QStringList returnValueName() const;
     QMap<QString, QVariant> returnValueNameType() const;
@@ -115,10 +115,10 @@ public:
     void setHttpMethod(HttpMethod method);
     bool setHttpMethod(const QString &newMethod);
 
-    bool invokeMethod(const QByteArray &requestData = QByteArray());
+    Q_INVOKABLE bool invokeMethod(const QByteArray &requestData = QByteArray());
     QVariant replyReadParsed();
     QByteArray replyReadRaw();
-    QString replyRead();
+    Q_INVOKABLE QString replyRead();
 
     QString errorInfo() const;
     bool isErrorState() const;

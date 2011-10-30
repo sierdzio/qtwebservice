@@ -8,9 +8,10 @@ OBJECTS_DIR = $${EXAMPLES_DIRECTORY}/QtDeveloperNetworkQmlExample
 MOC_DIR = $${EXAMPLES_DIRECTORY}/QtDeveloperNetworkQmlExample
 
 # Add more folders to ship with the application, here
-folder_01.source = qml/QtDeveloperNetworkQmlExample
-#folder_01.target = ../../build/examples/QtDeveloperNetworkQmlExample/qml
-DEPLOYMENTFOLDERS = folder_01
+#folder_01.source = $${ROOT_DIRECTORY}/examples/QtDeveloperNetworkQmlExample/qml/QtDeveloperNetworkQmlExample
+#folder_01.target = $${EXAMPLES_DIRECTORY}/QtDeveloperNetworkQmlExample/qml
+#DEPLOYMENTFOLDERS = folder_01
+OTHER_FILES = qml/QtDeveloperNetworkQmlExample/main.qml
 # Currently, QML FILES HAVE TO BE COPIED BY HAND! I know it sucks, but
 # I have not found a way to do it automatically, yet.
 
