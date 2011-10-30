@@ -5,8 +5,8 @@ CONFIG += qtestlib
 
 include(../../libraryIncludes.pri)
 
-DESTDIR = $${BUILD_DIRECTORY}/tests/QWsdl
-OBJECTS_DIR = $${BUILD_DIRECTORY}/tests/QWsdl
-MOC_DIR = $${BUILD_DIRECTORY}/tests/QWsdl
+DESTDIR = $${TESTS_DIRECTORY}/QWsdl
+OBJECTS_DIR = $${TESTS_DIRECTORY}/QWsdl
+MOC_DIR = $${TESTS_DIRECTORY}/QWsdl
 
 SOURCES += tst_qwsdl.cpp

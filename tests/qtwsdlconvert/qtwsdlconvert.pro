@@ -5,9 +5,9 @@ CONFIG += qtestlib
 
 include(../../libraryIncludes.pri)
 
-DESTDIR = $${BUILD_DIRECTORY}/tests/qtwsdlconvert
-OBJECTS_DIR = $${BUILD_DIRECTORY}/tests/qtwsdlconvert
-MOC_DIR = $${BUILD_DIRECTORY}/tests/qtwsdlconvert
+DESTDIR = $${TESTS_DIRECTORY}/qtwsdlconvert
+OBJECTS_DIR = $${TESTS_DIRECTORY}/qtwsdlconvert
+MOC_DIR = $${TESTS_DIRECTORY}/qtwsdlconvert
 
 SOURCES += tst_qtwsdlconvert.cpp \
     ../../qtwsdlconvert/sources/flags.cpp \

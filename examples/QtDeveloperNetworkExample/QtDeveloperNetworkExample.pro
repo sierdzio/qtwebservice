@@ -12,9 +12,9 @@ TEMPLATE = app
 
 include(../../libraryIncludes.pri)
 
-DESTDIR = $${BUILD_DIRECTORY}/QtDeveloperNetworkExample
-OBJECTS_DIR = $${BUILD_DIRECTORY}/QtDeveloperNetworkExample
-MOC_DIR = $${BUILD_DIRECTORY}/QtDeveloperNetworkExample
+DESTDIR = $${EXAMPLES_DIRECTORY}/QtDeveloperNetworkExample
+OBJECTS_DIR = $${EXAMPLES_DIRECTORY}/QtDeveloperNetworkExample
+MOC_DIR = $${EXAMPLES_DIRECTORY}/QtDeveloperNetworkExample
 
 SOURCES += main.cpp\
         qdnmain.cpp

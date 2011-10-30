@@ -5,8 +5,8 @@ CONFIG += qtestlib
 
 include(../../libraryIncludes.pri)
 
-DESTDIR = $${BUILD_DIRECTORY}/tests/QWebMethod
-OBJECTS_DIR = $${BUILD_DIRECTORY}/tests/QWebMethod
-MOC_DIR = $${BUILD_DIRECTORY}/tests/QWebMethod
+DESTDIR = $${TESTS_DIRECTORY}/QWebMethod
+OBJECTS_DIR = $${TESTS_DIRECTORY}/QWebMethod
+MOC_DIR = $${TESTS_DIRECTORY}/QWebMethod
 
 SOURCES += tst_qwebmethod.cpp

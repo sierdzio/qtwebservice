@@ -8,6 +8,6 @@ MOC_DIR = $${BUILD_DIRECTORY}
 
 SUBDIRS += \
     QWebService \
-    tests \
     qtwsdlconvert \
-    examples/QtDeveloperNetworkExample
+    tests \
+    examples

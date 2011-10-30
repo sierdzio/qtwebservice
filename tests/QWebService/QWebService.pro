@@ -5,8 +5,8 @@ CONFIG += qtestlib
 
 include(../../libraryIncludes.pri)
 
-DESTDIR = $${BUILD_DIRECTORY}/tests/QWebService
-OBJECTS_DIR = $${BUILD_DIRECTORY}/tests/QWebService
-MOC_DIR = $${BUILD_DIRECTORY}/tests/QWebService
+DESTDIR = $${TESTS_DIRECTORY}/QWebService
+OBJECTS_DIR = $${TESTS_DIRECTORY}/QWebService
+MOC_DIR = $${TESTS_DIRECTORY}/QWebService
 
 SOURCES += tst_qwebservice.cpp
