@@ -31,7 +31,10 @@ Example arguments for converter:
    scheme,
  - adjusted .pro settings so that by default the project compiles as intended,
  - changed converter's name to lowercase and stripped of "er" at the end. New name
-   is "qtwsdlconvert".
+   is "qtwsdlconvert",
+ - made QWebService more QML-friendly,
+ - added QtDeveloperNetworkQmlExample application,
+ - marked v0.6.0.
 
 06.10.2011 19:14 CEST:
  - updated converter's help message,

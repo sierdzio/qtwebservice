@@ -40,11 +40,13 @@ class QWEBSERVICESHARED_EXPORT QWebMethod : public QObject
     Q_FLAGS(Protocols)
     Q_ENUMS(HttpMethod)
 
-    Q_PROPERTY(QString host READ host WRITE setHost)
-    Q_PROPERTY(QUrl hostUrl READ hostUrl WRITE setHost)
-    Q_PROPERTY(QString name READ methodName WRITE setMethodName)
-    Q_PROPERTY(QString targetNamespace READ targetNamespace WRITE setTargetNamespace)
-    Q_PROPERTY(QStringList parameterNames READ parameterNames)
+    Q_PROPERTY(QString host READ host WRITE setHost NOTIFY hostChanged)
+    Q_PROPERTY(QUrl hostUrl READ hostUrl WRITE setHost NOTIFY hostUrlChanged)
+    Q_PROPERTY(QString name READ methodName WRITE setMethodName NOTIFY nameChanged)
+    Q_PROPERTY(QString targetNamespace READ targetNamespace WRITE setTargetNamespace NOTIFY targetNamespaceChanged)
+    Q_PROPERTY(QStringList parameterNames READ parameterNames NOTIFY parameterNamesChanged)
+    Q_PROPERTY(QString protocol READ protocol WRITE setProtocol NOTIFY protocolChanged)
+    Q_PROPERTY(QString httpMethod READ httpMethod WRITE setHttpMethod NOTIFY httpMethodChanged)
 
 public:
     enum Protocol
@@ -105,7 +107,8 @@ public:
 
     Protocol protocol() const;
     QString protocolString(bool includeRest = false) const;
-    void setProtocol(Protocol protocol);
+    bool setProtocol(Protocol protocol);
+    bool setProtocol(QString protocolString);
 
     HttpMethod httpMethod() const;
     QString httpMethodString() const;
@@ -124,6 +127,15 @@ public:
 signals:
     void replyReady(const QByteArray &rply);
     void errorEncountered(const QString &errMessage);
+
+    // For QObject properties:
+    void hostChanged();
+    void hostUrlChanged();
+    void nameChanged();
+    void targetNamespaceChanged();
+    void parameterNamesChanged();
+    void protocolChanged();
+    void httpMethodChanged();
 
 protected slots:
     void replyFinished(QNetworkReply *reply);

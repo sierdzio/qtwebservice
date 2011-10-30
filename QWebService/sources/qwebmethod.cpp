@@ -240,6 +240,49 @@ QWebMethod::~QWebMethod()
   */
 
 /*!
+    \fn QWebMethod::hostChanged()
+
+    Signal invoked when host value is changed.
+  */
+
+/*!
+    \fn QWebMethod::hostUrlChanged()
+
+    Signal invoked when hostUrl value is changed.
+  */
+
+/*!
+    \fn QWebMethod::nameChanged()
+
+    Signal invoked when method name is changed.
+  */
+
+/*!
+    \fn QWebMethod::targetNamespaceChanged()
+
+    Signal invoked when targetNamespace value is changed.
+  */
+
+/*!
+    \fn QWebMethod::parameterNamesChanged()
+
+    Signal invoked when parameters are changed.
+  */
+
+/*!
+    \fn QWebMethod::protocolChanged()
+
+    Signal invoked when protocol value is changed.
+  */
+
+/*!
+    \fn QWebMethod::httpMethodChanged()
+
+    Signal invoked when httpMethod value is changed.
+  */
+
+
+/*!
     Returns host's URL (in QString). If you want a QUrl, call getHostUrl(),
     or QUrl(QWebMethod::getHost());
 
@@ -271,6 +314,7 @@ void QWebMethod::setHost(const QString &newHost)
 {
     Q_D(QWebMethod);
     d->m_hostUrl.setPath(newHost);
+    emit hostChanged();
 }
 
 /*!
@@ -283,6 +327,7 @@ void QWebMethod::setHost(const QUrl &newHost)
 {
     Q_D(QWebMethod);
     d->m_hostUrl = newHost;
+    emit hostUrlChanged();
 }
 
 /*!
@@ -416,6 +461,7 @@ void QWebMethod::setMethodName(const QString &newName)
 {
     Q_D(QWebMethod);
     d->m_methodName = newName;
+    emit nameChanged();
 }
 
 /*!
@@ -450,6 +496,7 @@ void QWebMethod::setParameters(const QMap<QString, QVariant> &params)
 {
     Q_D(QWebMethod);
     d->parameters = params;
+    emit parameterNamesChanged();
 }
 
 /*!
@@ -508,6 +555,7 @@ void QWebMethod::setTargetNamespace(const QString &tNamespace)
 {
     Q_D(QWebMethod);
     d->m_targetNamespace = tNamespace;
+    emit targetNamespaceChanged();
 }
 
 /*!
@@ -554,13 +602,15 @@ QString QWebMethod::protocolString(bool includeRest) const
     of QWebMethod::Protocol). This determines the protocol used later,
     when sending request. Defaults to SOAP1.2.
 
+    Returns true if allowed combination was specified.
+
     WARNING:
     This method also checks for disallowed combinations. If such combination
     is encountered, it discards the set protocol, and sets SOAP 1.2.
     An example of dissalowed combination is setting JSON and SOAP
     simultaneously.
   */
-void QWebMethod::setProtocol(Protocol prot)
+bool QWebMethod::setProtocol(Protocol prot)
 {
     Q_D(QWebMethod);
     // Prevent incompatibile flags from being set simultaneously:
@@ -575,10 +625,62 @@ void QWebMethod::setProtocol(Protocol prot)
             d->protocolUsed = Soap12;
         else
             d->protocolUsed = prot;
+
+        emit protocolChanged();
+        return true;
     } else {
-        d->enterErrorState(QLatin1String("Wrong protocol is set. You have "
-                                            "combined exclusive flags."));
+//        d->enterErrorState(QLatin1String("Wrong protocol is set. You have "
+//                                            "combined exclusive flags."));
+        d->protocolUsed = Soap12;
+        emit protocolChanged();
+        return false;
     }
+}
+
+/*!
+    \overload
+
+    Sets the protocol flag by parsing the given string, and passing it to setProtocol()
+    as a QWebMethod flag. This determines the protocol used later,
+    when sending request. Defaults to SOAP1.2.
+
+    Returns true if allowed combination was specified.
+
+    WARNING:
+    This method also checks for disallowed combinations. If such combination
+    is encountered, it discards the set protocol, and sets SOAP 1.2.
+    An example of dissalowed combination is setting JSON and SOAP
+    simultaneously.
+  */
+bool QWebMethod::setProtocol(QString protocolString)
+{
+    QString protocol = protocolString.toLower();
+    QStringList protocolList;
+    Protocol result = Soap;// = 0;
+
+    // For 2 protocol setup.
+    if (protocol.contains(QLatin1Char(',')))
+        protocolList = protocol.split(QLatin1Char(','));
+    else
+        protocolList.append(protocol);
+
+    if (protocolList.contains(QLatin1String("http"), Qt::CaseInsensitive))
+        result = Http;
+    else if (protocolList.contains(QLatin1String("soap10"), Qt::CaseInsensitive))
+        result = Soap10;
+    else if (protocolList.contains(QLatin1String("soap12"), Qt::CaseInsensitive))
+        result = Soap12;
+    else if (protocolList.contains(QLatin1String("soap"), Qt::CaseInsensitive))
+        result = Soap;
+    else if (protocolList.contains(QLatin1String("xml"), Qt::CaseInsensitive))
+        result = Xml;
+    else if (protocolList.contains(QLatin1String("json"), Qt::CaseInsensitive))
+        result = Json;
+
+    if (protocolList.contains(QLatin1String("rest"), Qt::CaseInsensitive))
+        return (Rest | result);
+
+    return setProtocol(result);
 }
 
 /*!
@@ -622,6 +724,7 @@ void QWebMethod::setHttpMethod(HttpMethod method)
 {
     Q_D(QWebMethod);
     d->httpMethodUsed = method;
+    emit httpMethodChanged();
 }
 
 /*!
@@ -649,6 +752,7 @@ bool QWebMethod::setHttpMethod(const QString &newMethod)
     else
         return false;
 
+    emit httpMethodChanged();
     return true;
 }
 
