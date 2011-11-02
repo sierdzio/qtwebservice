@@ -171,6 +171,7 @@ void QWebService::setName(const QString &newWebServiceName)
 {
     Q_D(QWebService);
     d->webServiceName = newWebServiceName;
+    emit nameChanged();
 }
 
 /*!
@@ -259,6 +260,7 @@ void QWebService::addMethod(QWebMethod *newMethod)
 {
     Q_D(QWebService);
     d->methods->insert(newMethod->methodName(), newMethod);
+    emit methodNamesChanged();
 }
 
 /*!
@@ -273,8 +275,8 @@ void QWebService::addMethod(QWebMethod *newMethod)
 void QWebService::addMethod(const QString &methodName, QWebMethod *newMethod)
 {
     Q_D(QWebService);
-//    newMethod->setMessageName(methodName);
     d->methods->insert(methodName, newMethod);
+    emit methodNamesChanged();
 }
 
 /*!
@@ -288,6 +290,7 @@ void QWebService::removeMethod(const QString &methodName)
     Q_D(QWebService);
     delete d->methods->value(methodName);
     d->methods->remove(methodName);
+    emit methodNamesChanged();
 }
 
 /*!
@@ -317,6 +320,7 @@ void QWebService::setHost(const QString &hostname)
     d->m_hostUrl.setUrl(hostname);
     resetWsdl(new QWsdl(hostname, this));
     d->init();
+    emit hostChanged();
 }
 
 /*!
@@ -330,6 +334,7 @@ void QWebService::setHost(const QUrl &hostUrl)
     d->m_hostUrl = hostUrl;
     resetWsdl(new QWsdl(hostUrl.host(), this));
     d->init();
+    emit hostUrlChanged();
 }
 
 /*!

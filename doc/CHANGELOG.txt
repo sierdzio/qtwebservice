@@ -34,6 +34,9 @@ Example arguments for converter:
    is "qtwsdlconvert",
  - made QWebService more QML-friendly,
  - added QtDeveloperNetworkQmlExample application,
+ - added Q_PROPERTY notify signals to properties,
+ - added Q_INVOKABLE to some methods in QWebService library, so that is is
+   easier to use in QML and meta-object system,
  - marked v0.6.0.
 
 06.10.2011 19:14 CEST:

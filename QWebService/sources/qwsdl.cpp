@@ -106,6 +106,7 @@ QWsdl::QWsdl(const QString &wsdlFile, QObject *parent) :
     d->m_wsdlFilePath = wsdlFile;
     d->init();
     d->parse();
+    emit wsdlFileChanged();
 }
 
 /*!
@@ -182,6 +183,7 @@ void QWsdl::resetWsdl(const QString &newWsdl)
     d->xmlReader.clear();
 
     d->parse();
+    emit wsdlFileChanged();
 }
 
 /*!

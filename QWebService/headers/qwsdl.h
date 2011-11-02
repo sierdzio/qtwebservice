@@ -33,11 +33,11 @@ class QWEBSERVICESHARED_EXPORT QWsdl : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString webServiceName READ webServiceName)
-    Q_PROPERTY(QString host READ host)
-    Q_PROPERTY(QUrl hostUrl READ hostUrl)
-    Q_PROPERTY(QString targetNamespace READ targetNamespace)
-    Q_PROPERTY(QString wsdlFile READ wsdlFile WRITE setWsdlFile)
+    Q_PROPERTY(QString webServiceName READ webServiceName NOTIFY wsdlFileChanged)
+    Q_PROPERTY(QString host READ host NOTIFY wsdlFileChanged)
+    Q_PROPERTY(QUrl hostUrl READ hostUrl NOTIFY wsdlFileChanged)
+    Q_PROPERTY(QString targetNamespace READ targetNamespace NOTIFY wsdlFileChanged)
+    Q_PROPERTY(QString wsdlFile READ wsdlFile WRITE setWsdlFile NOTIFY wsdlFileChanged)
 
 public:
     explicit QWsdl(QObject *parent = 0);
@@ -62,6 +62,13 @@ public:
 
 signals:
     void errorEncountered(const QString &errMessage);
+
+    // For QObject properties:
+//    void hostChanged();
+//    void hostUrlChanged();
+//    void webServiceNameChanged();
+//    void targetNamespaceChanged();
+    void wsdlFileChanged();
 
 protected slots:
     void fileReplyFinished(QNetworkReply *rply);

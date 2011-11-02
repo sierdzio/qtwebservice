@@ -29,10 +29,10 @@ class QWEBSERVICESHARED_EXPORT QWebService : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString name READ name WRITE setName)
-    Q_PROPERTY(QString host READ host WRITE setHost)
-    Q_PROPERTY(QUrl hostUrl READ hostUrl WRITE setHost)
-    Q_PROPERTY(QStringList methodNames READ methodNames)
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(QString host READ host WRITE setHost NOTIFY hostChanged)
+    Q_PROPERTY(QUrl hostUrl READ hostUrl WRITE setHost NOTIFY hostUrlChanged)
+    Q_PROPERTY(QStringList methodNames READ methodNames NOTIFY methodNamesChanged)
 
 public:
     QWebService(QObject *parent = 0);
@@ -68,6 +68,12 @@ public:
 
 signals:
     void errorEncountered(const QString &errMessage);
+
+    // For QObject properties:
+    void hostChanged();
+    void hostUrlChanged();
+    void nameChanged();
+    void methodNamesChanged();
 
 protected:
     QWebService(QWebServicePrivate &d, QObject *parent = 0);
