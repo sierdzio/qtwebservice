@@ -4,30 +4,30 @@
 # include compat.qdocconf.
 
 #
-# To run from project's root: ~/QtSDK/Desktop/Qt/474/gcc/bin/qdoc3 ./qtwsdlconvert.qdocconf
+# To run from project's root: ~/QtSDK/Desktop/Qt/474/gcc/bin/qdoc3 ./QtWebService.qdocconf
 #
 
 #include(compat.qdocconf)
 
-project = qtwsdlconvert
-description = an app for converting WSDL files into Qt classes
+project = QtWebService
+description = A toolkit providing Qt with Web Service functionality
 
 # The outputdir variable specifies the directory
 # where QDoc will put the generated documentation.
 
-outputdir   = ./html
+outputdir   = ./doc/html
 
 # The headerdirs variable specifies the directories
 # containing the header files associated
 # with the .cpp source files used in the documentation.
 
-headerdirs  = ./headers
+headerdirs  = ./QWebService/headers ./qtwsdlconvert/headers
 
 # The sourcedirs variable specifies the
 # directories containing the .cpp or .qdoc
 # files used in the documentation.
 
-sourcedirs  = ./sources
+sourcedirs  = ./QWebService/sources ./qtwsdlconvert/sources
 
 # The exampledirs variable specifies the directories containing
 # the source code of the example files.

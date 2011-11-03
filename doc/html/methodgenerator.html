@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- methodgenerator.cpp -->
-  <title>qtwsdlconvert : MethodGenerator Class Reference</title>
+  <title>QtWebService : MethodGenerator Class Reference</title>
 <li>Modules</li>
 <li>MethodGenerator</li>
 <div class="toc">
@@ -33,19 +33,19 @@
 <div class="descr">
 <h2>Detailed Description</h2>
 <p>Creates code for web methods.</p>
-<p>Creates methods (both headers and sources) by generating the entire code or subclassing QWebServiceMethod (depending on whether --subclass flag is set).</p>
-<p>Generation is based on templates located in ./qtwsdlconverter/templates (for subclassed methods) and on real QWebMethod code (for non-subclassed methods).</p>
+<p>Creates methods (both headers and sources) by generating the entire code or subclassing <a href="qwebservicemethod.html">QWebServiceMethod</a> (depending on whether --subclass flag is set).</p>
+<p>Generation is based on templates located in ./qtwsdlconverter/templates (for subclassed methods) and on real <a href="qwebmethod.html">QWebMethod</a> code (for non-subclassed methods).</p>
 </div>
 <!-- @@@MethodGenerator -->
 <div class="func">
 <h2>Member Function Documentation</h2>
 <!-- $$$MethodGenerator[overload1]$$$MethodGeneratorQMap<QString,QWebMethod*>*constQDir&Flags*QObject* -->
-<h3 class="fn"><a name="MethodGenerator"></a>MethodGenerator::<span class="name">MethodGenerator</span> ( <span class="type">QMap</span>&lt;<span class="type">QString</span>, <span class="type">QWebMethod</span> *&gt; * <i>mthds</i>, const <span class="type">QDir</span> &amp; <i>wrkDir</i>, <span class="type"><a href="flags.html">Flags</a></span> * <i>flgs</i>, <span class="type">QObject</span> * <i>parent</i> = 0 )</h3>
+<h3 class="fn"><a name="MethodGenerator"></a>MethodGenerator::<span class="name">MethodGenerator</span> ( <span class="type">QMap</span>&lt;<span class="type">QString</span>, <span class="type"><a href="qwebmethod.html">QWebMethod</a></span> *&gt; * <i>mthds</i>, const <span class="type">QDir</span> &amp; <i>wrkDir</i>, <span class="type"><a href="flags.html">Flags</a></span> * <i>flgs</i>, <span class="type">QObject</span> * <i>parent</i> = 0 )</h3>
 <p>Constructs QObject using <i>parent</i>, initialises <a href="methodgenerator.html">MethodGenerator</a> with methods (<i>mthds</i>), working directory (<i>wrkDir</i>), and flags (<i>flgs</i>).</p>
 <!-- @@@MethodGenerator -->
 <!-- $$$createMethods[overload1]$$$createMethods -->
 <h3 class="fn"><a name="createMethods"></a><span class="type">bool</span> MethodGenerator::<span class="name">createMethods</span> ()</h3>
-<p>Creates web methods (both headers and sources) by generating the entire code or subclassing QWebServiceMethod (depending on whether --subclass flag is set).</p>
+<p>Creates web methods (both headers and sources) by generating the entire code or subclassing <a href="qwebservicemethod.html">QWebServiceMethod</a> (depending on whether --subclass flag is set).</p>
 <p>Returns true if successful.</p>
 <!-- @@@createMethods -->
 <!-- $$$errorMessage[overload1]$$$errorMessage -->

@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- qwebservice.cpp -->
-  <title>QWebService : QWebService Class Reference</title>
+  <title>QtWebService : QWebService Class Reference</title>
 <li>Modules</li>
 <li>QWebService</li>
 <div class="toc">
@@ -63,6 +63,10 @@
 <h2>Signals</h2>
 <table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#errorEncountered">errorEncountered</a></b> ( const QString &amp; <i>errMessage</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#hostChanged">hostChanged</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#hostUrlChanged">hostUrlChanged</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#methodNamesChanged">methodNamesChanged</a></b> ()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwebservice.html#nameChanged">nameChanged</a></b> ()</td></tr>
 </table>
 <a name="details"></a>
 <!-- $$$QWebService-description -->
@@ -77,7 +81,7 @@
 <!-- @@@QWebService -->
 <div class="prop">
 <h2>Property Documentation</h2>
-<!-- $$$host-prop$$$host$$$setHostconstQString&$$$setHostconstQUrl& -->
+<!-- $$$host-prop$$$host$$$setHostconstQString&$$$setHostconstQUrl&$$$hostChanged -->
 <h3 class="fn"><a name="host-prop"></a><span class="name">host</span> : <span class="type">QString</span></h3>
 <p>This property holds web service host Url as QString.</p>
 <p>This property's default is empty string.</p>
@@ -87,8 +91,12 @@
 <tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="qwebservice.html#hostUrl-prop">setHost</a></b></span> ( const QString &amp; <i>hostname</i> )</td></tr>
 <tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="qwebservice.html#hostUrl-prop">setHost</a></b></span> ( const QUrl &amp; <i>hostUrl</i> )</td></tr>
 </table>
+<p><b>Notifier signal:</b></p>
+<table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="qwebservice.html#hostChanged">hostChanged</a></b></span> ()</td></tr>
+</table>
 <!-- @@@host -->
-<!-- $$$hostUrl-prop$$$hostUrl$$$setHostconstQString&$$$setHostconstQUrl& -->
+<!-- $$$hostUrl-prop$$$hostUrl$$$setHostconstQString&$$$setHostconstQUrl&$$$hostUrlChanged -->
 <h3 class="fn"><a name="hostUrl-prop"></a><span class="name">hostUrl</span> : <span class="type">QUrl</span></h3>
 <p>This property holds web service url as QUrl.</p>
 <p>This property's default is empty QUrl.</p>
@@ -98,8 +106,12 @@
 <tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setHost</b></span> ( const QString &amp; <i>hostname</i> )</td></tr>
 <tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setHost</b></span> ( const QUrl &amp; <i>hostUrl</i> )</td></tr>
 </table>
+<p><b>Notifier signal:</b></p>
+<table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="qwebservice.html#hostUrlChanged">hostUrlChanged</a></b></span> ()</td></tr>
+</table>
 <!-- @@@hostUrl -->
-<!-- $$$methodNames-prop$$$methodNames -->
+<!-- $$$methodNames-prop$$$methodNames$$$methodNamesChanged -->
 <h3 class="fn"><a name="methodNames-prop"></a><span class="name">methodNames</span> : const <span class="type">QStringList</span></h3>
 <p>This property holds names of methods available in this web service.</p>
 <p>This property's default is empty QStringList.</p>
@@ -107,8 +119,12 @@
 <table class="alignedsummary">
 <tr><td class="memItemLeft topAlign rightAlign"> QStringList </td><td class="memItemRight bottomAlign"><span class="name"><b>methodNames</b></span> () const</td></tr>
 </table>
+<p><b>Notifier signal:</b></p>
+<table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="qwebservice.html#methodNamesChanged">methodNamesChanged</a></b></span> ()</td></tr>
+</table>
 <!-- @@@methodNames -->
-<!-- $$$name-prop$$$name$$$setNameconstQString& -->
+<!-- $$$name-prop$$$name$$$setNameconstQString&$$$nameChanged -->
 <h3 class="fn"><a name="name-prop"></a><span class="name">name</span> : <span class="type">QString</span></h3>
 <p>This property holds web service name.</p>
 <p>This property's default is empty string.</p>
@@ -116,6 +132,10 @@
 <table class="alignedsummary">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>name</b></span> () const</td></tr>
 <tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setName</b></span> ( const QString &amp; <i>newWebServiceName</i> = QString() )</td></tr>
+</table>
+<p><b>Notifier signal:</b></p>
+<table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="qwebservice.html#nameChanged">nameChanged</a></b></span> ()</td></tr>
 </table>
 <!-- @@@name -->
 </div>
@@ -153,13 +173,19 @@
 <!-- @@@addMethod -->
 <!-- $$$errorEncountered[overload1]$$$errorEncounteredconstQString& -->
 <h3 class="fn"><a name="errorEncountered"></a><span class="type">void</span> QWebService::<span class="name">errorEncountered</span> ( const <span class="type">QString</span> &amp; <i>errMessage</i> )<tt> [signal]</tt></h3>
-<p>Singal emitted when WsdlConverter encounters an error. Carries <i>errMessage</i> for convenience.</p>
+<p>Singal emitted when <a href="wsdlconverter.html">WsdlConverter</a> encounters an error. Carries <i>errMessage</i> for convenience.</p>
 <!-- @@@errorEncountered -->
 <!-- $$$errorInfo[overload1]$$$errorInfo -->
 <h3 class="fn"><a name="errorInfo"></a><span class="type">QString</span> QWebService::<span class="name">errorInfo</span> () const</h3>
 <p>Returns QString with error message in case an error occured. Otherwise, returns empty string.</p>
 <p><b>See also </b><a href="qwebservice.html#isErrorState">isErrorState</a>().</p>
 <!-- @@@errorInfo -->
+<!-- $$$hostChanged[overload1]$$$hostChanged -->
+<h3 class="fn"><a name="hostChanged"></a><span class="type">void</span> QWebService::<span class="name">hostChanged</span> ()<tt> [signal]</tt></h3>
+<!-- @@@hostChanged -->
+<!-- $$$hostUrlChanged[overload1]$$$hostUrlChanged -->
+<h3 class="fn"><a name="hostUrlChanged"></a><span class="type">void</span> QWebService::<span class="name">hostUrlChanged</span> ()<tt> [signal]</tt></h3>
+<!-- @@@hostUrlChanged -->
 <!-- $$$isErrorState[overload1]$$$isErrorState -->
 <h3 class="fn"><a name="isErrorState"></a><span class="type">bool</span> QWebService::<span class="name">isErrorState</span> ()</h3>
 <p>Returns true if object is in error state.</p>
@@ -169,6 +195,9 @@
 <p>Returns a pointer to a single web method object, specified by <i>methodName</i>. If no method with that name exists, a default-constructed value is returned (see QMap::value() documentation for details).</p>
 <p><b>See also </b><a href="qwebservice.html#methods">methods</a>().</p>
 <!-- @@@method -->
+<!-- $$$methodNamesChanged[overload1]$$$methodNamesChanged -->
+<h3 class="fn"><a name="methodNamesChanged"></a><span class="type">void</span> QWebService::<span class="name">methodNamesChanged</span> ()<tt> [signal]</tt></h3>
+<!-- @@@methodNamesChanged -->
 <!-- $$$methodParameters[overload1]$$$methodParametersconstQString& -->
 <h3 class="fn"><a name="methodParameters"></a><span class="type">QStringList</span> QWebService::<span class="name">methodParameters</span> ( const <span class="type">QString</span> &amp; <i>methodName</i> ) const</h3>
 <p>Returns list of names of parameters of a method specified by <i>methodName</i>.</p>
@@ -182,6 +211,9 @@
 <p>Returns pointers to all <a href="qwebmethod.html">QWebMethod</a> objects held in <a href="qwebservice.html">QWebService</a>, useful for invoking web methods.</p>
 <p><b>See also </b><a href="qwebservice.html#method">method</a>().</p>
 <!-- @@@methods -->
+<!-- $$$nameChanged[overload1]$$$nameChanged -->
+<h3 class="fn"><a name="nameChanged"></a><span class="type">void</span> QWebService::<span class="name">nameChanged</span> ()<tt> [signal]</tt></h3>
+<!-- @@@nameChanged -->
 <!-- $$$parameterNamesTypes[overload1]$$$parameterNamesTypesconstQString& -->
 <h3 class="fn"><a name="parameterNamesTypes"></a><span class="type">QMap</span>&lt;<span class="type">QString</span>, <span class="type">QVariant</span>&gt; QWebService::<span class="name">parameterNamesTypes</span> ( const <span class="type">QString</span> &amp; <i>methodName</i> ) const</h3>
 <p>For a given <i>methodName</i>, returns a QMap with QString paramater name as a key, and QVariant value. By running QVariant::typeName() you can determine the type of the parameter.</p>

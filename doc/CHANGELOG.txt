@@ -6,12 +6,13 @@ Remote Features and TODO's list can be found at: http://goo.gl/L1C6X
 Updating QDoc (assuming QtSDK is installed, and Qt 4.7.1 used. Change the link if needed):
  - QWebService: run from project's root: ~/QtSDK/Desktop/Qt/474/gcc/bin/qdoc3 ./QWebService/qwebservice.qdocconf
  - Converter:   run from project's root: ~/QtSDK/Desktop/Qt/474/gcc/bin/qdoc3 ./qtwsdlconvert/qtwsdlconvert.qdocconf
+ - run from project's root: ~/QtSDK/Desktop/Qt/474/gcc/bin/qdoc3 ./QtWebService.qdocconf
 
 Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/wsdl/band_ws.asmx
  -af --cmake --scons --json ../examples/wsdl/band_ws.asmx
 
-.10.2011 : CEST:
+.11.2011 : CEST:
  - removed QWebServiceReader,
  - added more robust SOAP, XML reply parsing,
  - changed license headers in all source files,

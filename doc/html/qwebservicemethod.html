@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- qwebservicemethod.cpp -->
-  <title>QWebService : QWebServiceMethod Class Reference</title>
+  <title>QtWebService : QWebServiceMethod Class Reference</title>
 <li>Modules</li>
 <li>QWebServiceMethod</li>
 <div class="toc">
@@ -33,11 +33,11 @@
 <tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="qwebservicemethod.html#invokeMethod">invokeMethod</a></b> ( const QMap&lt;QString, QVariant&gt; &amp; <i>params</i> )</td></tr>
 </table>
 <ul>
-<li class="fn">34 public functions inherited from <a href="qwebmethod.html#public-functions">QWebMethod</a></li>
+<li class="fn">31 public functions inherited from <a href="qwebmethod.html#public-functions">QWebMethod</a></li>
 </ul>
 <h3>Additional Inherited Members</h3>
 <ul>
-<li class="fn">2 signals inherited from <a href="qwebmethod.html#signals">QWebMethod</a></li>
+<li class="fn">9 signals inherited from <a href="qwebmethod.html#signals">QWebMethod</a></li>
 <li class="fn">3 protected slots inherited from <a href="qwebmethod.html#protected-slots">QWebMethod</a></li>
 </ul>
 <a name="details"></a>
@@ -58,17 +58,17 @@
 <!-- $$$QWebServiceMethod$$$QWebServiceMethodProtocolHttpMethodQObject* -->
 <h3 class="fn"><a name="QWebServiceMethod-2"></a>QWebServiceMethod::<span class="name">QWebServiceMethod</span> ( <span class="type"><a href="qwebmethod.html#Protocol-enum">Protocol</a></span> <i>protocol</i> = Soap12, <span class="type"><a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a></span> <i>httpMethod</i> = Post, <span class="type">QObject</span> * <i>parent</i> = 0 )</h3>
 <p>A constructor that takes in <i>protocol</i> information, <i>httpMethod</i> to use, and <i>parent</i> to satisfy QObject requirements. All other data has to be set later using setter methods.</p>
-<p><b>See also </b><a href="qwebmethod.html#setParameters">setParameters</a>() and <a href="qwebservicemethod.html#invokeMethod">invokeMethod</a>().</p>
+<p><b>See also </b>setParameters() and <a href="qwebservicemethod.html#invokeMethod">invokeMethod</a>().</p>
 <!-- @@@QWebServiceMethod -->
 <!-- $$$QWebServiceMethod$$$QWebServiceMethodconstQUrl&constQString&ProtocolHttpMethodQObject* -->
 <h3 class="fn"><a name="QWebServiceMethod-3"></a>QWebServiceMethod::<span class="name">QWebServiceMethod</span> ( const <span class="type">QUrl</span> &amp; <i>hostUrl</i>, const <span class="type">QString</span> &amp; <i>methodName</i>, <span class="type"><a href="qwebmethod.html#Protocol-enum">Protocol</a></span> <i>protocol</i> = Soap12, <span class="type"><a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a></span> <i>method</i> = Post, <span class="type">QObject</span> * <i>parent</i> = 0 )</h3>
 <p>Constructs the message using <i>hostUrl</i> (QUrl), <i>methodName</i>, <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>method</i> (which defaults to POST). Requires params to be specified later.</p>
-<p><b>See also </b><a href="qwebmethod.html#setParameters">setParameters</a>() and <a href="qwebservicemethod.html#invokeMethod">invokeMethod</a>().</p>
+<p><b>See also </b>setParameters() and <a href="qwebservicemethod.html#invokeMethod">invokeMethod</a>().</p>
 <!-- @@@QWebServiceMethod -->
 <!-- $$$QWebServiceMethod$$$QWebServiceMethodconstQString&constQString&ProtocolHttpMethodQObject* -->
 <h3 class="fn"><a name="QWebServiceMethod-4"></a>QWebServiceMethod::<span class="name">QWebServiceMethod</span> ( const <span class="type">QString</span> &amp; <i>host</i>, const <span class="type">QString</span> &amp; <i>methodName</i>, <span class="type"><a href="qwebmethod.html#Protocol-enum">Protocol</a></span> <i>protocol</i> = Soap12, <span class="type"><a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a></span> <i>httpMethod</i> = Post, <span class="type">QObject</span> * <i>parent</i> = 0 )</h3>
 <p>Constructs the message using <i>host</i> (QString), <i>methodName</i>, <i>parent</i>, <i>protocol</i> (which defaults to soap12), and <i>httpMethod</i> (which defaults to POST). Requires params to be specified later.</p>
-<p><b>See also </b><a href="qwebmethod.html#setParameters">setParameters</a>() and <a href="qwebservicemethod.html#invokeMethod">invokeMethod</a>().</p>
+<p><b>See also </b>setParameters() and <a href="qwebservicemethod.html#invokeMethod">invokeMethod</a>().</p>
 <!-- @@@QWebServiceMethod -->
 <!-- $$$QWebServiceMethod$$$QWebServiceMethodconstQString&constQString&constQString&constQMap<QString,QVariant>&ProtocolHttpMethodQObject* -->
 <h3 class="fn"><a name="QWebServiceMethod-5"></a>QWebServiceMethod::<span class="name">QWebServiceMethod</span> ( const <span class="type">QString</span> &amp; <i>host</i>, const <span class="type">QString</span> &amp; <i>methodName</i>, const <span class="type">QString</span> &amp; <i>targetNamespace</i>, const <span class="type">QMap</span>&lt;<span class="type">QString</span>, <span class="type">QVariant</span>&gt; &amp; <i>params</i>, <span class="type"><a href="qwebmethod.html#Protocol-enum">Protocol</a></span> <i>protocol</i> = Soap12, <span class="type"><a href="qwebmethod.html#HttpMethod-enum">HttpMethod</a></span> <i>httpMethod</i> = Post, <span class="type">QObject</span> * <i>parent</i> = 0 )</h3>
@@ -78,7 +78,7 @@
 <!-- $$$invokeMethod[overload1]$$$invokeMethodconstQMap<QString,QVariant>& -->
 <h3 class="fn"><a name="invokeMethod"></a><span class="type">bool</span> QWebServiceMethod::<span class="name">invokeMethod</span> ( const <span class="type">QMap</span>&lt;<span class="type">QString</span>, <span class="type">QVariant</span>&gt; &amp; <i>params</i> )</h3>
 <p>This function overloads invokeMethod().</p>
-<p>Convenience method - sends the method asynchronously using parameters specified in <i>params</i>. With <a href="qwebmethod.html">QWebMethod</a>, you would have to specify parameters by <a href="qwebmethod.html#setParameters">setParameters</a>() first, this method can save one line of code. This method returns immediately. When reply is ready, <a href="qwebmethod.html#replyReady">replyReady</a>() signal is being emitted. Presence of the reply can also be checked by <a href="qwebmethod.html#isReplyReady">isReplyReady</a>() method.</p>
+<p>Convenience method - sends the method asynchronously using parameters specified in <i>params</i>. With <a href="qwebmethod.html">QWebMethod</a>, you would have to specify parameters by setParameters() first, this method can save one line of code. This method returns immediately. When reply is ready, <a href="qwebmethod.html#replyReady">replyReady</a>() signal is being emitted. Presence of the reply can also be checked by <a href="qwebmethod.html#isReplyReady">isReplyReady</a>() method.</p>
 <p>Returns true on success.</p>
 <!-- @@@invokeMethod -->
 </div>

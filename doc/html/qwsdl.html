@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- qwsdl.cpp -->
-  <title>QWebService : QWsdl Class Reference</title>
+  <title>QtWebService : QWsdl Class Reference</title>
 <li>Modules</li>
 <li>QWsdl</li>
 <div class="toc">
@@ -59,6 +59,7 @@
 <h2>Signals</h2>
 <table class="alignedsummary">
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#errorEncountered">errorEncountered</a></b> ( const QString &amp; <i>errMessage</i> )</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qwsdl.html#wsdlFileChanged">wsdlFileChanged</a></b> ()</td></tr>
 </table>
 <a name="protected-slots"></a>
 <h2>Protected Slots</h2>
@@ -88,7 +89,7 @@
 <!-- @@@QWsdl -->
 <div class="prop">
 <h2>Property Documentation</h2>
-<!-- $$$host-prop$$$host -->
+<!-- $$$host-prop$$$host$$$wsdlFileChanged -->
 <h3 class="fn"><a name="host-prop"></a><span class="name">host</span> : const <span class="type">QString</span></h3>
 <p>This property holds web service's host Url as QString.</p>
 <p>This property's default is empty string.</p>
@@ -96,8 +97,12 @@
 <table class="alignedsummary">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>host</b></span> () const</td></tr>
 </table>
+<p><b>Notifier signal:</b></p>
+<table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="qwsdl.html#wsdlFileChanged">wsdlFileChanged</a></b></span> ()</td></tr>
+</table>
 <!-- @@@host -->
-<!-- $$$hostUrl-prop$$$hostUrl -->
+<!-- $$$hostUrl-prop$$$hostUrl$$$wsdlFileChanged -->
 <h3 class="fn"><a name="hostUrl-prop"></a><span class="name">hostUrl</span> : const <span class="type">QUrl</span></h3>
 <p>This property holds web service's host Url as QUrl.</p>
 <p>This property's default is empty QUrl.</p>
@@ -105,8 +110,12 @@
 <table class="alignedsummary">
 <tr><td class="memItemLeft topAlign rightAlign"> QUrl </td><td class="memItemRight bottomAlign"><span class="name"><b>hostUrl</b></span> () const</td></tr>
 </table>
+<p><b>Notifier signal:</b></p>
+<table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="qwsdl.html#wsdlFileChanged">wsdlFileChanged</a></b></span> ()</td></tr>
+</table>
 <!-- @@@hostUrl -->
-<!-- $$$targetNamespace-prop$$$targetNamespace -->
+<!-- $$$targetNamespace-prop$$$targetNamespace$$$wsdlFileChanged -->
 <h3 class="fn"><a name="targetNamespace-prop"></a><span class="name">targetNamespace</span> : const <span class="type">QString</span></h3>
 <p>This property holds web service's targetNamespace.</p>
 <p>This property's default is empty string.</p>
@@ -114,8 +123,12 @@
 <table class="alignedsummary">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>targetNamespace</b></span> () const</td></tr>
 </table>
+<p><b>Notifier signal:</b></p>
+<table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="qwsdl.html#wsdlFileChanged">wsdlFileChanged</a></b></span> ()</td></tr>
+</table>
 <!-- @@@targetNamespace -->
-<!-- $$$webServiceName-prop$$$webServiceName -->
+<!-- $$$webServiceName-prop$$$webServiceName$$$wsdlFileChanged -->
 <h3 class="fn"><a name="webServiceName-prop"></a><span class="name">webServiceName</span> : const <span class="type">QString</span></h3>
 <p>This property holds web service name.</p>
 <p>This property's default is empty string.</p>
@@ -123,8 +136,12 @@
 <table class="alignedsummary">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>webServiceName</b></span> () const</td></tr>
 </table>
+<p><b>Notifier signal:</b></p>
+<table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="qwsdl.html#wsdlFileChanged">wsdlFileChanged</a></b></span> ()</td></tr>
+</table>
 <!-- @@@webServiceName -->
-<!-- $$$wsdlFile-prop$$$wsdlFile$$$setWsdlFileconstQString& -->
+<!-- $$$wsdlFile-prop$$$wsdlFile$$$setWsdlFileconstQString&$$$wsdlFileChanged -->
 <h3 class="fn"><a name="wsdlFile-prop"></a><span class="name">wsdlFile</span> : <span class="type">QString</span></h3>
 <p>This property holds path to web service file.</p>
 <p>This property's default is empty string.</p>
@@ -132,6 +149,10 @@
 <table class="alignedsummary">
 <tr><td class="memItemLeft topAlign rightAlign"> QString </td><td class="memItemRight bottomAlign"><span class="name"><b>wsdlFile</b></span> () const</td></tr>
 <tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b>setWsdlFile</b></span> ( const QString &amp; <i>wsdlFile</i> )</td></tr>
+</table>
+<p><b>Notifier signal:</b></p>
+<table class="alignedsummary">
+<tr><td class="memItemLeft topAlign rightAlign"> void </td><td class="memItemRight bottomAlign"><span class="name"><b><a href="qwsdl.html#wsdlFileChanged">wsdlFileChanged</a></b></span> ()</td></tr>
 </table>
 <!-- @@@wsdlFile -->
 </div>
@@ -153,7 +174,7 @@
 <!-- @@@~QWsdl -->
 <!-- $$$errorEncountered[overload1]$$$errorEncounteredconstQString& -->
 <h3 class="fn"><a name="errorEncountered"></a><span class="type">void</span> QWsdl::<span class="name">errorEncountered</span> ( const <span class="type">QString</span> &amp; <i>errMessage</i> )<tt> [signal]</tt></h3>
-<p>Singal emitted when WsdlConverter encounters an error. Carries <i>errMessage</i> for convenience.</p>
+<p>Singal emitted when <a href="wsdlconverter.html">WsdlConverter</a> encounters an error. Carries <i>errMessage</i> for convenience.</p>
 <!-- @@@errorEncountered -->
 <!-- $$$errorInfo[overload1]$$$errorInfo -->
 <h3 class="fn"><a name="errorInfo"></a><span class="type">QString</span> QWsdl::<span class="name">errorInfo</span> () const</h3>
@@ -184,6 +205,9 @@
 <p>Can be used to set or reset a WSDL file (or URL), using <i>newWsdl</i>. Cleans and reinitialises the object, parses the file.</p>
 <p><b>See also </b><a href="qwsdl.html#wsdlFile-prop">setWsdlFile</a>().</p>
 <!-- @@@resetWsdl -->
+<!-- $$$wsdlFileChanged[overload1]$$$wsdlFileChanged -->
+<h3 class="fn"><a name="wsdlFileChanged"></a><span class="type">void</span> QWsdl::<span class="name">wsdlFileChanged</span> ()<tt> [signal]</tt></h3>
+<!-- @@@wsdlFileChanged -->
 </div>
 </body>
 </html>

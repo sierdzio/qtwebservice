@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- codegenerator.cpp -->
-  <title>qtwsdlconvert : CodeGenerator Class Reference</title>
+  <title>QtWebService : CodeGenerator Class Reference</title>
 <li>Modules</li>
 <li>CodeGenerator</li>
 <div class="toc">
@@ -55,7 +55,7 @@
 <p>Constructs QObject using <i>parent</i>, initialises <a href="codegenerator.html">CodeGenerator</a>.</p>
 <!-- @@@CodeGenerator -->
 <!-- $$$create[overload1]$$$createQWsdl*constQDir&Flags*constQString&QObject* -->
-<h3 class="fn"><a name="create"></a><span class="type">bool</span> CodeGenerator::<span class="name">create</span> ( <span class="type">QWsdl</span> * <i>wsdl</i>, const <span class="type">QDir</span> &amp; <i>workingDir</i>, <span class="type"><a href="flags.html">Flags</a></span> * <i>flags</i>, const <span class="type">QString</span> &amp; <i>baseClassName</i> = 0, <span class="type">QObject</span> * <i>parent</i> = 0 )<tt> [static]</tt></h3>
+<h3 class="fn"><a name="create"></a><span class="type">bool</span> CodeGenerator::<span class="name">create</span> ( <span class="type"><a href="qwsdl.html">QWsdl</a></span> * <i>wsdl</i>, const <span class="type">QDir</span> &amp; <i>workingDir</i>, <span class="type"><a href="flags.html">Flags</a></span> * <i>flags</i>, const <span class="type">QString</span> &amp; <i>baseClassName</i> = 0, <span class="type">QObject</span> * <i>parent</i> = 0 )<tt> [static]</tt></h3>
 <p>Performs the conversion in <a href="codegenerator.html">CodeGenerator</a>. Data from WSDL (<i>wsdl</i>) is combined with options specified in flags (<i>flags</i>), and base class name (<i>baseClassName</i>) to create a complete set of classes in given directory (<i>workingDir</i>). For Qt reasons, <i>parent</i> is also needed, although it defaults to 0.</p>
 <p>Returns true if successful.</p>
 <!-- @@@create -->

@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- flags.cpp -->
-  <title>qtwsdlconvert : Flags Class Reference</title>
+  <title>QtWebService : Flags Class Reference</title>
 <li>Modules</li>
 <li>Flags</li>
 <div class="toc">
@@ -83,11 +83,11 @@
 <tr><td class="topAlign"><tt>Flags::FullMode</tt></td><td class="topAlign"><tt>0x000001</tt></td><td class="topAlign">(mode) All enums and variables are copied, enabling some flexibility in use.</td></tr>
 <tr><td class="topAlign"><tt>Flags::DebugMode</tt></td><td class="topAlign"><tt>0x000002</tt></td><td class="topAlign">(mode) fullMode + debug messages.</td></tr>
 <tr><td class="topAlign"><tt>Flags::CompactMode</tt></td><td class="topAlign"><tt>0x000004</tt></td><td class="topAlign">(mode) Only most needed methods, variables and enums are preserved. Code is as small, as possible, at the expense of loosing flexibility.</td></tr>
-<tr><td class="topAlign"><tt>Flags::Subclass</tt></td><td class="topAlign"><tt>0x000008</tt></td><td class="topAlign">converter creates web methods by subclassing QWebMethod (this option requires QWebService library to be present).</td></tr>
+<tr><td class="topAlign"><tt>Flags::Subclass</tt></td><td class="topAlign"><tt>0x000008</tt></td><td class="topAlign">converter creates web methods by subclassing <a href="qwebmethod.html">QWebMethod</a> (this option requires <a href="qwebservice.html">QWebService</a> library to be present).</td></tr>
 <tr><td class="topAlign"><tt>Flags::Synchronous</tt></td><td class="topAlign"><tt>0x000010</tt></td><td class="topAlign">(synchronousness) Web methods will wait for reply and return with data.</td></tr>
 <tr><td class="topAlign"><tt>Flags::Asynchronous</tt></td><td class="topAlign"><tt>0x000020</tt></td><td class="topAlign">(synchronousness) Web methods will return instantly. Data availability will be announced by emitting a signal.</td></tr>
 <tr><td class="topAlign"><tt>Flags::StandardStructure</tt></td><td class="topAlign"><tt>0x000100</tt></td><td class="topAlign">(structure) Headers will be placed in &lt;dir&gt;/headers, sources in &lt;dir&gt;/sources, build system and .pro files in &lt;dir&gt;/.</td></tr>
-<tr><td class="topAlign"><tt>Flags::NoMessagesStructure</tt></td><td class="topAlign"><tt>0x000200</tt></td><td class="topAlign">(structure) Converter will not create web methods as separate classes, but use QWebMethod (this option requires QWebService library to be present).</td></tr>
+<tr><td class="topAlign"><tt>Flags::NoMessagesStructure</tt></td><td class="topAlign"><tt>0x000200</tt></td><td class="topAlign">(structure) Converter will not create web methods as separate classes, but use <a href="qwebmethod.html">QWebMethod</a> (this option requires <a href="qwebservice.html">QWebService</a> library to be present).</td></tr>
 <tr><td class="topAlign"><tt>Flags::AllInOneDirStructure</tt></td><td class="topAlign"><tt>0x000400</tt></td><td class="topAlign">(structure) All generated files will be stored in one folder.</td></tr>
 <tr><td class="topAlign"><tt>Flags::Qmake</tt></td><td class="topAlign"><tt>0x001000</tt></td><td class="topAlign">(build system) qmake will be used.</td></tr>
 <tr><td class="topAlign"><tt>Flags::Cmake</tt></td><td class="topAlign"><tt>0x002000</tt></td><td class="topAlign">(build system) cmake will be used.</td></tr>
