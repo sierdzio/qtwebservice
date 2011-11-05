@@ -440,7 +440,7 @@ bool QWebMethod::authenticate(const QUrl &customAuthString)
 
     QByteArray paramBytes = customAuthString.toString().mid(1).toLatin1();
     paramBytes.replace("/", "%2F");
-
+//    qDebug() << paramBytes;
     d->manager->post(rqst, paramBytes);
     return true;
 }
@@ -880,6 +880,9 @@ QString QWebMethod::replyRead()
     Q_D(QWebMethod);
     QString replyString(d->reply);
     replyString = d->convertReplyToUtf(replyString);
+    // OPTIONAL - FOR TESTING:
+//    qDebug() << replyString;
+    // ENDOF: OPTIONAL - FOR TESTING
     return replyString;
 }
 
@@ -1076,7 +1079,7 @@ void QWebMethod::authReplyFinished(QNetworkReply *reply)
     {
         d->enterErrorState(QLatin1String("Login incorrect."));
     }
-    //    else        qDebug() << "Login correct";
+//    else        qDebug() << "Login correct";
     reply->deleteLater();
 }
 
