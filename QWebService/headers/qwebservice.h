@@ -60,7 +60,7 @@ public:
     void setHost(const QUrl &hostUrl);
 
 //    QString wsdl();
-    void setWsdl(QWsdl *newWsdl);
+    Q_INVOKABLE void setWsdl(QWsdl *newWsdl);
     void resetWsdl(QWsdl *newWsdl = 0);
 
     bool isErrorState();

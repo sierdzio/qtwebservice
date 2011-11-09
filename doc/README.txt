@@ -26,19 +26,16 @@ This project provides a set of classes (compilable into a library, if you prefer
   1.1.3 QWebService (formerly QWebServiceAbstract)
   In it's current shape, this is mostly a QWsdl wrapper class which hides the WSDL parsing machinery and exposes useful stuff only.
 
-  1.1.4 QWebServiceReader (formerly QWebServiceReaderAbstract. Removed in v0.5.3) (*)
-  A derivative of QWebService, more focused on "reading" a web service (that is, sending messages and receiving replies). Currently not very innovative, it does nothing more that QWebService. Possible updates in the future, bringing new functionality.
-
-  1.1.5 QWebServiceServer (or QWebServiceWriter) (*)
+  1.1.4 QWebServiceServer (or QWebServiceWriter) (*)
   Currently does not exist. A proposed class, derived from QWebService, aimed at providing web service server functionality.
 
-  1.1.6 QWebServiceMethod
+  1.1.5 QWebServiceMethod
   Subclass of QWebMethod, contains many generic methods for sending messages. Can be used both synchronously (through static sendMessage() method), or asynchronously (indicates, when reply is ready by emitting a replyReady() signal).
 
 ------------------
 2. qtWsdlConverter
 
-WARNING: Remember to first compile QWebService library, and set it's path in run environment for Converter (it requires this lib to run. By default, it puts the library into ../lib).
+WARNING: Remember to first compile QWebService library, and set it's path in run environment for Converter (it requires this lib to run. By default, it puts the library into ../lib. If you leave everything at default, it should build without problems).
 
 2.1 Syntax
   qtwsdlconvert [options] <WSDL file or URL> [output directory, defaults to web service name] [base output class name, defaults to web service name]

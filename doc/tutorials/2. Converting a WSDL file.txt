@@ -1,0 +1,39 @@
+1. First of all, ask yourself: do I really need a set of custom classes to communicate with a given web service? Then: does this WS have a WSDL definition?
+
+If both answers are "yes", or even "well, sort of", then you are in a right place to learn about it. If not, then what you probably need is to take a look at QWebService, QWebMethod, and/ or QWsdl classes inside QWebService library. They offer powerful genereric ways of communitations with web services. And yes, they can do their own WSDL parsing.
+
+Anyway, you want automatically generated, custom code that communicates with web services. Fine. Another thing to consider is: do I want a fully independent code (which is quite lengthy) or maybe I can live with being dependent on QWebMethod (code is shorter, but web methods subclass QWebMethod)?
+
+a) I don't want to subclass!
+Well, your choice. qtwsdlconvert does not subclass by default, so you don't need to specify any special flag for your choice. This code is dependent only on QtCore module, so you can use it in any situation, even on embedded devices! The code that gets generated is always based on the newest available source code of QWebMethod, but if you want to update your code later, you have to do it either by hand or from scratch.
+
+Feel free to look through the sources that are being generated. You can change and adjust them as you wish. A good thing to start with is adding some custom parsing code to your web methods.
+
+b) Give me those subclasses already!
+Right. You need to add -s or --subclass to your command line. This option makes you dependant on QWebMethod and produces shorter code. All QWebMethod methods are still available, so you can easily use it asynchronously even if you used --synchronous flag. This code inherits from QWebMethod, so if QWM gets updated, you won't need to do anything in your code to benefit from those changes (well, apart from maybe recompiling the project - but not necessarily).
+
+------------
+
+2. Next, you have to decide, whether you want the generated code to invoke web methods synchronously (default, can be explicitly set with --synchrnous flag), or asynchronously (-a or --asynchronous).
+
+a) synchronous invokation does wait for the reply. It returns QString replies, so you'll probably need to parse them in your code.
+
+b) asynchronous invokes return immediately. When the reply is received, you will be notified by means of replyReady() signal.
+
+------------
+
+3. Another step is the choice of communication protocol. Default it SOAP1.2, but you can choose from wide variety. Since you are converting a WSDL, SOAP1.2 is probably a right choice for you.
+
+------------
+
+4. We are past the most important flags now. Following are some less commonly used flags that might be of interest to you. Be sure to check ../README.txt for a list of all flags (you can also run "qtwsdlconver --help").
+
+a) you can choose a build system file to create: qmake, cmake, scons, or none. Default option is qmake.
+
+b) there is a subtle set of flags having to do with file structure. Default setting is to put all headers into "headers" folder, and all sources into "sources", with build system living happily in top directory. You can also choose to put everything into top dir (--all-in-one-dir flag), or resign from generating the messages (--no-message flag. This should not be used together with --subclass).
+
+c) a flag that might be useful is --force (-f). It will overwrite any files found in destination directory.
+
+d) The rest of the flags have more to do with how the generated code looks: you can specify suffixes for variables, number of spaces in a tabulation, and end of line character.
+
+Hope that helps. Remember, if you spot any bug, or something is erroneously written, or you just don't like a part of the toolkit, please write to sierdzio@gmail.com.
