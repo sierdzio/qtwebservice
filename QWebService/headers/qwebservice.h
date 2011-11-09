@@ -68,6 +68,7 @@ public:
 
 signals:
     void errorEncountered(const QString &errMessage);
+    void replyReady(const QByteArray &reply, const QString &methodName);
 
     // For QObject properties:
     void hostChanged();
@@ -78,6 +79,9 @@ signals:
 protected:
     QWebService(QWebServicePrivate &d, QObject *parent = 0);
     QWebServicePrivate *d_ptr;
+
+protected slots:
+    void receiveReply(const QByteArray &reply);
 
 private:
     Q_DECLARE_PRIVATE(QWebService)

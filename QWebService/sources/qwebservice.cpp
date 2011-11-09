@@ -34,7 +34,16 @@
     remote web service (methods(), method()).
 
     Especially useful is the method(), which returns a pointer to a single web
-    method, which  can be used directly to interact with QWebMethod object.
+    method, which  can be used directly to interact with QWebMethod object. For example:
+    \code
+        QWebService myWebService;
+        ...
+        myWebService.method("myWebMethod").invokeMethod();
+    \endcode
+
+    When any of the web methods in QwebService receives a reply, replyReady() signal
+    is emitted. It sends reply data and web method name, so that the sender can be easily
+    determined.
   */
 
 /*!
@@ -149,6 +158,13 @@ QWebService::~QWebService()
   */
 
 /*!
+    \fn QWebService::replyReady(const QByteArray &reply, const QString &methodName)
+
+    Signal emitted when any of QWebMethods receives a \a reply. The web method
+    that got the reply can be determined using \a methodName.
+  */
+
+/*!
     Returns name of the web service, as taken from QWsdl
     or set by setName().
 
@@ -260,6 +276,8 @@ void QWebService::addMethod(QWebMethod *newMethod)
 {
     Q_D(QWebService);
     d->methods->insert(newMethod->methodName(), newMethod);
+    connect(newMethod, SIGNAL(replyReady(QByteArray)),
+            this, SLOT(receiveReply(QByteArray)));
     emit methodNamesChanged();
 }
 
@@ -276,6 +294,8 @@ void QWebService::addMethod(const QString &methodName, QWebMethod *newMethod)
 {
     Q_D(QWebService);
     d->methods->insert(methodName, newMethod);
+    connect(newMethod, SIGNAL(replyReady(QByteArray)),
+            this, SLOT(receiveReply(QByteArray)));
     emit methodNamesChanged();
 }
 
@@ -288,6 +308,8 @@ void QWebService::addMethod(const QString &methodName, QWebMethod *newMethod)
 void QWebService::removeMethod(const QString &methodName)
 {
     Q_D(QWebService);
+    disconnect(d->methods->value(methodName), SIGNAL(replyReady(QByteArray)),
+            this, SLOT(receiveReply(QByteArray)));
     delete d->methods->value(methodName);
     d->methods->remove(methodName);
     emit methodNamesChanged();
@@ -350,6 +372,8 @@ void QWebService::setWsdl(QWsdl *newWsdl)
     setName(d->wsdl->webServiceName());
     foreach (QString s, d->wsdl->methods()->keys()) {
         d->methods->insert(s, d->wsdl->methods()->value(s));
+        connect(d->methods->value(s), SIGNAL(replyReady(QByteArray)),
+                this, SLOT(receiveReply(QByteArray)));
     }
 }
 
@@ -365,13 +389,22 @@ void QWebService::resetWsdl(QWsdl *newWsdl)
     Q_D(QWebService);
 
     if (newWsdl == 0) {
+        foreach (QString s, d->methods->keys()) {
+            connect(d->methods->value(s), SIGNAL(replyReady(QByteArray)),
+                    this, SLOT(receiveReply(QByteArray)));
+        }
         d->methods->clear();
         d->wsdl = new QWsdl(this);
         setName();
     } else {
         d->wsdl = newWsdl;
         d->methods->clear();
-        d->methods = d->wsdl->methods();
+//        d->methods = d->wsdl->methods();
+        foreach (QString s, d->wsdl->methods()->keys()) {
+            d->methods->insert(s, d->wsdl->methods()->value(s));
+            connect(d->methods->value(s), SIGNAL(replyReady(QByteArray)),
+                    this, SLOT(receiveReply(QByteArray)));
+        }
         setName(d->wsdl->webServiceName());
     }
 }
@@ -424,4 +457,17 @@ bool QWebServicePrivate::enterErrorState(const QString &errMessage)
     errorMessage += QString(errMessage + QLatin1String(" "));
     emit q->errorEncountered(errMessage);
     return false;
+}
+
+/*!
+    \internal
+
+    Emits proper replyReady() signal after a web method reports that
+    a reply is ready.
+  */
+void QWebService::receiveReply(const QByteArray &reply)
+{
+    QWebMethod *sendingMethod = qobject_cast<QWebMethod *>(QObject::sender());
+    QString sendingMethodName = sendingMethod->methodName();
+    emit replyReady(reply, sendingMethodName);
 }

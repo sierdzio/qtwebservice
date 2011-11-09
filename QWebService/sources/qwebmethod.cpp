@@ -233,9 +233,9 @@ QWebMethod::~QWebMethod()
   */
 
 /*!
-    \fn QWebMethod::replyReady(const QByteArray &rply)
+    \fn QWebMethod::replyReady(const QByteArray &reply)
 
-    Signal invoked when the reply (\a rply) from web service's server
+    Signal invoked when the reply (\a reply) from web service's server
     is ready for reading.
   */
 

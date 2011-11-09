@@ -125,7 +125,7 @@ public:
     bool isReplyReady() const;
 
 signals:
-    void replyReady(const QByteArray &rply);
+    void replyReady(const QByteArray &reply);
     void errorEncountered(const QString &errMessage);
 
     // For QObject properties:

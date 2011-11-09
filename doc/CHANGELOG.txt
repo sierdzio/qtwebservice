@@ -38,6 +38,11 @@ Example arguments for converter:
  - added Q_PROPERTY notify signals to properties,
  - added Q_INVOKABLE to some methods in QWebService library, so that is is
    easier to use in QML and meta-object system,
+ - added some tutorials to doc/tutorials,
+ - added some video tutorials to doc/videos,
+ - added bether method handling to QWebService (when using QWebService, you need to connect
+   only one signal now - replyReady(). It passes the web method name, so that you can
+   know, which QWebMethod received the reply),
  - marked v0.6.0.
 
 06.10.2011 19:14 CEST:
