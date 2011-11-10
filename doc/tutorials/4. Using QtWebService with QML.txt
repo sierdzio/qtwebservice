@@ -1,0 +1,20 @@
+QML support in QtWebService is still in it's infancy, but it is being actively developed. The aim for the future is to make it possible to easily communicate with web services in QML, and enabling QWebService with just one simple QML "import" statement.
+
+Some glimpse into the proposed shape of QML API can be seen in QtDeveloperNetworkQmlExample. Strangely, there are some issues, which are being resolved (debugged, to be honest - it should work, I don't know yet, what's wrong) right now. More examples are likely to be created in the future. A more hard-core approach would be to dive into project's sources and gather API info there.
+
+In general, usage in QML is very similar to that available in C++: you have to set the object up, (in case of QWebMethod that step is done by setting host, protocol and httpMethod properties) and then order some action using JavaScript (like QWebMethod::invokeMethod()). For example:
+
+// This will instantiate a web method.
+WebMethod {
+        id: webMethod
+        host: "http://developer.qt.nokia.com/qtapi/1/member/profile"
+        httpMethod: "Get"
+        protocol: "Json"
+}
+
+// Now, we need to invoke it:
+MouseArea {
+                id: mouseAreaButton
+                anchors.fill: parent
+                onClicked: webMethod.invokeMethod();
+}
