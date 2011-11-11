@@ -643,8 +643,9 @@ bool QWebMethod::setProtocol(Protocol prot)
 /*!
     \overload
 
-    Sets the protocol flag by parsing the given string, and passing it to setProtocol()
-    as a QWebMethod flag. This determines the protocol used later,
+    Sets the protocol flag by parsing the given string (\a protocolString),
+    and passing it to setProtocol() as a QWebMethod flag.
+    This determines the protocol used later,
     when sending request. Defaults to SOAP1.2.
 
     Returns true if allowed combination was specified.

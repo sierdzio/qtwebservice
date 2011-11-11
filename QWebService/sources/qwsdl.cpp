@@ -135,8 +135,14 @@ QWsdl::~QWsdl()
 /*!
     \fn QWsdl::errorEncountered(const QString &errMessage)
 
-    Singal emitted when WsdlConverter encounters an error.
+    Singal emitted when QWsdl encounters an error.
     Carries \a errMessage for convenience.
+  */
+
+/*!
+    \fn QWsdl::wsdlFileChanged()
+
+    Singal emitted when wsdl file changes.
   */
 
 /*!

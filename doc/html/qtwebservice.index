@@ -226,9 +226,6 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="setHost" fullname="QWebService::setHost" href="qwebservice.html#hostUrl-prop" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="true" overload-number="2" associated-property="hostUrl" type="void" signature="setHost(const QUrl &amp; hostUrl)">
                 <parameter left="const QUrl &amp;" right="" name="hostUrl" default=""/>
             </function>
-            <function access="public" threadsafety="unspecified" status="commendable" name="setWsdl" fullname="QWebService::setWsdl" href="qwebservice.html#setWsdl" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setWsdl(QWsdl * newWsdl)">
-                <parameter left="QWsdl *" right="" name="newWsdl" default=""/>
-            </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="resetWsdl" fullname="QWebService::resetWsdl" href="qwebservice.html#resetWsdl" location="qwebservice.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="resetWsdl(QWsdl * newWsdl)">
                 <parameter left="QWsdl *" right="" name="newWsdl" default="0"/>
             </function>
@@ -236,6 +233,10 @@
             <function access="public" threadsafety="unspecified" status="commendable" name="errorInfo" fullname="QWebService::errorInfo" href="qwebservice.html#errorInfo" location="qwebservice.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="errorInfo() const"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="errorEncountered" fullname="QWebService::errorEncountered" href="qwebservice.html#errorEncountered" location="qwebservice.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="errorEncountered(const QString &amp; errMessage)">
                 <parameter left="const QString &amp;" right="" name="errMessage" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="replyReady" fullname="QWebService::replyReady" href="qwebservice.html#replyReady" location="qwebservice.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="replyReady(const QByteArray &amp; reply, const QString &amp; methodName)">
+                <parameter left="const QByteArray &amp;" right="" name="reply" default=""/>
+                <parameter left="const QString &amp;" right="" name="methodName" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="hostChanged" fullname="QWebService::hostChanged" href="qwebservice.html#hostChanged" location="qwebservice.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="hostChanged()"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="hostUrlChanged" fullname="QWebService::hostUrlChanged" href="qwebservice.html#hostUrlChanged" location="qwebservice.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="hostUrlChanged()"/>
@@ -365,11 +366,8 @@
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="replyReadParsed" fullname="QWebMethod::replyReadParsed" href="qwebmethod.html#replyReadParsed" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="QVariant" signature="replyReadParsed()"/>
             <function access="public" threadsafety="unspecified" status="commendable" name="replyReadRaw" fullname="QWebMethod::replyReadRaw" href="qwebmethod.html#replyReadRaw" location="qwebmethod.h" virtual="non" meta="plain" const="false" static="false" overload="false" type="QByteArray" signature="replyReadRaw()"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="errorInfo" fullname="QWebMethod::errorInfo" href="qwebmethod.html#errorInfo" location="qwebmethod.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="QString" signature="errorInfo() const"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="isErrorState" fullname="QWebMethod::isErrorState" href="qwebmethod.html#isErrorState" location="qwebmethod.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="isErrorState() const"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="isReplyReady" fullname="QWebMethod::isReplyReady" href="qwebmethod.html#isReplyReady" location="qwebmethod.h" virtual="non" meta="plain" const="true" static="false" overload="false" type="bool" signature="isReplyReady() const"/>
-            <function access="public" threadsafety="unspecified" status="commendable" name="replyReady" fullname="QWebMethod::replyReady" href="qwebmethod.html#replyReady" location="qwebmethod.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="replyReady(const QByteArray &amp; rply)">
-                <parameter left="const QByteArray &amp;" right="" name="rply" default=""/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="replyReady" fullname="QWebMethod::replyReady" href="qwebmethod.html#replyReady" location="qwebmethod.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="replyReady(const QByteArray &amp; reply)">
+                <parameter left="const QByteArray &amp;" right="" name="reply" default=""/>
             </function>
             <function access="public" threadsafety="unspecified" status="commendable" name="errorEncountered" fullname="QWebMethod::errorEncountered" href="qwebmethod.html#errorEncountered" location="qwebmethod.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="errorEncountered(const QString &amp; errMessage)">
                 <parameter left="const QString &amp;" right="" name="errMessage" default=""/>

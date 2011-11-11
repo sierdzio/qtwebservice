@@ -64,10 +64,6 @@ signals:
     void errorEncountered(const QString &errMessage);
 
     // For QObject properties:
-//    void hostChanged();
-//    void hostUrlChanged();
-//    void webServiceNameChanged();
-//    void targetNamespaceChanged();
     void wsdlFileChanged();
 
 protected slots:

@@ -167,6 +167,37 @@ QWebService::~QWebService()
   */
 
 /*!
+    \fn QWebService::hostChanged()
+
+    Signal emitted when host URL changes.
+  */
+
+/*!
+    \fn QWebService::hostUrlChanged()
+
+    Signal emitted when host URL changes.
+  */
+
+/*!
+    \fn QWebService::methodNamesChanged()
+
+    Signal emitted when list of methods changes.
+    This means:
+    \list
+        \o a method has been added
+        \o a method has been deleted
+        \o WSDL file has been reset
+        \o WSDL file has been changed
+    \endlist
+  */
+
+/*!
+    \fn QWebService::nameChanged()
+
+    Signal emitted when web service's name changes.
+  */
+
+/*!
     Returns name of the web service, as taken from QWsdl
     or set by setName().
 
@@ -414,7 +445,7 @@ void QWebService::setWsdl(QWsdl *newWsdl)
 /*!
     Sets the WSDL (\a newWsdl) file to use. This does override already
     present methods.
-    If you just want to add WSDL methods to existing ones, use setWsdl()
+    If you just want to add WSDL methods to existing ones, use setWsdl().
 
     \sa setWsdl()
   */
