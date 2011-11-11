@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'qdnmain.ui'
 **
-** Created: Thu Nov 10 15:20:53 2011
+** Created: Fri Nov 11 11:10:58 2011
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

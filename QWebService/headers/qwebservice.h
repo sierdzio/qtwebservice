@@ -53,6 +53,8 @@ public:
     void addMethod(QWebMethod *newMethod);
     void addMethod(const QString &methodName, QWebMethod *newMethod);
     void removeMethod(const QString &methodName);
+    Q_INVOKABLE bool invokeMethod(const QString &methodName, const QByteArray &data = 0);
+    Q_INVOKABLE QString replyRead(const QString &methodName);
 
     QUrl hostUrl() const;
     QString host() const;

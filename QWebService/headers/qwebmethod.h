@@ -120,9 +120,9 @@ public:
     QByteArray replyReadRaw();
     Q_INVOKABLE QString replyRead();
 
-    QString errorInfo() const;
-    bool isErrorState() const;
-    bool isReplyReady() const;
+    Q_INVOKABLE QString errorInfo() const;
+    Q_INVOKABLE bool isErrorState() const;
+    Q_INVOKABLE bool isReplyReady() const;
 
 signals:
     void replyReady(const QByteArray &reply);

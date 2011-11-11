@@ -32,14 +32,15 @@
 
     If you need to authenticate on the server, use authenticate() method.
     You can specify username and password right there, or before,
-    using setCredentials(), setUsername() and/ or setPassword().
+    using setCredentials(), setUsername() and/ or setPassword(). Custom authentication
+    strings are also possible, just use auhenticate() with QUrl.
 
     Typically, to send a message, you will need to set the URL, message name,
     target namespace (when using SOAP), parameters list (when invoking a method
     that has parameters), and then use the parameterless sendMessage() method.
     Here is a snippet for that:
     \code
-    QWebMethod *message = new QWebMethod(0, QWebMethod::soap12, QWebMethod::POST);
+    QWebMethod *message = new QWebMethod(0, QWebMethod::Soap12, QWebMethod::Post);
     message->setHost("http://www.currencyserver.de/webservice/currencyserverwebservice.asmx");
     message->setMessageName("getProviderList");
     message->setTargetNamespace("http://www.daenet.de/webservices/CurrencyServer");
@@ -49,7 +50,7 @@
     using isReplyReady() convenience method.
 
     To send a REST message with (for example) JSON body, pass
-    (QWebMethod::rest | QWebMethod::json) as protocol flag. Additionally,
+    (QWebMethod::Rest | QWebMethod::Json) as protocol flag. Additionally,
     specify HTTP method to be used (POST, GET, PUT, DELETE).
     When invoking a REST method, \a methodName is used as request URI,
     and \a parameters specify additioanl data to be sent in message body.
@@ -204,7 +205,9 @@ QWebMethod::QWebMethod(const QUrl &url, Protocol protocol,
 }
 
 /*!
-  \internal
+    \internal
+
+    Constructor used by private headers implementation.
   */
 QWebMethod::QWebMethod(QWebMethodPrivate &dd, Protocol protocol,
                        HttpMethod httpMethod, QObject *parent) :
@@ -878,6 +881,8 @@ bool QWebMethod::invokeMethod(const QByteArray &requestData)
 QString QWebMethod::replyRead()
 {
     Q_D(QWebMethod);
+    // Clears reply received bool.
+    d->replyReceived = false;
     QString replyString(d->reply);
     replyString = d->convertReplyToUtf(replyString);
     // OPTIONAL - FOR TESTING:
@@ -906,6 +911,8 @@ QString QWebMethod::replyRead()
 QVariant QWebMethod::replyReadParsed()
 {
     Q_D(QWebMethod);
+    // Clears reply received bool.
+    d->replyReceived = false;
     QVariant result;
     QByteArray replyBytes = d->reply;
     QString replyString = d->convertReplyToUtf(replyBytes);
@@ -1015,6 +1022,8 @@ QVariant QWebMethod::replyReadParsed()
 QByteArray QWebMethod::replyReadRaw()
 {
     Q_D(QWebMethod);
+    // Clears reply received bool.
+    d->replyReceived = false;
     return d->reply;
 }
 

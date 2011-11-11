@@ -12,6 +12,8 @@ Rectangle {
         host: "http://developer.qt.nokia.com/qtapi/1/member/profile"
         httpMethod: "Get"
         protocol: "Json"
+
+        Component.onCompleted: replyReady.connect(readMtdReply);
     }
 
     Text {
@@ -67,7 +69,6 @@ Rectangle {
                 onClicked: {
                     webMethod.authenticate(textInputLogin.text, textInputPassword.text);
                     console.log("Invoking method");
-                    webMethod.replyReady.connect(readMtdReply);
                     webMethod.invokeMethod();
                     console.log("Finished invoking method");
                 }
@@ -115,9 +116,13 @@ Rectangle {
         }
     }
 
-    function readMtdReply(whatever) {
-        var reply = webMethod.replyRead();
-        console.log("Reading the reply: " + reply);
-        textResult.text = reply;
+    function readMtdReply() {
+        if (webMethod.isReplyReady()) {
+            var reply = webMethod.replyRead();
+            console.log("Reading the reply: " + reply);
+            textResult.text = reply;
+        } else {
+            console.log("Reaply is not available");
+        }
     }
 }

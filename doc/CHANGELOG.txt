@@ -43,6 +43,8 @@ Example arguments for converter:
  - added bether method handling to QWebService (when using QWebService, you need to connect
    only one signal now - replyReady(). It passes the web method name, so that you can
    know, which QWebMethod received the reply),
+ - added QWebService::invokeMethod and QWebService::replyRead() convenience methods. They both
+   are Q_INVOKABLE, too,
  - marked v0.6.0.
 
 06.10.2011 19:14 CEST:

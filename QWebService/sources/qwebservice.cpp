@@ -41,6 +41,8 @@
         myWebService.method("myWebMethod").invokeMethod();
     \endcode
 
+    For convenience, QWebService::invokeMethod() and QWebService::replyRead() can also be used.
+
     When any of the web methods in QwebService receives a reply, replyReady() signal
     is emitted. It sends reply data and web method name, so that the sender can be easily
     determined.
@@ -313,6 +315,38 @@ void QWebService::removeMethod(const QString &methodName)
     delete d->methods->value(methodName);
     d->methods->remove(methodName);
     emit methodNamesChanged();
+}
+
+/*!
+    Invokes a web method, specified by given \a methodName. Passes \a data to the method.
+    If no data specified, invokes (empty method body - common for getter methods).
+    Returns true on success.
+
+    Similar to calling:
+    \code
+    QWebService::method("methodName")->invokeMethod(data);
+    \endcode
+  */
+bool QWebService::invokeMethod(const QString &methodName, const QByteArray &data)
+{
+    Q_D(QWebService);
+    return d->methods->value(methodName)->invokeMethod(data);
+}
+
+/*!
+    Read the reply of a web method, specified by given \a methodName.
+    Returns empty string when no reply is present. See also replyReady()
+    signal, as it can be used to determine, when a reply can be read.
+
+    Similar to calling:
+    \code
+    QWebService::method("methodName")->replyRead();
+    \endcode
+  */
+QString QWebService::replyRead(const QString &methodName)
+{
+    Q_D(QWebService);
+    return d->methods->value(methodName)->replyRead();
 }
 
 /*!
