@@ -6,5 +6,6 @@
 #include "qwebservicemethod.h"
 #include "qwsdl.h"
 #include "qwebservice.h"
+#include "QtWebServiceQml.h"
 
 #endif // QWEBSERVICE_H

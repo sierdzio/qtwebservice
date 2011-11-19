@@ -176,7 +176,7 @@ void TestQWebService::methodManagementTest()
     QCOMPARE(reader->isErrorState(), bool(false));
     QCOMPARE(reader->methodNames().size(), int(0));
 
-    reader->addMethod("testMethod1", new QWebServiceMethod(reader));
+    reader->addMethod("testMethod1", new QWebServiceMethod(/*reader*/));
     QCOMPARE(reader->isErrorState(), bool(false));
     QCOMPARE(reader->methodNames().size(), int(1));
     reader->removeMethod("testMethod1");

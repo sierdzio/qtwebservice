@@ -31,16 +31,16 @@
     a replyReady() signal).
   */
 
-/*!
+/* !
     Constructs web method object with \a parent.
     Requires specifying other parameters later.
     If you use that constructor, you can probably go on
     and use the base QWebMethod class instead of this one.
   */
-QWebServiceMethod::QWebServiceMethod(QObject *parent) :
-    QWebMethod(*new QWebServiceMethodPrivate, Soap12, Post, parent)
-{
-}
+//QWebServiceMethod::QWebServiceMethod(QObject *parent) :
+//    QWebMethod(*new QWebServiceMethodPrivate, Soap12, Post, parent)
+//{
+//}
 
 /*!
     A constructor that takes in \a protocol information,

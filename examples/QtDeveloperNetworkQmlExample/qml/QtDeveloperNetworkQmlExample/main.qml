@@ -1,6 +1,5 @@
 import QtQuick 1.1
-import QtWebService 1.0
-import QtQuick 1.0
+import QtWebService 0.6
 
 Rectangle {
     width: 360

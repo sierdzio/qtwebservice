@@ -6,13 +6,16 @@
 #endif
 #include <QtDeclarative>
 #include "qmlapplicationviewer.h"
-#include <qwebmethod.h>
+#include <QWebService>
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
     QScopedPointer<QApplication> app(createApplication(argc, argv));
 
-    qmlRegisterType<QWebMethod>("QtWebService", 1, 0, "WebMethod");
+    // This method can be used if the whole QWebService was included.
+    registerQmlTypes();
+    // When including just QWebMethod, this line should be used.
+//    qmlRegisterType<QWebMethod>("QtWebService", 1, 0, "WebMethod");
 
     QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
 
