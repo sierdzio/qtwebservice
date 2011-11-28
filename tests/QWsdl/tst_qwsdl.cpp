@@ -47,6 +47,8 @@ void TestQWsdl::initialTest()
     QWsdl wsdl2(QString("../../../examples/wsdl/band_ws.asmx"), this);
     QCOMPARE(wsdl2.isErrorState(), bool(false));
 
+    wsdl2.parse();
+
     QStringList tempList = wsdl2.methodNames();
     QCOMPARE(tempList.size(), int(13));
 }

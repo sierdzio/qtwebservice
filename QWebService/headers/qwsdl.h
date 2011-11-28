@@ -60,6 +60,8 @@ public:
     QString errorInfo() const;
     bool isErrorState() const;
 
+    bool parse();
+
 signals:
     void errorEncountered(const QString &errMessage);
 
@@ -74,6 +76,8 @@ protected:
     QWsdlPrivate *d_ptr;
 
 private:
+    void prepareFile(); // temp - problems in PIMPL
+
     Q_DECLARE_PRIVATE(QWsdl)
 
 };

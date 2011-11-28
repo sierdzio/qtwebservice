@@ -43,6 +43,7 @@ Example arguments for converter:
    know, which QWebMethod received the reply),
  - added QWebService::invokeMethod and QWebService::replyRead() convenience methods. They both
    are Q_INVOKABLE, too,
+ - fixed issues with QWsdl. Sadly, this exposes some of the private header information,
  - marked v0.6.0.
 
 06.10.2011 19:14 CEST:

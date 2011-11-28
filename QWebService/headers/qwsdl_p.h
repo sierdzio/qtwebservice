@@ -37,8 +37,8 @@ public:
     QWsdl *q_ptr;
 
     void init();
-    bool parse();
-    void prepareFile();
+//    bool parse();
+//    void prepareFile();
     void prepareMethods();
     void readDefinitions();
     void readTypes();

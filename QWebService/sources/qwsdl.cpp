@@ -105,7 +105,7 @@ QWsdl::QWsdl(const QString &wsdlFile, QObject *parent) :
     Q_D(QWsdl);
     d->m_wsdlFilePath = wsdlFile;
     d->init();
-    d->parse();
+    parse();
     emit wsdlFileChanged();
 }
 
@@ -188,7 +188,7 @@ void QWsdl::resetWsdl(const QString &newWsdl)
     d->m_targetNamespace = QString();
     d->xmlReader.clear();
 
-    d->parse();
+    parse();
     emit wsdlFileChanged();
 }
 
@@ -302,6 +302,7 @@ void QWsdl::fileReplyFinished(QNetworkReply *rply)
     Q_D(QWsdl);
     QString replyString = d->convertReplyToUtf(QLatin1String(rply->readAll()));
     QFile file(QLatin1String("tempWsdl.asmx~"));
+    d->m_wsdlFilePath = QLatin1String("tempWsdl.asmx~");
 
     if (file.exists())
         file.remove();
@@ -357,55 +358,55 @@ bool QWsdlPrivate::enterErrorState(const QString &errMessage)
     QWebServiceMethods, reads all necessary data,
     like web service's name etc.
   */
-bool QWsdlPrivate::parse()
+bool QWsdl::parse()
 {
+    Q_D(QWsdl);
     /*
       Algorithm extracts method names from "types" tags,
       which is most probably wrong, as it should be
       cross-checked with other tags ("message", etc.)
     */
-
-    if (errorState) {
-        enterErrorState(QLatin1String("WSDL reader is in error state "
+    if (d->errorState) {
+        d->enterErrorState(QLatin1String("WSDL reader is in error state "
                                             "and cannot parse the file."));
         return false;
     }
 
     prepareFile();
 
-    QFile file(m_wsdlFilePath);
+    QFile file(d->m_wsdlFilePath);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
-        enterErrorState(QString(QLatin1String("Error: cannot read WSDL file: ")
-                                + m_wsdlFilePath
+        d->enterErrorState(QString(QLatin1String("Error: cannot read WSDL file: ")
+                                + d->m_wsdlFilePath
                                 + QLatin1String(". Reason: ")
                                 + file.errorString()));
         return false;
     }
 
-    xmlReader.setDevice(&file);
-    xmlReader.readNext();
+    d->xmlReader.setDevice(&file);
+    d->xmlReader.readNext();
 
-    while (!xmlReader.atEnd()) {
-        if (xmlReader.isStartElement()) {
-            QString tempN = xmlReader.name().toString();
+    while (!d->xmlReader.atEnd()) {
+        if (d->xmlReader.isStartElement()) {
+            QString tempN = d->xmlReader.name().toString();
 
             if (tempN == QLatin1String("definitions")) {
-                m_targetNamespace = xmlReader.attributes().value(
+                d->m_targetNamespace = d->xmlReader.attributes().value(
                             QLatin1String("targetNamespace")).toString();
-                readDefinitions();
+                d->readDefinitions();
             } else {
-                enterErrorState(QLatin1String("Error: file does not have "
+                d->enterErrorState(QLatin1String("Error: file does not have "
                                                     "WSDL definitions inside!"));
                 return false;
             }
         } else {
-            xmlReader.readNext();
+            d->xmlReader.readNext();
         }
     }
 
-    prepareMethods();
+    d->prepareMethods();
 
-    if (!errorState)
+    if (!d->errorState)
         return true;
     else
         return false;
@@ -417,27 +418,28 @@ bool QWsdlPrivate::parse()
     If the host path is not a local file, but URL, QWsdl will download
     it into a temporary file, then read, and delete at exit.
   */
-void QWsdlPrivate::prepareFile()
+void QWsdl::prepareFile()
 {
-    Q_Q(QWsdl);
+    Q_D(QWsdl);
     QUrl filePath;
-    filePath.setUrl(m_wsdlFilePath);
+    filePath.setUrl(d->m_wsdlFilePath);
 
-    if (!QFile::exists(m_wsdlFilePath) && filePath.isValid()) {
-        m_hostUrl = filePath;
-
+    if (!QFile::exists(d->m_wsdlFilePath) && filePath.isValid()) {
+        d->m_hostUrl = filePath;
         QNetworkAccessManager *manager = new QNetworkAccessManager();
         QObject::connect(manager, SIGNAL(finished(QNetworkReply*)),
-                q, SLOT(fileReplyFinished(QNetworkReply*)));
-
+                this, SLOT(fileReplyFinished(QNetworkReply*)));
         manager->get(QNetworkRequest(filePath));
 
         forever {
-            if (replyReceived == true)
+            if (d->replyReceived == true) {
                 return;
-            else
+            } else {
                 QCoreApplication::instance()->processEvents();
+            }
         }
+
+        delete manager;
     }
 }
 
@@ -567,7 +569,9 @@ void QWsdlPrivate::readTypeSchemaElement()
         if (xmlReader.isEndElement()
                 && (xmlReader.name() == QLatin1String("element"))
                 && ((lastName == QLatin1String("complexType"))
-                    || (lastName == QLatin1String("sequence")))
+                    || (lastName == QLatin1String("sequence"))
+//                    || (lastName == QLatin1String("part"))
+                    )
                 && (firstElem == false)) {
             int currentMethodIndex = workMethodList->length() - 1;
             workMethodParameters->insert(currentMethodIndex, params);
@@ -631,6 +635,13 @@ void QWsdlPrivate::readTypeSchemaElement()
 
             params.insert(elementName, element);
             xmlReader.readNext();
+//        } else if (tempName == QLatin1String("part")) {
+//            firstElem = false;
+//            QString elementName = xmlReader.attributes().value(
+//                        QLatin1String("name")).toString();
+//            QVariant element = QString("XSD not supported yet");
+//            params.insert(elementName, element);
+//            xmlReader.readNext();
         } else {
             xmlReader.readNext();
         }
@@ -668,7 +679,8 @@ void QWsdlPrivate::prepareMethods()
                 tempMethodName.chop(8);
 
                 for (int j = 0; j < workMethodList->length(); j++) {
-                    if (workMethodList->at(j) == tempMethodName) {
+                    if ((workMethodList->at(j) == tempMethodName)
+                            || (workMethodList->at(j) == (tempMethodName + "Request"))) {
                         methodMain = j;
                         methodsDone[j] = true;
                         isMethodAndResponsePresent = true;
@@ -680,8 +692,13 @@ void QWsdlPrivate::prepareMethods()
                 methodMain = i;
 
                 for (int j = 0; j < workMethodList->length(); j++) {
-                    if (workMethodList->at(j) == QString(methodName
-                                                         + QLatin1String("Response"))) {
+                    QString cleanMethodName = QString(methodName + QLatin1String("Response"));
+                    QString requestMethodName = methodName;
+                    requestMethodName.chop(7);
+                    requestMethodName += QLatin1String("Response");
+
+                    if ((workMethodList->at(j) == cleanMethodName)
+                        || workMethodList->at(j) == requestMethodName) {
                         methodReturn = j;
                         methodsDone[j] = true;
                         isMethodAndResponsePresent = true;
