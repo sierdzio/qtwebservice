@@ -659,14 +659,14 @@ void QWsdlPrivate::prepareMethods()
     if (errorState)
         return;
 
-    bool methodsDone[workMethodList->length()];
+    QList<bool> methodsDone;//[workMethodList->length()];
 
     for (int x = 0; x < workMethodList->length(); x++)
-        methodsDone[x] = false;
+        methodsDone.append(false);
 
 
     for (int i = 0; (i < workMethodList->length()); i++) {
-        if (methodsDone[i] == false) {
+        if (methodsDone.at(i) == false) {
             bool isMethodAndResponsePresent = false;
             int methodMain = 0;
             int methodReturn = 0;
@@ -674,7 +674,7 @@ void QWsdlPrivate::prepareMethods()
 
             if (methodName.contains(QLatin1String("Response"))) {
                 methodReturn = i;
-                methodsDone[i] = true;
+                methodsDone.at(i) = true;
                 QString tempMethodName = methodName;
                 tempMethodName.chop(8);
 
@@ -682,7 +682,7 @@ void QWsdlPrivate::prepareMethods()
                     if ((workMethodList->at(j) == tempMethodName)
                             || (workMethodList->at(j) == (tempMethodName + "Request"))) {
                         methodMain = j;
-                        methodsDone[j] = true;
+                        methodsDone.at(j) = true;
                         isMethodAndResponsePresent = true;
                         methodName = tempMethodName;
                         break;
@@ -700,7 +700,7 @@ void QWsdlPrivate::prepareMethods()
                     if ((workMethodList->at(j) == cleanMethodName)
                         || workMethodList->at(j) == requestMethodName) {
                         methodReturn = j;
-                        methodsDone[j] = true;
+                        methodsDone.at(j) = true;
                         isMethodAndResponsePresent = true;
                         break;
                     }
