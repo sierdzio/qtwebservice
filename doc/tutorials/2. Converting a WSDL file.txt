@@ -1,3 +1,6 @@
+/*! \page tutorial2 Tutorial
+\brief Part 2
+
 1. First of all, ask yourself: do I really need a set of custom classes to communicate with a given web service? Then: does this WS have a WSDL definition?
 
 If both answers are "yes", or even "well, sort of", then you are in a right place to learn about it. If not, then what you probably need is to take a look at QWebService, QWebMethod, and/ or QWsdl classes inside QWebService library. They offer powerful genereric ways of communitations with web services. And yes, they can do their own WSDL parsing.
@@ -37,3 +40,4 @@ c) a flag that might be useful is --force (-f). It will overwrite any files foun
 d) The rest of the flags have more to do with how the generated code looks: you can specify suffixes for variables, number of spaces in a tabulation, and end of line character.
 
 Hope that helps. Remember, if you spot any bug, or something is erroneously written, or you just don't like a part of the toolkit, please write to sierdzio@gmail.com.
+*/

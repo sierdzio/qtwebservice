@@ -2,6 +2,7 @@
 # Tells git to ignore build-related files.
 build*/
 lib/
+ui_*
 *.autosave
 *.pro.user*
 *.kate-swp

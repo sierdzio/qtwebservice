@@ -1,12 +1,9 @@
-/*
- * Note: this will probably move into QDoc in the future
- * Thank you for your attention,
- * sierdzio
- */
+/*! \page tutorial1 Tutorial
+\brief Part 1
 
 This tutorial is a starting point for developers that want to use QtWebService toolkit. For a short introduction into what this project is all about, see ../README.txt. It will give you a small overview of available tools and libraries. Then, you can proceed to other tutorials based on your requirements.
 
-This project also comes with a detailed (hopefully :) If not, don't hesitate to point any things you feel are done badly to sierdzio@gmail.com) QDoc documentation, available in project's sources and in ../html/ directory. Apart from that, you can take a look at examples (../../examples/), tests (../../tests/), and some video tutorials located in ../videos/.
+This project also comes with a detailed (hopefully :) If not, don't hesitate to point any things you feel are done badly to sierdzio@gmail.com) doxygen documentation, available in project's sources and in ../html/ directory. Apart from that, you can take a look at examples (../../examples/), tests (../../tests/), and some video tutorials located in ../videos/.
 
 The directory you are currently in should have some textual tutorials. Their aim is to show you how to use this toolkit.
 
@@ -14,5 +11,4 @@ That's it for this file, feel free to look around. Happy Qt hacking!
 
 Cheers,
 sierdzio
-sierdzio.com
-sierdzio@gmail.com
+*/

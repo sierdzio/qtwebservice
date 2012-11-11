@@ -1,3 +1,4 @@
+/*! \mainpage
 QWebService library helps connecting to and communicating with web services in Qt applications.
 qtWsdlConverter automatically creates Qt/C++ classes for a given WSDL file or URL.
 
@@ -109,3 +110,4 @@ All entries in single sections (with an exception of build system related switch
     --tabulation=<int> - specifies number of spaces to use as tabulation,
     --force - if the <wsName> dir already exists, converter will delete and recreate it,
     --help  - displays a simple help message and information. Does not proceed with any other action.
+*/

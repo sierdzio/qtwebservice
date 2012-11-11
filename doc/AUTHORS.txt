@@ -1,4 +1,6 @@
+/*! \page authors Authors
 Project creator and author:
 Tomasz Siekierda
 sierdzio@gmail.com
 http://www.sierdzio.com
+*/

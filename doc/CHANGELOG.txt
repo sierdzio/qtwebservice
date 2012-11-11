@@ -1,4 +1,6 @@
-Changelog for QWebService library project & qtWsdlConverter.
+/*! \page changelog Changelog
+\brief Changelog for QWebService library project & qtWsdlConverter.
+
 Part of the initial development is not expressed here. Refer to git logs or ask sierdzio at sierdzio@gmail.com
 
 Remote Features and TODO's list can be found at: http://goo.gl/L1C6X
@@ -10,7 +12,10 @@ Example arguments for converter:
  --force --asynchronous --scons --cmake --json ../examples/wsdl/band_ws.asmx
  -af --cmake --scons --json ../examples/wsdl/band_ws.asmx
 
-.11.2011 : CET:
+11.11.2012:
+ - migrated documentation to doxygen
+ 
+11.2011 : CET:
  - removed QWebServiceReader,
  - added more robust SOAP, XML reply parsing,
  - changed license headers in all source files,
@@ -488,3 +493,4 @@ Example arguments for converter:
  - added some debug information to testCase2,
  - added method bodies to QWebServiceAbstract,
  - some other initial changes I forgot about :)
+*/

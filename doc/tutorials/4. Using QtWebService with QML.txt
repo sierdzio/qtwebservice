@@ -1,3 +1,6 @@
+/*! \page tutorial4 Tutorial
+\brief Part 4
+
 QML support in QtWebService is still in it's infancy, but it is being actively developed. The aim for the future is to make it possible to easily communicate with web services in QML, and enabling QWebService with just one simple QML "import" statement.
 
 Some glimpse into the proposed shape of QML API can be seen in QtDeveloperNetworkQmlExample. Strangely, there are some issues, which are being resolved (debugged, to be honest - it should work, I don't know yet, what's wrong) right now. More examples are likely to be created in the future. A more hard-core approach would be to dive into project's sources and gather API info there.
@@ -18,3 +21,4 @@ MouseArea {
                 anchors.fill: parent
                 onClicked: webMethod.invokeMethod();
 }
+*/
