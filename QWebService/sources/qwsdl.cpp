@@ -603,7 +603,7 @@ void QWsdlPrivate::readTypeSchemaElement()
 
             QVariant element;
             // The int(1) looks very bad.
-            elementType = elementType.split(QChar::fromAscii(':')).at(1);
+            elementType = elementType.split(QChar(':')).at(1);
             // NEEDS MANY MORE VALUE TYPES! VERY SHAKY IMPLEMENTATION!
             // Prob'ly better to use schemas.
             if (elementType == QLatin1String("int")) {

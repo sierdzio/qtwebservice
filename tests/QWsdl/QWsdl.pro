@@ -1,7 +1,6 @@
 include(../../buildInfo.pri)
 
-QT += qtestlib
-CONFIG += qtestlib
+QT += testlib
 
 include(../../libraryIncludes.pri)
 

@@ -15,7 +15,7 @@
 **
 ****************************************************************************/
 
-#include <QtTest/QtTest>
+#include <QtTest>
 #include <qwebservice.h>
 
 /**

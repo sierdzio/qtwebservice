@@ -17,6 +17,8 @@
 
 #include "../headers/qwebmethod_p.h"
 
+#include <QUrlQuery>
+
 /*!
     \class QWebMethod
     \brief Class that can be used to asnchronously and synchronously send HTTP,
@@ -399,13 +401,15 @@ bool QWebMethod::authenticate(const QString &newUsername, const QString &newPass
         d->m_password = newPassword;
 
     if (d->m_username != QLatin1String("")) {
-        QUrl url;
-        url.addEncodedQueryItem("ACT", QUrl::toPercentEncoding(QLatin1String("11")));
-        url.addEncodedQueryItem("RET", QUrl::toPercentEncoding(QLatin1String("/")));
-        url.addEncodedQueryItem("site_id", QUrl::toPercentEncoding(QLatin1String("1")));
-        url.addEncodedQueryItem("username", QUrl::toPercentEncoding(d->m_username));
-        url.addEncodedQueryItem("password", QUrl::toPercentEncoding(d->m_password));
+        QUrlQuery urlquery;
+        urlquery.addQueryItem("ACT", QUrl::toPercentEncoding(QLatin1String("11")));
+        urlquery.addQueryItem("RET", QUrl::toPercentEncoding(QLatin1String("/")));
+        urlquery.addQueryItem("site_id", QUrl::toPercentEncoding(QLatin1String("1")));
+        urlquery.addQueryItem("username", QUrl::toPercentEncoding(d->m_username));
+        urlquery.addQueryItem("password", QUrl::toPercentEncoding(d->m_password));
 
+        QUrl url;
+        url.setQuery(urlquery);
         return authenticate(url);
     }
     return false;
@@ -838,7 +842,7 @@ bool QWebMethod::invokeMethod(const QByteArray &requestData)
 
     if (d->protocolUsed & Soap10)
         request.setRawHeader(QByteArray("SOAPAction"),
-                             QByteArray(d->m_hostUrl.toString().toAscii()));
+                             QByteArray(d->m_hostUrl.toString().toLatin1()));
 
     if (requestData.isNull() || requestData.isEmpty())
         d->prepareRequestData();
