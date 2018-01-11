@@ -8,3 +8,4 @@ ui_*
 *.kate-swp
 *~
 Makefile
+*.moc

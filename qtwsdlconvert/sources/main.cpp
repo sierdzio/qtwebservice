@@ -15,7 +15,7 @@
 **
 ****************************************************************************/
 
-#include <QtCore/qcoreapplication.h>
+#include <QCoreApplication>
 #include "../headers/wsdlconverter.h"
 
 /**
@@ -30,8 +30,9 @@ int main(int argc, char *argv[])
         converter.convert();
     }
 
-    if (converter.isErrorState())
-        printf(converter.errorInfo().toLocal8Bit());
+    if (converter.isErrorState()) {
+        qWarning() << converter.errorInfo();
+    }
 
     return 0;//    a.exec();
 }

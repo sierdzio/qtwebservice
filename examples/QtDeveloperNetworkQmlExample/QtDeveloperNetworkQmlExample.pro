@@ -14,9 +14,9 @@ OTHER_FILES = main.qml
 SOURCES += main.cpp
 
 unix {
-    QMAKE_POST_LINK = cp main.qml $${OUTDIR}
+    QMAKE_POST_LINK = cp $$_PRO_FILE_PWD_/main.qml $${OUTDIR}
 }
 
 win32 {
-    QMAKE_POST_LINK = copy main.qml $${OUTDIR}
+    QMAKE_POST_LINK = copy $$_PRO_FILE_PWD_/main.qml $${OUTDIR}
 }

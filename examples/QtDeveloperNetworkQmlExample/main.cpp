@@ -1,12 +1,11 @@
 #include <QUrl>
-#include <QApplication>
+#include <QGuiApplication>
 #include <QQuickView>
-#include "qmlapplicationviewer.h"
 #include <QWebService>
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
 
     // This method can be used if the whole QWebService was included.
     registerQmlTypes();
@@ -16,5 +15,5 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QQuickView view(QUrl::fromUserInput("main.qml"));
     view.show();
 
-    return app->exec();
+    return app.exec();
 }

@@ -18,11 +18,7 @@
 #ifndef QDNMAIN_H
 #define QDNMAIN_H
 
-#if QT_VERSION < 0x050000
-    #include <QtGui/QMainWindow>
-#else
-    #include <QtWidgets/QMainWindow>
-#endif
+#include <QMainWindow>
 #include <qwebmethod.h>
 
 namespace Ui {

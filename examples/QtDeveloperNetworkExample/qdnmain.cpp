@@ -18,6 +18,8 @@
 #include "qdnmain.h"
 #include "ui_qdnmain.h"
 
+#include <QUrlQuery>
+
 QdnMain::QdnMain(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::QdnMain)
@@ -56,15 +58,16 @@ void QdnMain::on_buttonLogin_clicked()
                                    ui->lineEditPassword->text());
     webMethodProfile->invokeMethod();
 
-    QUrl url;
-    url.addEncodedQueryItem("ACT", QUrl::toPercentEncoding("11"));
-    url.addEncodedQueryItem("RET", QUrl::toPercentEncoding("/"));
-    url.addEncodedQueryItem("site_id", QUrl::toPercentEncoding("1"));
-    url.addEncodedQueryItem("username",
-                            QUrl::toPercentEncoding(ui->lineEditLogin->text()));
-    url.addEncodedQueryItem("password",
-                            QUrl::toPercentEncoding(ui->lineEditPassword->text()));
-    webMethodPosts->authenticate(url);
+    // Untested!
+    QUrlQuery url;
+    url.addQueryItem("ACT", QUrl::toPercentEncoding("11"));
+    url.addQueryItem("RET", QUrl::toPercentEncoding("/"));
+    url.addQueryItem("site_id", QUrl::toPercentEncoding("1"));
+    url.addQueryItem("username",
+                     QUrl::toPercentEncoding(ui->lineEditLogin->text()));
+    url.addQueryItem("password",
+                     QUrl::toPercentEncoding(ui->lineEditPassword->text()));
+    webMethodPosts->authenticate(QUrl(url.toString()));
     webMethodPosts->invokeMethod();
 }
 
